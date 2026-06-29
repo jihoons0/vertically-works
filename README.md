@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Vertically Works
 
-## Getting Started
+The canonical reference for vertical interface design.
 
-First, run the development server:
+**vertically.works** is a documentation platform exploring interaction patterns for vertical writing systems — Korean (한국어), Japanese (日本語), and Chinese (中文). It treats writing direction not as a typographic choice, but as the foundation of interaction.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## What's here
+
+```
+content/        MDX documentation (components, patterns, principles, challenges)
+app/            Next.js routes
+components/     React components and interactive demos
+docs/           Project meta-documentation (manifesto, blueprint, design decisions)
+lib/            Utilities
+public/         Static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Getting started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+## How docs are organized
 
-To learn more about Next.js, take a look at the following resources:
+Content lives in `content/` as MDX files. Each file has frontmatter:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```mdx
+---
+title: Button
+description: How should a button behave in a vertical interface?
+status: published
+category: components
+---
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Routes in `app/` read MDX from `content/` via `lib/mdx.ts`.
 
-## Deploy on Vercel
+## How components work
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Every documented component has:
+- **Purpose** — why it exists
+- **Problem** — the specific vertical-interface question it answers
+- **Interactive demo** — live in the browser, not a screenshot
+- **Implementation notes** — what to actually do
+- **Do / Don't** — concrete guidance
+- **Open questions** — what we don't know yet
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Development
+
+```bash
+npm run dev      # dev server
+npm run build    # production build
+npm run lint     # lint
+```
+
+## Deploy
+
+This project deploys to Vercel. Connect the GitHub repo to a Vercel project targeting `vertically.works`.
+
+## The application
+
+[Vertically Verse](https://github.com/jihoons/exploring) — the companion iOS app — is the first implementation of these principles: a fully vertical, RTL scripture reader for Korean, Japanese, and Chinese.
+
+---
+
+One sentence: Vertically Works explores how software changes when writing direction becomes the foundation of interaction rather than a typographic afterthought.
