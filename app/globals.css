@@ -227,6 +227,31 @@ a {
   margin: var(--space-8) 0;
 }
 
+/* ─── Responsive nav helpers ─── */
+.nav-links {
+  display: none;
+}
+.nav-mobile-btn {
+  display: flex;
+}
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    flex: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .nav-mobile-btn {
+    display: none;
+  }
+  .nav-mobile-dropdown {
+    display: none !important;
+  }
+}
+
 /* ─── Hover utility classes (CSS-only, works in Server Components) ─── */
 
 .card-hover {

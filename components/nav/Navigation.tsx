@@ -60,16 +60,7 @@ export function Navigation() {
         {/* Desktop nav links */}
         <ul
           role="list"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-1)",
-            flex: 1,
-            listStyle: "none",
-            margin: 0,
-            padding: 0,
-          }}
-          className="hidden md:flex"
+          className="nav-links"
         >
           {NAV_LINKS.map((link) => {
             const active = pathname === link.href || pathname.startsWith(link.href + "/");
@@ -135,13 +126,12 @@ export function Navigation() {
 
           <ThemeToggle />
 
-          {/* Mobile hamburger */}
+          {/* Mobile hamburger — visibility controlled by .nav-mobile-btn CSS class */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             style={{
-              display: "flex",
               alignItems: "center",
               justifyContent: "center",
               width: 32,
@@ -152,7 +142,7 @@ export function Navigation() {
               color: "var(--color-fg-muted)",
               cursor: "pointer",
             }}
-            className="flex md:hidden"
+            className="nav-mobile-btn"
           >
             {mobileOpen ? (
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
@@ -178,7 +168,7 @@ export function Navigation() {
             background: "var(--color-bg)",
             padding: "var(--space-4) var(--space-6)",
           }}
-          className="md:hidden"
+className="nav-mobile-dropdown"
         >
           <ul role="list" style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
             {NAV_LINKS.map((link) => {
