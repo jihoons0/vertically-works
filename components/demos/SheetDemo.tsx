@@ -5,9 +5,15 @@ import { useState } from "react";
 type Edge = "bottom" | "right" | "left";
 
 const EDGES: { id: Edge; label: string; note: string }[] = [
-  { id: "bottom", label: "↑ Bottom", note: "Matches screen geometry — feels natural on a horizontal phone, ambiguous in vertical." },
-  { id: "right", label: "← Right", note: "Travels against reading direction — feels like an intrusion from the end of the document." },
-  { id: "left", label: "→ Left", note: "Follows reading direction — new content arrives from where the reader is going." },
+  { id: "bottom", label: "↑ Bottom", note: "Screen geometry. Feels like a new layer — natural on horizontal phones, ambiguous in vertical context." },
+  { id: "right", label: "← Right", note: "Travels against RTL reading direction. Feels like content arriving from behind the reader." },
+  { id: "left", label: "→ Left", note: "Follows reading direction. New content arrives from where the reader is heading." },
+];
+
+const BOOKMARKS = [
+  { ref: "창 1:1", text: "태초에 하나님이 천지를 창조하시니라" },
+  { ref: "시 23:1", text: "여호와는 나의 목자시니" },
+  { ref: "요 3:16", text: "하나님이 세상을 이처럼 사랑하사" },
 ];
 
 export function SheetDemo() {
@@ -26,9 +32,24 @@ export function SheetDemo() {
       background: "var(--color-bg)",
       boxShadow: "0 -8px 32px rgba(0,0,0,0.15)",
     };
-    if (edge === "bottom") return { ...base, bottom: 0, left: 0, right: 0, height: "55%", borderRadius: "16px 16px 0 0", animation: `${closing ? "sheet-out-bottom" : "sheet-in-bottom"} 260ms cubic-bezier(0.32,0.72,0,1) both` };
-    if (edge === "right") return { ...base, top: 0, right: 0, bottom: 0, width: "65%", borderRadius: "16px 0 0 16px", animation: `${closing ? "sheet-out-right" : "sheet-in-right"} 260ms cubic-bezier(0.32,0.72,0,1) both` };
-    return { ...base, top: 0, left: 0, bottom: 0, width: "65%", borderRadius: "0 16px 16px 0", animation: `${closing ? "sheet-out-left" : "sheet-in-left"} 260ms cubic-bezier(0.32,0.72,0,1) both` };
+    if (edge === "bottom") return {
+      ...base,
+      bottom: 0, left: 0, right: 0, height: "60%",
+      borderRadius: "20px 20px 0 0",
+      animation: `${closing ? "sheet-out-bottom" : "sheet-in-bottom"} 260ms cubic-bezier(0.32,0.72,0,1) both`,
+    };
+    if (edge === "right") return {
+      ...base,
+      top: 0, right: 0, bottom: 0, width: "68%",
+      borderRadius: "16px 0 0 16px",
+      animation: `${closing ? "sheet-out-right" : "sheet-in-right"} 260ms cubic-bezier(0.32,0.72,0,1) both`,
+    };
+    return {
+      ...base,
+      top: 0, left: 0, bottom: 0, width: "68%",
+      borderRadius: "0 16px 16px 0",
+      animation: `${closing ? "sheet-out-left" : "sheet-in-left"} 260ms cubic-bezier(0.32,0.72,0,1) both`,
+    };
   };
 
   return (
@@ -61,8 +82,8 @@ export function SheetDemo() {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div
           style={{
-            width: 240,
-            height: 420,
+            width: 260,
+            height: 460,
             border: "2px solid var(--color-border-strong)",
             borderRadius: 24,
             background: "var(--color-bg-subtle)",
@@ -75,38 +96,52 @@ export function SheetDemo() {
             gap: "var(--space-4)",
           }}
         >
-          {/* Vertical content bg */}
+          {/* Vertical scripture content in background */}
           <div
             style={{
-              writingMode: "vertical-rl",
-              fontSize: "0.875rem",
-              color: "var(--color-fg-subtle)",
-              letterSpacing: "0.12em",
-              lineHeight: 1.9,
-              opacity: 0.5,
+              display: "flex",
+              flexDirection: "row-reverse",
+              gap: "var(--space-5)",
+              opacity: 0.45,
               userSelect: "none",
+              pointerEvents: "none",
             }}
             aria-hidden
           >
-            태초에 하나님이 천지를 창조하시니라
+            {["태초에 하나님이 천지를 창조하시니라", "땅이 혼돈하고 공허하며"].map((text, i) => (
+              <span
+                key={i}
+                style={{
+                  writingMode: "vertical-rl",
+                  fontSize: "0.9375rem",
+                  color: "var(--color-fg)",
+                  letterSpacing: "0.1em",
+                  lineHeight: 1.9,
+                }}
+              >
+                {text}
+              </span>
+            ))}
           </div>
 
           {/* Trigger button */}
           <button
             onClick={() => setOpen(true)}
             style={{
-              padding: "var(--space-2) var(--space-4)",
+              padding: "var(--space-2) var(--space-5)",
               borderRadius: "var(--radius-full)",
               background: "var(--color-fg)",
               color: "var(--color-bg)",
               border: "none",
-              fontSize: "0.8125rem",
+              fontSize: "0.875rem",
               fontWeight: 600,
               cursor: "pointer",
               fontFamily: "inherit",
+              position: "relative",
+              zIndex: 1,
             }}
           >
-            열기
+            책갈피 열기
           </button>
 
           {/* Sheet overlay */}
@@ -117,18 +152,68 @@ export function SheetDemo() {
                 style={{
                   position: "absolute",
                   inset: 0,
-                  background: "rgba(0,0,0,0.3)",
+                  background: "rgba(0,0,0,0.35)",
                   animation: `${closing ? "fade-out" : "fade-in"} 200ms ease both`,
+                  zIndex: 10,
                 }}
               />
-              <div style={sheetStyle()}>
-                <div style={{ padding: "var(--space-5) var(--space-5) var(--space-3)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "0.875rem", fontWeight: 700, color: "var(--color-fg)" }}>책갈피</span>
-                  <button onClick={close} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--color-fg-muted)", fontSize: "1.25rem", lineHeight: 1, fontFamily: "inherit" }}>×</button>
+              <div style={{ ...sheetStyle(), zIndex: 20 }}>
+                {/* Sheet handle */}
+                <div style={{ width: 32, height: 4, borderRadius: 2, background: "var(--color-border-strong)", margin: "10px auto 12px" }} />
+
+                {/* Sheet header */}
+                <div style={{ padding: "0 var(--space-4) var(--space-3)", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid var(--color-border)" }}>
+                  <span style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--color-fg)" }}>책갈피</span>
+                  <button onClick={close} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--color-fg-muted)", fontSize: "1.125rem", lineHeight: 1, fontFamily: "inherit" }}>×</button>
                 </div>
-                <div style={{ padding: "0 var(--space-5)", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-                  {["창세기 1장", "시편 23편", "요한복음 3:16"].map((item) => (
-                    <div key={item} style={{ padding: "var(--space-3) var(--space-3)", borderRadius: "var(--radius-md)", background: "var(--color-bg-muted)", fontSize: "0.8125rem", color: "var(--color-fg)" }}>{item}</div>
+
+                {/* Vertical bookmark content */}
+                <div
+                  style={{
+                    padding: "var(--space-4)",
+                    display: "flex",
+                    flexDirection: "row-reverse", // RTL column order
+                    gap: "var(--space-4)",
+                    overflowX: "auto",
+                    flex: 1,
+                    alignItems: "flex-start",
+                  }}
+                >
+                  {BOOKMARKS.map((bm, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "var(--space-1)",
+                        alignItems: "flex-start",
+                        padding: "var(--space-2)",
+                        borderRadius: "var(--radius-md)",
+                        background: "var(--color-bg-muted)",
+                        cursor: "pointer",
+                        flexShrink: 0,
+                      }}
+                    >
+                      {/* Reference — small horizontal */}
+                      <span style={{ fontSize: "0.6rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)" }}>
+                        {bm.ref}
+                      </span>
+                      {/* Text — vertical */}
+                      <span
+                        style={{
+                          writingMode: "vertical-rl",
+                          textOrientation: "mixed",
+                          fontSize: "0.8rem",
+                          color: "var(--color-fg)",
+                          letterSpacing: "0.08em",
+                          lineHeight: 1.8,
+                          maxHeight: 120,
+                          overflow: "hidden",
+                        }}
+                      >
+                        {bm.text}
+                      </span>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -137,7 +222,7 @@ export function SheetDemo() {
         </div>
       </div>
 
-      <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6, maxWidth: "48ch", marginInline: "auto" }}>
+      <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6, maxWidth: "52ch", marginInline: "auto" }}>
         {EDGES.find((e) => e.id === edge)?.note}
       </p>
 

@@ -4,6 +4,9 @@ import { TooltipDemo } from "@/components/demos/TooltipDemo";
 import { ToggleDemo } from "@/components/demos/ToggleDemo";
 import { SheetDemo } from "@/components/demos/SheetDemo";
 import { VerseDemo } from "@/components/demos/VerseDemo";
+import { VerseActionBarDemo } from "@/components/demos/VerseActionBarDemo";
+import { MarkerDemo } from "@/components/demos/MarkerDemo";
+import { MessageDemo } from "@/components/demos/MessageDemo";
 
 export type ComponentVariant = {
   name: string;
@@ -855,6 +858,103 @@ function NavRail({ items, active, onSelect }) {
     status: "built",
   },
   {
+    slug: "verse-action-bar",
+    name: "Verse Action Bar",
+    category: "Reading",
+    description: "A dark vertical action bar that appears after verse selection, offering highlight color swatches and action items with vertical Korean labels.",
+    problem: "How should a contextual action menu orient in a vertical reading interface? Horizontal toolbars break the reading flow.",
+    intent: "The action bar reads top-to-bottom — matching the reading axis it serves. Highlight swatches at the top, labeled actions below. Icons sit above their vertical labels.",
+    variants: [
+      {
+        name: "Default",
+        demo: <VerseActionBarDemo />,
+        code: `function VerseActionBar({ onHighlight, onSave, onNote, onCopy }) {
+  const COLORS = [
+    { id: "yellow", color: "#FFD166" },
+    { id: "green",  color: "#44CF7A" },
+    { id: "blue",   color: "#60A5FA" },
+    { id: "pink",   color: "#F472B6" },
+  ]
+
+  return (
+    <div style={{
+      background: "#1a1a1a",
+      borderRadius: 20,
+      padding: "12px 10px",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: 10,
+    }}>
+      {/* Highlight swatches */}
+      {COLORS.map((c) => (
+        <button
+          key={c.id}
+          onClick={() => onHighlight(c.id)}
+          style={{
+            width: 26, height: 26,
+            borderRadius: "50%",
+            background: c.color,
+            border: "2px solid transparent",
+            cursor: "pointer",
+          }}
+          aria-label={c.id}
+        />
+      ))}
+
+      <div style={{ width: 24, height: 1, background: "rgba(255,255,255,0.15)" }} />
+
+      {/* Actions — icon + vertical label */}
+      {[
+        { id: "save",  label: "저장", icon: <BookmarkIcon /> },
+        { id: "note",  label: "노트", icon: <NoteIcon /> },
+        { id: "copy",  label: "복사", icon: <CopyIcon /> },
+      ].map((action) => (
+        <button key={action.id} style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 4,
+          background: "transparent",
+          border: "none",
+          color: "white",
+          cursor: "pointer",
+          width: 44,
+          padding: "6px 4px",
+          borderRadius: 10,
+        }}>
+          {action.icon}
+          <span style={{
+            writingMode: "vertical-rl",
+            textOrientation: "mixed",
+            fontSize: "0.75rem",
+            color: "rgba(255,255,255,0.7)",
+            letterSpacing: "0.05em",
+          }}>
+            {action.label}
+          </span>
+        </button>
+      ))}
+    </div>
+  )
+}`,
+      },
+    ],
+    doList: [
+      "Arrange actions top-to-bottom matching the vertical reading axis",
+      "Place highlight swatches at the top — they're the most frequent action",
+      "Use vertical Korean labels (저장, 노트, 복사) below each icon",
+    ],
+    dontList: [
+      "Use a horizontal toolbar — it forces the user's eye off the reading axis",
+      "Label actions with horizontal text in a vertical reading context",
+      "Place the bar on the reading axis — it should sit at the edge of the selected column",
+    ],
+    accessibility: "role='toolbar', aria-label='구절 동작'. Each button has aria-label. Keyboard: arrow keys navigate within the bar.",
+    openQuestion: "When the selected verse is in the leftmost column (reading terminus), where does the action bar go? It can't extend further left.",
+    status: "built",
+  },
+  {
     slug: "highlight",
     name: "Highlight",
     category: "Reading",
@@ -1248,6 +1348,162 @@ function useChapterPull(scrollRef, onNext, onPrev) {
     accessibility: "role='dialog' or role='navigation'. aria-label. Focus trapped when modal. Escape closes.",
     openQuestion: "Should a navigator drawer in a vertical RTL reader enter from the top (reading start) or the left (trailing edge in RTL columns)?",
     status: "coming-soon",
+  },
+
+  // ── Conversation ─────────────────────────────────────────────────────────────
+  {
+    slug: "marker",
+    name: "Marker",
+    category: "Conversation",
+    description: "An inline status, system note, or labeled separator in a conversation or reading thread.",
+    problem: "How do reading progress markers, chapter completions, and system events appear in a vertical reading context without interrupting the column flow?",
+    intent: "Markers in horizontal chat are centered text separators. In a vertical reading interface, markers must orient vertically to match the reading axis — or appear at column boundaries to separate sections.",
+    variants: [
+      {
+        name: "Reading progress & conversation",
+        demo: <MarkerDemo />,
+        code: `// Chapter completion marker between vertical columns
+function ChapterMarker({ label }) {
+  return (
+    <div style={{
+      writingMode: "vertical-rl",
+      display: "flex",
+      alignItems: "center",
+      gap: 6,
+      padding: "8px 6px",
+      borderRadius: 999,
+      background: "var(--color-bg)",
+      border: "1px solid var(--color-border)",
+      color: "var(--color-fg-subtle)",
+      fontSize: "0.6875rem",
+      fontWeight: 500,
+      letterSpacing: "0.06em",
+    }}>
+      <span style={{ color: "#16a34a", fontSize: "0.625rem" }}>✓</span>
+      {label}
+    </div>
+  )
+}
+
+// Conversation thread separator
+function ThreadSeparator({ label, sub }) {
+  return (
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: 12,
+      padding: "4px 0",
+    }}>
+      <div style={{ flex: 1, height: 1, background: "var(--color-border)" }} />
+      <span style={{
+        fontSize: "0.6875rem",
+        color: "var(--color-fg-subtle)",
+        fontWeight: 500,
+        whiteSpace: "nowrap",
+      }}>
+        {label}{sub && \` · \${sub}\`}
+      </span>
+      <div style={{ flex: 1, height: 1, background: "var(--color-border)" }} />
+    </div>
+  )
+}`,
+      },
+    ],
+    doList: [
+      "Orient chapter/section markers vertically to match the reading axis",
+      "Use system markers (completions, breaks) at natural column boundaries",
+      "Keep marker text to 4 characters or fewer when displayed vertically",
+    ],
+    dontList: [
+      "Place horizontal separators across the middle of a vertical column",
+      "Use markers as navigation elements — they are informational only",
+      "Override the vertical reading flow with a horizontal marker that requires head rotation",
+    ],
+    accessibility: "aria-label on the marker element. Role='separator' for visual dividers. Status markers use role='status'.",
+    openQuestion: "In a vertical reader, should progress markers appear at the top of the next column (before) or bottom of the completed column (after)?",
+    status: "built",
+  },
+  {
+    slug: "message",
+    name: "Message",
+    category: "Conversation",
+    description: "A chat message with avatar, content, timestamp, and alignment. The open question in a vertical interface is whether bubbles should adapt to the reading axis.",
+    problem: "Should chat message bubbles remain horizontal (familiar) or adapt to vertical text orientation (consistent with reading direction)?",
+    intent: "This is one of the most contested open questions in vertical interface design. Horizontal bubbles are universally understood. Vertical message columns are consistent with the reading axis but unfamiliar.",
+    variants: [
+      {
+        name: "Horizontal vs Vertical",
+        demo: <MessageDemo />,
+        code: `// Horizontal message — conventional
+function HorizontalMessage({ from, text, time, avatar }) {
+  const me = from === "me"
+  return (
+    <div style={{
+      display: "flex",
+      gap: 10,
+      flexDirection: me ? "row-reverse" : "row",
+      alignItems: "flex-end",
+    }}>
+      <Avatar label={avatar} me={me} />
+      <div style={{
+        padding: "10px 14px",
+        borderRadius: 16,
+        background: me ? "var(--color-fg)" : "var(--color-bg)",
+        color: me ? "var(--color-bg)" : "var(--color-fg)",
+        border: me ? "none" : "1px solid var(--color-border)",
+        fontSize: "0.9375rem",
+        lineHeight: 1.5,
+        maxWidth: "70%",
+      }}>
+        {text}
+      </div>
+    </div>
+  )
+}
+
+// Vertical adaptation — message as a column
+function VerticalMessage({ from, text, time, avatar }) {
+  const me = from === "me"
+  return (
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: 8,
+    }}>
+      <Avatar label={avatar} me={me} />
+      <div style={{
+        writingMode: "vertical-rl",
+        textOrientation: "mixed",
+        padding: "12px 10px",
+        borderRadius: 14,
+        background: me ? "var(--color-fg)" : "var(--color-bg)",
+        color: me ? "var(--color-bg)" : "var(--color-fg)",
+        border: me ? "none" : "1px solid var(--color-border)",
+        fontSize: "0.9375rem",
+        letterSpacing: "0.08em",
+        lineHeight: 1.8,
+      }}>
+        {text}
+      </div>
+    </div>
+  )
+}`,
+      },
+    ],
+    doList: [
+      "Keep horizontal bubbles for mixed-language interfaces — vertical layout works best for pure CJK content",
+      "In vertical mode, arrange columns RTL: latest message on the left",
+      "Avatars should sit at the top of each message column, matching reading start",
+    ],
+    dontList: [
+      "Force vertical bubbles without user control — this is an open UX question, not a resolved decision",
+      "Rotate horizontal bubble text 90° — reflow it properly with writing-mode",
+      "Use vertical messages for long multi-paragraph messages — truncate or expand differently",
+    ],
+    accessibility: "Each message has aria-label including sender and timestamp. Messages list uses role='log'. New messages announced via aria-live='polite'.",
+    openQuestion: "This is one of the most contested open questions in vertical UI. Horizontal bubbles are familiar to all users; vertical columns are consistent with reading direction. Which wins? The answer may depend on the content type.",
+    status: "built",
   },
 
   // ── Feedback ──────────────────────────────────────────────────────────────────

@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 const NAV_ITEMS = [
-  { id: "read", ko: "읽기", ja: "読書" },
-  { id: "search", ko: "검색", ja: "検索" },
-  { id: "settings", ko: "설정", ja: "設定" },
+  { id: "read", label: "읽기" },
+  { id: "search", label: "검색" },
+  { id: "settings", label: "설정" },
 ];
 
 export function NavRailDemo() {
@@ -16,16 +16,7 @@ export function NavRailDemo() {
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
       {/* Toggle */}
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <div
-          style={{
-            display: "flex",
-            border: "1px solid var(--color-border)",
-            borderRadius: "var(--radius-full)",
-            padding: 3,
-            gap: 2,
-            background: "var(--color-bg-muted)",
-          }}
-        >
+        <div style={{ display: "flex", border: "1px solid var(--color-border)", borderRadius: "var(--radius-full)", padding: 3, gap: 2, background: "var(--color-bg-muted)" }}>
           {(["vertical", "bottom"] as const).map((m) => (
             <button
               key={m}
@@ -53,8 +44,8 @@ export function NavRailDemo() {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div
           style={{
-            width: 280,
-            height: 480,
+            width: 300,
+            height: 500,
             border: "2px solid var(--color-border-strong)",
             borderRadius: 28,
             background: "var(--color-bg)",
@@ -68,14 +59,14 @@ export function NavRailDemo() {
           {mode === "vertical" && (
             <nav
               style={{
-                width: 56,
+                width: 64,
                 borderRight: "1px solid var(--color-border)",
                 background: "var(--color-bg-subtle)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                padding: "var(--space-4) 0",
-                gap: "var(--space-2)",
+                padding: "var(--space-5) 0",
+                gap: "var(--space-3)",
                 flexShrink: 0,
               }}
             >
@@ -84,8 +75,9 @@ export function NavRailDemo() {
                   key={item.id}
                   onClick={() => setActive(item.id)}
                   style={{
-                    width: 40,
-                    height: 40,
+                    width: 48,
+                    paddingTop: "var(--space-3)",
+                    paddingBottom: "var(--space-3)",
                     borderRadius: "var(--radius-lg)",
                     border: "none",
                     background: active === item.id ? "var(--color-fg)" : "transparent",
@@ -94,14 +86,18 @@ export function NavRailDemo() {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    fontSize: "1rem",
+                    /* Full word spelled out vertically */
                     writingMode: "vertical-rl",
-                    letterSpacing: "0.05em",
+                    textOrientation: "mixed",
+                    fontSize: "0.875rem",
+                    fontWeight: active === item.id ? 600 : 400,
+                    letterSpacing: "0.1em",
+                    lineHeight: 1.6,
                     fontFamily: "inherit",
                     transition: "all 150ms ease",
                   }}
                 >
-                  {item.ko[0]}
+                  {item.label}
                 </button>
               ))}
             </nav>
@@ -115,20 +111,21 @@ export function NavRailDemo() {
               alignItems: "center",
               justifyContent: "center",
               writingMode: "vertical-rl",
-              fontSize: "0.875rem",
+              fontSize: "1rem",
               color: "var(--color-fg-subtle)",
-              letterSpacing: "0.08em",
-              lineHeight: 1.8,
+              letterSpacing: "0.1em",
+              lineHeight: 1.9,
+              userSelect: "none",
             }}
           >
-            {NAV_ITEMS.find((i) => i.id === active)?.ko} 화면
+            {NAV_ITEMS.find((i) => i.id === active)?.label} 화면
           </div>
 
           {/* Bottom bar */}
           {mode === "bottom" && (
             <nav
               style={{
-                height: 56,
+                height: 60,
                 borderTop: "1px solid var(--color-border)",
                 background: "var(--color-bg-subtle)",
                 display: "flex",
@@ -158,7 +155,7 @@ export function NavRailDemo() {
                     transition: "all 150ms ease",
                   }}
                 >
-                  {item.ko}
+                  {item.label}
                 </button>
               ))}
             </nav>
@@ -168,8 +165,8 @@ export function NavRailDemo() {
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
         {mode === "vertical"
-          ? "The vertical rail stays fixed to the left. Reading progresses rightward — away from the rail."
-          : "The bottom bar maps to thumb reach, but conflicts with the vertical reading axis."}
+          ? "Rail labels spell out the full word vertically — 읽/기, 검/색, 설/정."
+          : "Bottom bar keeps labels horizontal — a deliberate contrast to the vertical content axis."}
       </p>
     </div>
   );
