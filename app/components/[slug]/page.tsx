@@ -1,0 +1,320 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getComponent, getAllSlugs, COMPONENTS_REGISTRY } from "@/lib/components-registry";
+import { CodeBlock } from "@/components/ui/CodeBlock";
+
+type Props = { params: Promise<{ slug: string }> };
+
+export async function generateStaticParams() {
+  return getAllSlugs().map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const comp = getComponent(slug);
+  if (!comp) return {};
+  return {
+    title: comp.name,
+    description: comp.description,
+  };
+}
+
+function DosDonts({ doList, dontList }: { doList: string[]; dontList: string[] }) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-6)" }}>
+      <div>
+        <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#16a34a", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "var(--space-4)" }}>
+          Do
+        </div>
+        <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+          {doList.map((item, i) => (
+            <li key={i} style={{ display: "flex", gap: "var(--space-3)", alignItems: "flex-start" }}>
+              <span style={{ color: "#16a34a", flexShrink: 0, fontSize: "0.875rem", marginTop: 2 }}>✓</span>
+              <span style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", lineHeight: 1.6 }}>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#dc2626", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "var(--space-4)" }}>
+          Don&apos;t
+        </div>
+        <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+          {dontList.map((item, i) => (
+            <li key={i} style={{ display: "flex", gap: "var(--space-3)", alignItems: "flex-start" }}>
+              <span style={{ color: "#dc2626", flexShrink: 0, fontSize: "0.875rem", marginTop: 2 }}>✗</span>
+              <span style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", lineHeight: 1.6 }}>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+export default async function ComponentPage({ params }: Props) {
+  const { slug } = await params;
+  const comp = getComponent(slug);
+  if (!comp) notFound();
+
+  const allComponents = COMPONENTS_REGISTRY;
+  const currentIdx = allComponents.findIndex((c) => c.slug === slug);
+  const prev = currentIdx > 0 ? allComponents[currentIdx - 1] : null;
+  const next = currentIdx < allComponents.length - 1 ? allComponents[currentIdx + 1] : null;
+
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "240px 1fr",
+        minHeight: "calc(100dvh - 56px)",
+        alignItems: "start",
+      }}
+    >
+      {/* Sidebar */}
+      <aside
+        style={{
+          position: "sticky",
+          top: 56,
+          height: "calc(100dvh - 56px)",
+          overflowY: "auto",
+          borderRight: "1px solid var(--color-border)",
+          padding: "var(--space-6) 0",
+        }}
+      >
+        {/* Group by category */}
+        {Array.from(new Set(allComponents.map((c) => c.category))).map((cat) => (
+          <div key={cat} style={{ marginBottom: "var(--space-6)" }}>
+            <div
+              style={{
+                fontSize: "0.6875rem",
+                fontWeight: 700,
+                color: "var(--color-fg-subtle)",
+                textTransform: "uppercase",
+                letterSpacing: "0.1em",
+                padding: "0 var(--space-6)",
+                marginBottom: "var(--space-2)",
+              }}
+            >
+              {cat}
+            </div>
+            {allComponents.filter((c) => c.category === cat).map((c) => (
+              <a
+                key={c.slug}
+                href={`/components/${c.slug}`}
+                style={{
+                  display: "block",
+                  padding: "var(--space-2) var(--space-6)",
+                  fontSize: "0.875rem",
+                  color: c.slug === slug ? "var(--color-fg)" : "var(--color-fg-muted)",
+                  fontWeight: c.slug === slug ? 600 : 400,
+                  background: c.slug === slug ? "var(--color-bg-muted)" : "transparent",
+                  borderRight: c.slug === slug ? "2px solid var(--color-fg)" : "2px solid transparent",
+                  transition: "all 100ms ease",
+                }}
+              >
+                {c.name}
+              </a>
+            ))}
+          </div>
+        ))}
+      </aside>
+
+      {/* Main content */}
+      <main style={{ padding: "var(--space-12) var(--space-10) var(--space-24)", maxWidth: 860 }}>
+        {/* Breadcrumb */}
+        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-8)", fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
+          <a href="/components" style={{ color: "inherit" }}>Components</a>
+          <span>›</span>
+          <span style={{ color: "var(--color-fg)" }}>{comp.name}</span>
+        </div>
+
+        {/* Header */}
+        <div style={{ marginBottom: "var(--space-10)" }}>
+          <span
+            style={{
+              display: "inline-block",
+              fontSize: "0.6875rem",
+              fontWeight: 600,
+              color: "var(--color-fg-subtle)",
+              textTransform: "uppercase",
+              letterSpacing: "0.1em",
+              padding: "2px 8px",
+              borderRadius: "var(--radius-full)",
+              border: "1px solid var(--color-border)",
+              marginBottom: "var(--space-4)",
+            }}
+          >
+            {comp.category}
+          </span>
+          <h1
+            style={{
+              fontSize: "2.5rem",
+              fontWeight: 700,
+              letterSpacing: "-0.04em",
+              color: "var(--color-fg)",
+              margin: "0 0 var(--space-4)",
+            }}
+          >
+            {comp.name}
+          </h1>
+          <p style={{ fontSize: "1.0625rem", color: "var(--color-fg-muted)", lineHeight: 1.65, margin: 0, maxWidth: "52ch" }}>
+            {comp.description}
+          </p>
+        </div>
+
+        {/* Design question callout */}
+        <div
+          style={{
+            padding: "var(--space-4) var(--space-6)",
+            borderRadius: "var(--radius-lg)",
+            background: "var(--color-bg-subtle)",
+            border: "1px solid var(--color-border)",
+            marginBottom: "var(--space-12)",
+            display: "flex",
+            gap: "var(--space-4)",
+            alignItems: "flex-start",
+          }}
+        >
+          <span style={{ fontSize: "0.6875rem", fontWeight: 700, color: "var(--color-fg-subtle)", textTransform: "uppercase", letterSpacing: "0.08em", paddingTop: 2, flexShrink: 0 }}>
+            Design question
+          </span>
+          <p style={{ fontSize: "0.9375rem", color: "var(--color-fg)", margin: 0, lineHeight: 1.55, fontStyle: "italic" }}>
+            {comp.problem}
+          </p>
+        </div>
+
+        {/* Variants — shadcn style: demo canvas + code block */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-12)" }}>
+          {comp.variants.map((variant) => (
+            <div key={variant.name}>
+              <h2 style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-fg)", margin: "0 0 var(--space-5)" }}>
+                {variant.name}
+              </h2>
+
+              {/* Demo canvas */}
+              <div
+                style={{
+                  border: "1px solid var(--color-border)",
+                  borderRadius: "var(--radius-xl)",
+                  minHeight: 320,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background: "var(--color-bg)",
+                  padding: "var(--space-8)",
+                  marginBottom: "var(--space-4)",
+                }}
+              >
+                <div style={{ width: "100%" }}>
+                  {variant.demo}
+                </div>
+              </div>
+
+              {/* Code block */}
+              <CodeBlock code={variant.code} language="tsx" />
+            </div>
+          ))}
+        </div>
+
+        {/* Guidance */}
+        <div style={{ marginTop: "var(--space-16)", paddingTop: "var(--space-12)", borderTop: "1px solid var(--color-border)" }}>
+          <h2 style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-fg)", margin: "0 0 var(--space-8)" }}>
+            Guidance
+          </h2>
+          <DosDonts doList={comp.doList} dontList={comp.dontList} />
+        </div>
+
+        {/* Accessibility */}
+        <div style={{ marginTop: "var(--space-10)" }}>
+          <h2 style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-fg)", margin: "0 0 var(--space-5)" }}>
+            Accessibility
+          </h2>
+          <div
+            style={{
+              padding: "var(--space-5) var(--space-6)",
+              borderRadius: "var(--radius-lg)",
+              background: "var(--color-bg-subtle)",
+              border: "1px solid var(--color-border)",
+            }}
+          >
+            <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.7 }}>
+              {comp.accessibility}
+            </p>
+          </div>
+        </div>
+
+        {/* Open question */}
+        <div style={{ marginTop: "var(--space-10)" }}>
+          <h2 style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-fg)", margin: "0 0 var(--space-5)" }}>
+            Open Question
+          </h2>
+          <div
+            style={{
+              padding: "var(--space-5) var(--space-6)",
+              borderRadius: "var(--radius-lg)",
+              border: "1px dashed var(--color-border-strong)",
+            }}
+          >
+            <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.7, fontStyle: "italic" }}>
+              {comp.openQuestion}
+            </p>
+          </div>
+        </div>
+
+        {/* Prev / Next navigation */}
+        <div
+          style={{
+            marginTop: "var(--space-16)",
+            paddingTop: "var(--space-8)",
+            borderTop: "1px solid var(--color-border)",
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "var(--space-4)",
+          }}
+        >
+          {prev ? (
+            <a
+              href={`/components/${prev.slug}`}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-1)",
+                padding: "var(--space-5) var(--space-6)",
+                borderRadius: "var(--radius-xl)",
+                border: "1px solid var(--color-border)",
+                background: "var(--color-bg)",
+                transition: "border-color var(--duration-fast)",
+              }}
+              className="card-hover-border"
+            >
+              <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>← Previous</span>
+              <span style={{ fontSize: "0.9375rem", fontWeight: 600, color: "var(--color-fg)" }}>{prev.name}</span>
+            </a>
+          ) : <div />}
+
+          {next ? (
+            <a
+              href={`/components/${next.slug}`}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-1)",
+                padding: "var(--space-5) var(--space-6)",
+                borderRadius: "var(--radius-xl)",
+                border: "1px solid var(--color-border)",
+                background: "var(--color-bg)",
+                textAlign: "right",
+                transition: "border-color var(--duration-fast)",
+              }}
+              className="card-hover-border"
+            >
+              <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>Next →</span>
+              <span style={{ fontSize: "0.9375rem", fontWeight: 600, color: "var(--color-fg)" }}>{next.name}</span>
+            </a>
+          ) : <div />}
+        </div>
+      </main>
+    </div>
+  );
+}

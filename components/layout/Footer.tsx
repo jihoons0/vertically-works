@@ -100,20 +100,24 @@ export function Footer() {
             © 2026 Vertically Works. Open knowledge.
           </span>
 
-          {/* Vertical text signature */}
-          <span
-            style={{
-              writingMode: "vertical-rl",
-              textOrientation: "mixed",
-              fontSize: "0.75rem",
-              color: "var(--color-fg-subtle)",
-              letterSpacing: "0.05em",
-              userSelect: "none",
-            }}
-            aria-hidden
-          >
-            縦書き・세로쓰기・竖排
-          </span>
+          {/* #8: 3 separate vertical columns — shorter height, wider spread */}
+          <div style={{ display: "flex", gap: "var(--space-3)", userSelect: "none" }} aria-hidden>
+            {["縦書き", "세로쓰기", "竖排"].map((text) => (
+              <span
+                key={text}
+                style={{
+                  writingMode: "vertical-rl",
+                  textOrientation: "mixed",
+                  fontSize: "0.75rem",
+                  color: "var(--color-fg-subtle)",
+                  letterSpacing: "0.08em",
+                  lineHeight: 1,
+                }}
+              >
+                {text}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
