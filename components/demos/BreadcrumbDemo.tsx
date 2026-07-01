@@ -24,22 +24,25 @@ export function BreadcrumbDemo() {
       </div>
 
       <div style={{ background: "var(--color-bg-muted)", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", padding: "var(--space-10)", display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-8)", minHeight: 200 }}>
-        {/* Breadcrumb — horizontal even in vertical context */}
+        {/* Breadcrumb — vertical trail reading top→bottom, hierarchy descending */}
         <nav aria-label="경로">
-          <ol style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", listStyle: "none", margin: 0, padding: 0 }}>
+          <ol style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-2)", listStyle: "none", margin: 0, padding: 0 }}>
             {items.map((item, i) => (
-              <li key={item.id} style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-                {i > 0 && <span style={{ color: "var(--color-fg-subtle)", fontSize: "0.875rem" }}>›</span>}
+              <li key={item.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-2)" }}>
                 <span
                   style={{
-                    fontSize: "0.875rem",
+                    writingMode: "vertical-rl",
+                    textOrientation: "mixed",
+                    fontSize: "0.9375rem",
+                    letterSpacing: "0.05em",
                     color: i === items.length - 1 ? "var(--color-fg)" : "var(--color-fg-muted)",
-                    fontWeight: i === items.length - 1 ? 600 : 400,
+                    fontWeight: i === items.length - 1 ? 700 : 400,
                   }}
                   aria-current={i === items.length - 1 ? "page" : undefined}
                 >
                   {item.label}
                 </span>
+                {i < items.length - 1 && <span aria-hidden style={{ color: "var(--color-fg-subtle)", fontSize: "0.875rem", transform: "rotate(90deg)", lineHeight: 1 }}>›</span>}
               </li>
             ))}
           </ol>
@@ -52,7 +55,7 @@ export function BreadcrumbDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        Breadcrumbs stay horizontal — they represent a different axis (hierarchy) from the vertical content. Click depth to navigate up the tree.
+        The breadcrumb reads as a vertical trail, top→bottom, with each level separated by a downward chevron — hierarchy descends along the same axis as the reading. Click depth to navigate the tree.
       </p>
     </div>
   );

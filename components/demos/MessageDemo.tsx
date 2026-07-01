@@ -27,7 +27,7 @@ function Avatar({ label, me }: { label: string; me: boolean }) {
 }
 
 export function MessageDemo() {
-  const [mode, setMode] = useState<MessageMode>("horizontal");
+  const [mode, setMode] = useState<MessageMode>("vertical");
   const [sent, setSent] = useState(false);
 
   return (
@@ -164,7 +164,8 @@ export function MessageDemo() {
             }}
             aria-label="전송"
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            {/* Send arrow points left — the forward/RTL reading direction */}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ transform: "rotate(180deg)" }}>
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
             </svg>

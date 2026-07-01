@@ -20,7 +20,7 @@ export function SegmentedControlDemo() {
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
       {/* The segmented control */}
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <div style={{ display: "inline-flex", background: "var(--color-bg-muted)", borderRadius: "var(--radius-full)", padding: 3, gap: 2 }}>
+        <div style={{ display: "inline-flex", flexDirection: "column", background: "var(--color-bg-muted)", borderRadius: "var(--radius-full)", padding: 3, gap: 2 }}>
           {SEGMENTS.map((s) => (
             <button className="pressable"
               key={s.id}
@@ -50,8 +50,8 @@ export function SegmentedControlDemo() {
       {/* Preview of selected language */}
       <div style={{ background: "var(--color-bg-muted)", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", padding: "var(--space-10)", display: "flex", justifyContent: "center", minHeight: 200, alignItems: "center" }}>
         {SAMPLE[active]?.map((v) => (
-          <div key={v.ref} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-3)" }}>
-            <span style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)" }}>{v.ref}</span>
+          <div key={v.ref} style={{ display: "flex", flexDirection: "row-reverse", alignItems: "flex-start", gap: "var(--space-3)" }}>
+            <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)", letterSpacing: "0.05em" }}>{v.ref}</span>
             <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "1.25rem", letterSpacing: "0.12em", lineHeight: 1.9, color: "var(--color-fg)" }}>
               {v.text}
             </span>
@@ -60,7 +60,7 @@ export function SegmentedControlDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        The language toggle stays horizontal — 3 options, single CJK character labels. The selected language updates the vertical content immediately.
+        The language toggle is a vertical capsule — 한 / あ / 中 stacked top-to-bottom, matching the reader's own language switch. Selecting one updates the vertical content immediately.
       </p>
     </div>
   );

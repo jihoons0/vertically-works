@@ -55,7 +55,7 @@ export function ChapterNavigationDemo() {
 
           {/* Chapter content, nudged by the pull */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-4)", transform: `translateX(${pull * 20}px)`, transition: startX.current === null ? "transform 300ms cubic-bezier(0.32,0.72,0,1)" : "none", opacity: flash ? 0.5 : 1 }}>
-            <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)", letterSpacing: "0.08em" }}>{index + 1} / {CHAPTERS.length}</span>
+            <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.75rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)", letterSpacing: "0.08em" }}>{index + 1} / {CHAPTERS.length}</span>
             <span style={{ writingMode: "vertical-rl", fontSize: "1.25rem", fontWeight: 700, letterSpacing: "0.15em", color: "var(--color-fg)" }}>{CHAPTERS[index]}</span>
             <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.9375rem", letterSpacing: "0.1em", lineHeight: 1.9, color: "var(--color-fg-muted)", maxHeight: 140, overflow: "hidden" }}>
               태초에 하나님이 천지를 창조하시니라

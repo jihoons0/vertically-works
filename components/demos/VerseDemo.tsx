@@ -133,7 +133,7 @@ export function VerseDemo() {
           pointerEvents: selected ? "auto" : "none",
         }}
       >
-        <span style={{ fontSize: "0.75rem", color: "var(--color-fg-muted)" }}>하이라이트</span>
+        <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.75rem", color: "var(--color-fg-muted)", letterSpacing: "0.05em" }}>하이라이트</span>
         <div style={{ display: "flex", gap: "var(--space-2)" }}>
           {COLORS.map((c) => (
             <button
@@ -157,7 +157,8 @@ export function VerseDemo() {
         </div>
         <button
           onClick={() => setSelected(null)}
-          style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit" }}
+          className="pressable"
+          style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.75rem", color: "var(--color-fg-subtle)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", letterSpacing: "0.05em" }}
         >
           취소
         </button>

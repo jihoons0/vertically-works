@@ -81,9 +81,10 @@ export function PopoverMenuDemo() {
             aria-expanded={false}
             style={{
               display: "flex",
+              flexDirection: "column",
               alignItems: "center",
               gap: "var(--space-2)",
-              padding: "var(--space-3) var(--space-4)",
+              padding: "var(--space-4) var(--space-3)",
               borderRadius: "var(--radius-full)",
               border: "none",
               background: "#1a1a1a",
@@ -95,10 +96,11 @@ export function PopoverMenuDemo() {
               boxShadow: "0 8px 32px rgba(0,0,0,0.35)",
             }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+            {/* Hamburger rotated 90° → vertical bars, reading on the vertical axis */}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ transform: "rotate(90deg)" }}>
               <line x1="4" y1="7" x2="20" y2="7" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="17" x2="20" y2="17" />
             </svg>
-            메뉴 열기
+            <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", letterSpacing: "0.05em" }}>메뉴 열기</span>
           </button>
         )}
 

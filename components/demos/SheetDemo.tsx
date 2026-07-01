@@ -128,7 +128,7 @@ export function SheetDemo() {
           <button className="pressable"
             onClick={() => setOpen(true)}
             style={{
-              padding: "var(--space-2) var(--space-5)",
+              padding: "var(--space-5) var(--space-3)",
               borderRadius: "var(--radius-full)",
               background: "var(--color-fg)",
               color: "var(--color-bg)",
@@ -139,6 +139,9 @@ export function SheetDemo() {
               fontFamily: "inherit",
               position: "relative",
               zIndex: 1,
+              writingMode: "vertical-rl",
+              textOrientation: "mixed",
+              letterSpacing: "0.05em",
             }}
           >
             책갈피 열기
@@ -162,8 +165,8 @@ export function SheetDemo() {
                 <div style={{ width: 32, height: 4, borderRadius: 2, background: "var(--color-border-strong)", margin: "10px auto 12px" }} />
 
                 {/* Sheet header */}
-                <div style={{ padding: "0 var(--space-4) var(--space-3)", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid var(--color-border)" }}>
-                  <span style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--color-fg)" }}>책갈피</span>
+                <div style={{ padding: "0 var(--space-4) var(--space-3)", display: "flex", justifyContent: "space-between", alignItems: "flex-start", borderBottom: "1px solid var(--color-border)" }}>
+                  <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.8125rem", fontWeight: 700, color: "var(--color-fg)", letterSpacing: "0.05em" }}>책갈피</span>
                   <button className="pressable" onClick={close} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--color-fg-muted)", fontSize: "1.125rem", lineHeight: 1, fontFamily: "inherit" }}>×</button>
                 </div>
 
@@ -184,7 +187,7 @@ export function SheetDemo() {
                       key={i}
                       style={{
                         display: "flex",
-                        flexDirection: "column",
+                        flexDirection: "row-reverse",
                         gap: "var(--space-1)",
                         alignItems: "flex-start",
                         padding: "var(--space-2)",
@@ -194,8 +197,8 @@ export function SheetDemo() {
                         flexShrink: 0,
                       }}
                     >
-                      {/* Reference — small horizontal */}
-                      <span style={{ fontSize: "0.6rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)" }}>
+                      {/* Reference — vertical, sits to the right of the text like a verse number */}
+                      <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)", letterSpacing: "0.05em" }}>
                         {bm.ref}
                       </span>
                       {/* Text — vertical */}

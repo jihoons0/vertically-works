@@ -24,7 +24,7 @@ export function ToastDemo() {
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div style={{ width: 300, height: 380, border: "2px solid var(--color-border-strong)", borderRadius: 24, background: "var(--color-bg)", overflow: "hidden", position: "relative", display: "flex", alignItems: "center", justifyContent: "center", padding: "var(--space-6)" }}>
-          {/* Toast — top-center, above the reading corridor */}
+          {/* Toast — top-right, a vertical pill sliding in along the leading edge */}
           {toast && (
             <div
               aria-live="polite"
@@ -32,16 +32,19 @@ export function ToastDemo() {
               style={{
                 position: "absolute",
                 top: 20,
-                left: "50%",
-                transform: `translateX(-50%) translateY(${visible ? 0 : -12}px)`,
+                right: 20,
+                transform: `translateX(${visible ? 0 : 12}px)`,
                 opacity: visible ? 1 : 0,
                 transition: "transform 220ms var(--easing-spring), opacity 220ms var(--easing-out)",
                 background: "var(--color-fg)",
                 color: "var(--color-bg)",
-                padding: "var(--space-2) var(--space-4)",
+                padding: "var(--space-4) var(--space-2)",
                 borderRadius: "var(--radius-full)",
+                writingMode: "vertical-rl",
+                textOrientation: "mixed",
                 fontSize: "0.8125rem",
                 fontWeight: 600,
+                letterSpacing: "0.05em",
                 whiteSpace: "nowrap",
                 zIndex: 10,
                 pointerEvents: "none",
@@ -59,14 +62,14 @@ export function ToastDemo() {
             ))}
           </div>
 
-          <button onClick={fire} style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", padding: "var(--space-2) var(--space-5)", borderRadius: "var(--radius-full)", background: "var(--color-bg-muted)", color: "var(--color-fg)", border: "1px solid var(--color-border)", fontSize: "0.8125rem", fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}>
-            동작 실행 →
+          <button className="pressable" onClick={fire} style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", padding: "var(--space-4) var(--space-2)", borderRadius: "var(--radius-full)", background: "var(--color-bg-muted)", color: "var(--color-fg)", border: "1px solid var(--color-border)", writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.8125rem", fontWeight: 600, letterSpacing: "0.05em", cursor: "pointer", fontFamily: "inherit" }}>
+            동작 실행 ↓
           </button>
         </div>
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        The toast appears at the top — above the reading corridor — so it never lands mid-column. Horizontal text is correct here: it’s a one-line acknowledgement, not reading content. Auto-dismisses after 2s.
+        The toast slides in as a vertical pill at the top-right (leading) edge, clear of the reading corridor so it never lands mid-column. It reads on the same axis as the content and auto-dismisses after 2s.
       </p>
     </div>
   );

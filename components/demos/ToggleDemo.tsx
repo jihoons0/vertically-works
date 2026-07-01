@@ -57,6 +57,7 @@ export function ToggleDemo() {
               <button
                 key={key}
                 onClick={() => toggle(key)}
+                className="pressable"
                 style={{
                   display: "flex",
                   alignItems: "center",
@@ -68,11 +69,13 @@ export function ToggleDemo() {
                   cursor: "pointer",
                   fontFamily: "inherit",
                   gap: "var(--space-4)",
+                  minHeight: 108,
                 }}
               >
-                <div style={{ textAlign: "left" }}>
-                  <div style={{ fontSize: "0.9375rem", fontWeight: 500, color: "var(--color-fg)" }}>{label}</div>
-                  <div style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)", marginTop: 2 }}>{sub}</div>
+                {/* Label — vertical Korean with its Latin subtitle set beside it (rotated, per mixed orientation) */}
+                <div style={{ display: "flex", flexDirection: "row-reverse", alignItems: "flex-start", gap: "var(--space-2)" }}>
+                  <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.9375rem", fontWeight: 500, color: "var(--color-fg)", letterSpacing: "0.05em" }}>{label}</span>
+                  <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", color: "var(--color-fg-subtle)", letterSpacing: "0.05em", paddingTop: 2 }}>{sub}</span>
                 </div>
 
                 {/* Toggle pill — stays horizontal, perpendicular to the vertical reading axis */}
