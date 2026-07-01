@@ -13,7 +13,6 @@ import { SegmentedControlDemo } from "@/components/demos/SegmentedControlDemo";
 import { TextFieldDemo } from "@/components/demos/TextFieldDemo";
 import { SearchDemo } from "@/components/demos/SearchDemo";
 import { SliderDemo } from "@/components/demos/SliderDemo";
-import { SwitchDemo } from "@/components/demos/SwitchDemo";
 import { TabsDemo } from "@/components/demos/TabsDemo";
 import { BreadcrumbDemo } from "@/components/demos/BreadcrumbDemo";
 import { HighlightDemo } from "@/components/demos/HighlightDemo";
@@ -501,76 +500,6 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
     ],
     accessibility: "role='slider', aria-valuenow/min/max. Arrow keys: up/right increase, down/left decrease. Page Up/Down jump.",
     openQuestion: "Should 'drag up = more' match the direction of physical weight (up = lighter = less) or follow the visual filled-track metaphor (up = filled = more)?",
-    status: "built",
-  },
-  {
-    slug: "switch",
-    name: "Switch",
-    category: "Inputs",
-    description: "A binary toggle that immediately applies a setting. Distinguished from a checkbox by its immediacy.",
-    problem: "Does the horizontal on/off axis of a switch conflict with vertical reading direction?",
-    intent: "The horizontal axis of a switch is orthogonal to reading direction — which is useful. It signals 'this is a control, not content.'",
-    variants: [
-      {
-        name: "Default",
-        demo: <SwitchDemo />,
-        code: `function Switch({ checked, onChange, label }) {
-  return (
-    <button
-      role="switch"
-      aria-checked={checked}
-      onClick={() => onChange(!checked)}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 12,
-        background: "none",
-        border: "none",
-        cursor: "pointer",
-        padding: "10px 0",
-      }}
-    >
-      <span>{label}</span>
-      <div style={{
-        width: 44,
-        height: 26,
-        borderRadius: 13,
-        background: checked
-          ? "var(--color-fg)"
-          : "var(--color-border-strong)",
-        position: "relative",
-        transition: "background 200ms ease",
-        flexShrink: 0,
-      }}>
-        <div style={{
-          position: "absolute",
-          top: 3,
-          left: checked ? 21 : 3,
-          width: 20,
-          height: 20,
-          borderRadius: "50%",
-          background: "white",
-          transition: "left 200ms ease",
-          boxShadow: "0 1px 4px rgba(0,0,0,0.2)",
-        }} />
-      </div>
-    </button>
-  )
-}`,
-      },
-    ],
-    doList: [
-      "Apply change immediately on toggle (unlike checkbox which requires form submit)",
-      "Show a brief confirmation toast when the change has side effects",
-      "Keep the switch pill horizontal regardless of surrounding layout orientation",
-    ],
-    dontList: [
-      "Use a switch when the change requires a confirmation step",
-      "Stack switches in a vertical column without clear grouping",
-      "Use a switch for filtering (use checkbox instead)",
-    ],
-    accessibility: "role='switch', aria-checked. Space or Enter to toggle. Visible focus. Label on same interactive element.",
-    openQuestion: "In a purely vertical settings panel, is horizontal switch orientation intuitive or jarring?",
     status: "built",
   },
 

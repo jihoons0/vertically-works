@@ -47,7 +47,7 @@ export function VerseActionBarDemo() {
   const [activeColor, setActiveColor] = useState<string | null>("yellow");
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  const [visible, setVisible] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const handleAction = (id: string) => {
     setActiveAction(id);
@@ -99,21 +99,79 @@ export function VerseActionBarDemo() {
           태초에 하나님이 천지를 창조하시니라
         </div>
 
+        {/* Closed state — a single button that opens the menu */}
+        {!open && (
+          <button
+            onClick={() => setOpen(true)}
+            aria-expanded={false}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "var(--space-2)",
+              padding: "var(--space-3) var(--space-4)",
+              borderRadius: "var(--radius-full)",
+              border: "none",
+              background: "#1a1a1a",
+              color: "white",
+              fontSize: "0.8125rem",
+              fontWeight: 600,
+              cursor: "pointer",
+              fontFamily: "inherit",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.35)",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <line x1="4" y1="7" x2="20" y2="7" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="17" x2="20" y2="17" />
+            </svg>
+            메뉴 열기
+          </button>
+        )}
+
         {/* The action bar — dark vertical panel matching the screenshot */}
-        {visible && (
+        {open && (
           <div
+            role="toolbar"
+            aria-label="구절 동작"
             style={{
               background: "#1a1a1a",
               borderRadius: 20,
-              padding: "var(--space-4) var(--space-3)",
+              padding: "var(--space-3) var(--space-3) var(--space-4)",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               gap: "var(--space-3)",
               boxShadow: "0 8px 32px rgba(0,0,0,0.35)",
               minWidth: 52,
+              animation: "vab-in 220ms cubic-bezier(0.32,0.72,0,1) both",
             }}
           >
+            {/* Close button — collapses the menu */}
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="메뉴 닫기"
+              style={{
+                width: 26,
+                height: 26,
+                borderRadius: "50%",
+                border: "none",
+                background: "rgba(255,255,255,0.08)",
+                color: "rgba(255,255,255,0.7)",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                flexShrink: 0,
+                fontFamily: "inherit",
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden>
+                <line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" />
+              </svg>
+            </button>
+
+            {/* Divider */}
+            <div style={{ width: 24, height: 1, background: "rgba(255,255,255,0.15)", margin: "0 0 var(--space-1)" }} />
+
             {/* Highlight color swatches */}
             {HIGHLIGHT_COLORS.map((c) => (
               <button
@@ -192,43 +250,19 @@ export function VerseActionBarDemo() {
         )}
       </div>
 
-      {/* Controls */}
-      <div style={{ display: "flex", justifyContent: "center", gap: "var(--space-4)" }}>
-        <button
-          onClick={() => setVisible(!visible)}
-          style={{
-            padding: "var(--space-2) var(--space-4)",
-            borderRadius: "var(--radius-full)",
-            border: "1px solid var(--color-border)",
-            background: "var(--color-bg-muted)",
-            color: "var(--color-fg-muted)",
-            fontSize: "0.8125rem",
-            cursor: "pointer",
-            fontFamily: "inherit",
-          }}
-        >
-          {visible ? "Hide bar" : "Show bar"}
-        </button>
-        <button
-          onClick={() => { setActiveColor("yellow"); setActiveAction(null); }}
-          style={{
-            padding: "var(--space-2) var(--space-4)",
-            borderRadius: "var(--radius-full)",
-            border: "1px solid var(--color-border)",
-            background: "var(--color-bg-muted)",
-            color: "var(--color-fg-muted)",
-            fontSize: "0.8125rem",
-            cursor: "pointer",
-            fontFamily: "inherit",
-          }}
-        >
-          Reset
-        </button>
-      </div>
-
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        The action bar appears after verse selection. Highlight swatches at top, action labels in vertical Korean text. The bar itself reads top-to-bottom — matching the reading axis.
+        Tap <strong>메뉴 열기</strong> to open the action bar, then <strong>×</strong> to collapse it. Highlight swatches at top, action labels in vertical Korean text — the bar itself reads top-to-bottom, matching the reading axis.
       </p>
+
+      <style>{`
+        @keyframes vab-in {
+          from { opacity: 0; transform: translateX(8px) scale(0.96); }
+          to { opacity: 1; transform: translateX(0) scale(1); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          [style*="vab-in"] { animation: none !important; }
+        }
+      `}</style>
     </div>
   );
 }
