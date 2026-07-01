@@ -7,6 +7,21 @@ import { VerseDemo } from "@/components/demos/VerseDemo";
 import { VerseActionBarDemo } from "@/components/demos/VerseActionBarDemo";
 import { MarkerDemo } from "@/components/demos/MarkerDemo";
 import { MessageDemo } from "@/components/demos/MessageDemo";
+import { IconButtonDemo } from "@/components/demos/IconButtonDemo";
+import { FABDemo } from "@/components/demos/FABDemo";
+import { SegmentedControlDemo } from "@/components/demos/SegmentedControlDemo";
+import { TextFieldDemo } from "@/components/demos/TextFieldDemo";
+import { SearchDemo } from "@/components/demos/SearchDemo";
+import { SliderDemo } from "@/components/demos/SliderDemo";
+import { SwitchDemo } from "@/components/demos/SwitchDemo";
+import { TabsDemo } from "@/components/demos/TabsDemo";
+import { BreadcrumbDemo } from "@/components/demos/BreadcrumbDemo";
+import { HighlightDemo } from "@/components/demos/HighlightDemo";
+import { ChapterNavigationDemo } from "@/components/demos/ChapterNavigationDemo";
+import { DialogDemo } from "@/components/demos/DialogDemo";
+import { DrawerDemo } from "@/components/demos/DrawerDemo";
+import { ToastDemo } from "@/components/demos/ToastDemo";
+import { SkeletonDemo } from "@/components/demos/SkeletonDemo";
 
 export type ComponentVariant = {
   name: string;
@@ -28,27 +43,6 @@ export type ComponentEntry = {
   openQuestion: string;
   status: "built" | "coming-soon";
 };
-
-const PLACEHOLDER_DEMO = (name: string, char?: string) => (
-  <div
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: "var(--space-4)",
-      height: 200,
-      color: "var(--color-fg-subtle)",
-    }}
-  >
-    {char && (
-      <span style={{ writingMode: "vertical-rl", fontSize: "2rem", letterSpacing: "0.1em", opacity: 0.3 }}>
-        {char}
-      </span>
-    )}
-    <span style={{ fontSize: "0.8125rem" }}>Interactive demo coming soon</span>
-  </div>
-);
 
 export const COMPONENTS_REGISTRY: ComponentEntry[] = [
   // ── Actions ──────────────────────────────────────────────────────────────────
@@ -101,7 +95,7 @@ export function ButtonDefault() {
     variants: [
       {
         name: "Default",
-        demo: PLACEHOLDER_DEMO("Icon Button", "→"),
+        demo: <IconButtonDemo />,
         code: `<button
   aria-label="다음 장으로 이동"
   style={{
@@ -136,7 +130,7 @@ export function ButtonDefault() {
     ],
     accessibility: "aria-label required. Role button implicit. Focus indicator must be visible at all sizes.",
     openQuestion: "Should 'back' and 'forward' icons rotate 90° in a vertical interface, or adopt entirely new metaphors?",
-    status: "coming-soon",
+    status: "built",
   },
   {
     slug: "floating-action-button",
@@ -148,7 +142,7 @@ export function ButtonDefault() {
     variants: [
       {
         name: "Default",
-        demo: PLACEHOLDER_DEMO("FAB", "＋"),
+        demo: <FABDemo />,
         code: `<button
   aria-label="새 메모"
   style={{
@@ -189,7 +183,7 @@ export function ButtonDefault() {
     ],
     accessibility: "aria-label. Keyboard focusable. Visible focus ring. Does not trap focus.",
     openQuestion: "In a vertical RTL interface where columns flow right-to-left, is bottom-left (reading origin) or bottom-right (reading terminus) the more prominent position?",
-    status: "coming-soon",
+    status: "built",
   },
   {
     slug: "toggle",
@@ -261,7 +255,7 @@ function Settings() {
     variants: [
       {
         name: "Horizontal (conventional)",
-        demo: PLACEHOLDER_DEMO("Segmented", "한·あ·中"),
+        demo: <SegmentedControlDemo />,
         code: `// Horizontal — conventional layout
 <div style={{
   display: "inline-flex",
@@ -300,7 +294,7 @@ function Settings() {
     ],
     accessibility: "role='radiogroup'. Each segment is role='radio'. aria-checked. Arrow keys navigate.",
     openQuestion: "Is a vertical segmented control (stacked) a distinct component, or just a radio button group with styling?",
-    status: "coming-soon",
+    status: "built",
   },
 
   // ── Inputs ────────────────────────────────────────────────────────────────────
@@ -314,7 +308,7 @@ function Settings() {
     variants: [
       {
         name: "Default",
-        demo: PLACEHOLDER_DEMO("Text Field", "가나다"),
+        demo: <TextFieldDemo />,
         code: `// Vertical text field — composition-aware
 <div style={{ position: "relative" }}>
   <input
@@ -356,7 +350,7 @@ function Settings() {
     ],
     accessibility: "label element required. aria-describedby for error messages. autocomplete attribute appropriate to context.",
     openQuestion: "Where does the IME candidate window appear in a vertical layout? Platform IME APIs rarely expose enough control to reposition it.",
-    status: "coming-soon",
+    status: "built",
   },
   {
     slug: "search",
@@ -368,7 +362,7 @@ function Settings() {
     variants: [
       {
         name: "Default",
-        demo: PLACEHOLDER_DEMO("Search", "검"),
+        demo: <SearchDemo />,
         code: `function VerticalSearch() {
   const [query, setQuery] = useState("")
   const [results, setResults] = useState([])
@@ -424,7 +418,7 @@ function Settings() {
     ],
     accessibility: "role='search'. aria-live region for results count. Results list with role='listbox'.",
     openQuestion: "Should search results be displayed horizontally (for faster scanning) or vertically (to match the reader's current mode)?",
-    status: "coming-soon",
+    status: "built",
   },
   {
     slug: "slider",
@@ -436,7 +430,7 @@ function Settings() {
     variants: [
       {
         name: "Vertical drag",
-        demo: PLACEHOLDER_DEMO("Slider", "▲"),
+        demo: <SliderDemo />,
         code: `// Drag-up-to-increase vertical slider
 function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
   const trackRef = useRef(null)
@@ -507,7 +501,7 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
     ],
     accessibility: "role='slider', aria-valuenow/min/max. Arrow keys: up/right increase, down/left decrease. Page Up/Down jump.",
     openQuestion: "Should 'drag up = more' match the direction of physical weight (up = lighter = less) or follow the visual filled-track metaphor (up = filled = more)?",
-    status: "coming-soon",
+    status: "built",
   },
   {
     slug: "switch",
@@ -519,7 +513,7 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
     variants: [
       {
         name: "Default",
-        demo: PLACEHOLDER_DEMO("Switch", "⏻"),
+        demo: <SwitchDemo />,
         code: `function Switch({ checked, onChange, label }) {
   return (
     <button
@@ -577,7 +571,7 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
     ],
     accessibility: "role='switch', aria-checked. Space or Enter to toggle. Visible focus. Label on same interactive element.",
     openQuestion: "In a purely vertical settings panel, is horizontal switch orientation intuitive or jarring?",
-    status: "coming-soon",
+    status: "built",
   },
 
   // ── Navigation ────────────────────────────────────────────────────────────────
@@ -666,7 +660,7 @@ function NavRail({ items, active, onSelect }) {
     variants: [
       {
         name: "Default",
-        demo: PLACEHOLDER_DEMO("Tabs", "—"),
+        demo: <TabsDemo />,
         code: `function VerticalContextTabs({ tabs, active, onChange }) {
   return (
     <div role="tablist" aria-label="읽기 보기" style={{
@@ -716,7 +710,7 @@ function NavRail({ items, active, onSelect }) {
     ],
     accessibility: "role='tablist'. Each tab is role='tab'. Each panel is role='tabpanel'. Arrow keys navigate between tabs.",
     openQuestion: "When tabs control vertical content panels, should tab keyboard navigation (left/right) feel directionally mismatched with the content (up/down)?",
-    status: "coming-soon",
+    status: "built",
   },
   {
     slug: "breadcrumb",
@@ -728,7 +722,7 @@ function NavRail({ items, active, onSelect }) {
     variants: [
       {
         name: "Horizontal (in vertical context)",
-        demo: PLACEHOLDER_DEMO("Breadcrumb", "＞"),
+        demo: <BreadcrumbDemo />,
         code: `function Breadcrumb({ items }) {
   return (
     <nav aria-label="경로" style={{
@@ -780,7 +774,7 @@ function NavRail({ items, active, onSelect }) {
     ],
     accessibility: "nav element with aria-label. Current page item has aria-current='page'. Ordered list structure.",
     openQuestion: "In a vertical RTL reader, should breadcrumb separators be › (rightward) or ↓ (downward, matching reading progression)?",
-    status: "coming-soon",
+    status: "built",
   },
 
   // ── Reading ───────────────────────────────────────────────────────────────────
@@ -964,7 +958,7 @@ function NavRail({ items, active, onSelect }) {
     variants: [
       {
         name: "Default",
-        demo: PLACEHOLDER_DEMO("Highlight", "🎨"),
+        demo: <HighlightDemo />,
         code: `// Highlight applied as CSS custom property
 // Color stored per-verse in user state
 
@@ -1002,7 +996,7 @@ function highlightStyle(color) {
     ],
     accessibility: "Announce highlight application via live region. Provide keyboard mechanism to highlight selected text. Ensure color + non-color cues.",
     openQuestion: "Should highlight removal require a deliberate action (tap the highlight, choose 'remove') or a tap toggle? The latter risks accidental removal.",
-    status: "coming-soon",
+    status: "built",
   },
   {
     slug: "chapter-navigation",
@@ -1014,7 +1008,7 @@ function highlightStyle(color) {
     variants: [
       {
         name: "Pull right → previous chapter",
-        demo: PLACEHOLDER_DEMO("Chapter Nav", "←"),
+        demo: <ChapterNavigationDemo />,
         code: `// RTL pull-to-paginate
 // Overscroll past leftmost column → next chapter
 // Overscroll past rightmost column → previous chapter
@@ -1056,7 +1050,7 @@ function useChapterPull(scrollRef, onNext, onPrev) {
     ],
     accessibility: "Provide accessible alternative (toolbar buttons) for this gesture. Announce chapter change via aria-live.",
     openQuestion: "On desktop, what keyboard shortcut maps to chapter navigation in a vertical reader? Arrow keys are taken by text navigation.",
-    status: "coming-soon",
+    status: "built",
   },
 
   // ── Overlays ──────────────────────────────────────────────────────────────────
@@ -1217,7 +1211,7 @@ function useChapterPull(scrollRef, onNext, onPrev) {
     variants: [
       {
         name: "Default",
-        demo: PLACEHOLDER_DEMO("Dialog", "⚠"),
+        demo: <DialogDemo />,
         code: `function Dialog({ open, onClose, title, description, actions }) {
   if (!open) return null
   return (
@@ -1283,7 +1277,7 @@ function useChapterPull(scrollRef, onNext, onPrev) {
     ],
     accessibility: "role='dialog', aria-modal, aria-labelledby, aria-describedby. Focus trapped. Escape closes. Focus returns to trigger.",
     openQuestion: "Should a dialog's action buttons be arranged horizontally (conventional) or vertically (matching the layout) in a fully vertical interface?",
-    status: "coming-soon",
+    status: "built",
   },
   {
     slug: "drawer",
@@ -1295,7 +1289,7 @@ function useChapterPull(scrollRef, onNext, onPrev) {
     variants: [
       {
         name: "Navigator drawer",
-        demo: PLACEHOLDER_DEMO("Drawer", "≡"),
+        demo: <DrawerDemo />,
         code: `function Drawer({ open, onClose, children }) {
   return (
     <>
@@ -1347,7 +1341,7 @@ function useChapterPull(scrollRef, onNext, onPrev) {
     ],
     accessibility: "role='dialog' or role='navigation'. aria-label. Focus trapped when modal. Escape closes.",
     openQuestion: "Should a navigator drawer in a vertical RTL reader enter from the top (reading start) or the left (trailing edge in RTL columns)?",
-    status: "coming-soon",
+    status: "built",
   },
 
   // ── Conversation ─────────────────────────────────────────────────────────────
@@ -1517,7 +1511,7 @@ function VerticalMessage({ from, text, time, avatar }) {
     variants: [
       {
         name: "Default",
-        demo: PLACEHOLDER_DEMO("Toast", "✓"),
+        demo: <ToastDemo />,
         code: `function Toast({ message, visible }) {
   return (
     <div
@@ -1562,7 +1556,7 @@ function VerticalMessage({ from, text, time, avatar }) {
     ],
     accessibility: "aria-live='polite', aria-atomic='true'. Not positioned based on visual layout — screenreaders announce regardless of position.",
     openQuestion: "In a full-screen vertical reader, is 'above the content' still the right position for toasts, or does it interrupt the reading start point?",
-    status: "coming-soon",
+    status: "built",
   },
   {
     slug: "skeleton",
@@ -1574,7 +1568,7 @@ function VerticalMessage({ from, text, time, avatar }) {
     variants: [
       {
         name: "Column skeleton",
-        demo: PLACEHOLDER_DEMO("Skeleton", "▓"),
+        demo: <SkeletonDemo />,
         code: `function ColumnSkeleton({ columns = 3, cellHeight = 24, cellsPerColumn = 20 }) {
   return (
     <div style={{
@@ -1632,7 +1626,7 @@ function VerticalMessage({ from, text, time, avatar }) {
     ],
     accessibility: "aria-busy='true' on the container. aria-label describing what's loading. Remove when content appears.",
     openQuestion: "Should the skeleton shimmer animate top-to-bottom (following reading direction) or use a simple pulse? Does directionality in the loading animation matter?",
-    status: "coming-soon",
+    status: "built",
   },
 ];
 

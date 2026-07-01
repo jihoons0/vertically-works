@@ -1,0 +1,59 @@
+"use client";
+import { useState } from "react";
+
+const PATHS = [
+  [{ id: "bible", label: "성경" }],
+  [{ id: "bible", label: "성경" }, { id: "ot", label: "구약" }],
+  [{ id: "bible", label: "성경" }, { id: "ot", label: "구약" }, { id: "gen", label: "창세기" }],
+  [{ id: "bible", label: "성경" }, { id: "ot", label: "구약" }, { id: "gen", label: "창세기" }, { id: "ch1", label: "1장" }],
+];
+
+export function BreadcrumbDemo() {
+  const [depth, setDepth] = useState(3);
+  const items = PATHS[depth];
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
+      {/* Depth selector */}
+      <div style={{ display: "flex", justifyContent: "center", gap: "var(--space-2)" }}>
+        {PATHS.map((_, i) => (
+          <button key={i} onClick={() => setDepth(i)} style={{ width: 32, height: 32, borderRadius: "var(--radius-full)", border: "1px solid var(--color-border)", background: depth === i ? "var(--color-fg)" : "var(--color-bg-muted)", color: depth === i ? "var(--color-bg)" : "var(--color-fg-muted)", fontSize: "0.8125rem", cursor: "pointer", fontFamily: "inherit", transition: "all 150ms ease" }}>
+            {i + 1}
+          </button>
+        ))}
+      </div>
+
+      <div style={{ background: "var(--color-bg-muted)", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", padding: "var(--space-10)", display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-8)", minHeight: 200 }}>
+        {/* Breadcrumb — horizontal even in vertical context */}
+        <nav aria-label="경로">
+          <ol style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", listStyle: "none", margin: 0, padding: 0 }}>
+            {items.map((item, i) => (
+              <li key={item.id} style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+                {i > 0 && <span style={{ color: "var(--color-fg-subtle)", fontSize: "0.875rem" }}>›</span>}
+                <span
+                  style={{
+                    fontSize: "0.875rem",
+                    color: i === items.length - 1 ? "var(--color-fg)" : "var(--color-fg-muted)",
+                    fontWeight: i === items.length - 1 ? 600 : 400,
+                  }}
+                  aria-current={i === items.length - 1 ? "page" : undefined}
+                >
+                  {item.label}
+                </span>
+              </li>
+            ))}
+          </ol>
+        </nav>
+
+        {/* Content below the breadcrumb — vertical */}
+        <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "1.0625rem", letterSpacing: "0.1em", lineHeight: 1.9, color: "var(--color-fg)", opacity: depth === 3 ? 1 : 0.3, transition: "opacity 200ms ease" }}>
+          태초에 하나님이 천지를 창조하시니라
+        </span>
+      </div>
+
+      <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
+        Breadcrumbs stay horizontal — they represent a different axis (hierarchy) from the vertical content. Click depth to navigate up the tree.
+      </p>
+    </div>
+  );
+}
