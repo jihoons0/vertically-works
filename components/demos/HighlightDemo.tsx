@@ -34,8 +34,10 @@ export function HighlightDemo() {
             onClick={() => setActive(c.id)}
             aria-label={c.label}
             aria-pressed={active === c.id}
-            style={{ width: 30, height: 30, borderRadius: "50%", background: c.color, border: active === c.id ? "3px solid var(--color-fg)" : "3px solid transparent", cursor: "pointer", transition: "transform 150ms ease", transform: active === c.id ? "scale(1.1)" : "scale(1)" }}
-          />
+            style={{ width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center", padding: 0, background: "none", border: "none", cursor: "pointer" }}
+          >
+            <span aria-hidden style={{ width: 30, height: 30, borderRadius: "50%", background: c.color, border: active === c.id ? "3px solid var(--color-fg)" : "3px solid transparent", transition: "transform 150ms ease", transform: active === c.id ? "scale(1.1)" : "scale(1)" }} />
+          </button>
         ))}
       </div>
 
@@ -47,6 +49,7 @@ export function HighlightDemo() {
           return (
             <button
               key={v.ref}
+              className="pressable"
               onClick={() => toggle(v.ref)}
               aria-label={`${v.ref}절 형광펜`}
               style={{ display: "flex", gap: 4, background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", padding: 0 }}

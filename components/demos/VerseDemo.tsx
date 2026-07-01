@@ -134,25 +134,40 @@ export function VerseDemo() {
         }}
       >
         <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.75rem", color: "var(--color-fg-muted)", letterSpacing: "0.05em" }}>하이라이트</span>
-        <div style={{ display: "flex", gap: "var(--space-2)" }}>
+        <div style={{ display: "flex", gap: "var(--space-1)" }}>
           {COLORS.map((c) => (
             <button
               key={c}
               onClick={() => applyHighlight(c)}
+              onMouseEnter={(e) => { (e.currentTarget.firstElementChild as HTMLElement).style.transform = "scale(1.2)"; }}
+              onMouseLeave={(e) => { (e.currentTarget.firstElementChild as HTMLElement).style.transform = "scale(1)"; }}
               style={{
-                width: 24,
-                height: 24,
-                borderRadius: "50%",
-                background: c,
-                border: "2px solid transparent",
+                // 44×44 tap target (WCAG / Apple HIG min); the visual swatch stays 24px.
+                width: 44,
+                height: 44,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: 0,
+                background: "none",
+                border: "none",
                 cursor: "pointer",
-                transition: "transform 100ms ease",
-                boxShadow: "0 1px 4px rgba(0,0,0,0.2)",
               }}
-              onMouseEnter={(e) => { e.currentTarget.style.transform = "scale(1.2)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.transform = "scale(1)"; }}
               aria-label={`Highlight color ${c}`}
-            />
+            >
+              <span
+                aria-hidden
+                style={{
+                  width: 24,
+                  height: 24,
+                  borderRadius: "50%",
+                  background: c,
+                  border: "2px solid transparent",
+                  transition: "transform 100ms ease",
+                  boxShadow: "0 1px 4px rgba(0,0,0,0.2)",
+                }}
+              />
+            </button>
           ))}
         </div>
         <button

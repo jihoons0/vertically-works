@@ -18,7 +18,7 @@ export function DialogDemo() {
             ))}
           </div>
 
-          <button onClick={() => setOpen(true)} style={{ padding: "var(--space-2) var(--space-5)", borderRadius: "var(--radius-full)", background: "var(--color-fg)", color: "var(--color-bg)", border: "none", fontSize: "0.875rem", fontWeight: 600, cursor: "pointer", fontFamily: "inherit", position: "relative", zIndex: 1 }}>
+          <button className="pressable" onClick={() => setOpen(true)} style={{ padding: "var(--space-2) var(--space-5)", borderRadius: "var(--radius-full)", background: "var(--color-fg)", color: "var(--color-bg)", border: "none", fontSize: "0.875rem", fontWeight: 600, cursor: "pointer", fontFamily: "inherit", position: "relative", zIndex: 1 }}>
             렌즈 삭제
           </button>
 
@@ -32,8 +32,8 @@ export function DialogDemo() {
                 <h3 id="dialog-title" style={{ fontSize: "0.9375rem", fontWeight: 700, color: "var(--color-fg)", margin: "0 0 var(--space-2)" }}>정말 삭제할까요?</h3>
                 <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-5)", lineHeight: 1.6 }}>이 렌즈를 삭제하면 되돌릴 수 없어요.</p>
                 <div style={{ display: "flex", gap: "var(--space-2)" }}>
-                  <button onClick={close} style={{ flex: 1, padding: "var(--space-3)", borderRadius: "var(--radius-lg)", border: "1px solid var(--color-border)", background: "transparent", fontSize: "0.8125rem", fontWeight: 500, color: "var(--color-fg-muted)", cursor: "pointer", fontFamily: "inherit" }}>취소</button>
-                  <button onClick={close} style={{ flex: 1, padding: "var(--space-3)", borderRadius: "var(--radius-lg)", border: "none", background: "#dc2626", fontSize: "0.8125rem", fontWeight: 600, color: "white", cursor: "pointer", fontFamily: "inherit" }}>삭제</button>
+                  <button className="pressable" onClick={close} style={{ flex: 1, padding: "var(--space-3)", borderRadius: "var(--radius-lg)", border: "1px solid var(--color-border)", background: "transparent", fontSize: "0.8125rem", fontWeight: 500, color: "var(--color-fg-muted)", cursor: "pointer", fontFamily: "inherit" }}>취소</button>
+                  <button className="pressable" onClick={close} style={{ flex: 1, padding: "var(--space-3)", borderRadius: "var(--radius-lg)", border: "none", background: "#dc2626", fontSize: "0.8125rem", fontWeight: 600, color: "white", cursor: "pointer", fontFamily: "inherit" }}>삭제</button>
                 </div>
               </div>
             </>

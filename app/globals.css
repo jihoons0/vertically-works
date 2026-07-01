@@ -97,6 +97,18 @@
     --duration-slow: 0ms;
     --duration-page: 0ms;
   }
+
+  /* Universal reset — reaches inline style={{ transition/animation }} in the
+     demos, which CSS-variable overrides above cannot. Keeps a ~0 duration
+     (not `none`) so state still lands, and preserves opacity/color fades. */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ─── Base styles ─── */
