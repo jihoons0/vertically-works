@@ -35,7 +35,7 @@ export function ToastDemo() {
                 left: "50%",
                 transform: `translateX(-50%) translateY(${visible ? 0 : -12}px)`,
                 opacity: visible ? 1 : 0,
-                transition: "all 220ms cubic-bezier(0.34,1.56,0.64,1)",
+                transition: "transform 220ms var(--easing-spring), opacity 220ms var(--easing-out)",
                 background: "var(--color-fg)",
                 color: "var(--color-bg)",
                 padding: "var(--space-2) var(--space-4)",

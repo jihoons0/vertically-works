@@ -17,7 +17,7 @@ export function BreadcrumbDemo() {
       {/* Depth selector */}
       <div style={{ display: "flex", justifyContent: "center", gap: "var(--space-2)" }}>
         {PATHS.map((_, i) => (
-          <button key={i} onClick={() => setDepth(i)} style={{ width: 32, height: 32, borderRadius: "var(--radius-full)", border: "1px solid var(--color-border)", background: depth === i ? "var(--color-fg)" : "var(--color-bg-muted)", color: depth === i ? "var(--color-bg)" : "var(--color-fg-muted)", fontSize: "0.8125rem", cursor: "pointer", fontFamily: "inherit", transition: "all 150ms ease" }}>
+          <button className="pressable" key={i} onClick={() => setDepth(i)} style={{ width: 32, height: 32, borderRadius: "var(--radius-full)", border: "1px solid var(--color-border)", background: depth === i ? "var(--color-fg)" : "var(--color-bg-muted)", color: depth === i ? "var(--color-bg)" : "var(--color-fg-muted)", fontSize: "0.8125rem", cursor: "pointer", fontFamily: "inherit", transition: "transform 140ms var(--easing-out), background 150ms var(--easing-out), color 150ms var(--easing-out), border-color 150ms var(--easing-out)" }}>
             {i + 1}
           </button>
         ))}

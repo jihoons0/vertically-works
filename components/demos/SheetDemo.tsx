@@ -57,7 +57,7 @@ export function SheetDemo() {
       {/* Edge selector */}
       <div style={{ display: "flex", justifyContent: "center", gap: "var(--space-2)" }}>
         {EDGES.map((e) => (
-          <button
+          <button className="pressable"
             key={e.id}
             onClick={() => setEdge(e.id)}
             style={{
@@ -69,7 +69,7 @@ export function SheetDemo() {
               color: edge === e.id ? "var(--color-bg)" : "var(--color-fg-muted)",
               border: "1px solid var(--color-border)",
               cursor: "pointer",
-              transition: "all 150ms ease",
+              transition: "transform 140ms var(--easing-out), background 150ms var(--easing-out), color 150ms var(--easing-out), border-color 150ms var(--easing-out)",
               fontFamily: "inherit",
             }}
           >
@@ -125,7 +125,7 @@ export function SheetDemo() {
           </div>
 
           {/* Trigger button */}
-          <button
+          <button className="pressable"
             onClick={() => setOpen(true)}
             style={{
               padding: "var(--space-2) var(--space-5)",
@@ -164,7 +164,7 @@ export function SheetDemo() {
                 {/* Sheet header */}
                 <div style={{ padding: "0 var(--space-4) var(--space-3)", display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "1px solid var(--color-border)" }}>
                   <span style={{ fontSize: "0.8125rem", fontWeight: 700, color: "var(--color-fg)" }}>책갈피</span>
-                  <button onClick={close} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--color-fg-muted)", fontSize: "1.125rem", lineHeight: 1, fontFamily: "inherit" }}>×</button>
+                  <button className="pressable" onClick={close} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--color-fg-muted)", fontSize: "1.125rem", lineHeight: 1, fontFamily: "inherit" }}>×</button>
                 </div>
 
                 {/* Vertical bookmark content */}
@@ -235,6 +235,15 @@ export function SheetDemo() {
         @keyframes sheet-out-left { from { transform: translateX(0); } to { transform: translateX(-100%); } }
         @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) {
+          /* Replace directional slides with a gentle fade */
+          @keyframes sheet-in-bottom { from { opacity: 0; } to { opacity: 1; } }
+          @keyframes sheet-out-bottom { from { opacity: 1; } to { opacity: 0; } }
+          @keyframes sheet-in-right { from { opacity: 0; } to { opacity: 1; } }
+          @keyframes sheet-out-right { from { opacity: 1; } to { opacity: 0; } }
+          @keyframes sheet-in-left { from { opacity: 0; } to { opacity: 1; } }
+          @keyframes sheet-out-left { from { opacity: 1; } to { opacity: 0; } }
+        }
       `}</style>
     </div>
   );

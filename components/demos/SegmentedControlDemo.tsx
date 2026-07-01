@@ -22,7 +22,7 @@ export function SegmentedControlDemo() {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div style={{ display: "inline-flex", background: "var(--color-bg-muted)", borderRadius: "var(--radius-full)", padding: 3, gap: 2 }}>
           {SEGMENTS.map((s) => (
-            <button
+            <button className="pressable"
               key={s.id}
               onClick={() => setActive(s.id)}
               style={{
@@ -35,7 +35,7 @@ export function SegmentedControlDemo() {
                 fontWeight: active === s.id ? 700 : 400,
                 cursor: "pointer",
                 fontFamily: "inherit",
-                transition: "all 150ms ease",
+                transition: "transform 140ms var(--easing-out), background 150ms var(--easing-out), color 150ms var(--easing-out), border-color 150ms var(--easing-out)",
                 boxShadow: active === s.id ? "0 1px 4px rgba(0,0,0,0.1)" : "none",
               }}
               aria-pressed={active === s.id}

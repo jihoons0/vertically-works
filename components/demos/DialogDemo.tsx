@@ -50,6 +50,11 @@ export function DialogDemo() {
         @keyframes dialog-out { from { opacity: 1; transform: translate(-50%,-50%) scale(1); } to { opacity: 0; transform: translate(-50%,-50%) scale(0.9); } }
         @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) {
+          /* Keep the opacity fade, drop the scale bounce */
+          @keyframes dialog-in { from { opacity: 0; transform: translate(-50%,-50%); } to { opacity: 1; transform: translate(-50%,-50%); } }
+          @keyframes dialog-out { from { opacity: 1; transform: translate(-50%,-50%); } to { opacity: 0; transform: translate(-50%,-50%); } }
+        }
       `}</style>
     </div>
   );

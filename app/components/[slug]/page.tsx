@@ -110,7 +110,7 @@ export default async function ComponentPage({ params }: Props) {
                   fontWeight: c.slug === slug ? 600 : 400,
                   background: c.slug === slug ? "var(--color-bg-muted)" : "transparent",
                   borderRight: c.slug === slug ? "2px solid var(--color-fg)" : "2px solid transparent",
-                  transition: "all 100ms ease",
+                  transition: "color 100ms ease, background 100ms ease, border-color 100ms ease, font-weight 100ms ease",
                 }}
               >
                 {c.name}

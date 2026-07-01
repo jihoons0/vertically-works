@@ -18,7 +18,7 @@ export function NavRailDemo() {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div style={{ display: "flex", border: "1px solid var(--color-border)", borderRadius: "var(--radius-full)", padding: 3, gap: 2, background: "var(--color-bg-muted)" }}>
           {(["vertical", "bottom"] as const).map((m) => (
-            <button
+            <button className="pressable"
               key={m}
               onClick={() => setMode(m)}
               style={{
@@ -30,7 +30,7 @@ export function NavRailDemo() {
                 color: mode === m ? "var(--color-bg)" : "var(--color-fg-muted)",
                 border: "none",
                 cursor: "pointer",
-                transition: "all 150ms ease",
+                transition: "transform 140ms var(--easing-out), background 150ms var(--easing-out), color 150ms var(--easing-out), border-color 150ms var(--easing-out)",
                 fontFamily: "inherit",
               }}
             >
@@ -71,7 +71,7 @@ export function NavRailDemo() {
               }}
             >
               {NAV_ITEMS.map((item) => (
-                <button
+                <button className="pressable"
                   key={item.id}
                   onClick={() => setActive(item.id)}
                   style={{
@@ -94,7 +94,7 @@ export function NavRailDemo() {
                     letterSpacing: "0.1em",
                     lineHeight: 1.6,
                     fontFamily: "inherit",
-                    transition: "all 150ms ease",
+                    transition: "transform 140ms var(--easing-out), background 150ms var(--easing-out), color 150ms var(--easing-out), border-color 150ms var(--easing-out)",
                   }}
                 >
                   {item.label}
@@ -135,7 +135,7 @@ export function NavRailDemo() {
               }}
             >
               {NAV_ITEMS.map((item) => (
-                <button
+                <button className="pressable"
                   key={item.id}
                   onClick={() => setActive(item.id)}
                   style={{
@@ -152,7 +152,7 @@ export function NavRailDemo() {
                     fontWeight: active === item.id ? 700 : 400,
                     fontFamily: "inherit",
                     borderBottom: active === item.id ? `2px solid var(--color-fg)` : "2px solid transparent",
-                    transition: "all 150ms ease",
+                    transition: "transform 140ms var(--easing-out), background 150ms var(--easing-out), color 150ms var(--easing-out), border-color 150ms var(--easing-out)",
                   }}
                 >
                   {item.label}

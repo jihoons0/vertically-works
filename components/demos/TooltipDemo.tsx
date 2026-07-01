@@ -18,7 +18,7 @@ export function TooltipDemo() {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div style={{ display: "flex", border: "1px solid var(--color-border)", borderRadius: "var(--radius-full)", padding: 3, gap: 2, background: "var(--color-bg-muted)" }}>
           {(["left", "below"] as const).map((p) => (
-            <button
+            <button className="pressable"
               key={p}
               onClick={() => setPlacement(p)}
               style={{
@@ -30,7 +30,7 @@ export function TooltipDemo() {
                 color: placement === p ? "var(--color-bg)" : "var(--color-fg-muted)",
                 border: "none",
                 cursor: "pointer",
-                transition: "all 150ms ease",
+                transition: "transform 140ms var(--easing-out), background 150ms var(--easing-out), color 150ms var(--easing-out), border-color 150ms var(--easing-out)",
                 fontFamily: "inherit",
               }}
             >

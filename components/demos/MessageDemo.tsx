@@ -36,14 +36,14 @@ export function MessageDemo() {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div style={{ display: "flex", border: "1px solid var(--color-border)", borderRadius: "var(--radius-full)", padding: 3, gap: 2, background: "var(--color-bg-muted)" }}>
           {(["horizontal", "vertical"] as const).map((m) => (
-            <button key={m} onClick={() => setMode(m)} style={{
+            <button className="pressable" key={m} onClick={() => setMode(m)} style={{
               padding: "var(--space-2) var(--space-4)",
               borderRadius: "var(--radius-full)",
               fontSize: "0.8125rem", fontWeight: 500,
               background: mode === m ? "var(--color-fg)" : "transparent",
               color: mode === m ? "var(--color-bg)" : "var(--color-fg-muted)",
               border: "none", cursor: "pointer",
-              transition: "all 150ms ease", fontFamily: "inherit",
+              transition: "transform 140ms var(--easing-out), background 150ms var(--easing-out), color 150ms var(--easing-out), border-color 150ms var(--easing-out)", fontFamily: "inherit",
             }}>
               {m === "horizontal" ? "Horizontal bubbles" : "Vertical adaptation"}
             </button>
@@ -151,7 +151,7 @@ export function MessageDemo() {
           }}>
             메시지 입력…
           </div>
-          <button
+          <button className="pressable"
             onClick={() => { setSent(true); setTimeout(() => setSent(false), 800); }}
             style={{
               width: 36, height: 36, borderRadius: "50%",

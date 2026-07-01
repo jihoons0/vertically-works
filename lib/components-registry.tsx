@@ -4,7 +4,7 @@ import { TooltipDemo } from "@/components/demos/TooltipDemo";
 import { ToggleDemo } from "@/components/demos/ToggleDemo";
 import { SheetDemo } from "@/components/demos/SheetDemo";
 import { VerseDemo } from "@/components/demos/VerseDemo";
-import { VerseActionBarDemo } from "@/components/demos/VerseActionBarDemo";
+import { PopoverMenuDemo } from "@/components/demos/PopoverMenuDemo";
 import { MarkerDemo } from "@/components/demos/MarkerDemo";
 import { MessageDemo } from "@/components/demos/MessageDemo";
 import { IconButtonDemo } from "@/components/demos/IconButtonDemo";
@@ -781,16 +781,16 @@ function NavRail({ items, active, onSelect }) {
     status: "built",
   },
   {
-    slug: "verse-action-bar",
-    name: "Verse Action Bar",
-    category: "Reading",
-    description: "A dark vertical action bar that appears after verse selection, offering highlight color swatches and action items with vertical Korean labels.",
-    problem: "How should a contextual action menu orient in a vertical reading interface? Horizontal toolbars break the reading flow.",
-    intent: "The action bar reads top-to-bottom — matching the reading axis it serves. Highlight swatches at the top, labeled actions below. Icons sit above their vertical labels.",
+    slug: "popover-menu",
+    name: "Popover Menu",
+    category: "Overlays",
+    description: "A dark vertical popover that opens from a trigger, offering highlight color swatches and action items with vertical Korean labels. Scales in from its trigger origin, collapses on close.",
+    problem: "How should a contextual popover menu orient and animate in a vertical reading interface? Horizontal toolbars break the reading flow, and a menu that scales from center feels disconnected from the trigger.",
+    intent: "The menu reads top-to-bottom — matching the reading axis it serves. Highlight swatches at the top, labeled actions below. Icons sit above their vertical labels. It opens from a compact trigger and collapses back to it.",
     variants: [
       {
         name: "Default",
-        demo: <VerseActionBarDemo />,
+        demo: <PopoverMenuDemo />,
         code: `function VerseActionBar({ onHighlight, onSave, onNote, onCopy }) {
   const COLORS = [
     { id: "yellow", color: "#FFD166" },
@@ -867,14 +867,15 @@ function NavRail({ items, active, onSelect }) {
       "Arrange actions top-to-bottom matching the vertical reading axis",
       "Place highlight swatches at the top — they're the most frequent action",
       "Use vertical Korean labels (저장, 노트, 복사) below each icon",
+      "Scale the menu in from its trigger, not from the viewport center",
     ],
     dontList: [
       "Use a horizontal toolbar — it forces the user's eye off the reading axis",
       "Label actions with horizontal text in a vertical reading context",
-      "Place the bar on the reading axis — it should sit at the edge of the selected column",
+      "Place the menu on the reading axis — it should sit at the edge of the selected column",
     ],
-    accessibility: "role='toolbar', aria-label='구절 동작'. Each button has aria-label. Keyboard: arrow keys navigate within the bar.",
-    openQuestion: "When the selected verse is in the leftmost column (reading terminus), where does the action bar go? It can't extend further left.",
+    accessibility: "Trigger is a labeled button; the open menu is role='toolbar', aria-label='구절 동작'. Each button has aria-label. Keyboard: arrow keys navigate within the menu, Escape collapses it.",
+    openQuestion: "When the selected verse is in the leftmost column (reading terminus), where does the popover go? It can't extend further left.",
     status: "built",
   },
   {

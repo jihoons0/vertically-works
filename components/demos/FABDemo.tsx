@@ -23,7 +23,7 @@ export function FABDemo() {
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
       <div style={{ display: "flex", justifyContent: "center", gap: "var(--space-2)", flexWrap: "wrap" }}>
         {POSITIONS.map((p) => (
-          <button key={p.id} onClick={() => setPos(p.id)} style={{ padding: "var(--space-2) var(--space-4)", borderRadius: "var(--radius-full)", fontSize: "0.8125rem", fontWeight: 500, background: pos === p.id ? "var(--color-fg)" : "var(--color-bg-muted)", color: pos === p.id ? "var(--color-bg)" : "var(--color-fg-muted)", border: "1px solid var(--color-border)", cursor: "pointer", fontFamily: "inherit", transition: "all 150ms ease" }}>
+          <button className="pressable" key={p.id} onClick={() => setPos(p.id)} style={{ padding: "var(--space-2) var(--space-4)", borderRadius: "var(--radius-full)", fontSize: "0.8125rem", fontWeight: 500, background: pos === p.id ? "var(--color-fg)" : "var(--color-bg-muted)", color: pos === p.id ? "var(--color-bg)" : "var(--color-fg-muted)", border: "1px solid var(--color-border)", cursor: "pointer", fontFamily: "inherit", transition: "transform 140ms var(--easing-out), background 150ms var(--easing-out), color 150ms var(--easing-out), border-color 150ms var(--easing-out)" }}>
             {p.label}
           </button>
         ))}
@@ -39,7 +39,7 @@ export function FABDemo() {
           </div>
 
           {/* FAB */}
-          <button
+          <button className="pressable"
             onClick={() => { setTapped(true); setTimeout(() => setTapped(false), 500); }}
             style={{
               position: "absolute",

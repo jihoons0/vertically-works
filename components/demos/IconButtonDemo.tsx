@@ -18,7 +18,7 @@ export function IconButtonDemo() {
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div style={{ display: "flex", border: "1px solid var(--color-border)", borderRadius: "var(--radius-full)", padding: 3, gap: 2, background: "var(--color-bg-muted)" }}>
           {(["vertical", "hidden"] as const).map((m) => (
-            <button key={m} onClick={() => setLabelMode(m)} style={{ padding: "var(--space-2) var(--space-4)", borderRadius: "var(--radius-full)", fontSize: "0.8125rem", fontWeight: 500, background: labelMode === m ? "var(--color-fg)" : "transparent", color: labelMode === m ? "var(--color-bg)" : "var(--color-fg-muted)", border: "none", cursor: "pointer", fontFamily: "inherit", transition: "all 150ms ease" }}>
+            <button className="pressable" key={m} onClick={() => setLabelMode(m)} style={{ padding: "var(--space-2) var(--space-4)", borderRadius: "var(--radius-full)", fontSize: "0.8125rem", fontWeight: 500, background: labelMode === m ? "var(--color-fg)" : "transparent", color: labelMode === m ? "var(--color-bg)" : "var(--color-fg-muted)", border: "none", cursor: "pointer", fontFamily: "inherit", transition: "transform 140ms var(--easing-out), background 150ms var(--easing-out), color 150ms var(--easing-out), border-color 150ms var(--easing-out)" }}>
               {m === "vertical" ? "Labelled" : "Icon only"}
             </button>
           ))}
@@ -27,7 +27,7 @@ export function IconButtonDemo() {
 
       <div style={{ display: "flex", justifyContent: "center", background: "var(--color-bg-muted)", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", padding: "var(--space-10)", gap: "var(--space-5)" }}>
         {ICONS.map((icon) => (
-          <button
+          <button className="pressable"
             key={icon.id}
             aria-label={icon.title}
             onMouseDown={() => setPressed(icon.id)}

@@ -67,6 +67,11 @@ export function DrawerDemo() {
         @keyframes drawer-out { from { transform: translateX(0); } to { transform: translateX(-100%); } }
         @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
         @keyframes fade-out { from { opacity: 1; } to { opacity: 0; } }
+        @media (prefers-reduced-motion: reduce) {
+          /* Replace the slide with a gentle fade */
+          @keyframes drawer-in { from { opacity: 0; } to { opacity: 1; } }
+          @keyframes drawer-out { from { opacity: 1; } to { opacity: 0; } }
+        }
       `}</style>
     </div>
   );

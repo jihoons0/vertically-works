@@ -43,7 +43,7 @@ const ACTIONS = [
   },
 ];
 
-export function VerseActionBarDemo() {
+export function PopoverMenuDemo() {
   const [activeColor, setActiveColor] = useState<string | null>("yellow");
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -61,7 +61,7 @@ export function VerseActionBarDemo() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
-      {/* Context preview — verse + action bar side by side */}
+      {/* Demo panel — just the open/close menu */}
       <div
         style={{
           background: "var(--color-bg-muted)",
@@ -71,37 +71,12 @@ export function VerseActionBarDemo() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: "var(--space-6)",
           minHeight: 320,
         }}
       >
-        {/* Vertical text — the selected verse in context */}
-        <div
-          style={{
-            writingMode: "vertical-rl",
-            textOrientation: "mixed",
-            fontSize: "1.0625rem",
-            letterSpacing: "0.1em",
-            lineHeight: 1.9,
-            color: "var(--color-fg)",
-            padding: "var(--space-2) var(--space-3)",
-            borderRadius: "var(--radius-md)",
-            background: activeColor
-              ? `${HIGHLIGHT_COLORS.find(c => c.id === activeColor)?.color}33`
-              : "transparent",
-            borderRight: activeColor
-              ? `3px solid ${HIGHLIGHT_COLORS.find(c => c.id === activeColor)?.color}`
-              : "3px solid transparent",
-            transition: "background 200ms ease, border-color 200ms ease",
-            userSelect: "none",
-          }}
-        >
-          태초에 하나님이 천지를 창조하시니라
-        </div>
-
         {/* Closed state — a single button that opens the menu */}
         {!open && (
-          <button
+          <button className="pressable"
             onClick={() => setOpen(true)}
             aria-expanded={false}
             style={{
@@ -146,7 +121,7 @@ export function VerseActionBarDemo() {
             }}
           >
             {/* Close button — collapses the menu */}
-            <button
+            <button className="pressable"
               onClick={() => setOpen(false)}
               aria-label="메뉴 닫기"
               style={{
@@ -174,7 +149,7 @@ export function VerseActionBarDemo() {
 
             {/* Highlight color swatches */}
             {HIGHLIGHT_COLORS.map((c) => (
-              <button
+              <button className="pressable"
                 key={c.id}
                 onClick={() => setActiveColor(c.id === activeColor ? null : c.id)}
                 aria-label={c.label}
@@ -200,7 +175,7 @@ export function VerseActionBarDemo() {
 
             {/* Action buttons */}
             {ACTIONS.map((action) => (
-              <button
+              <button className="pressable"
                 key={action.id}
                 onClick={() => handleAction(action.id)}
                 style={{

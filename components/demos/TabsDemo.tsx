@@ -17,7 +17,7 @@ export function TabsDemo() {
           {/* Tabs — horizontal at the top, semantic contrast to vertical content */}
           <div role="tablist" style={{ display: "flex", borderBottom: "1px solid var(--color-border)", background: "var(--color-bg-subtle)" }}>
             {TABS.map((tab) => (
-              <button
+              <button className="pressable"
                 key={tab.id}
                 role="tab"
                 aria-selected={active === tab.id}
@@ -33,7 +33,7 @@ export function TabsDemo() {
                   color: active === tab.id ? "var(--color-fg)" : "var(--color-fg-muted)",
                   cursor: "pointer",
                   fontFamily: "inherit",
-                  transition: "all 150ms ease",
+                  transition: "transform 140ms var(--easing-out), background 150ms var(--easing-out), color 150ms var(--easing-out), border-color 150ms var(--easing-out)",
                   marginBottom: -1,
                 }}
               >
