@@ -50,6 +50,22 @@
   --color-vt-label-muted: #525252;
 }
 
+[data-theme="sepia"] {
+  --color-bg: #f4ecd8;
+  --color-bg-subtle: #efe4cb;
+  --color-bg-muted: #e7d9ba;
+  --color-fg: #4b3b2b;
+  --color-fg-muted: #7a6650;
+  --color-fg-subtle: #a08a6d;
+  --color-border: #ddcdac;
+  --color-border-strong: #c8b58e;
+  --color-accent: #4b3b2b;
+  --color-accent-fg: #f4ecd8;
+
+  --color-vt-label: #4b3b2b;
+  --color-vt-label-muted: #a08a6d;
+}
+
 /* ─── Tailwind v4 theme tokens ─── */
 @theme inline {
   --font-sans: var(--font-geist-sans);

@@ -1,22 +1,11 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { PlaygroundPreview } from "@/components/PlaygroundPreview";
+import { PlaygroundClient } from "@/components/PlaygroundClient";
 
 export const metadata: Metadata = {
   title: "Playground",
   description: "Experiment with vertical writing systems in real time.",
 };
-
-const PLANNED_CONTROLS = [
-  { label: "Language", options: ["Korean", "Japanese", "Chinese (Traditional)"] },
-  { label: "Writing Direction", options: ["Vertical RL", "Horizontal LTR"] },
-  { label: "Reading Direction", options: ["Right to Left", "Left to Right"] },
-  { label: "Device", options: ["Mobile", "Tablet", "Desktop"] },
-  { label: "Theme", options: ["Light", "Dark", "Sepia"] },
-  { label: "Animation Speed", options: ["Normal", "Slow (0.5×)", "Off"] },
-  { label: "Reduced Motion", options: ["Off", "On"] },
-  { label: "Grid", options: ["Hidden", "Visible"] },
-];
 
 export default function PlaygroundPage() {
   return (
@@ -24,7 +13,7 @@ export default function PlaygroundPage() {
       <PageHeader
         eyebrow="Playground"
         title="Experiment"
-        description="Compare, prototype, and explore. The playground lets you see the same content across writing directions, languages, devices, and animation speeds in real time."
+        description="See the same content across writing directions, languages, alignment, themes, and devices in real time. Every control updates the preview live, and your configuration is saved to the URL so you can share it."
       />
 
       <div
@@ -34,111 +23,16 @@ export default function PlaygroundPage() {
           padding: "var(--space-12) var(--space-6) var(--space-24)",
         }}
       >
-        {/* Coming soon banner */}
-        <div
-          style={{
-            padding: "var(--space-8) var(--space-8)",
-            borderRadius: "var(--radius-xl)",
-            border: "1px solid var(--color-border)",
-            background: "var(--color-bg-subtle)",
-            marginBottom: "var(--space-12)",
-            display: "flex",
-            alignItems: "center",
-            gap: "var(--space-4)",
-          }}
-        >
-          <div
-            style={{
-              width: 8,
-              height: 8,
-              borderRadius: "50%",
-              background: "var(--color-border-strong)",
-              flexShrink: 0,
-            }}
-          />
-          <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: 0 }}>
-            The interactive playground is in development. The alignment control in the preview is live; the rest are a preview of planned controls.
-          </p>
-        </div>
+        <PlaygroundClient />
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "280px 1fr",
-            gap: "var(--space-8)",
-            alignItems: "start",
-          }}
-        >
-          {/* Controls panel */}
-          <div
-            style={{
-              border: "1px solid var(--color-border)",
-              borderRadius: "var(--radius-xl)",
-              overflow: "hidden",
-              background: "var(--color-bg)",
-            }}
-          >
-            <div
-              style={{
-                padding: "var(--space-4) var(--space-5)",
-                borderBottom: "1px solid var(--color-border)",
-                background: "var(--color-bg-subtle)",
-              }}
-            >
-              <span style={{ fontSize: "0.8125rem", fontWeight: 600, color: "var(--color-fg)", letterSpacing: "-0.01em" }}>
-                Controls
-              </span>
-            </div>
-            <div style={{ padding: "var(--space-4)", display: "flex", flexDirection: "column", gap: "var(--space-1)" }}>
-              {PLANNED_CONTROLS.map((ctrl) => (
-                <div
-                  key={ctrl.label}
-                  style={{
-                    padding: "var(--space-3) var(--space-4)",
-                    borderRadius: "var(--radius-lg)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    gap: "var(--space-3)",
-                  }}
-                >
-                  <span style={{ fontSize: "0.8125rem", color: "var(--color-fg)", fontWeight: 500 }}>
-                    {ctrl.label}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: "0.75rem",
-                      color: "var(--color-fg-subtle)",
-                      padding: "1px 8px",
-                      borderRadius: "var(--radius-full)",
-                      border: "1px solid var(--color-border)",
-                      background: "var(--color-bg-muted)",
-                    }}
-                  >
-                    {ctrl.options[0]}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Preview panel — the alignment control is live */}
-          <PlaygroundPreview />
-        </div>
-
-        {/* Planned features */}
+        {/* What's next */}
         <div style={{ marginTop: "var(--space-16)" }}>
-          <h2
-            style={{
-              fontSize: "1.25rem",
-              fontWeight: 600,
-              letterSpacing: "-0.02em",
-              color: "var(--color-fg)",
-              margin: "0 0 var(--space-8)",
-            }}
-          >
-            Planned Features
+          <h2 style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-fg)", margin: "0 0 var(--space-3)" }}>
+            Coming Next
           </h2>
+          <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-8)", maxWidth: "52ch", lineHeight: 1.65 }}>
+            Live controls, themeable preview, device frames, and shareable URLs are in. These are still on the way.
+          </p>
           <div
             style={{
               display: "grid",
@@ -147,12 +41,9 @@ export default function PlaygroundPage() {
             }}
           >
             {[
-              { title: "Real-time preview", desc: "Every control update reflects instantly in the preview canvas." },
-              { title: "URL persistence", desc: "Share your configuration via URL. Each state is addressable." },
-              { title: "Side-by-side comparison", desc: "Compare vertical vs. horizontal rendering of the same content." },
-              { title: "Device simulation", desc: "Preview the same content at mobile, tablet, and desktop breakpoints." },
-              { title: "Component isolation", desc: "Preview any individual component in isolation with full control over its props." },
-              { title: "Animation scrubbing", desc: "Step through animations frame by frame to inspect motion design decisions." },
+              { title: "Side-by-side comparison", desc: "Show vertical and horizontal renderings of the same content at once." },
+              { title: "Component isolation", desc: "Drop any component from the library into the canvas with full control over its props." },
+              { title: "Animation scrubbing", desc: "Step through motion frame by frame to inspect timing and easing decisions." },
             ].map((f) => (
               <div
                 key={f.title}
