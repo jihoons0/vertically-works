@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
       { source: "/applications/:path*", destination: "/apps/:path*", permanent: true },
       // Verse legal pages live at the top level, not nested under /apps.
       { source: "/apps/verse/:path*", destination: "/verse/:path*", permanent: true },
+      // The to-do app's canonical URL is /apps/notes.
+      { source: "/notes", destination: "/apps/notes", permanent: true },
     ];
   },
 };
