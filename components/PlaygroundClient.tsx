@@ -128,7 +128,9 @@ export function PlaygroundClient() {
     letterSpacing: "0.08em",
     color: "var(--color-fg)",
     margin: 0,
-    ...(isVertical ? { maxBlockSize: 300 } : { maxInlineSize: "42ch" }),
+    // Physical caps so the block is smaller than the canvas, leaving room for
+    // the alignment control to move it (top/center/bottom or start/center/end).
+    ...(isVertical ? { maxHeight: 300 } : { maxWidth: "42ch" }),
   };
 
   const gridBg: CSSProperties = s.grid
