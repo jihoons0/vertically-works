@@ -4,18 +4,9 @@ import { useEffect, useState, type CSSProperties } from "react";
 
 // Secular vertical-writing sample, one passage per language.
 const SAMPLES: Record<Lang, { label: string; text: string }> = {
-  ko: {
-    label: "한국어",
-    text: "글씨를 세로로 쓰는 것을 세로쓰기라 한다. 전통적으로 한국어, 중국어, 일본어가 세로로 쓰였으며, 오른쪽에서 왼쪽으로 줄이 이어진다.",
-  },
-  ja: {
-    label: "日本語",
-    text: "文字を縦に書くことを縦書きという。伝統的に日本語・中国語・韓国語は縦に書かれ、行は右から左へと進んでいく。",
-  },
-  zh: {
-    label: "中文",
-    text: "把文字豎著書寫稱為豎排。傳統上韓語、日語、中文都曾豎著書寫，行文由右至左推進。",
-  },
+  ko: { label: "한국어", text: "글씨를 세로로 쓰는 것을 세로쓰기라 한다." },
+  ja: { label: "日本語", text: "文字を縦に書くことを縦書きという。" },
+  zh: { label: "中文", text: "把文字豎著書寫稱為豎排。" },
 };
 
 type Lang = "ko" | "ja" | "zh";
@@ -128,9 +119,9 @@ export function PlaygroundClient() {
     letterSpacing: "0.08em",
     color: "var(--color-fg)",
     margin: 0,
-    // Physical caps so the block is smaller than the canvas, leaving room for
-    // the alignment control to move it (top/center/bottom or start/center/end).
-    ...(isVertical ? { maxHeight: 300 } : { maxWidth: "42ch" }),
+    // Physical caps so the block is clearly smaller than the canvas, leaving
+    // room for the alignment control to move it (top/center/bottom).
+    ...(isVertical ? { maxHeight: 200 } : { maxWidth: "36ch" }),
   };
 
   const gridBg: CSSProperties = s.grid
