@@ -124,7 +124,7 @@ export default function PrivacyPage() {
 
         <p style={{ ...p, color: "var(--color-fg-subtle)", fontSize: "0.8125rem", paddingTop: "var(--space-6)", borderTop: "1px solid var(--color-border)" }}>
           Looking for help using the app? See{" "}
-          <Link href="/apps/verse/support" style={link}>Support</Link>.
+          <Link href="/verse/support" style={link}>Support</Link>.
         </p>
       </div>
     </>

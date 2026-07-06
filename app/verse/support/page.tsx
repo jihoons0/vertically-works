@@ -86,7 +86,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     a: (
       <>
         No. Vertically Verse collects no data at all. See our{" "}
-        <Link href="/apps/verse/privacy" style={link}>Privacy Policy</Link>.
+        <Link href="/verse/privacy" style={link}>Privacy Policy</Link>.
       </>
     ),
   },

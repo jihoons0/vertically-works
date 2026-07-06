@@ -86,8 +86,8 @@ export function Footer() {
                 Vertically Verse
               </span>
               {[
-                { href: "/apps/verse/privacy", label: "Privacy Policy" },
-                { href: "/apps/verse/support", label: "Support" },
+                { href: "/verse/privacy", label: "Privacy Policy" },
+                { href: "/verse/support", label: "Support" },
               ].map((link) => (
                 <Link
                   key={link.href}
