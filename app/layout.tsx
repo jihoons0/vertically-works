@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { Navigation } from "@/components/nav/Navigation";
-import { Footer } from "@/components/layout/Footer";
+import { SiteFrame } from "@/components/layout/SiteFrame";
 import { Agentation } from "agentation";
 
 const geistSans = Geist({
@@ -54,9 +53,7 @@ export default function RootLayout({
     >
       <body style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
         <ThemeProvider>
-          <Navigation />
-          <main style={{ flex: 1 }}>{children}</main>
-          <Footer />
+          <SiteFrame>{children}</SiteFrame>
           {process.env.NODE_ENV === "development" && <Agentation />}
         </ThemeProvider>
       </body>

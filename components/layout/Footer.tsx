@@ -45,7 +45,7 @@ export function Footer() {
                 Explore
               </span>
               {[
-                { href: "/applications", label: "Applications" },
+                { href: "/apps", label: "Applications" },
                 { href: "/components", label: "Components" },
                 { href: "/challenges", label: "Challenges" },
                 { href: "/principles", label: "Principles" },
@@ -86,8 +86,8 @@ export function Footer() {
                 Vertically Verse
               </span>
               {[
-                { href: "/verse/privacy", label: "Privacy Policy" },
-                { href: "/verse/support", label: "Support" },
+                { href: "/apps/verse/privacy", label: "Privacy Policy" },
+                { href: "/apps/verse/support", label: "Support" },
               ].map((link) => (
                 <Link
                   key={link.href}

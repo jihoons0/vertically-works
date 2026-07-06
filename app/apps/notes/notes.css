@@ -1,0 +1,88 @@
+/* ─────────────────────────────────────────────────────────────
+   Vertically Do (the "Notes" application) — scoped additions.
+   The base token system (colors, spacing, radii, motion, .pressable)
+   already lives in app/globals.css; this file only adds what the
+   notes app needs on top, so nothing here collides with the site.
+   ───────────────────────────────────────────────────────────── */
+
+:root {
+  --radius-2xl: 18px;
+  /* Completed text dims to the subtle foreground; it's already theme-aware. */
+  --color-done: var(--color-fg-subtle);
+  --shadow-column: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-lift: 0 12px 40px rgba(0, 0, 0, 0.16);
+}
+[data-theme="dark"] {
+  --shadow-column: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lift: 0 12px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* ─── Vertical text primitives ─── */
+.v-text {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+.v-upright {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+.tcy {
+  text-combine-upright: all;
+  -webkit-text-combine: horizontal;
+}
+
+/* Vertical text input (contentEditable) that shrink-wraps to content so a single
+   column stays horizontally centered and grows symmetrically as columns wrap. */
+.v-input-ce {
+  display: inline-block;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  height: 100%;
+  max-height: 100%;
+  outline: none;
+  background: transparent;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  cursor: text;
+  caret-color: var(--color-fg);
+}
+.v-input-ce[data-empty]::before {
+  content: attr(data-placeholder);
+  color: var(--color-fg-subtle);
+  pointer-events: none;
+}
+
+/* ─── Notes-specific keyframes ─── */
+@keyframes vd-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes vd-fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes vd-column-in {
+  from { opacity: 0; transform: translateY(-14px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes vd-toast-in {
+  from { opacity: 0; transform: translateX(calc(100% + 20px)) scale(0.94); }
+  60% { opacity: 1; }
+  to { opacity: 1; transform: translateX(0) scale(1); }
+}
+@keyframes vd-toast-out {
+  from { opacity: 1; transform: translateX(0) scale(1); }
+  to { opacity: 0; transform: translateX(calc(100% + 20px)) scale(0.96); }
+}
+@media (prefers-reduced-motion: reduce) {
+  @keyframes vd-column-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes vd-toast-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes vd-toast-out { from { opacity: 1; } to { opacity: 0; } }
+}
+
+/* Full-viewport shell for the notes route (the site chrome is hidden here). */
+.notes-shell {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+}

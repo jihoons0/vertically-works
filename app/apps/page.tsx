@@ -82,16 +82,19 @@ const APPS = [
   },
   {
     id: "notes",
-    name: "Notes",
-    platform: "Concept",
-    status: "Planned",
+    name: "Vertically Do",
+    platform: "Web",
+    status: "Live",
     icon: "記",
-    description: null,
-    question: "How does freeform vertical writing change the structure of a notes application?",
+    href: "/notes",
+    description:
+      "A to-do list rethought for the vertical, right-to-left axis. Tasks are columns you read top→bottom, newest at the reading start; drag a column down to delete (a trashcan opens behind it in the vacated slot), sideways to reorder, and switch the whole interface across 한 / あ / 中.",
     challenges: [
-      "Cursor behavior and line breaks in vertical text entry",
-      "Note organization: vertical columns within the list view",
-      "Inline mentions and links in a vertical text stream",
+      "Tasks as full-height columns that stack right→left and scroll on the column axis",
+      "Vertical pull-to-delete with a trashcan revealed behind the card",
+      "Orthogonal drag axes — vertical deletes, horizontal reorders",
+      "contentEditable vertical-text input that stays column-centered",
+      "한 / あ / 中 language toggle re-localizing the entire interface",
     ],
   },
 ];
@@ -118,7 +121,7 @@ export default function ApplicationsPage() {
         {APPS.map((app) => (
           <Link
             key={app.id}
-            href={`/applications/${app.id}`}
+            href={"href" in app && app.href ? app.href : `/apps/${app.id}`}
             className="card-hover"
             style={{
               display: "grid",
