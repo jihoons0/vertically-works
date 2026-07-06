@@ -86,7 +86,7 @@ const APPS = [
     platform: "Web",
     status: "Live",
     icon: "記",
-    href: "/apps/notes",
+    href: "/notes",
     description:
       "Vertically Do — a to-do list rethought for the vertical, right-to-left axis. Tasks are columns you read top→bottom, newest at the reading start; drag a column down to delete (a trashcan opens behind it in the vacated slot), sideways to reorder, and switch the whole interface across 한 / あ / 中.",
     challenges: [
