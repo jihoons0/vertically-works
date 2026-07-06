@@ -1,34 +1,31 @@
 "use client";
 
-import { useTheme } from "next-themes";
+import { useState } from "react";
 import { useLocale } from "@/lib/notes/i18n";
 
 export type Filter = "active" | "done" | "all";
 
 const FILTER_IDS: Filter[] = ["active", "done", "all"];
 
-const iconBtn: React.CSSProperties = {
-  width: 34,
-  height: 34,
-  borderRadius: "var(--radius-full)",
-  border: "1px solid var(--color-border)",
-  background: "var(--color-bg)",
-  cursor: "pointer",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  fontSize: "0.9rem",
-  color: "var(--color-fg)",
-  fontFamily: "inherit",
-};
+const CELL = 46; // filter cell height
+const GAP = 2;
+
+function TrashIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M3 6h18" />
+      <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+      <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
+      <path d="M10 11v6M14 11v6" />
+    </svg>
+  );
+}
 
 export function Rail({
-  total,
   done,
   filter,
   setFilter,
   onClearDone,
-  onHelp,
 }: {
   total: number;
   done: number;
@@ -37,87 +34,57 @@ export function Rail({
   onClearDone: () => void;
   onHelp: () => void;
 }) {
-  const { resolvedTheme, setTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
-  const toggle = () => setTheme(isDark ? "light" : "dark");
   const { t } = useLocale();
-  const ratio = total === 0 ? 0 : done / total;
+  const [tip, setTip] = useState(false);
+  const activeIndex = FILTER_IDS.indexOf(filter);
 
   return (
     <aside
       aria-label={t.a11y.controls}
       className="vd-rail"
       style={{
-        flexShrink: 0,
-        height: "100%",
+        position: "fixed",
+        right: "var(--space-4)",
+        top: "50%",
+        transform: "translateY(-50%)",
+        zIndex: 40,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        gap: "var(--space-4)",
-        padding: "var(--space-6) var(--space-4)",
-        borderInlineStart: "1px solid var(--color-border)",
-        background: "var(--color-bg-subtle)",
+        gap: "var(--space-3)",
       }}
     >
-      {/* Top zone — identity + progress, filling the upper half so the filter lands
-          exactly at the vertical centre. */}
-      <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-4)", width: "100%" }}>
-        <div style={{ display: "flex", flexDirection: "row-reverse", gap: "var(--space-1)", alignItems: "flex-start" }}>
-          <span className="v-text" style={{ fontSize: "1.25rem", fontWeight: 700, letterSpacing: "0.12em", color: "var(--color-fg)" }}>
-            {t.appTitle}
-          </span>
-          <span
-            className="v-text"
-            style={{ fontSize: "0.625rem", letterSpacing: "0.18em", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)", paddingTop: 2 }}
-          >
-            VERTICALLY&nbsp;DO
-          </span>
-        </div>
-
-        {/* Progress meter — a vertical bar filling top→down along the reading axis */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-3)", flex: 1, minHeight: 0 }}>
-          <div
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={total}
-            aria-valuenow={done}
-            aria-label={t.a11y.progress}
-            style={{ position: "relative", width: 6, flex: 1, minHeight: 48, borderRadius: "var(--radius-full)", background: "var(--color-bg-muted)", overflow: "hidden" }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                right: 0,
-                height: `${ratio * 100}%`,
-                background: "var(--color-fg)",
-                borderRadius: "var(--radius-full)",
-                transition: "height var(--duration-slow) var(--easing-drawer)",
-              }}
-            />
-          </div>
-          <span className="tcy" style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.6875rem", color: "var(--color-fg-muted)" }}>
-            {done}/{total}
-          </span>
-        </div>
-      </div>
-
-      {/* Filter — vertical segmented control, vertically centred in the rail */}
+      {/* Filter — a capsule styled exactly like the language toggle, with a
+          sliding indicator. No title, no panel, no divider. */}
       <div
         role="tablist"
         aria-label={t.a11y.view}
         style={{
-          flexShrink: 0,
+          position: "relative",
           display: "flex",
           flexDirection: "column",
-          gap: 2,
+          gap: GAP,
           padding: 3,
           borderRadius: "var(--radius-full)",
-          background: "var(--color-bg-muted)",
+          background: "var(--color-bg-subtle)",
           border: "1px solid var(--color-border)",
+          boxShadow: "var(--shadow-column)",
         }}
       >
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            left: 3,
+            right: 3,
+            top: 3,
+            height: CELL,
+            borderRadius: "var(--radius-full)",
+            background: "var(--color-fg)",
+            transform: `translateY(${activeIndex * (CELL + GAP)}px)`,
+            transition: "transform var(--duration-base) var(--easing-drawer)",
+          }}
+        />
         {FILTER_IDS.map((id) => {
           const on = filter === id;
           return (
@@ -128,19 +95,25 @@ export function Rail({
               className="pressable"
               onClick={() => setFilter(id)}
               style={{
+                position: "relative",
+                zIndex: 1,
                 writingMode: "vertical-rl",
                 textOrientation: "mixed",
-                padding: "var(--space-3) var(--space-2)",
+                width: 40,
+                height: CELL,
                 borderRadius: "var(--radius-full)",
                 border: "none",
+                background: "transparent",
                 cursor: "pointer",
                 fontFamily: "inherit",
                 fontSize: "0.75rem",
                 fontWeight: 600,
                 letterSpacing: "0.1em",
-                background: on ? "var(--color-fg)" : "transparent",
                 color: on ? "var(--color-bg)" : "var(--color-fg-muted)",
-                transition: "background var(--duration-base) var(--easing-out), color var(--duration-base) var(--easing-default)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "color var(--duration-base) var(--easing-default)",
               }}
             >
               {t.filters[id]}
@@ -149,36 +122,64 @@ export function Rail({
         })}
       </div>
 
-      {/* Bottom zone — actions pinned to the bottom, mirroring the top zone. */}
-      <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-3)" }}>
-        {done > 0 && (
+      {/* Clear completed — a red trashcan icon button with a hover tooltip. */}
+      {done > 0 && (
+        <div
+          style={{ position: "relative", display: "flex" }}
+          onPointerEnter={() => setTip(true)}
+          onPointerLeave={() => setTip(false)}
+        >
           <button
-            className="pressable link-muted-hover"
+            className="pressable"
+            aria-label={t.clearDone}
             onClick={onClearDone}
             style={{
-              writingMode: "vertical-rl",
-              textOrientation: "mixed",
-              background: "none",
+              width: 40,
+              height: 40,
+              borderRadius: "var(--radius-full)",
               border: "none",
+              background: "#ef4444",
+              color: "#ffffff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               cursor: "pointer",
-              fontFamily: "inherit",
-              fontSize: "0.6875rem",
-              letterSpacing: "0.08em",
-              padding: "var(--space-1)",
+              boxShadow: "0 2px 8px rgba(239,68,68,0.35)",
+              transition: "transform 140ms var(--easing-out), background var(--duration-fast) var(--easing-default)",
             }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "#dc2626"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "#ef4444"; }}
           >
-            {t.clearDone}
+            <TrashIcon />
           </button>
-        )}
-        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-          <button className="pressable" aria-label={t.a11y.help} onClick={onHelp} style={iconBtn}>
-            ?
-          </button>
-          <button className="pressable" aria-label={isDark ? t.a11y.light : t.a11y.dark} onClick={toggle} style={iconBtn}>
-            {isDark ? "☾" : "☀"}
-          </button>
+          {tip && (
+            <span
+              role="tooltip"
+              style={{
+                position: "absolute",
+                right: "calc(100% + var(--space-2))",
+                top: "50%",
+                transform: "translateY(-50%)",
+                writingMode: "vertical-rl",
+                textOrientation: "mixed",
+                background: "var(--color-fg)",
+                color: "var(--color-bg)",
+                padding: "var(--space-3) var(--space-2)",
+                borderRadius: "var(--radius-full)",
+                fontSize: "0.6875rem",
+                fontWeight: 600,
+                letterSpacing: "0.06em",
+                whiteSpace: "nowrap",
+                boxShadow: "var(--shadow-column)",
+                pointerEvents: "none",
+                animation: "vd-fade-in 120ms ease both",
+              }}
+            >
+              {t.clearDone}
+            </span>
+          )}
         </div>
-      </div>
+      )}
     </aside>
   );
 }

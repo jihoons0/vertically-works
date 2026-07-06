@@ -57,7 +57,7 @@ export function HelpSheet({ open, onClose }: { open: boolean; onClose: () => voi
           borderInlineEnd: "1px solid var(--color-border)",
           boxShadow: "var(--shadow-lift)",
           zIndex: 201,
-          animation: `${closing ? "vd-sheet-out-left" : "vd-sheet-in-left"} 260ms var(--easing-drawer) both`,
+          animation: `${closing ? "vd-sheet-out-left" : "vd-sheet-in-left"} ${closing ? 170 : 240}ms var(--easing-out) both`,
           display: "flex",
           flexDirection: "column",
           padding: "var(--space-8) var(--space-6)",
@@ -127,8 +127,9 @@ export function HelpSheet({ open, onClose }: { open: boolean; onClose: () => voi
       </div>
 
       <style>{`
-        @keyframes vd-sheet-in-left { from { transform: translateX(-100%); } to { transform: translateX(0); } }
-        @keyframes vd-sheet-out-left { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+        /* Fade with only a small settle — not a full slide across the screen. */
+        @keyframes vd-sheet-in-left { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes vd-sheet-out-left { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-14px); } }
         @media (prefers-reduced-motion: reduce) {
           @keyframes vd-sheet-in-left { from { opacity: 0; } to { opacity: 1; } }
           @keyframes vd-sheet-out-left { from { opacity: 1; } to { opacity: 0; } }

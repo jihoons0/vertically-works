@@ -84,7 +84,7 @@ export const Composer = forwardRef<ComposerHandle, { onAdd: (text: string, starr
             ariaLabel={t.a11y.taskContent}
             placeholder={t.composerPlaceholder}
             style={{
-              fontFamily: "inherit",
+              fontFamily: "var(--vd-task-font)",
               fontSize: "1.0625rem",
               fontWeight: 600,
               letterSpacing: "0.08em",

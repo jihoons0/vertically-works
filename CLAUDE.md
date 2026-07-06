@@ -93,3 +93,16 @@ Sprint 2: Applications, Challenges, Principles pages with real content
 Sprint 3: Component pages with interactive demos
 Sprint 4: Playground
 Sprint 5: Motion library
+
+---
+
+## Deployment
+
+- This repo is the live site **https://vertically.works**, deployed by Vercel from the `main` branch. Pushing to `main` triggers a production deploy.
+- **"ship it" means: commit and push to `main` so it deploys to https://vertically.works.** Do not just build locally — a change is not "shipped" until it is live on the site. (For the to-do app specifically, that means https://vertically.works/notes.)
+- Routes come from the App Router `app/` directory, which is the routing root, not a URL segment: `app/notes/page.tsx` serves at `/notes` (not `/app/notes`).
+
+## Applications live here
+
+- `/notes` — **Vertically Do**, the vertical/RTL to-do app (`app/notes`, `components/notes`, `lib/notes`). Rendered full-screen (no site chrome) via `components/layout/SiteFrame.tsx`; reachable from the `/apps` launcher's "To-do" card. This is a *different app* from Vertically Verse.
+- Vertically **Verse** is the CJK **scripture (bible) reader** — `/apps/vertically-verse` + `/apps/verse/*`. Never conflate Verse (bible) with Notes (to-do).

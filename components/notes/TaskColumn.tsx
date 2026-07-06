@@ -172,7 +172,7 @@ export function TaskColumn({
       role="listitem"
       tabIndex={0}
       className="v-col"
-      aria-label={`${task.text}${task.note ? `, ${task.note}` : ""}${task.done ? `, ${t.filters.done}` : ""}`}
+      aria-label={`${task.text}${task.done ? `, ${t.filters.done}` : ""}`}
       onKeyDown={onKeyDown}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
@@ -316,7 +316,7 @@ export function TaskColumn({
               onBlur={commitEdit}
               autoFocus
               ariaLabel={t.a11y.edit}
-              style={{ fontFamily: "inherit", fontSize: "1.0625rem", fontWeight: 600, letterSpacing: "0.08em", lineHeight: 1.5, color: "var(--color-fg)" }}
+              style={{ fontFamily: "var(--vd-task-font)", fontSize: "1.0625rem", fontWeight: 600, letterSpacing: "0.08em", lineHeight: 1.5, color: "var(--color-fg)" }}
             />
           ) : (
             <button
@@ -332,7 +332,7 @@ export function TaskColumn({
                 background: "none",
                 border: "none",
                 cursor: "text",
-                fontFamily: "inherit",
+                fontFamily: "var(--vd-task-font)",
                 fontSize: "1.0625rem",
                 fontWeight: 600,
                 letterSpacing: "0.08em",
@@ -348,11 +348,6 @@ export function TaskColumn({
             >
               {task.text}
             </button>
-          )}
-          {task.note && !editing && (
-            <span className="v-text" style={{ fontSize: "0.6875rem", letterSpacing: "0.06em", lineHeight: 1.6, color: "var(--color-fg-subtle)", paddingTop: 2, maxHeight: "100%", overflow: "hidden" }}>
-              {task.note}
-            </span>
           )}
         </div>
 

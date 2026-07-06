@@ -17,11 +17,7 @@ export function CJKToggle() {
       role="radiogroup"
       aria-label={t.a11y.language}
       style={{
-        position: "fixed",
-        left: "var(--space-4)",
-        top: "50%",
-        transform: "translateY(-50%)",
-        zIndex: 40,
+        position: "relative",
         display: "flex",
         flexDirection: "column",
         gap: 2,

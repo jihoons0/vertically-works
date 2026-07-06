@@ -223,23 +223,23 @@ export const SEED_TASKS: Record<
   { text: string; note?: string; starred?: boolean; done?: boolean }[]
 > = {
   ko: [
-    { text: "세로로 읽고 쓰기", note: "위에서 아래로", starred: true },
-    { text: "동그라미 눌러 완료", note: "아래 끝의 동그라미" },
-    { text: "위·아래로 당겨 삭제", note: "휴지통이 뒤에서 열려요" },
+    { text: "세로로 읽고 쓰기", starred: true },
+    { text: "동그라미 눌러 완료" },
+    { text: "위·아래로 당겨 삭제" },
     { text: "옆으로 당겨 순서 바꾸기" },
     { text: "죽간에 글을 새기다", done: true },
   ],
   ja: [
-    { text: "縦に読み書き", note: "上から下へ", starred: true },
-    { text: "丸を押して完了", note: "下端の丸" },
-    { text: "上下に引いて削除", note: "ゴミ箱が後ろに開く" },
+    { text: "縦に読み書き", starred: true },
+    { text: "丸を押して完了" },
+    { text: "上下に引いて削除" },
     { text: "横に引いて並べ替え" },
     { text: "木簡に文字を刻む", done: true },
   ],
   zh: [
-    { text: "直書閱讀", note: "由上而下", starred: true },
-    { text: "點圓圈完成", note: "底部的圓圈" },
-    { text: "上下拖曳刪除", note: "垃圾桶在後方展開" },
+    { text: "直書閱讀", starred: true },
+    { text: "點圓圈完成" },
+    { text: "上下拖曳刪除" },
     { text: "左右拖曳排序" },
     { text: "竹簡刻字", done: true },
   ],

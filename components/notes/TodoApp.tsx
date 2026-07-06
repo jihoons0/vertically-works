@@ -7,15 +7,18 @@ import { Rail, type Filter } from "@/components/notes/Rail";
 import { TaskColumn } from "@/components/notes/TaskColumn";
 import { Composer, type ComposerHandle } from "@/components/notes/Composer";
 import { HelpSheet } from "@/components/notes/HelpSheet";
-import { CJKToggle } from "@/components/notes/CJKToggle";
+import { LeftControls } from "@/components/notes/LeftControls";
 import { LocaleProvider, useLocale } from "@/lib/notes/i18n";
+import { FontProvider } from "@/lib/notes/font";
 
 export function TodoApp() {
   return (
     <LocaleProvider>
-      <ToastProvider>
-        <Shell />
-      </ToastProvider>
+      <FontProvider>
+        <ToastProvider>
+          <Shell />
+        </ToastProvider>
+      </FontProvider>
     </LocaleProvider>
   );
 }
@@ -49,11 +52,11 @@ function Shell() {
   }, []);
 
   const total = store.mounted ? store.tasks.length : 0;
-  const done = store.mounted ? store.tasks.filter((t) => t.done).length : 0;
+  const done = store.mounted ? store.tasks.filter((task) => task.done).length : 0;
 
   return (
     <div style={{ display: "flex", flexDirection: "row", height: "100dvh", width: "100%" }}>
-      <CJKToggle />
+      <LeftControls />
       <Board store={store} filter={filter} />
       <Rail
         total={total}
@@ -228,6 +231,24 @@ function Board({ store, filter }: { store: ReturnType<typeof useTasks>; filter: 
           transition: "opacity var(--duration-base) var(--easing-default)",
         }}
       />
+
+      {/* Studio footer — vertical, bottom-left */}
+      <span
+        className="v-text"
+        style={{
+          position: "absolute",
+          bottom: "var(--space-6)",
+          left: "var(--space-6)",
+          fontSize: "0.625rem",
+          letterSpacing: "0.14em",
+          color: "var(--color-fg-subtle)",
+          fontFamily: "var(--font-geist-mono)",
+          pointerEvents: "none",
+          userSelect: "none",
+        }}
+      >
+        © 2026 Vertically Works
+      </span>
     </div>
   );
 }
