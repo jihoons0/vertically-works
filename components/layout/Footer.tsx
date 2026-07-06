@@ -46,10 +46,9 @@ export function Footer() {
               </span>
               {[
                 { href: "/applications", label: "Applications" },
+                { href: "/components", label: "Components" },
                 { href: "/challenges", label: "Challenges" },
                 { href: "/principles", label: "Principles" },
-                { href: "/components", label: "Components" },
-                { href: "/patterns", label: "Patterns" },
               ].map((link) => (
                 <Link
                   key={link.href}

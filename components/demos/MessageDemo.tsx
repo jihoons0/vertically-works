@@ -5,10 +5,10 @@ import { useState } from "react";
 type MessageMode = "horizontal" | "vertical";
 
 const MESSAGES = [
-  { from: "them", text: "창세기 1장 5절이 마음에 와닿았어요", time: "오전 9:14", vertical: "창세기 1장 5절이 마음에 와닿았어요" },
+  { from: "them", text: "세로쓰기의 유래가 흥미로웠어요",       time: "오전 9:14", vertical: "세로쓰기의 유래가 흥미로웠어요" },
   { from: "me",   text: "어떤 부분이요?",                     time: "오전 9:15", vertical: "어떤 부분이요?" },
-  { from: "them", text: "하나님이 빛과 어둠을 나누사",        time: "오전 9:16", vertical: "하나님이 빛과 어둠을 나누사" },
-  { from: "me",   text: "그 구절 저도 좋아해요",              time: "오전 9:16", vertical: "그 구절 저도 좋아해요" },
+  { from: "them", text: "죽간에서 세로쓰기가 시작됐대요",       time: "오전 9:16", vertical: "죽간에서 세로쓰기가 시작됐대요" },
+  { from: "me",   text: "그 부분 저도 좋아해요",              time: "오전 9:16", vertical: "그 부분 저도 좋아해요" },
 ];
 
 function Avatar({ label, me }: { label: string; me: boolean }) {

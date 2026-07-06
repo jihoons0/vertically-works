@@ -25,7 +25,7 @@ export function IconButtonDemo() {
         </div>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "var(--color-bg-muted)", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", padding: "var(--space-10)", gap: "var(--space-4)" }}>
+      <div style={{ display: "flex", flexDirection: "row-reverse", flexWrap: "wrap", alignItems: "center", justifyContent: "center", background: "var(--color-bg-muted)", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", padding: "var(--space-10)", gap: "var(--space-4)" }}>
         {ICONS.map((icon) => (
           <button className="pressable"
             key={icon.id}

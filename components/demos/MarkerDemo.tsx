@@ -14,10 +14,10 @@ const MARKERS: { type: MarkerType; label: string; sub?: string; icon?: string }[
 ];
 
 const VERSES = [
-  "태초에 하나님이 천지를 창조하시니라",
-  "땅이 혼돈하고 공허하며",
-  "하나님이 이르시되 빛이 있으라",
-  "빛이 하나님이 보시기에 좋았더라",
+  "글씨를 세로로 쓰는 것을 세로쓰기라 한다",
+  "전통적으로 한국어와 중국어가 세로로 쓰였다",
+  "죽간을 쓰던 때부터 세로로 써 왔고",
+  "옛 문헌은 세로쓰기로 되어 있다",
 ];
 
 export function MarkerDemo() {
@@ -88,33 +88,34 @@ export function MarkerDemo() {
             ))}
           </div>
         ) : (
-          /* Chat mode: markers in a conversation thread */
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)", maxWidth: 400, margin: "0 auto" }}>
+          /* Conversation thread — vertical: entries flow as columns R→L (oldest
+             rightmost), each reading top→bottom. Separators become vertical rules. */
+          <div style={{ display: "flex", flexDirection: "row-reverse", gap: "var(--space-4)", justifyContent: "center", alignItems: "center", minHeight: 240 }}>
             {MARKERS.map((marker, i) => {
               if (marker.type === "separator" || marker.type === "date") {
                 return (
-                  <div key={i} style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", padding: "var(--space-1) 0" }}>
-                    <div style={{ flex: 1, height: 1, background: "var(--color-border)" }} />
-                    <span style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)", fontWeight: 500, whiteSpace: "nowrap" }}>
+                  <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-2)", height: 160 }}>
+                    <div style={{ width: 1, flex: 1, background: "var(--color-border)" }} />
+                    <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", color: "var(--color-fg-subtle)", fontWeight: 500, letterSpacing: "0.06em", whiteSpace: "nowrap" }}>
                       {marker.label}{marker.sub && ` · ${marker.sub}`}
                     </span>
-                    <div style={{ flex: 1, height: 1, background: "var(--color-border)" }} />
+                    <div style={{ width: 1, flex: 1, background: "var(--color-border)" }} />
                   </div>
                 );
               }
               return (
-                <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "var(--space-2)" }}>
+                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-2)", padding: "var(--space-4) var(--space-3)", borderRadius: "var(--radius-lg)", background: "var(--color-bg)", border: "1px solid var(--color-border)", boxShadow: "0 1px 4px rgba(0,0,0,0.06)" }}>
                   <span style={{
                     fontSize: "0.75rem",
                     color: marker.type === "system" ? "#16a34a" : "var(--color-fg-subtle)",
                   }}>
                     {marker.icon}
                   </span>
-                  <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)", fontWeight: 500 }}>
+                  <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.8125rem", color: "var(--color-fg)", fontWeight: 500, letterSpacing: "0.05em" }}>
                     {marker.label}
                   </span>
                   {marker.sub && (
-                    <span style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)", opacity: 0.6 }}>
+                    <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", color: "var(--color-fg-subtle)", letterSpacing: "0.05em" }}>
                       {marker.sub}
                     </span>
                   )}
@@ -128,7 +129,7 @@ export function MarkerDemo() {
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
         {mode === "reading"
           ? "Chapter completion markers appear between vertical columns — in vertical writing direction to match the reading axis."
-          : "Status and system markers in a conversation thread — reading progress, session breaks, completions."}
+          : "A vertical conversation thread: status and system markers flow as columns right-to-left (oldest on the right), each reading top→bottom. Session breaks become vertical rules between entries."}
       </p>
     </div>
   );

@@ -33,7 +33,7 @@ export function SliderDemo() {
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: `${((value - min) / (max - min)) * 100}%`, background: "var(--color-fg)", borderRadius: 3 }} />
                 <div style={{ position: "absolute", left: "50%", bottom: `calc(${((value - min) / (max - min)) * 100}% - 10px)`, transform: "translateX(-50%)", width: 20, height: 20, borderRadius: "50%", background: "var(--color-fg)", border: "2px solid var(--color-bg)", boxShadow: "0 2px 8px rgba(0,0,0,0.2)" }} />
               </div>
-              <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)" }}>{value}</span>
+              <span style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)" }}>{value}</span>
               <span style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)" }}>{sub}</span>
             </div>
           ))}
@@ -41,7 +41,7 @@ export function SliderDemo() {
 
         {/* Live preview */}
         <div style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: `${fontSize}px`, lineHeight: `${spacing / 100 * 2}`, letterSpacing: "0.1em", color: "var(--color-fg)", transition: "font-size 100ms ease, line-height 100ms ease", maxHeight: 200, overflow: "hidden" }}>
-          태초에 하나님이 천지를 창조하시니라
+          글씨를 세로로 쓰는 것을 세로쓰기라 한다
         </div>
       </div>
 

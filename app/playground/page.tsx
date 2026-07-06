@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { PlaygroundPreview } from "@/components/PlaygroundPreview";
 
 export const metadata: Metadata = {
   title: "Playground",
@@ -17,19 +18,13 @@ const PLANNED_CONTROLS = [
   { label: "Grid", options: ["Hidden", "Visible"] },
 ];
 
-const SAMPLE_CONTENT = [
-  { lang: "Korean", script: "한국어", text: "태초에 하나님이 천지를 창조하시니라", ref: "창 1:1" },
-  { lang: "Japanese", script: "日本語", text: "初めに、神が天と地を創造された", ref: "創 1:1" },
-  { lang: "Chinese", script: "中文", text: "起初　神創造天地", ref: "創 1:1" },
-];
-
 export default function PlaygroundPage() {
   return (
     <>
       <PageHeader
         eyebrow="Playground"
         title="Experiment"
-        description="Compare, prototype, and explore. The playground lets you see the same content across writing directions, languages, devices, and animation speeds — in real time."
+        description="Compare, prototype, and explore. The playground lets you see the same content across writing directions, languages, devices, and animation speeds in real time."
       />
 
       <div
@@ -62,7 +57,7 @@ export default function PlaygroundPage() {
             }}
           />
           <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: 0 }}>
-            The interactive playground is in development. Below is a preview of the planned controls and a static demo.
+            The interactive playground is in development. The alignment control in the preview is live; the rest are a preview of planned controls.
           </p>
         </div>
 
@@ -127,80 +122,8 @@ export default function PlaygroundPage() {
             </div>
           </div>
 
-          {/* Preview panel */}
-          <div
-            style={{
-              border: "1px solid var(--color-border)",
-              borderRadius: "var(--radius-xl)",
-              overflow: "hidden",
-              background: "var(--color-bg)",
-              minHeight: 480,
-            }}
-          >
-            <div
-              style={{
-                padding: "var(--space-4) var(--space-5)",
-                borderBottom: "1px solid var(--color-border)",
-                background: "var(--color-bg-subtle)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              <span style={{ fontSize: "0.8125rem", fontWeight: 600, color: "var(--color-fg)", letterSpacing: "-0.01em" }}>
-                Preview
-              </span>
-              <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>
-                Static demo
-              </span>
-            </div>
-
-            <div
-              style={{
-                padding: "var(--space-12)",
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: "flex-end",
-                gap: "var(--space-8)",
-                minHeight: 400,
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                direction: "rtl",
-              }}
-            >
-              {SAMPLE_CONTENT.map((item) => (
-                <div
-                  key={item.lang}
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "var(--space-3)",
-                    alignItems: "flex-start",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: "0.75rem",
-                      color: "var(--color-fg-subtle)",
-                      letterSpacing: "0.04em",
-                    }}
-                  >
-                    {item.ref}
-                  </span>
-                  <span
-                    style={{
-                      fontSize: "1.25rem",
-                      letterSpacing: "0.12em",
-                      lineHeight: 1.9,
-                      color: item.lang === "Korean" ? "var(--color-fg)" : item.lang === "Japanese" ? "var(--color-fg-muted)" : "var(--color-fg-subtle)",
-                    }}
-                  >
-                    {item.text}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+          {/* Preview panel — the alignment control is live */}
+          <PlaygroundPreview />
         </div>
 
         {/* Planned features */}

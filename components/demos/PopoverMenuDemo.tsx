@@ -79,6 +79,7 @@ export function PopoverMenuDemo() {
           <button className="pressable"
             onClick={() => setOpen(true)}
             aria-expanded={false}
+            aria-label="메뉴 열기"
             style={{
               display: "flex",
               flexDirection: "column",
@@ -100,7 +101,6 @@ export function PopoverMenuDemo() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ transform: "rotate(90deg)" }}>
               <line x1="4" y1="7" x2="20" y2="7" /><line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="17" x2="20" y2="17" />
             </svg>
-            <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", letterSpacing: "0.05em" }}>메뉴 열기</span>
           </button>
         )}
 
@@ -228,7 +228,7 @@ export function PopoverMenuDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        Tap <strong>메뉴 열기</strong> to open the action bar, then <strong>×</strong> to collapse it. Highlight swatches at top, action labels in vertical Korean text — the bar itself reads top-to-bottom, matching the reading axis.
+        Tap the <strong>menu icon</strong> to open the action bar, then <strong>×</strong> to collapse it. Highlight swatches at top, action labels in vertical Korean text — the bar itself reads top-to-bottom, matching the reading axis.
       </p>
 
       <style>{`

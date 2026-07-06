@@ -577,8 +577,6 @@ Button
 
 Icon Button
 
-Floating Action Button
-
 Toggle
 
 Segmented Control
@@ -621,11 +619,7 @@ Navigation
 
 Tabs
 
-Navigation Rail
-
 Sidebar
-
-Breadcrumb
 
 Pagination
 
@@ -712,8 +706,6 @@ Dialog
 Sheet
 
 Context Menu
-
-Drawer
 
 Modal
 

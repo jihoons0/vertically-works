@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 const VERSES = [
-  { ref: "창 1:1", text: "태초에 하나님이 천지를 창조하시니라" },
-  { ref: "창 1:2", text: "땅이 혼돈하고 공허하며" },
-  { ref: "창 1:3", text: "하나님이 이르시되 빛이 있으라" },
+  { ref: "1", text: "글씨를 세로로 쓰는 것을 세로쓰기라 한다" },
+  { ref: "2", text: "전통적으로 한국어와 중국어가 세로로 쓰였다" },
+  { ref: "3", text: "죽간을 쓰던 때부터 세로로 써 왔다" },
 ];
 
 export function TooltipDemo() {
@@ -66,6 +66,7 @@ export function TooltipDemo() {
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-2)" }}>
                 <span
                   style={{
+                    position: "relative",
                     writingMode: "vertical-rl",
                     fontSize: "0.6875rem",
                     color: hoveredVerse === i ? "var(--color-fg)" : "var(--color-fg-subtle)",
@@ -78,6 +79,54 @@ export function TooltipDemo() {
                   }}
                 >
                   {verse.ref}
+
+                  {/* Tooltip — anchored to the reference it annotates. Content is vertical too. */}
+                  {hoveredVerse === i && (
+                    <span
+                      role="tooltip"
+                      style={{
+                        position: "absolute",
+                        zIndex: 10,
+                        pointerEvents: "none",
+                        display: "flex",
+                        ...(placement === "left"
+                          ? { right: "calc(100% + 10px)", top: "50%", transform: "translateY(-50%)" }
+                          : { top: "calc(100% + 10px)", left: "50%", transform: "translateX(-50%)" }),
+                        background: "var(--color-fg)",
+                        color: "var(--color-bg)",
+                        borderRadius: "var(--radius-lg)",
+                        padding: "var(--space-2) var(--space-3)",
+                        boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
+                      }}
+                    >
+                      <span
+                        style={{
+                          writingMode: "vertical-rl",
+                          textOrientation: "mixed",
+                          fontSize: "0.8125rem",
+                          fontWeight: 500,
+                          letterSpacing: "0.08em",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {`${i + 1}번 · ${verse.ref}`}
+                      </span>
+
+                      {/* Arrow */}
+                      <span
+                        style={{
+                          position: "absolute",
+                          width: 7,
+                          height: 7,
+                          background: "var(--color-fg)",
+                          transform: "rotate(45deg)",
+                          ...(placement === "left"
+                            ? { right: -3, top: "50%", marginTop: -3 }
+                            : { top: -3, left: "50%", marginLeft: -3 }),
+                        }}
+                      />
+                    </span>
+                  )}
                 </span>
 
                 {/* Verse text */}
@@ -95,53 +144,6 @@ export function TooltipDemo() {
                 </span>
               </div>
 
-              {/* Tooltip — text is also vertical */}
-              {hoveredVerse === i && (
-                <div
-                  role="tooltip"
-                  style={{
-                    position: "absolute",
-                    zIndex: 10,
-                    pointerEvents: "none",
-                    ...(placement === "left"
-                      ? { right: "calc(100% + 12px)", top: "50%", transform: "translateY(-50%)" }
-                      : { bottom: "calc(100% + 12px)", left: "50%", transform: "translateX(-50%)" }),
-                    background: "var(--color-fg)",
-                    color: "var(--color-bg)",
-                    borderRadius: "var(--radius-lg)",
-                    padding: "var(--space-3) var(--space-3)",
-                    boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
-                  }}
-                >
-                  {/* Tooltip content is vertical too */}
-                  <span
-                    style={{
-                      writingMode: "vertical-rl",
-                      textOrientation: "mixed",
-                      fontSize: "0.8125rem",
-                      fontWeight: 500,
-                      letterSpacing: "0.08em",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {`${i + 1}절 · ${verse.ref}`}
-                  </span>
-
-                  {/* Arrow */}
-                  <span
-                    style={{
-                      position: "absolute",
-                      width: 7,
-                      height: 7,
-                      background: "var(--color-fg)",
-                      transform: "rotate(45deg)",
-                      ...(placement === "left"
-                        ? { right: -3, top: "50%", marginTop: -3 }
-                        : { bottom: -3, left: "50%", marginLeft: -3 }),
-                    }}
-                  />
-                </div>
-              )}
             </div>
           ))}
         </div>

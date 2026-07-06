@@ -5,20 +5,20 @@ import { useState } from "react";
 const COLUMNS = [
   {
     verses: [
-      { ref: "1", text: "태초에 하나님이 천지를 창조하시니라" },
-      { ref: "2", text: "땅이 혼돈하고 공허하며 흑암이 깊음 위에 있고" },
+      { ref: "1", text: "글씨를 세로로 쓰는 것을 세로쓰기라 한다" },
+      { ref: "2", text: "전통적으로 한국어·중국어·일본어가 세로로 쓰였다" },
     ],
   },
   {
     verses: [
-      { ref: "3", text: "하나님이 이르시되 빛이 있으라 하시니 빛이 있었고" },
-      { ref: "4", text: "빛이 하나님이 보시기에 좋았더라" },
+      { ref: "3", text: "우종서의 가장 오래된 기록은 중국에서 발견되었다" },
+      { ref: "4", text: "죽간을 쓰던 때부터 한자 문화권은 세로로 썼다" },
     ],
   },
   {
     verses: [
-      { ref: "5", text: "하나님이 빛과 어둠을 나누사" },
-      { ref: "6", text: "하나님이 이르시되 물 가운데에 궁창이 있으라" },
+      { ref: "5", text: "그에 따라 옛 문헌은 전부 세로쓰기로 되어 있다" },
+      { ref: "6", text: "가로로 쓰면 두루마리를 말고 펴기가 불편했다" },
     ],
   },
 ];
@@ -81,18 +81,6 @@ export function VerseDemo() {
                     userSelect: "none",
                   }}
                 >
-                  {/* Verse number inline at start */}
-                  <sup
-                    style={{
-                      fontSize: "0.55em",
-                      color: "var(--color-fg-subtle)",
-                      fontFamily: "var(--font-geist-mono)",
-                      verticalAlign: "super",
-                      marginRight: 2,
-                    }}
-                  >
-                    {verse.ref}
-                  </sup>
                   <span
                     style={{
                       fontSize: "1rem",
@@ -180,7 +168,7 @@ export function VerseDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        Columns flow right-to-left (창 1:1–2 on right). Tap a verse to select, then apply a highlight color. Selection must account for RTL column order.
+        Columns flow right-to-left (sentences 1–2 on the right). Tap a line to select, then apply a highlight color. Selection must account for RTL column order.
       </p>
     </div>
   );

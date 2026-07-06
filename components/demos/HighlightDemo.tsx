@@ -9,10 +9,10 @@ const COLORS = [
 ];
 
 const VERSES = [
-  { ref: "1", text: "태초에 하나님이 천지를 창조하시니라" },
-  { ref: "2", text: "땅이 혼돈하고 공허하며 흑암이 깊음 위에 있고" },
-  { ref: "3", text: "하나님이 이르시되 빛이 있으라 하시니 빛이 있었고" },
-  { ref: "4", text: "빛이 하나님이 보시기에 좋았더라" },
+  { ref: "1", text: "글씨를 세로로 쓰는 것을 세로쓰기라 한다" },
+  { ref: "2", text: "전통적으로 한국어·중국어·일본어가 세로로 쓰였다" },
+  { ref: "3", text: "죽간을 쓰던 때부터 세로로 써 왔고" },
+  { ref: "4", text: "옛 문헌은 세로쓰기로 되어 있다" },
 ];
 
 export function HighlightDemo() {
@@ -51,7 +51,7 @@ export function HighlightDemo() {
               key={v.ref}
               className="pressable"
               onClick={() => toggle(v.ref)}
-              aria-label={`${v.ref}절 형광펜`}
+              aria-label={`${v.ref}번 문장 형광펜`}
               style={{ display: "flex", gap: 4, background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", padding: 0 }}
             >
               <span style={{ writingMode: "vertical-rl", fontSize: "0.625rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)", alignSelf: "flex-start", paddingTop: 2 }}>{v.ref}</span>

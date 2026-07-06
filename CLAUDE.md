@@ -50,7 +50,6 @@ content/          MDX source files for all doc pages
   challenges/
   principles/
   components/
-  patterns/
 app/              Next.js routes
 components/       Shared React components
   nav/            Navigation
@@ -94,4 +93,3 @@ Sprint 2: Applications, Challenges, Principles pages with real content
 Sprint 3: Component pages with interactive demos
 Sprint 4: Playground
 Sprint 5: Motion library
-Sprint 6: Pattern library

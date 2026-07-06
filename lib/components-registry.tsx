@@ -1,5 +1,4 @@
 import { ButtonDemo } from "@/components/demos/ButtonDemo";
-import { NavRailDemo } from "@/components/demos/NavRailDemo";
 import { TooltipDemo } from "@/components/demos/TooltipDemo";
 import { ToggleDemo } from "@/components/demos/ToggleDemo";
 import { SheetDemo } from "@/components/demos/SheetDemo";
@@ -8,19 +7,17 @@ import { PopoverMenuDemo } from "@/components/demos/PopoverMenuDemo";
 import { MarkerDemo } from "@/components/demos/MarkerDemo";
 import { MessageDemo } from "@/components/demos/MessageDemo";
 import { IconButtonDemo } from "@/components/demos/IconButtonDemo";
-import { FABDemo } from "@/components/demos/FABDemo";
-import { SegmentedControlDemo } from "@/components/demos/SegmentedControlDemo";
 import { TextFieldDemo } from "@/components/demos/TextFieldDemo";
 import { SearchDemo } from "@/components/demos/SearchDemo";
 import { SliderDemo } from "@/components/demos/SliderDemo";
 import { TabsDemo } from "@/components/demos/TabsDemo";
-import { BreadcrumbDemo } from "@/components/demos/BreadcrumbDemo";
 import { HighlightDemo } from "@/components/demos/HighlightDemo";
 import { ChapterNavigationDemo } from "@/components/demos/ChapterNavigationDemo";
+import { HyperlinkTreatmentDemo } from "@/components/demos/HyperlinkTreatmentDemo";
 import { DialogDemo } from "@/components/demos/DialogDemo";
-import { DrawerDemo } from "@/components/demos/DrawerDemo";
 import { ToastDemo } from "@/components/demos/ToastDemo";
 import { SkeletonDemo } from "@/components/demos/SkeletonDemo";
+import { VerticalListCellDemo } from "@/components/demos/VerticalListCellDemo";
 
 export type ComponentVariant = {
   name: string;
@@ -132,59 +129,6 @@ export function ButtonDefault() {
     status: "built",
   },
   {
-    slug: "floating-action-button",
-    name: "Floating Action Button",
-    category: "Actions",
-    description: "A persistent, elevated button for the primary action in a view.",
-    problem: "Where does a FAB live in a vertical, RTL interface? Bottom-right is the horizontal convention — does it hold?",
-    intent: "FAB position encodes priority and reachability. In a vertical RTL reader, bottom-right is the end of reading flow, not the beginning.",
-    variants: [
-      {
-        name: "Default",
-        demo: <FABDemo />,
-        code: `<button
-  aria-label="새 메모"
-  style={{
-    position: "fixed",
-    // RTL: bottom-left puts it at the reading origin
-    // Bottom-right puts it at the reading terminus
-    bottom: 24,
-    right: 24,
-    width: 56,
-    height: 56,
-    borderRadius: "50%",
-    background: "var(--color-fg)",
-    color: "var(--color-bg)",
-    border: "none",
-    boxShadow: "0 4px 16px rgba(0,0,0,0.24)",
-    cursor: "pointer",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  }}
->
-  <svg width="24" height="24" fill="none"
-    stroke="currentColor" strokeWidth="2">
-    <path d="M12 5v14M5 12h14" />
-  </svg>
-</button>`,
-      },
-    ],
-    doList: [
-      "Place FAB where it doesn't obscure reading content",
-      "Consider bottom-left for RTL interfaces where reading terminates at right",
-      "Use extended FAB with vertical label for primary actions that need context",
-    ],
-    dontList: [
-      "Blindly copy bottom-right positioning from horizontal conventions",
-      "Place the FAB over the active reading column",
-      "Use FAB for secondary or destructive actions",
-    ],
-    accessibility: "aria-label. Keyboard focusable. Visible focus ring. Does not trap focus.",
-    openQuestion: "In a vertical RTL interface where columns flow right-to-left, is bottom-left (reading origin) or bottom-right (reading terminus) the more prominent position?",
-    status: "built",
-  },
-  {
     slug: "toggle",
     name: "Toggle",
     category: "Actions",
@@ -242,57 +186,6 @@ function Settings() {
     ],
     accessibility: "role='switch', aria-checked. Space to toggle. Label describes effect, not control name.",
     openQuestion: "In a fully vertical settings panel, does a horizontal toggle create useful contrast or cognitive dissonance?",
-    status: "built",
-  },
-  {
-    slug: "segmented-control",
-    name: "Segmented Control",
-    category: "Actions",
-    description: "A horizontal set of mutually exclusive options. A common control that has no clear vertical-native equivalent.",
-    problem: "Should segment options stack vertically (matching the reading axis) or remain horizontal (matching convention)?",
-    intent: "Segmented controls are inherently horizontal. In a vertical interface, stacking segments vertically changes the affordance to feel like a list rather than a toggle.",
-    variants: [
-      {
-        name: "Horizontal (conventional)",
-        demo: <SegmentedControlDemo />,
-        code: `// Horizontal — conventional layout
-<div style={{
-  display: "inline-flex",
-  background: "var(--color-bg-muted)",
-  borderRadius: "var(--radius-full)",
-  padding: 3,
-  gap: 2,
-}}>
-  {["한", "あ", "中"].map((label) => (
-    <button key={label} style={{
-      padding: "6px 16px",
-      borderRadius: "var(--radius-full)",
-      border: "none",
-      background: active === label
-        ? "var(--color-bg)"
-        : "transparent",
-      fontSize: "0.9375rem",
-      fontWeight: active === label ? 600 : 400,
-      cursor: "pointer",
-    }}>
-      {label}
-    </button>
-  ))}
-</div>`,
-      },
-    ],
-    doList: [
-      "Limit to 3 segments maximum in a vertical interface — horizontal space is constrained",
-      "Use single CJK characters as segment labels where possible",
-      "Consider a vertical radio button list for >3 options",
-    ],
-    dontList: [
-      "Stack segments vertically unless they represent a sequential progression",
-      "Use long label text — it creates width pressure in narrow vertical layouts",
-      "Use segmented controls for navigation between views (use tabs or rail instead)",
-    ],
-    accessibility: "role='radiogroup'. Each segment is role='radio'. aria-checked. Arrow keys navigate.",
-    openQuestion: "Is a vertical segmented control (stacked) a distinct component, or just a radio button group with styling?",
     status: "built",
   },
 
@@ -505,81 +398,6 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
 
   // ── Navigation ────────────────────────────────────────────────────────────────
   {
-    slug: "navigation-rail",
-    name: "Navigation Rail",
-    category: "Navigation",
-    description: "Persistent access to top-level destinations in a vertical-first interface.",
-    problem: "Should the primary navigation axis align with or cross the reading direction?",
-    intent: "In horizontal UIs a left rail works because reading progresses rightward — away from the rail. In a vertical RTL interface this logic inverts.",
-    variants: [
-      {
-        name: "Vertical rail vs Bottom bar",
-        demo: <NavRailDemo />,
-        code: `// Vertical navigation rail
-function NavRail({ items, active, onSelect }) {
-  return (
-    <nav
-      aria-label="주 탐색"
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        gap: 4,
-        padding: "16px 8px",
-        borderRight: "1px solid var(--color-border)",
-        background: "var(--color-bg-subtle)",
-        width: 56,
-        height: "100%",
-      }}
-    >
-      {items.map((item) => (
-        <button
-          key={item.id}
-          onClick={() => onSelect(item.id)}
-          aria-current={active === item.id ? "page" : undefined}
-          style={{
-            width: 40,
-            height: 40,
-            borderRadius: 10,
-            border: "none",
-            background: active === item.id
-              ? "var(--color-fg)"
-              : "transparent",
-            color: active === item.id
-              ? "var(--color-bg)"
-              : "var(--color-fg-muted)",
-            cursor: "pointer",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            // Single CJK character as nav label
-            fontSize: "1rem",
-            writingMode: "vertical-rl",
-          }}
-        >
-          {item.label}
-        </button>
-      ))}
-    </nav>
-  )
-}`,
-      },
-    ],
-    doList: [
-      "Place the rail where it least interrupts the reading axis",
-      "Use single CJK characters or icons as rail labels",
-      "Keep rail items to 3–5; vertical space cost rises with each item",
-    ],
-    dontList: [
-      "Mirror a bottom bar directly into a vertical context without reconsideration",
-      "Use horizontal text labels in a narrow vertical rail",
-      "Animate rail transitions on the reading axis",
-    ],
-    accessibility: "nav element with aria-label. Active item has aria-current='page'. Tab between items, Enter to activate.",
-    openQuestion: "For a right-to-left column reader, should the rail be on the left (destination side) or right (origin side)?",
-    status: "built",
-  },
-  {
     slug: "tabs",
     name: "Tabs",
     category: "Navigation",
@@ -641,106 +459,30 @@ function NavRail({ items, active, onSelect }) {
     openQuestion: "When tabs control vertical content panels, should tab keyboard navigation (left/right) feel directionally mismatched with the content (up/down)?",
     status: "built",
   },
-  {
-    slug: "breadcrumb",
-    name: "Breadcrumb",
-    category: "Navigation",
-    description: "Hierarchical path display indicating the user's location in the content structure.",
-    problem: "How does path notation adapt to a vertical reading hierarchy?",
-    intent: "Breadcrumbs in horizontal UIs flow left-to-right showing ancestor → child. In a vertical interface, the hierarchy may flow top-to-bottom, or remain horizontal as a deliberate contrast.",
-    variants: [
-      {
-        name: "Horizontal (in vertical context)",
-        demo: <BreadcrumbDemo />,
-        code: `function Breadcrumb({ items }) {
-  return (
-    <nav aria-label="경로" style={{
-      display: "flex",
-      alignItems: "center",
-      gap: 6,
-      fontSize: "0.8125rem",
-      color: "var(--color-fg-muted)",
-    }}>
-      {items.map((item, i) => (
-        <React.Fragment key={item.id}>
-          {i > 0 && (
-            <span aria-hidden style={{ opacity: 0.4 }}>›</span>
-          )}
-          {item.href ? (
-            <a
-              href={item.href}
-              style={{ color: "inherit" }}
-              aria-current={i === items.length - 1 ? "page" : undefined}
-            >
-              {item.label}
-            </a>
-          ) : (
-            <span aria-current="page">{item.label}</span>
-          )}
-        </React.Fragment>
-      ))}
-    </nav>
-  )
-}
 
-// Usage
-<Breadcrumb items={[
-  { id: "bible", label: "성경", href: "/" },
-  { id: "gen", label: "창세기", href: "/gen" },
-  { id: "ch1", label: "1장" },
-]} />`,
-      },
-    ],
-    doList: [
-      "Keep breadcrumbs horizontal even in vertical interfaces — they represent a different axis (hierarchy)",
-      "Use CJK book/chapter names naturally",
-      "Show only 3 levels maximum — deeper hierarchies need a back button",
-    ],
-    dontList: [
-      "Display breadcrumbs in vertical text — they are navigation metadata, not reading content",
-      "Use breadcrumbs as the primary back mechanism on mobile",
-      "Truncate breadcrumb labels with ellipsis — restructure the hierarchy instead",
-    ],
-    accessibility: "nav element with aria-label. Current page item has aria-current='page'. Ordered list structure.",
-    openQuestion: "In a vertical RTL reader, should breadcrumb separators be › (rightward) or ↓ (downward, matching reading progression)?",
-    status: "built",
-  },
-
-  // ── Reading ───────────────────────────────────────────────────────────────────
+  // ── Text ───────────────────────────────────────────────────────────────────
   {
     slug: "verse",
     name: "Verse",
-    category: "Reading",
+    category: "Text",
     description: "The atomic unit of vertical scripture layout — a selectable, highlightable text cell within a vertical column.",
-    problem: "How should selection, highlight, and verse numbering work in a top-to-bottom, right-to-left column layout?",
-    intent: "Each verse is a discrete unit that must support tapping, long-pressing, highlighting, and annotation — all while maintaining correct RTL column order.",
+    problem: "How should selection and highlight behave for a body-text unit inside a top-to-bottom, right-to-left column layout?",
+    intent: "Each verse is a discrete unit that must support tapping, long-pressing, highlighting, and annotation — all while maintaining correct RTL column order. Rendered as plain body text so the reading surface stays uncluttered; reference numbers live in the chrome, not the column.",
     variants: [
       {
         name: "Default",
         demo: <VerseDemo />,
-        code: `function Verse({ reference, text, selected, highlighted, color, onTap }) {
+        code: `function Verse({ text, selected, highlighted, color, onTap }) {
   return (
     <div
       style={{
         position: "relative",
         display: "flex",
-        gap: 4,
         cursor: "pointer",
       }}
       onClick={onTap}
     >
-      {/* Verse number — top of column */}
-      <span style={{
-        fontSize: "0.625rem",
-        color: "var(--color-fg-subtle)",
-        fontFamily: "var(--font-geist-mono)",
-        flexShrink: 0,
-        alignSelf: "flex-start",
-      }}>
-        {reference}
-      </span>
-
-      {/* Verse text */}
+      {/* Body text only — reference numbers live in the chrome, not the column */}
       <span style={{
         fontSize: "1rem",
         letterSpacing: "0.1em",
@@ -767,13 +509,13 @@ function NavRail({ items, active, onSelect }) {
       },
     ],
     doList: [
-      "Place verse numbers at the top of each text string (start of vertical rendering)",
+      "Keep the reading column as pure body text — surface the reference in the chrome or on selection",
       "Treat tate-chu-yoko digit groups as single selection units",
-      "Use background-color + left border for highlights — not text inversion",
+      "Use background-color + leading border for highlights — not text inversion",
     ],
     dontList: [
       "Use the OS text selection API for vertical content — it breaks at column boundaries",
-      "Place verse numbers as separate column elements — they'll disrupt RTL column flow",
+      "Inject verse numbers as inline column elements — they interrupt the vertical reading rhythm",
       "Apply highlight via text-shadow or outline",
     ],
     accessibility: "Each verse is a paragraph with aria-label including reference. Highlight announced via live region.",
@@ -881,7 +623,7 @@ function NavRail({ items, active, onSelect }) {
   {
     slug: "highlight",
     name: "Highlight",
-    category: "Reading",
+    category: "Text",
     description: "Color-coded annotation applied to selected vertical text.",
     problem: "How should selection and highlight states work across RTL column order in a vertical layout?",
     intent: "Highlights must persist across sessions, survive verse re-rendering, and visually distinguish different annotation categories without obscuring the text.",
@@ -931,7 +673,7 @@ function highlightStyle(color) {
   {
     slug: "chapter-navigation",
     name: "Chapter Navigation",
-    category: "Reading",
+    category: "Text",
     description: "Horizontal pull gesture to navigate between adjacent chapters in a column-scrolling document.",
     problem: "How does the horizontal pull-to-paginate feel as a vertical gesture metaphor?",
     intent: "Traditional pull-to-refresh is vertical. Rotating the metaphor 90°: overscrolling past the leftmost column triggers the next chapter. A ring fills as you pull, fires on release with haptic feedback.",
@@ -980,6 +722,49 @@ function useChapterPull(scrollRef, onNext, onPrev) {
     ],
     accessibility: "Provide accessible alternative (toolbar buttons) for this gesture. Announce chapter change via aria-live.",
     openQuestion: "On desktop, what keyboard shortcut maps to chapter navigation in a vertical reader? Arrow keys are taken by text navigation.",
+    status: "built",
+  },
+  {
+    slug: "hyperlink-treatment",
+    name: "Hyperlink Treatment",
+    category: "Text",
+    description: "Marking an inline run of text as a link without an underline.",
+    problem: "A hyperlink is conventionally underlined. Rotated into vertical text, that underline falls to one side of the column and collides with the neighbouring line. How is a link marked instead?",
+    intent: "The underline is a horizontal-writing artifact — a rule that runs along the baseline. Vertical writing already has a mechanism for marking a run of characters: the emphasis mark (방점 / 傍點), a dot set beside each character, on the right in vertical text. Reused as the link affordance, it rides alongside the column instead of crossing into the next line.",
+    variants: [
+      {
+        name: "Interpunct vs underline",
+        demo: <HyperlinkTreatmentDemo />,
+        code: `// The interpunct rides to the right of every character in the run —
+// this is the CSS text-emphasis (emphasis-mark) mechanism, which in
+// vertical writing places one mark per character on the right by default.
+
+// a.link {
+//   color: var(--color-fg);
+//   text-decoration: none;                 /* no underline */
+//   -webkit-text-emphasis: "·";
+//   text-emphasis: "·";                     /* interpunct mark */
+//   -webkit-text-emphasis-position: right;
+//   text-emphasis-position: right;          /* right side of the column */
+// }
+
+<p style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}>
+  글씨를 세로로 쓰는 것을 <a href="/vert" className="link">세로쓰기</a>라 한다.
+</p>`,
+      },
+    ],
+    doList: [
+      "Use text-emphasis (방점) to mark links — it is the native vertical-writing mechanism for a character run",
+      "Keep the mark to the right of the character (the vertical default), where readers expect emphasis",
+      "Pair the mark with a color shift so the link is legible without relying on the dot alone",
+    ],
+    dontList: [
+      "Underline links in vertical text — the rule lands on the column's side and reads as a border",
+      "Rotate a horizontal underline 90° and call it done",
+      "Use the interpunct mark for non-interactive emphasis on the same screen — it will be mistaken for a link",
+    ],
+    accessibility: "Use a real <a> element so it is focusable and announced as a link. The mark is decorative (text-emphasis) — never encode the link's meaning in the dot alone; keep a color or focus cue. Ensure a visible focus ring on the vertical run.",
+    openQuestion: "Emphasis marks also signal non-link emphasis in CJK typography. When a page needs both, what second channel (color, weight, mark shape) keeps links distinct from emphasized text?",
     status: "built",
   },
 
@@ -1207,70 +992,6 @@ function useChapterPull(scrollRef, onNext, onPrev) {
     ],
     accessibility: "role='dialog', aria-modal, aria-labelledby, aria-describedby. Focus trapped. Escape closes. Focus returns to trigger.",
     openQuestion: "Should a dialog's action buttons be arranged horizontally (conventional) or vertically (matching the layout) in a fully vertical interface?",
-    status: "built",
-  },
-  {
-    slug: "drawer",
-    name: "Drawer",
-    category: "Overlays",
-    description: "A slide-in panel that presents vertical content flowing R→L, matching the reading direction.",
-    problem: "Which edge does a drawer enter from in a vertical, RTL reading interface?",
-    intent: "The drawer from the right edge of an RTL interface arrives from the reading origin — it feels like the reader is being pulled back. The trailing edge (left) or top can feel more natural.",
-    variants: [
-      {
-        name: "Navigator drawer",
-        demo: <DrawerDemo />,
-        code: `function Drawer({ open, onClose, children }) {
-  return (
-    <>
-      {/* Scrim */}
-      {open && (
-        <div
-          onClick={onClose}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.3)",
-            zIndex: 40,
-            animation: "fade-in 200ms ease",
-          }}
-        />
-      )}
-
-      {/* Panel — enters from TRAILING edge (left in RTL) */}
-      <div style={{
-        position: "fixed",
-        top: 0,
-        left: 0,   // leading edge in LTR = trailing in RTL reading
-        bottom: 0,
-        width: "80%",
-        maxWidth: 320,
-        background: "var(--color-bg)",
-        zIndex: 50,
-        overflowY: "auto",
-        transform: open ? "translateX(0)" : "translateX(-100%)",
-        transition: "transform 300ms cubic-bezier(0.32,0.72,0,1)",
-        boxShadow: open ? "4px 0 32px rgba(0,0,0,0.2)" : "none",
-      }}>
-        {children}
-      </div>
-    </>
-  )
-}`,
-      },
-    ],
-    doList: [
-      "Use the left edge for drawers — it's the trailing edge in RTL and feels less intrusive",
-      "Present drawer content in the same vertical orientation as the main content",
-      "Animate with CSS transitions, not JS animation — smoother on low-power devices",
-    ],
-    dontList: [
-      "Animate a drawer from the right (reading origin) in an RTL interface",
-      "Put the drawer trigger inside the drawer itself",
-      "Use a drawer for content that needs to stay in view alongside main content (use split view)",
-    ],
-    accessibility: "role='dialog' or role='navigation'. aria-label. Focus trapped when modal. Escape closes.",
-    openQuestion: "Should a navigator drawer in a vertical RTL reader enter from the top (reading start) or the left (trailing edge in RTL columns)?",
     status: "built",
   },
 
@@ -1556,6 +1277,53 @@ function VerticalMessage({ from, text, time, avatar }) {
     ],
     accessibility: "aria-busy='true' on the container. aria-label describing what's loading. Remove when content appears.",
     openQuestion: "Should the skeleton shimmer animate top-to-bottom (following reading direction) or use a simple pulse? Does directionality in the loading animation matter?",
+    status: "built",
+  },
+
+  // ── Lists ─────────────────────────────────────────────────────────────────────
+  {
+    slug: "vertical-list-cell",
+    name: "Vertical List Cell",
+    category: "Lists",
+    description: "The primitive behind every vertical list. A row cell rotated onto the vertical axis: a full-height column with a leading edge at the top, vertical title/subtitle, and a trailing accessory at the bottom.",
+    problem: "A horizontal list cell is [leading] [title/subtitle] … [trailing accessory] laid out as a full-width row. What is its shape when the list stacks as columns and scrolls right-to-left?",
+    intent: "Rotate the cell's anatomy, don't rotate the cell. Leading moves to the top (reading start), title and subtitle become vertical text, and the disclosure accessory sits at the bottom pointing down — along the reading axis, not across it.",
+    variants: [
+      {
+        name: "Default",
+        demo: <VerticalListCellDemo />,
+        code: `import { VerticalListCell } from "@/components/ui/vertical-list-cell"
+
+export function ContentsList() {
+  return (
+    <div style={{ display: "flex", flexDirection: "row-reverse", gap: 12, overflowX: "auto" }}>
+      {chapters.map((c, i) => (
+        <VerticalListCell
+          key={c.title}
+          index={i + 1}
+          title={c.title}
+          subtitle={c.sub}
+          accessory="chevron"   // chevron points down, along the reading axis
+        />
+      ))}
+    </div>
+  )
+}`,
+      },
+    ],
+    doList: [
+      "Put the leading element (index, icon, avatar) at the top — the reading-start edge",
+      "Point the disclosure chevron down (rotate 90°): 'forward' is downward along the vertical axis",
+      "Keep every cell the same height so the row of columns reads as one list",
+      "Give each cell a 44px+ hit target and stack cells right-to-left",
+    ],
+    dontList: [
+      "Rotate a finished horizontal cell with transform: rotate(90deg)",
+      "Leave the chevron pointing right — it should follow the reading axis, not the scroll edge",
+      "Mix upright and vertical text within the same cell for title and subtitle",
+    ],
+    accessibility: "Container role='listbox' (or 'list'); each cell role='option' with aria-selected (or a plain button). Keyboard: arrow keys move selection; the visual R→L order must match DOM/tab order.",
+    openQuestion: "When the accessory is an interactive control (toggle, stepper), should it keep the bottom position, or move beside the title so the primary tap target stays central?",
     status: "built",
   },
 ];

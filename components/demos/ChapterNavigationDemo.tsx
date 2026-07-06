@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 
-const CHAPTERS = ["창세기 1장", "창세기 2장", "창세기 3장"];
+const CHAPTERS = ["세로쓰기 1장", "세로쓰기 2장", "세로쓰기 3장"];
 
 export function ChapterNavigationDemo() {
   const [index, setIndex] = useState(1);
@@ -53,19 +53,25 @@ export function ChapterNavigationDemo() {
             </div>
           )}
 
-          {/* Chapter content, nudged by the pull */}
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-4)", transform: `translateX(${pull * 20}px)`, transition: startX.current === null ? "transform 300ms cubic-bezier(0.32,0.72,0,1)" : "none", opacity: flash ? 0.5 : 1 }}>
-            <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.75rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)", letterSpacing: "0.08em" }}>{index + 1} / {CHAPTERS.length}</span>
+          {/* Edge affordances — persistent hints for which way the pull goes */}
+          <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", letterSpacing: "0.1em", color: "var(--color-fg-subtle)", opacity: canNext && dir !== "next" ? 0.6 : 0, transition: "opacity 150ms var(--easing-out)", pointerEvents: "none" }}>다음 ‹</span>
+          <span style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", letterSpacing: "0.1em", color: "var(--color-fg-subtle)", opacity: canPrev && dir !== "prev" ? 0.6 : 0, transition: "opacity 150ms var(--easing-out)", pointerEvents: "none" }}>› 이전</span>
+
+          {/* Position indicator — the value the gesture drives, nudged by the pull */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-3)", transform: `translateX(${pull * 20}px)`, transition: startX.current === null ? "transform 300ms cubic-bezier(0.32,0.72,0,1)" : "none", opacity: flash ? 0.4 : 1 }}>
             <span style={{ writingMode: "vertical-rl", fontSize: "1.25rem", fontWeight: 700, letterSpacing: "0.15em", color: "var(--color-fg)" }}>{CHAPTERS[index]}</span>
-            <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.9375rem", letterSpacing: "0.1em", lineHeight: 1.9, color: "var(--color-fg-muted)", maxHeight: 140, overflow: "hidden" }}>
-              태초에 하나님이 천지를 창조하시니라
-            </span>
+            {/* Segmented progress dots — reads as a discrete position control, not a page of text */}
+            <div style={{ display: "flex", flexDirection: "row", gap: 6 }}>
+              {CHAPTERS.map((_, i) => (
+                <span key={i} style={{ width: 6, height: 6, borderRadius: "50%", background: i === index ? "var(--color-fg)" : "var(--color-border-strong)", transition: "background 150ms var(--easing-out)" }} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        Drag left past the last column → next chapter; drag right past the first → previous. The classic vertical pull-to-refresh, rotated 90° onto the column-scroll axis. A ring fills as you pull and fires on release.
+        A gesture input: drag left past the last column to advance, right past the first to go back. Overscroll resistance at the ends, a ring that fills as you pull and arms at 100%, firing on release — the classic pull-to-refresh rotated 90° onto the column-scroll axis. Shown here as a bare control, decoupled from any content it drives.
       </p>
     </div>
   );

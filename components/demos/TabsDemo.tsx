@@ -2,9 +2,9 @@
 import { useState } from "react";
 
 const TABS = [
-  { id: "read",    label: "읽기",   content: "태초에 하나님이 천지를 창조하시니라" },
+  { id: "read",    label: "읽기",   content: "글씨를 세로로 쓰는 것을 세로쓰기라 한다" },
   { id: "search",  label: "검색",   content: "검색 결과가 여기에 표시됩니다" },
-  { id: "history", label: "기록",   content: "최근 읽은 구절이 여기에 표시됩니다" },
+  { id: "history", label: "기록",   content: "최근 읽은 문서가 여기에 표시됩니다" },
 ];
 
 export function TabsDemo() {

@@ -17,72 +17,54 @@ export function ToggleDemo() {
       {/* Phone mockup — looks like a vertical app settings panel */}
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div
+          data-theme={states.darkMode ? "dark" : "light"}
           style={{
             width: 300,
             border: "2px solid var(--color-border-strong)",
             borderRadius: 24,
             background: "var(--color-bg)",
+            color: "var(--color-fg)",
             overflow: "hidden",
+            transition: "background 200ms ease",
           }}
         >
-          {/* Settings screen header — vertical text label */}
-          <div
-            style={{
-              padding: "var(--space-5) var(--space-5) var(--space-4)",
-              borderBottom: "1px solid var(--color-border)",
-              display: "flex",
-              alignItems: "center",
-              gap: "var(--space-4)",
-            }}
-          >
-            <span
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                fontSize: "1.125rem",
-                fontWeight: 700,
-                color: "var(--color-fg)",
-                letterSpacing: "0.05em",
-              }}
-            >
-              설정
-            </span>
-            <div style={{ width: 1, height: 32, background: "var(--color-border)" }} />
-            <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>Settings</span>
-          </div>
-
-          {/* Toggle rows */}
-          <div style={{ padding: "var(--space-3) var(--space-4)", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+          {/* Toggle cells — a vertical list: 3 cells stacked as columns, flowing R→L.
+              Each cell reads top→bottom; its toggle runs on the same vertical axis. */}
+          <div style={{ padding: "var(--space-4)", display: "flex", flexDirection: "row-reverse", justifyContent: "center", gap: "var(--space-3)" }}>
             {SETTINGS.map(({ key, label, sub }) => (
               <button
                 key={key}
                 onClick={() => toggle(key)}
+                aria-pressed={states[key]}
                 className="pressable"
                 style={{
                   display: "flex",
+                  flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "var(--space-4) var(--space-5)",
+                  padding: "var(--space-4) var(--space-3)",
                   borderRadius: "var(--radius-lg)",
                   border: "1px solid var(--color-border)",
                   background: "var(--color-bg-subtle)",
                   cursor: "pointer",
                   fontFamily: "inherit",
-                  gap: "var(--space-4)",
-                  minHeight: 108,
+                  gap: "var(--space-5)",
+                  width: 80,
+                  minHeight: 200,
                 }}
               >
-                {/* Label — vertical Korean with its Latin subtitle set beside it (rotated, per mixed orientation) */}
+                {/* Label — vertical Korean with its Latin subtitle set beside it */}
                 <div style={{ display: "flex", flexDirection: "row-reverse", alignItems: "flex-start", gap: "var(--space-2)" }}>
                   <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.9375rem", fontWeight: 500, color: "var(--color-fg)", letterSpacing: "0.05em" }}>{label}</span>
                   <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", color: "var(--color-fg-subtle)", letterSpacing: "0.05em", paddingTop: 2 }}>{sub}</span>
                 </div>
 
-                {/* Toggle pill — stays horizontal, perpendicular to the vertical reading axis */}
+                {/* Vertical toggle pill — thumb travels along the reading axis (up = on). */}
                 <div
+                  role="presentation"
                   style={{
-                    width: 44,
-                    height: 26,
+                    width: 26,
+                    height: 44,
                     borderRadius: "var(--radius-full)",
                     background: states[key] ? "var(--color-fg)" : "var(--color-border-strong)",
                     position: "relative",
@@ -93,13 +75,13 @@ export function ToggleDemo() {
                   <div
                     style={{
                       position: "absolute",
-                      top: 3,
-                      left: states[key] ? 21 : 3,
+                      left: 3,
+                      top: states[key] ? 3 : 21,
                       width: 20,
                       height: 20,
                       borderRadius: "50%",
                       background: "white",
-                      transition: "left 200ms ease",
+                      transition: "top 200ms var(--easing-out)",
                       boxShadow: "0 1px 4px rgba(0,0,0,0.2)",
                     }}
                   />
@@ -123,7 +105,7 @@ export function ToggleDemo() {
                 overflow: "hidden",
               }}
             >
-              {["태초에 하나님이", "천지를 창조하시니라"].map((text, i) => (
+              {["글씨를 세로로 쓰는 것", "세로쓰기라 한다"].map((text, i) => (
                 <span
                   key={i}
                   style={{
@@ -133,7 +115,6 @@ export function ToggleDemo() {
                     color: "var(--color-fg)",
                     letterSpacing: "0.1em",
                     lineHeight: 1.9,
-                    opacity: states.darkMode ? 1 : 0.7,
                     maxHeight: 80,
                     overflow: "hidden",
                   }}
@@ -147,7 +128,7 @@ export function ToggleDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        Toggle pills stay horizontal — perpendicular to reading direction, which signals a different semantic axis. The preview updates live.
+        A vertical list: three cells stacked as columns flowing right-to-left, each reading top→bottom. The toggle runs on that same axis — thumb up = on — so the control matches the reading direction instead of cutting across it. The preview updates live.
       </p>
     </div>
   );

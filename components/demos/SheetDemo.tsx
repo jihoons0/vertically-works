@@ -11,9 +11,9 @@ const EDGES: { id: Edge; label: string; note: string }[] = [
 ];
 
 const BOOKMARKS = [
-  { ref: "창 1:1", text: "태초에 하나님이 천지를 창조하시니라" },
-  { ref: "시 23:1", text: "여호와는 나의 목자시니" },
-  { ref: "요 3:16", text: "하나님이 세상을 이처럼 사랑하사" },
+  { ref: "세로 1", text: "글씨를 세로로 쓰는 것을 세로쓰기라 한다" },
+  { ref: "역사 2", text: "죽간을 쓰던 때부터 세로로 써 왔다" },
+  { ref: "역사 3", text: "옛 문헌은 세로쓰기로 되어 있다" },
 ];
 
 export function SheetDemo() {
@@ -96,34 +96,6 @@ export function SheetDemo() {
             gap: "var(--space-4)",
           }}
         >
-          {/* Vertical scripture content in background */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row-reverse",
-              gap: "var(--space-5)",
-              opacity: 0.45,
-              userSelect: "none",
-              pointerEvents: "none",
-            }}
-            aria-hidden
-          >
-            {["태초에 하나님이 천지를 창조하시니라", "땅이 혼돈하고 공허하며"].map((text, i) => (
-              <span
-                key={i}
-                style={{
-                  writingMode: "vertical-rl",
-                  fontSize: "0.9375rem",
-                  color: "var(--color-fg)",
-                  letterSpacing: "0.1em",
-                  lineHeight: 1.9,
-                }}
-              >
-                {text}
-              </span>
-            ))}
-          </div>
-
           {/* Trigger button */}
           <button className="pressable"
             onClick={() => setOpen(true)}
@@ -144,7 +116,7 @@ export function SheetDemo() {
               letterSpacing: "0.05em",
             }}
           >
-            책갈피 열기
+            열기
           </button>
 
           {/* Sheet overlay */}

@@ -1,6 +1,6 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { ChallengeVisual } from "@/components/ChallengeVisual";
 
 export const metadata: Metadata = {
   title: "Challenges",
@@ -33,7 +33,7 @@ const CHALLENGES = [
     question: "Where does the navigation rail belong in a vertical-first interface?",
     description:
       "Horizontal apps put navigation at the bottom (mobile) or left (desktop) based on thumb reach and primary reading axis. In a vertical, RTL reading interface, the primary axis is down-the-column, and columns flow right-to-left. The \"natural\" position of a rail is not obvious.",
-    related: ["Navigation Rail", "Sidebar", "Tab Bar"],
+    related: ["Sidebar", "Tab Bar"],
   },
   {
     id: "selection",
@@ -102,18 +102,17 @@ export default function ChallengesPage() {
         }}
       >
         {CHALLENGES.map((c, i) => (
-          <Link
+          <div
             key={c.id}
-            href={`/challenges/${c.id}`}
-            className="card-hover"
             style={{
               display: "grid",
-              gridTemplateColumns: "40px 1fr auto",
+              gridTemplateColumns: "40px 1fr 200px",
               gap: "var(--space-6)",
               padding: "var(--space-6) var(--space-8)",
               borderRadius: "var(--radius-xl)",
-              border: "1px solid",
-              alignItems: "start",
+              border: "1px solid var(--color-border)",
+              background: "var(--color-bg)",
+              alignItems: "stretch",
             }}
           >
             <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)", paddingTop: 3 }}>
@@ -150,10 +149,23 @@ export default function ChallengesPage() {
               </div>
             </div>
 
-            <svg style={{ color: "var(--color-fg-subtle)", flexShrink: 0, marginTop: 3 }} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
-          </Link>
+            <div
+              aria-hidden
+              style={{
+                alignSelf: "stretch",
+                minHeight: 128,
+                borderRadius: "var(--radius-lg)",
+                background: "var(--color-bg-subtle)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "var(--space-4)",
+                overflow: "hidden",
+              }}
+            >
+              <ChallengeVisual id={c.id} />
+            </div>
+          </div>
         ))}
       </div>
     </>
