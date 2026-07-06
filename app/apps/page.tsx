@@ -82,13 +82,13 @@ const APPS = [
   },
   {
     id: "notes",
-    name: "Vertically Do",
+    name: "To-do",
     platform: "Web",
     status: "Live",
     icon: "記",
-    href: "/notes",
+    href: "/apps/notes",
     description:
-      "A to-do list rethought for the vertical, right-to-left axis. Tasks are columns you read top→bottom, newest at the reading start; drag a column down to delete (a trashcan opens behind it in the vacated slot), sideways to reorder, and switch the whole interface across 한 / あ / 中.",
+      "Vertically Do — a to-do list rethought for the vertical, right-to-left axis. Tasks are columns you read top→bottom, newest at the reading start; drag a column down to delete (a trashcan opens behind it in the vacated slot), sideways to reorder, and switch the whole interface across 한 / あ / 中.",
     challenges: [
       "Tasks as full-height columns that stack right→left and scroll on the column axis",
       "Vertical pull-to-delete with a trashcan revealed behind the card",
