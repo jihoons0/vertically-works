@@ -80,6 +80,24 @@ export function Footer() {
                 </Link>
               ))}
             </div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+              <span style={{ fontSize: "0.75rem", fontWeight: 500, color: "var(--color-fg-subtle)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                Vertically Verse
+              </span>
+              {[
+                { href: "/verse/privacy", label: "Privacy Policy" },
+                { href: "/verse/support", label: "Support" },
+              ].map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  style={{ fontSize: "0.875rem", color: "var(--color-fg-muted)" }}
+                >
+                  {link.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
 
