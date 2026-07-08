@@ -1,3 +1,4 @@
+import registryManifest from "@/registry/registry.json";
 import { ButtonDemo } from "@/components/demos/ButtonDemo";
 import { TooltipDemo } from "@/components/demos/TooltipDemo";
 import { ToggleDemo } from "@/components/demos/ToggleDemo";
@@ -11,7 +12,6 @@ import { TextFieldDemo } from "@/components/demos/TextFieldDemo";
 import { SearchDemo } from "@/components/demos/SearchDemo";
 import { SliderDemo } from "@/components/demos/SliderDemo";
 import { TabsDemo } from "@/components/demos/TabsDemo";
-import { HighlightDemo } from "@/components/demos/HighlightDemo";
 import { ChapterNavigationDemo } from "@/components/demos/ChapterNavigationDemo";
 import { HyperlinkTreatmentDemo } from "@/components/demos/HyperlinkTreatmentDemo";
 import { DialogDemo } from "@/components/demos/DialogDemo";
@@ -53,7 +53,7 @@ export const COMPONENTS_REGISTRY: ComponentEntry[] = [
       {
         name: "Default",
         demo: <ButtonDemo />,
-        code: `import { VerticalButton } from "@/components/ui/vertical-button"
+        code: `import { VerticalButton } from "@/components/vw/vertical-button"
 
 export function ButtonDefault() {
   return (
@@ -134,53 +134,36 @@ export function ButtonDefault() {
     category: "Actions",
     description: "A pressable element that switches between two states — on and off.",
     problem: "Does the binary on/off axis conflict with vertical reading direction, or does its perpendicular orientation provide useful contrast?",
-    intent: "The horizontal on/off motion of a toggle is orthogonal to vertical reading — which actually signals a different semantic axis.",
+    intent: "In a vertical interface the toggle runs on the reading axis — the thumb travels up for on, matching the direction the eye already moves.",
     variants: [
       {
         name: "Default",
         demo: <ToggleDemo />,
-        code: `import { Switch } from "@/components/ui/switch"
+        code: `import { VerticalToggle } from "@/components/vw/toggle"
 
 function Settings() {
   const [dark, setDark] = useState(true)
-  const [serif, setSerif] = useState(false)
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-      <label style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "12px 16px",
-        border: "1px solid var(--color-border)",
-        borderRadius: 12,
-      }}>
-        <span>야간 모드</span>
-        <Switch checked={dark} onCheckedChange={setDark} />
-      </label>
-      <label style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "12px 16px",
-        border: "1px solid var(--color-border)",
-        borderRadius: 12,
-      }}>
-        <span>명조체</span>
-        <Switch checked={serif} onCheckedChange={setSerif} />
-      </label>
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+      <span id="dark-label" className="writing-vertical">야간 모드</span>
+      <VerticalToggle
+        checked={dark}
+        onCheckedChange={setDark}
+        aria-labelledby="dark-label"
+      />
     </div>
   )
 }`,
       },
     ],
     doList: [
-      "Keep toggle pill horizontal — the cross-axis communicates 'setting, not reading'",
+      "Run the toggle on the reading axis — thumb up = on, matching how the eye moves",
       "Always pair with a label that explains current state effect",
       "Use haptic feedback on state change in native implementations",
     ],
     dontList: [
-      "Rotate toggle pills to be vertical — they resemble sliders",
+      "Rotate a horizontal toggle with transform — build the vertical travel natively",
       "Use color alone to convey state",
       "Place toggle labels vertically unless they are single CJK characters",
     ],
@@ -618,56 +601,6 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
     ],
     accessibility: "Trigger is a labeled button; the open menu is role='toolbar', aria-label='구절 동작'. Each button has aria-label. Keyboard: arrow keys navigate within the menu, Escape collapses it.",
     openQuestion: "When the selected verse is in the leftmost column (reading terminus), where does the popover go? It can't extend further left.",
-    status: "built",
-  },
-  {
-    slug: "highlight",
-    name: "Highlight",
-    category: "Text",
-    description: "Color-coded annotation applied to selected vertical text.",
-    problem: "How should selection and highlight states work across RTL column order in a vertical layout?",
-    intent: "Highlights must persist across sessions, survive verse re-rendering, and visually distinguish different annotation categories without obscuring the text.",
-    variants: [
-      {
-        name: "Default",
-        demo: <HighlightDemo />,
-        code: `// Highlight applied as CSS custom property
-// Color stored per-verse in user state
-
-const HIGHLIGHT_COLORS = {
-  yellow: "#FFD166",
-  green: "#06D6A0",
-  blue: "#118AB2",
-  red: "#EF476F",
-}
-
-function highlightStyle(color) {
-  return {
-    background: \`\${color}40\`,       // 25% opacity
-    borderLeft: \`3px solid \${color}\`, // full opacity marker
-    borderRadius: 4,
-    padding: "0 3px",
-  }
-}
-
-// Usage — applied to the verse span
-<span style={highlightStyle(HIGHLIGHT_COLORS.yellow)}>
-  {verseText}
-</span>`,
-      },
-    ],
-    doList: [
-      "Store highlights by verse reference, not by character offset",
-      "Use distinct visual channels (color + border) for different highlight categories",
-      "Persist highlights to local storage and sync across sessions",
-    ],
-    dontList: [
-      "Store character offsets for vertical text — column reflow breaks them",
-      "Use more than 4–5 highlight colors — they become indistinguishable",
-      "Remove highlights on theme change — store color as a semantic label, not a hex value",
-    ],
-    accessibility: "Announce highlight application via live region. Provide keyboard mechanism to highlight selected text. Ensure color + non-color cues.",
-    openQuestion: "Should highlight removal require a deliberate action (tap the highlight, choose 'remove') or a tap toggle? The latter risks accidental removal.",
     status: "built",
   },
   {
@@ -1292,18 +1225,20 @@ function VerticalMessage({ from, text, time, avatar }) {
       {
         name: "Default",
         demo: <VerticalListCellDemo />,
-        code: `import { VerticalListCell } from "@/components/ui/vertical-list-cell"
+        code: `import { VerticalListCell } from "@/components/vw/vertical-list-cell"
 
 export function ContentsList() {
   return (
-    <div style={{ display: "flex", flexDirection: "row-reverse", gap: 12, overflowX: "auto" }}>
+    <div role="listbox" aria-label="목차" style={{ display: "flex", flexDirection: "row-reverse", gap: 12, overflowX: "auto" }}>
       {chapters.map((c, i) => (
         <VerticalListCell
           key={c.title}
-          index={i + 1}
+          leading={i + 1}
           title={c.title}
           subtitle={c.sub}
-          accessory="chevron"   // chevron points down, along the reading axis
+          accessory="chevron"   // points down, along the reading axis
+          selected={c.id === current}
+          onClick={() => setCurrent(c.id)}
         />
       ))}
     </div>
@@ -1334,4 +1269,14 @@ export function getComponent(slug: string): ComponentEntry | undefined {
 
 export function getAllSlugs(): string[] {
   return COMPONENTS_REGISTRY.map((c) => c.slug);
+}
+
+// ── Install metadata (registry/registry.json is the manifest the CLI serves) ──
+
+export function getInstallMeta(slug: string): { installName: string; sourceFile: string } | null {
+  const item = registryManifest.items.find(
+    (i) => "siteSlug" in i && (i as { siteSlug?: string }).siteSlug === slug
+  );
+  if (!item) return null;
+  return { installName: item.name, sourceFile: item.files[0].path };
 }

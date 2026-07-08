@@ -1,0 +1,103 @@
+{
+  "name": "verticallyworks",
+  "homepage": "https://vertically.works",
+  "items": [
+    {
+      "name": "tokens",
+      "title": "Design tokens",
+      "description": "Semantic colors with light/dark/sepia themes, spacing, radius, motion tokens, corner smoothing, and vertical-writing utilities.",
+      "type": "registry:item",
+      "files": [
+        { "path": "registry/tokens.css", "type": "registry:file", "target": "components/vw/tokens.css" }
+      ]
+    },
+    {
+      "name": "vertical-button",
+      "siteSlug": "button",
+      "title": "Vertical Button",
+      "description": "A button whose label is set on the vertical reading axis — real writing-mode, never a rotation.",
+      "type": "registry:component",
+      "files": [
+        { "path": "registry/components/vertical-button.tsx", "type": "registry:component" }
+      ],
+      "registryDependencies": ["tokens"]
+    },
+    {
+      "name": "toggle",
+      "siteSlug": "toggle",
+      "title": "Vertical Toggle",
+      "description": "An on/off switch whose thumb travels the reading axis — up is on. role=\"switch\" semantics.",
+      "type": "registry:component",
+      "files": [
+        { "path": "registry/components/toggle.tsx", "type": "registry:component" }
+      ],
+      "registryDependencies": ["tokens"]
+    },
+    {
+      "name": "vertical-list-cell",
+      "siteSlug": "vertical-list-cell",
+      "title": "Vertical List Cell",
+      "description": "The primitive behind every vertical list: a full-height column cell with leading at the top and the accessory pointing down.",
+      "type": "registry:component",
+      "files": [
+        { "path": "registry/components/vertical-list-cell.tsx", "type": "registry:component" }
+      ],
+      "registryDependencies": ["tokens"]
+    },
+    {
+      "name": "tooltip",
+      "siteSlug": "tooltip",
+      "title": "Vertical Tooltip",
+      "description": "A tooltip that opens to the left of its trigger — along the reading direction — with vertical content. Hover, focus, and Escape handling built in.",
+      "type": "registry:component",
+      "files": [
+        { "path": "registry/components/tooltip.tsx", "type": "registry:component" }
+      ],
+      "registryDependencies": ["tokens"]
+    },
+    {
+      "name": "dialog",
+      "siteSlug": "dialog",
+      "title": "Vertical Dialog",
+      "description": "A modal dialog whose title, description, and actions read as vertical columns. Focus trap, Escape, scrim dismiss, focus restore.",
+      "type": "registry:component",
+      "files": [
+        { "path": "registry/components/dialog.tsx", "type": "registry:component" }
+      ],
+      "registryDependencies": ["tokens"]
+    },
+    {
+      "name": "sheet",
+      "siteSlug": "sheet",
+      "title": "Vertical Sheet",
+      "description": "An edge sheet aware of the reading axis — enter from screen geometry (bottom) or reading direction (left/right). Modal semantics included.",
+      "type": "registry:component",
+      "files": [
+        { "path": "registry/components/sheet.tsx", "type": "registry:component" }
+      ],
+      "registryDependencies": ["tokens"]
+    },
+    {
+      "name": "text-field",
+      "siteSlug": "text-field",
+      "title": "Vertical Text Field",
+      "description": "A labeled input for vertical interfaces: vertical label, deliberately horizontal input (CJK IME composition needs the baseline), accessible help/error wiring.",
+      "type": "registry:component",
+      "files": [
+        { "path": "registry/components/text-field.tsx", "type": "registry:component" }
+      ],
+      "registryDependencies": ["tokens"]
+    },
+    {
+      "name": "tabs",
+      "siteSlug": "tabs",
+      "title": "Vertical Tabs",
+      "description": "A tab rail on the reading axis: vertical labels at the right edge, panels to their left, full tablist keyboard semantics.",
+      "type": "registry:component",
+      "files": [
+        { "path": "registry/components/tabs.tsx", "type": "registry:component" }
+      ],
+      "registryDependencies": ["tokens"]
+    }
+  ]
+}

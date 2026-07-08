@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Generated registry output + the standalone CLI package:
+    "public/r/**",
+    "packages/**",
   ]),
 ]);
 

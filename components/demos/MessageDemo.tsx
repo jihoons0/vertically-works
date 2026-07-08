@@ -13,7 +13,7 @@ const MESSAGES = [
 
 function Avatar({ label, me }: { label: string; me: boolean }) {
   return (
-    <div style={{
+    <div className="corner-round" style={{
       width: 32, height: 32, borderRadius: "50%", flexShrink: 0,
       background: me ? "var(--color-fg)" : "var(--color-bg-muted)",
       border: "1px solid var(--color-border)",
@@ -151,7 +151,7 @@ export function MessageDemo() {
           }}>
             메시지 입력…
           </div>
-          <button className="pressable"
+          <button className="pressable corner-round"
             onClick={() => { setSent(true); setTimeout(() => setSent(false), 800); }}
             style={{
               width: 36, height: 36, borderRadius: "50%",

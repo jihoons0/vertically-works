@@ -1,0 +1,17 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "vertical-button",
+  "type": "registry:component",
+  "title": "Vertical Button",
+  "description": "A button whose label is set on the vertical reading axis — real writing-mode, never a rotation.",
+  "registryDependencies": [
+    "https://vertically.works/r/tokens.json"
+  ],
+  "files": [
+    {
+      "path": "registry/components/vertical-button.tsx",
+      "type": "registry:component",
+      "content": "\"use client\";\n\n/**\n * VerticalButton — a button whose label is set on the vertical reading axis.\n *\n * The label uses real `writing-mode: vertical-rl` (never a rotation transform),\n * so mixed CJK/Latin content orients correctly per glyph. The horizontal\n * cross-axis stays a comfortable touch target regardless of label length.\n *\n * Docs: https://vertically.works/components/button\n */\n\nimport type { ButtonHTMLAttributes, CSSProperties, ReactNode } from \"react\";\n\nexport interface VerticalButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {\n  /** Visual weight. `primary` inverts, `outline` draws a border, `ghost` sits on muted ground. */\n  variant?: \"primary\" | \"outline\" | \"ghost\";\n  children: ReactNode;\n}\n\nconst VARIANT_STYLES: Record<NonNullable<VerticalButtonProps[\"variant\"]>, CSSProperties> = {\n  primary: {\n    background: \"var(--color-fg)\",\n    color: \"var(--color-bg)\",\n    border: \"1px solid var(--color-fg)\",\n  },\n  outline: {\n    background: \"transparent\",\n    color: \"var(--color-fg)\",\n    border: \"1.5px solid var(--color-border-strong)\",\n  },\n  ghost: {\n    background: \"var(--color-bg-muted)\",\n    color: \"var(--color-fg-muted)\",\n    border: \"1px solid transparent\",\n  },\n};\n\nexport function VerticalButton({\n  variant = \"primary\",\n  children,\n  style,\n  ...rest\n}: VerticalButtonProps) {\n  return (\n    <button\n      data-vw=\"button\"\n      className=\"pressable\"\n      style={{\n        writingMode: \"vertical-rl\",\n        textOrientation: \"mixed\",\n        display: \"inline-flex\",\n        alignItems: \"center\",\n        justifyContent: \"center\",\n        minWidth: 44, // touch target across the reading axis\n        padding: \"var(--space-4) var(--space-3)\",\n        borderRadius: \"var(--radius-xl)\",\n        fontSize: \"0.9375rem\",\n        fontWeight: 600,\n        letterSpacing: \"0.05em\",\n        fontFamily: \"inherit\",\n        cursor: \"pointer\",\n        transition: `opacity var(--duration-fast) var(--easing-default)`,\n        ...VARIANT_STYLES[variant],\n        ...(rest.disabled ? { opacity: 0.45, cursor: \"not-allowed\" } : {}),\n        ...style,\n      }}\n      {...rest}\n    >\n      {children}\n    </button>\n  );\n}\n"
+    }
+  ]
+}

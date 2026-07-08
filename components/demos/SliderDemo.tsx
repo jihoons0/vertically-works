@@ -31,7 +31,7 @@ export function SliderDemo() {
                 style={{ width: 6, height: 140, background: "var(--color-border)", borderRadius: 3, position: "relative", cursor: "ns-resize", touchAction: "none" }}
               >
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: `${((value - min) / (max - min)) * 100}%`, background: "var(--color-fg)", borderRadius: 3 }} />
-                <div style={{ position: "absolute", left: "50%", bottom: `calc(${((value - min) / (max - min)) * 100}% - 10px)`, transform: "translateX(-50%)", width: 20, height: 20, borderRadius: "50%", background: "var(--color-fg)", border: "2px solid var(--color-bg)", boxShadow: "0 2px 8px rgba(0,0,0,0.2)" }} />
+                <div className="corner-round" style={{ position: "absolute", left: "50%", bottom: `calc(${((value - min) / (max - min)) * 100}% - 10px)`, transform: "translateX(-50%)", width: 20, height: 20, borderRadius: "50%", background: "var(--color-fg)", border: "2px solid var(--color-bg)", boxShadow: "0 2px 8px rgba(0,0,0,0.2)" }} />
               </div>
               <span style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)" }}>{value}</span>
               <span style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)" }}>{sub}</span>

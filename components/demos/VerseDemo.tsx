@@ -145,6 +145,7 @@ export function VerseDemo() {
             >
               <span
                 aria-hidden
+                className="corner-round"
                 style={{
                   width: 24,
                   height: 24,

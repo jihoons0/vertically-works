@@ -14,9 +14,17 @@ const NAV_LINKS = [
   { href: "/resources", label: "Resources" },
 ];
 
+// Shown in the Applications hover dropdown (desktop) and indented in the mobile menu.
+const APP_LINKS = [
+  { href: "/apps/vertically-verse", name: "Vertically Verse", sub: "Scripture reader · iOS" },
+  { href: "/apps/vertically-do", name: "Vertically Do", sub: "To-do list · Web" },
+  { href: "/apps/vertically-listen", name: "Vertically Listen", sub: "Podcast player · Web" },
+];
+
 export function Navigation() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [appsOpen, setAppsOpen] = useState(false);
 
   return (
     <header
@@ -63,10 +71,27 @@ export function Navigation() {
         >
           {NAV_LINKS.map((link) => {
             const active = pathname === link.href || pathname.startsWith(link.href + "/");
+            const hasDropdown = link.href === "/apps";
             return (
-              <li key={link.href}>
+              <li
+                key={link.href}
+                style={hasDropdown ? { position: "relative" } : undefined}
+                onMouseEnter={hasDropdown ? () => setAppsOpen(true) : undefined}
+                onMouseLeave={hasDropdown ? () => setAppsOpen(false) : undefined}
+                onFocus={hasDropdown ? () => setAppsOpen(true) : undefined}
+                onBlur={
+                  hasDropdown
+                    ? (e) => {
+                        if (!e.currentTarget.contains(e.relatedTarget as Node)) setAppsOpen(false);
+                      }
+                    : undefined
+                }
+                onKeyDown={hasDropdown ? (e) => { if (e.key === "Escape") setAppsOpen(false); } : undefined}
+              >
                 <Link
                   href={link.href}
+                  aria-expanded={hasDropdown ? appsOpen : undefined}
+                  aria-haspopup={hasDropdown || undefined}
                   style={{
                     fontSize: "0.875rem",
                     fontWeight: active ? 500 : 400,
@@ -76,7 +101,9 @@ export function Navigation() {
                     transition: `color var(--duration-fast) var(--easing-default),
                                  background var(--duration-fast) var(--easing-default)`,
                     background: active ? "var(--color-bg-muted)" : "transparent",
-                    display: "block",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 5,
                   }}
                   onMouseEnter={(e) => {
                     if (!active) {
@@ -92,7 +119,110 @@ export function Navigation() {
                   }}
                 >
                   {link.label}
+                  {hasDropdown && (
+                    <svg
+                      width="9"
+                      height="9"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden
+                      style={{
+                        transform: appsOpen ? "rotate(180deg)" : "none",
+                        transition: "transform var(--duration-fast) var(--easing-out)",
+                        opacity: 0.6,
+                      }}
+                    >
+                      <path d="m6 9 6 6 6-6" />
+                    </svg>
+                  )}
                 </Link>
+
+                {/* Applications dropdown — hover/focus disclosure */}
+                {hasDropdown && (
+                  <div
+                    aria-hidden={!appsOpen}
+                    style={{
+                      position: "absolute",
+                      top: "100%",
+                      left: 0,
+                      paddingTop: "var(--space-2)", // hover bridge — no dead gap
+                      zIndex: 60,
+                      opacity: appsOpen ? 1 : 0,
+                      transform: appsOpen ? "none" : "translateY(-4px)",
+                      pointerEvents: appsOpen ? "auto" : "none",
+                      transition:
+                        "opacity var(--duration-fast) var(--easing-out), transform var(--duration-fast) var(--easing-out)",
+                    }}
+                  >
+                    <ul
+                      role="list"
+                      aria-label="Applications"
+                      style={{
+                        listStyle: "none",
+                        margin: 0,
+                        minWidth: 224,
+                        padding: "var(--space-2)",
+                        borderRadius: "var(--radius-lg)",
+                        border: "1px solid var(--color-border)",
+                        background: "var(--color-bg)",
+                        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 2,
+                      }}
+                    >
+                      {APP_LINKS.map((app) => (
+                        <li key={app.href}>
+                          <Link
+                            href={app.href}
+                            tabIndex={appsOpen ? 0 : -1}
+                            onClick={() => setAppsOpen(false)}
+                            style={{
+                              display: "block",
+                              padding: "var(--space-2) var(--space-3)",
+                              borderRadius: "var(--radius-md)",
+                              transition: "background var(--duration-fast) var(--easing-default)",
+                            }}
+                            onMouseEnter={(e) => {
+                              (e.currentTarget as HTMLAnchorElement).style.background = "var(--color-bg-subtle)";
+                            }}
+                            onMouseLeave={(e) => {
+                              (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+                            }}
+                          >
+                            <span style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "var(--color-fg)", marginBottom: 1 }}>
+                              {app.name}
+                            </span>
+                            <span style={{ display: "block", fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>
+                              {app.sub}
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                      <li style={{ borderTop: "1px solid var(--color-border)", marginTop: 2, paddingTop: 2 }}>
+                        <Link
+                          href="/apps"
+                          tabIndex={appsOpen ? 0 : -1}
+                          onClick={() => setAppsOpen(false)}
+                          className="link-muted-hover"
+                          style={{
+                            display: "block",
+                            padding: "var(--space-2) var(--space-3)",
+                            borderRadius: "var(--radius-md)",
+                            fontSize: "0.8125rem",
+                            fontWeight: 500,
+                          }}
+                        >
+                          All applications →
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                )}
               </li>
             );
           })}
@@ -189,6 +319,36 @@ className="nav-mobile-dropdown"
                   >
                     {link.label}
                   </Link>
+
+                  {/* App sublinks, indented under Applications */}
+                  {link.href === "/apps" && (
+                    <ul role="list" style={{ listStyle: "none", margin: 0, padding: 0 }}>
+                      {APP_LINKS.map((app) => {
+                        const subActive = pathname === app.href || pathname.startsWith(app.href + "/");
+                        return (
+                          <li key={app.href}>
+                            <Link
+                              href={app.href}
+                              onClick={() => setMobileOpen(false)}
+                              style={{
+                                display: "block",
+                                padding: "var(--space-2) var(--space-3)",
+                                marginLeft: "var(--space-4)",
+                                fontSize: "0.875rem",
+                                fontWeight: subActive ? 500 : 400,
+                                color: subActive ? "var(--color-fg)" : "var(--color-fg-muted)",
+                                borderRadius: "var(--radius-md)",
+                                background: subActive ? "var(--color-bg-muted)" : "transparent",
+                                borderLeft: "1px solid var(--color-border)",
+                              }}
+                            >
+                              {app.name}
+                            </Link>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
                 </li>
               );
             })}

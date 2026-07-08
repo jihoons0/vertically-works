@@ -1,70 +1,9 @@
 @import "tailwindcss";
+@import "../registry/tokens.css";
 
-/* ─── Semantic color tokens ─── */
-:root {
-  --color-bg: #ffffff;
-  --color-bg-subtle: #f9f9f9;
-  --color-bg-muted: #f3f3f3;
-  --color-fg: #0a0a0a;
-  --color-fg-muted: #737373;
-  --color-fg-subtle: #a3a3a3;
-  --color-border: #e5e5e5;
-  --color-border-strong: #d4d4d4;
-  --color-accent: #0a0a0a;
-  --color-accent-fg: #ffffff;
-
-  /* Vertical text label colors */
-  --color-vt-label: #0a0a0a;
-  --color-vt-label-muted: #a3a3a3;
-}
-
-[data-theme="light"] {
-  --color-bg: #ffffff;
-  --color-bg-subtle: #f9f9f9;
-  --color-bg-muted: #f3f3f3;
-  --color-fg: #0a0a0a;
-  --color-fg-muted: #737373;
-  --color-fg-subtle: #a3a3a3;
-  --color-border: #e5e5e5;
-  --color-border-strong: #d4d4d4;
-  --color-accent: #0a0a0a;
-  --color-accent-fg: #ffffff;
-
-  --color-vt-label: #0a0a0a;
-  --color-vt-label-muted: #a3a3a3;
-}
-
-[data-theme="dark"] {
-  --color-bg: #0a0a0a;
-  --color-bg-subtle: #111111;
-  --color-bg-muted: #1a1a1a;
-  --color-fg: #fafafa;
-  --color-fg-muted: #a3a3a3;
-  --color-fg-subtle: #525252;
-  --color-border: #262626;
-  --color-border-strong: #404040;
-  --color-accent: #fafafa;
-  --color-accent-fg: #0a0a0a;
-
-  --color-vt-label: #fafafa;
-  --color-vt-label-muted: #525252;
-}
-
-[data-theme="sepia"] {
-  --color-bg: #f4ecd8;
-  --color-bg-subtle: #efe4cb;
-  --color-bg-muted: #e7d9ba;
-  --color-fg: #4b3b2b;
-  --color-fg-muted: #7a6650;
-  --color-fg-subtle: #a08a6d;
-  --color-border: #ddcdac;
-  --color-border-strong: #c8b58e;
-  --color-accent: #4b3b2b;
-  --color-accent-fg: #f4ecd8;
-
-  --color-vt-label: #4b3b2b;
-  --color-vt-label-muted: #a08a6d;
-}
+/* Design tokens, themes, vertical-text utilities, .pressable, and corner
+   smoothing live in registry/tokens.css — the same file users install with
+   `npx verticallyworks init`. Everything below is site-only chrome. */
 
 /* ─── Tailwind v4 theme tokens ─── */
 @theme inline {
@@ -75,64 +14,11 @@
   --color-foreground: var(--color-fg);
 }
 
-/* ─── Spacing scale ─── */
-:root {
-  --space-1: 4px;
-  --space-2: 8px;
-  --space-3: 12px;
-  --space-4: 16px;
-  --space-5: 20px;
-  --space-6: 24px;
-  --space-8: 32px;
-  --space-10: 40px;
-  --space-12: 48px;
-  --space-16: 64px;
-  --space-20: 80px;
-  --space-24: 96px;
-  --space-32: 128px;
-}
-
-/* ─── Radius scale ─── */
-:root {
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
-  --radius-full: 9999px;
-}
-
-/* ─── Motion tokens ─── */
-:root {
-  --duration-micro: 80ms;
-  --duration-fast: 150ms;
-  --duration-base: 200ms;
-  --duration-slow: 300ms;
-  --duration-page: 400ms;
-
-  /* Color/opacity transitions — plain, unobtrusive */
-  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
-  --easing-in: cubic-bezier(0.4, 0, 1, 1);
-  /* Strong ease-out for entrances & UI feedback (stronger than Material's weak default) */
-  --easing-out: cubic-bezier(0.23, 1, 0.32, 1);
-  /* Strong ease-in-out for on-screen movement/morphing */
-  --easing-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  /* iOS-like drawer/panel curve (Ionic) */
-  --easing-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-  --easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  :root {
-    --duration-micro: 0ms;
-    --duration-fast: 0ms;
-    --duration-base: 0ms;
-    --duration-slow: 0ms;
-    --duration-page: 0ms;
-  }
-
   /* Universal reset — reaches inline style={{ transition/animation }} in the
-     demos, which CSS-variable overrides above cannot. Keeps a ~0 duration
-     (not `none`) so state still lands, and preserves opacity/color fades. */
+     site's demos, which CSS-variable overrides cannot. Keeps a ~0 duration
+     (not `none`) so state still lands, and preserves opacity/color fades.
+     Deliberately NOT part of tokens.css: too invasive for host projects. */
   *,
   *::before,
   *::after {
@@ -196,17 +82,6 @@ a {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-fg-muted);
-}
-
-/* ─── Vertical text utility ─── */
-.writing-vertical {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-}
-
-.writing-vertical-upright {
-  writing-mode: vertical-rl;
-  text-orientation: upright;
 }
 
 /* ─── Prose (for MDX content) ─── */
@@ -310,6 +185,66 @@ a {
   }
 }
 
+/* ─── Home page responsive helpers ─── */
+.home-hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+.home-hero-motif {
+  display: none;
+}
+@media (min-width: 900px) {
+  .home-hero {
+    grid-template-columns: 1fr auto;
+  }
+  .home-hero-motif {
+    display: block;
+  }
+}
+
+.home-bento {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 720px) {
+  .home-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ─── App detail lead: media + intro two-up ─── */
+.app-detail-lead {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-12);
+  align-items: center;
+}
+@media (min-width: 880px) {
+  .app-detail-lead {
+    grid-template-columns: minmax(280px, 380px) 1fr;
+  }
+}
+
+/* ─── Playground layout (standalone page + home embed) ─── */
+.playground-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: start;
+}
+@media (min-width: 880px) {
+  .playground-grid {
+    grid-template-columns: 280px 1fr;
+  }
+  .playground-controls {
+    position: sticky;
+    top: 72px;
+  }
+}
+
 /* ─── Hover utility classes (CSS-only, works in Server Components) ─── */
 
 .card-hover {
@@ -366,31 +301,17 @@ a {
   background: var(--color-bg);
 }
 
-/* ─── Pressable — instant tactile feedback on any interactive element ─── */
-/* Subtle scale on :active makes the UI feel like it's listening. scale() also
-   scales children (icon + label), so the whole control responds as one. */
-.pressable {
-  transition: transform 140ms var(--easing-out);
-  touch-action: manipulation;
+/* Section-level "view all" CTAs — outline at rest, full monochrome invert on
+   hover so the action registers on both plain and subtle section backgrounds. */
+.btn-cta-hover {
+  background: transparent;
+  border-color: var(--color-border-strong);
+  transition: background var(--duration-fast) var(--easing-default),
+              color var(--duration-fast) var(--easing-default),
+              border-color var(--duration-fast) var(--easing-default);
 }
-.pressable:active {
-  transform: scale(0.97);
+.btn-cta-hover:hover {
+  background: var(--color-fg);
+  color: var(--color-bg) !important;
+  border-color: var(--color-fg);
 }
-.pressable-strong {
-  transition: transform 140ms var(--easing-out);
-  touch-action: manipulation;
-}
-.pressable-strong:active {
-  transform: scale(0.93);
-}
-@media (prefers-reduced-motion: reduce) {
-  .pressable,
-  .pressable-strong {
-    transition: none;
-  }
-  .pressable:active,
-  .pressable-strong:active {
-    transform: none;
-  }
-}
-

@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+// Dogfoods the real registry component — the same file
+// `npx verticallyworks add vertical-button` copies into a project.
+import { VerticalButton } from "@/components/vw/vertical-button";
 
 const VARIANTS = [
   { id: "primary", label: "Primary", labelKo: "다음 장" },
@@ -10,11 +12,9 @@ const VARIANTS = [
 ];
 
 export function ButtonDemo() {
-  const [active, setActive] = useState<string | null>(null);
-
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
-      {/* Interactive demo */}
+      {/* Interactive demo — press feedback comes from the component itself */}
       <div
         style={{
           background: "var(--color-bg-muted)",
@@ -28,102 +28,10 @@ export function ButtonDemo() {
           minHeight: 200,
         }}
       >
-        {/* Primary */}
-        <button
-          onMouseDown={() => setActive("primary")}
-          onMouseUp={() => setActive(null)}
-          onMouseLeave={() => setActive(null)}
-          style={{
-            writingMode: "vertical-rl",
-            textOrientation: "mixed",
-            padding: "var(--space-5) var(--space-4)",
-            background: "var(--color-fg)",
-            color: "var(--color-bg)",
-            border: "none",
-            borderRadius: "var(--radius-xl)",
-            fontSize: "1rem",
-            fontWeight: 600,
-            letterSpacing: "0.06em",
-            cursor: "pointer",
-            transform: active === "primary" ? "scale(0.94)" : "scale(1)",
-            transition: `transform 80ms ease`,
-            fontFamily: "inherit",
-          }}
-        >
-          다음 장
-        </button>
-
-        {/* Outline */}
-        <button
-          onMouseDown={() => setActive("outline")}
-          onMouseUp={() => setActive(null)}
-          onMouseLeave={() => setActive(null)}
-          style={{
-            writingMode: "vertical-rl",
-            textOrientation: "mixed",
-            padding: "var(--space-5) var(--space-4)",
-            background: "transparent",
-            color: "var(--color-fg)",
-            border: "1.5px solid var(--color-border-strong)",
-            borderRadius: "var(--radius-xl)",
-            fontSize: "1rem",
-            fontWeight: 500,
-            letterSpacing: "0.06em",
-            cursor: "pointer",
-            transform: active === "outline" ? "scale(0.94)" : "scale(1)",
-            transition: `transform 80ms ease`,
-            fontFamily: "inherit",
-          }}
-        >
-          이전 장
-        </button>
-
-        {/* Ghost */}
-        <button
-          onMouseDown={() => setActive("ghost")}
-          onMouseUp={() => setActive(null)}
-          onMouseLeave={() => setActive(null)}
-          style={{
-            writingMode: "vertical-rl",
-            textOrientation: "mixed",
-            padding: "var(--space-5) var(--space-4)",
-            background: "transparent",
-            color: "var(--color-fg-muted)",
-            border: "none",
-            borderRadius: "var(--radius-xl)",
-            fontSize: "1rem",
-            fontWeight: 500,
-            letterSpacing: "0.06em",
-            cursor: "pointer",
-            transform: active === "ghost" ? "scale(0.94)" : "scale(1)",
-            transition: `transform 80ms ease`,
-            fontFamily: "inherit",
-          }}
-        >
-          설정
-        </button>
-
-        {/* Disabled */}
-        <button
-          disabled
-          style={{
-            writingMode: "vertical-rl",
-            textOrientation: "mixed",
-            padding: "var(--space-5) var(--space-4)",
-            background: "var(--color-bg-muted)",
-            color: "var(--color-fg-subtle)",
-            border: "1px solid var(--color-border)",
-            borderRadius: "var(--radius-xl)",
-            fontSize: "1rem",
-            fontWeight: 500,
-            letterSpacing: "0.06em",
-            cursor: "not-allowed",
-            opacity: 0.45,
-            fontFamily: "inherit",
-          }}
-        >
-          비활성
-        </button>
+        <VerticalButton variant="primary">다음 장</VerticalButton>
+        <VerticalButton variant="outline">이전 장</VerticalButton>
+        <VerticalButton variant="ghost">설정</VerticalButton>
+        <VerticalButton variant="outline" disabled>비활성</VerticalButton>
       </div>
 
       {/* Variant labels */}

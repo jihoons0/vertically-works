@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getComponent, getAllSlugs, COMPONENTS_REGISTRY } from "@/lib/components-registry";
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import { getComponent, getAllSlugs, getInstallMeta, COMPONENTS_REGISTRY } from "@/lib/components-registry";
 import { CodeBlock } from "@/components/ui/CodeBlock";
+import { InstallCommand } from "@/components/ui/InstallCommand";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -56,6 +59,13 @@ export default async function ComponentPage({ params }: Props) {
   const { slug } = await params;
   const comp = getComponent(slug);
   if (!comp) notFound();
+
+  // Installable components show their real, shipping source — read at build
+  // time (these pages are statically generated) straight from registry/.
+  const installMeta = getInstallMeta(slug);
+  const source = installMeta
+    ? await readFile(path.join(process.cwd(), installMeta.sourceFile), "utf8")
+    : null;
 
   const allComponents = COMPONENTS_REGISTRY;
   const currentIdx = allComponents.findIndex((c) => c.slug === slug);
@@ -163,6 +173,13 @@ export default async function ComponentPage({ params }: Props) {
           </p>
         </div>
 
+        {/* Install command — this component ships from the registry */}
+        {installMeta && (
+          <div style={{ marginBottom: "var(--space-8)" }}>
+            <InstallCommand name={installMeta.installName} />
+          </div>
+        )}
+
         {/* Design question callout */}
         <div
           style={{
@@ -216,6 +233,20 @@ export default async function ComponentPage({ params }: Props) {
             </div>
           ))}
         </div>
+
+        {/* Source — the exact file `npx verticallyworks add` copies */}
+        {source && installMeta && (
+          <div style={{ marginTop: "var(--space-16)", paddingTop: "var(--space-12)", borderTop: "1px solid var(--color-border)" }}>
+            <h2 style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-fg)", margin: "0 0 var(--space-3)" }}>
+              Source
+            </h2>
+            <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-5)", lineHeight: 1.65, maxWidth: "60ch" }}>
+              The exact file <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>npx verticallyworks add {installMeta.installName}</code> copies
+              into your project — yours to edit. Styling comes entirely from the design tokens.
+            </p>
+            <CodeBlock code={source.trim()} language="tsx" />
+          </div>
+        )}
 
         {/* Guidance */}
         <div style={{ marginTop: "var(--space-16)", paddingTop: "var(--space-12)", borderTop: "1px solid var(--color-border)" }}>

@@ -12,7 +12,6 @@ const SAMPLES: Record<Lang, { label: string; text: string }> = {
 type Lang = "ko" | "ja" | "zh";
 type Orient = "vertical" | "horizontal";
 type Reading = "rtl" | "ltr";
-type Align = "start" | "center" | "end";
 type Theme = "light" | "dark" | "sepia";
 type Device = "mobile" | "tablet" | "desktop";
 
@@ -20,7 +19,6 @@ type State = {
   lang: Lang;
   orient: Orient;
   reading: Reading;
-  align: Align;
   theme: Theme;
   size: number;
   device: Device;
@@ -31,7 +29,6 @@ const DEFAULTS: State = {
   lang: "ko",
   orient: "vertical",
   reading: "rtl",
-  align: "start",
   theme: "light",
   size: 22,
   device: "desktop",
@@ -46,7 +43,6 @@ function encode(s: State): string {
   p.set("lang", s.lang);
   p.set("dir", s.orient === "vertical" ? "v" : "h");
   p.set("read", s.reading);
-  p.set("align", s.align);
   p.set("theme", s.theme);
   p.set("size", String(s.size));
   p.set("device", s.device);
@@ -64,8 +60,6 @@ function decode(search: string): Partial<State> {
   if (dir === "h") out.orient = "horizontal";
   const read = p.get("read");
   if (read === "rtl" || read === "ltr") out.reading = read;
-  const align = p.get("align");
-  if (align === "start" || align === "center" || align === "end") out.align = align;
   const theme = p.get("theme");
   if (theme === "light" || theme === "dark" || theme === "sepia") out.theme = theme;
   const size = Number(p.get("size"));
@@ -78,42 +72,32 @@ function decode(search: string): Partial<State> {
   return out;
 }
 
-export function PlaygroundClient() {
+export function PlaygroundClient({ embedded = false }: { embedded?: boolean }) {
   const [s, setS] = useState<State>(DEFAULTS);
-  const [copied, setCopied] = useState(false);
   const set = <K extends keyof State>(key: K, value: State[K]) => setS((prev) => ({ ...prev, [key]: value }));
 
-  // Hydrate from URL once on mount.
+  // Hydrate from URL once on mount. When embedded (e.g. on the home page) the
+  // page's URL isn't ours — leave it alone in both directions.
   useEffect(() => {
+    if (embedded) return;
     const fromUrl = decode(window.location.search);
     if (Object.keys(fromUrl).length) setS((prev) => ({ ...prev, ...fromUrl }));
-  }, []);
+  }, [embedded]);
 
   // Reflect state into the URL (shareable config).
   useEffect(() => {
+    if (embedded) return;
     const qs = encode(s);
     window.history.replaceState(null, "", `${window.location.pathname}?${qs}`);
-  }, [s]);
-
-  const copyLink = () => {
-    navigator.clipboard?.writeText(window.location.href);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1400);
-  };
+  }, [s, embedded]);
 
   // ── Derived preview styles ──
   const isVertical = s.orient === "vertical";
   const writingMode = isVertical ? (s.reading === "rtl" ? "vertical-rl" : "vertical-lr") : "horizontal-tb";
-  const alignFlex = s.align === "start" ? "flex-start" : s.align === "center" ? "center" : "flex-end";
-
-  const canvasAlign: CSSProperties = isVertical
-    ? { alignItems: alignFlex, justifyContent: "center" }
-    : { alignItems: "center", justifyContent: "center" };
 
   const textStyle: CSSProperties = {
     writingMode,
     ...(isVertical ? { textOrientation: "mixed" } : { direction: s.reading }),
-    textAlign: isVertical ? undefined : (s.align as CSSProperties["textAlign"]),
     fontSize: s.size,
     lineHeight: 1.9,
     letterSpacing: "0.08em",
@@ -132,9 +116,9 @@ export function PlaygroundClient() {
     : {};
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "280px 1fr", gap: "var(--space-8)", alignItems: "start" }}>
+    <div className="playground-grid">
       {/* ── Controls ── */}
-      <div style={{ border: "1px solid var(--color-border)", borderRadius: "var(--radius-xl)", overflow: "hidden", background: "var(--color-bg)", position: "sticky", top: 72 }}>
+      <div className="playground-controls" style={{ border: "1px solid var(--color-border)", borderRadius: "var(--radius-xl)", overflow: "hidden", background: "var(--color-bg)" }}>
         <div style={{ padding: "var(--space-4) var(--space-5)", borderBottom: "1px solid var(--color-border)", background: "var(--color-bg-subtle)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <span style={{ fontSize: "0.8125rem", fontWeight: 600, color: "var(--color-fg)", letterSpacing: "-0.01em" }}>Controls</span>
           <button onClick={() => setS(DEFAULTS)} className="pressable" style={ghostBtn}>Reset</button>
@@ -144,16 +128,6 @@ export function PlaygroundClient() {
           <Segmented label="Language" value={s.lang} onChange={(v) => set("lang", v)} options={[{ id: "ko", label: "한" }, { id: "ja", label: "あ" }, { id: "zh", label: "中" }]} />
           <Segmented label="Writing direction" value={s.orient} onChange={(v) => set("orient", v)} options={[{ id: "vertical", label: "Vertical" }, { id: "horizontal", label: "Horizontal" }]} />
           <Segmented label="Reading direction" value={s.reading} onChange={(v) => set("reading", v)} options={[{ id: "rtl", label: "RTL" }, { id: "ltr", label: "LTR" }]} />
-          <Segmented
-            label="Alignment"
-            value={s.align}
-            onChange={(v) => set("align", v)}
-            options={
-              isVertical
-                ? [{ id: "start", label: "Top" }, { id: "center", label: "Center" }, { id: "end", label: "Bottom" }]
-                : [{ id: "start", label: "Start" }, { id: "center", label: "Center" }, { id: "end", label: "End" }]
-            }
-          />
           <Segmented label="Theme" value={s.theme} onChange={(v) => set("theme", v)} options={[{ id: "light", label: "Light" }, { id: "dark", label: "Dark" }, { id: "sepia", label: "Sepia" }]} />
           <Segmented label="Device" value={s.device} onChange={(v) => set("device", v)} options={[{ id: "mobile", label: "Mobile" }, { id: "tablet", label: "Tablet" }, { id: "desktop", label: "Desktop" }]} />
 
@@ -171,10 +145,6 @@ export function PlaygroundClient() {
             <span style={controlLabel}>Grid</span>
             <input type="checkbox" checked={s.grid} onChange={(e) => set("grid", e.target.checked)} style={{ accentColor: "var(--color-fg)", width: 16, height: 16, cursor: "pointer" }} />
           </label>
-
-          <button onClick={copyLink} className="pressable" style={{ marginTop: "var(--space-2)", height: 36, borderRadius: "var(--radius-lg)", border: "1px solid var(--color-border)", background: "var(--color-bg-muted)", color: "var(--color-fg)", fontSize: "0.8125rem", fontWeight: 500, cursor: "pointer", fontFamily: "inherit" }}>
-            {copied ? "Link copied ✓" : "Copy shareable link"}
-          </button>
         </div>
       </div>
 
@@ -199,8 +169,9 @@ export function PlaygroundClient() {
               transition: "max-width 220ms var(--easing-out), background 200ms ease",
               overflow: "hidden",
               display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               padding: "var(--space-8)",
-              ...canvasAlign,
               ...gridBg,
             }}
           >

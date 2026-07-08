@@ -13,7 +13,7 @@ export default function PlaygroundPage() {
       <PageHeader
         eyebrow="Playground"
         title="Experiment"
-        description="See the same content across writing directions, languages, alignment, themes, and devices in real time. Every control updates the preview live, and your configuration is saved to the URL so you can share it."
+        description="See the same content across writing directions, languages, themes, and devices in real time. Every control updates the preview live, and your configuration is saved to the URL."
       />
 
       <div

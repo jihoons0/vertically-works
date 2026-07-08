@@ -123,7 +123,7 @@ export function PopoverMenuDemo() {
             }}
           >
             {/* Close button — collapses the menu */}
-            <button className="pressable"
+            <button className="pressable corner-round"
               onClick={() => setOpen(false)}
               aria-label="메뉴 닫기"
               style={{
@@ -151,7 +151,7 @@ export function PopoverMenuDemo() {
 
             {/* Highlight color swatches */}
             {HIGHLIGHT_COLORS.map((c) => (
-              <button className="pressable"
+              <button className="pressable corner-round"
                 key={c.id}
                 onClick={() => setActiveColor(c.id === activeColor ? null : c.id)}
                 aria-label={c.label}

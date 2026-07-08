@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/layout/PageHeader";
+import { Reveal } from "@/components/Reveal";
+import { AppHero } from "@/components/apps/AppHero";
+import { AppVideo } from "@/components/home/AppVideo";
 
 export const metadata: Metadata = {
   title: "Vertically Verse",
@@ -52,83 +54,85 @@ const DECISIONS = [
 export default function VerticallyVersePage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Application"
+      <AppHero
         title="Vertically Verse"
-        description="A fully vertical, right-to-left scripture reader for Korean, Japanese, and Chinese. The first application built on Vertically Works principles."
-      >
-        <div style={{ display: "flex", gap: "var(--space-4)", marginTop: "var(--space-8)", flexWrap: "wrap" }}>
-          <span
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 5,
-              fontSize: "0.8125rem", fontWeight: 500, color: "var(--color-fg)",
-              padding: "var(--space-2) var(--space-4)",
-              borderRadius: "var(--radius-full)", border: "1px solid var(--color-border-strong)",
-            }}
-          >
-            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
-            Live · iOS
-          </span>
-          <span style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", alignSelf: "center" }}>
-            한국어 · 日本語 · 中文 (Traditional)
-          </span>
-        </div>
-      </PageHeader>
+        banner="/images/apps/verse-banner.jpg"
+        bannerAlt="Hands holding a phone running Vertically Verse, vertical Japanese scripture with highlights on screen"
+        status="Live"
+        platform="iOS"
+        meta="한국어 · 日本語 · 中文 (Traditional)"
+      />
 
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "var(--space-16) var(--space-6) var(--space-24)" }}>
-        {/* App preview — vertical text demo */}
-        <div
-          style={{
-            marginBottom: "var(--space-16)",
-            padding: "var(--space-16)",
-            borderRadius: "var(--radius-xl)",
-            border: "1px solid var(--color-border)",
-            background: "var(--color-bg-subtle)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            minHeight: 320,
-            gap: "var(--space-8)",
-          }}
-        >
-          <div
-            style={{
-              writingMode: "vertical-rl",
-              textOrientation: "mixed",
-              display: "flex",
-              flexDirection: "row",
-              gap: "var(--space-8)",
-              fontSize: "1.125rem",
-              letterSpacing: "0.12em",
-              lineHeight: 1.9,
-              userSelect: "none",
-            }}
-            aria-label="Sample vertical text: Genesis 1:1 in Korean, Japanese, and Chinese"
-          >
-            <div style={{ color: "var(--color-fg)" }}>
-              <span style={{ color: "var(--color-fg-subtle)", fontSize: "0.75rem", display: "block", marginBottom: "var(--space-3)" }}>창 1:1</span>
-              태초에 하나님이 천지를 창조하시니라
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
+        {/* Core visual — the app itself, running */}
+        <Reveal>
+          <div className="app-detail-lead" style={{ marginBottom: "var(--space-20)" }}>
+            <div
+              style={{
+                borderRadius: "var(--radius-xl)",
+                border: "1px solid var(--color-border)",
+                overflow: "hidden",
+                background: "var(--color-bg-muted)",
+                alignSelf: "start",
+              }}
+            >
+              <div style={{ aspectRatio: "2/3" }}>
+                <AppVideo
+                  src="/videos/vertically-verse.mp4"
+                  poster="/images/apps/verse-poster.jpg"
+                  label="Vertically Verse demo — reading and highlighting vertical scripture"
+                />
+              </div>
             </div>
-            <div style={{ color: "var(--color-fg-muted)" }}>
-              <span style={{ color: "var(--color-fg-subtle)", fontSize: "0.75rem", display: "block", marginBottom: "var(--space-3)" }}>創 1:1</span>
-              初めに、神が天と地を創造された
-            </div>
-            <div style={{ color: "var(--color-fg-subtle)" }}>
-              <span style={{ color: "var(--color-fg-subtle)", fontSize: "0.75rem", display: "block", marginBottom: "var(--space-3)" }}>創 1:1</span>
-              起初　神創造天地
+
+            <div>
+              <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-4)", lineHeight: 1.15 }}>
+                The first application built on Vertically Works principles
+              </h2>
+              <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: "0 0 var(--space-5)", maxWidth: "52ch" }}>
+                A fully vertical, right-to-left scripture reader for Korean, Japanese, and
+                Chinese. Every control, gesture, and transition is rethought for the
+                top→bottom, R→L axis — columns instead of pages, chrome that reads
+                vertically, and motion that always follows the reading direction.
+              </p>
+              <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: "0 0 var(--space-8)", maxWidth: "52ch" }}>
+                The recording is the real app: verse-anchored highlights, the color
+                palette at the reading edge, and text selection that travels down the
+                column — the same interactions documented across this site.
+              </p>
+              <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
+                <Link
+                  href="https://github.com/jihoons/exploring"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-cta-hover pressable"
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 8,
+                    height: 40, padding: "0 var(--space-5)",
+                    fontSize: "0.9375rem", fontWeight: 500,
+                    borderRadius: "var(--radius-lg)",
+                    border: "1px solid", color: "var(--color-fg)",
+                  }}
+                >
+                  View on GitHub ↗
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
+        </Reveal>
 
         {/* Features */}
         <section style={{ marginBottom: "var(--space-16)" }}>
-          <h2 style={{ fontSize: "1.5rem", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-8)" }}>
-            Features
-          </h2>
+          <Reveal>
+            <h2 style={{ fontSize: "1.5rem", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-8)" }}>
+              Features
+            </h2>
+          </Reveal>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "var(--space-4)" }}>
-            {FEATURES.map((f) => (
-              <div
+            {FEATURES.map((f, i) => (
+              <Reveal
                 key={f.title}
+                delay={i * 40}
                 style={{
                   padding: "var(--space-6)",
                   borderRadius: "var(--radius-xl)",
@@ -142,20 +146,69 @@ export default function VerticallyVersePage() {
                 <p style={{ fontSize: "0.875rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.65 }}>
                   {f.description}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </section>
 
+        {/* The reading surface — live vertical text */}
+        <Reveal>
+          <div
+            style={{
+              marginBottom: "var(--space-16)",
+              padding: "var(--space-16)",
+              borderRadius: "var(--radius-xl)",
+              border: "1px solid var(--color-border)",
+              background: "var(--color-bg-subtle)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minHeight: 320,
+              gap: "var(--space-8)",
+            }}
+          >
+            <div
+              style={{
+                writingMode: "vertical-rl",
+                textOrientation: "mixed",
+                display: "flex",
+                flexDirection: "row",
+                gap: "var(--space-8)",
+                fontSize: "1.125rem",
+                letterSpacing: "0.12em",
+                lineHeight: 1.9,
+                userSelect: "none",
+              }}
+              aria-label="Sample vertical text: Genesis 1:1 in Korean, Japanese, and Chinese"
+            >
+              <div style={{ color: "var(--color-fg)" }}>
+                <span style={{ color: "var(--color-fg-subtle)", fontSize: "0.75rem", display: "block", marginBottom: "var(--space-3)" }}>창 1:1</span>
+                태초에 하나님이 천지를 창조하시니라
+              </div>
+              <div style={{ color: "var(--color-fg-muted)" }}>
+                <span style={{ color: "var(--color-fg-subtle)", fontSize: "0.75rem", display: "block", marginBottom: "var(--space-3)" }}>創 1:1</span>
+                初めに、神が天と地を創造された
+              </div>
+              <div style={{ color: "var(--color-fg-subtle)" }}>
+                <span style={{ color: "var(--color-fg-subtle)", fontSize: "0.75rem", display: "block", marginBottom: "var(--space-3)" }}>創 1:1</span>
+                起初　神創造天地
+              </div>
+            </div>
+          </div>
+        </Reveal>
+
         {/* Design decisions */}
         <section style={{ marginBottom: "var(--space-16)" }}>
-          <h2 style={{ fontSize: "1.5rem", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-8)" }}>
-            Design Decisions
-          </h2>
+          <Reveal>
+            <h2 style={{ fontSize: "1.5rem", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-8)" }}>
+              Design Decisions
+            </h2>
+          </Reveal>
           <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-            {DECISIONS.map((d) => (
-              <div
+            {DECISIONS.map((d, i) => (
+              <Reveal
                 key={d.title}
+                delay={i * 50}
                 style={{
                   display: "grid",
                   gridTemplateColumns: "1fr 2fr",
@@ -172,7 +225,7 @@ export default function VerticallyVersePage() {
                 <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.65 }}>
                   {d.body}
                 </p>
-              </div>
+              </Reveal>
             ))}
           </div>
         </section>

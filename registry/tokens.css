@@ -1,0 +1,205 @@
+/*
+ * Vertically Works — design tokens & vertical-writing utilities
+ * https://vertically.works · installed by `npx verticallyworks init`
+ *
+ * Usage:
+ *   - Import this file once, globally (e.g. in your root layout or global CSS,
+ *     right after `@import "tailwindcss";` if you use Tailwind — plain CSS
+ *     projects can import it anywhere).
+ *   - Themes: set `data-theme="light" | "dark" | "sepia"` on <html>. With no
+ *     attribute you get light.
+ *   - Components from the registry style themselves exclusively with these
+ *     custom properties, so restyling your copy means editing tokens here.
+ */
+
+/* ─── Semantic color tokens ─── */
+:root {
+  --color-bg: #ffffff;
+  --color-bg-subtle: #f9f9f9;
+  --color-bg-muted: #f3f3f3;
+  --color-fg: #0a0a0a;
+  --color-fg-muted: #737373;
+  --color-fg-subtle: #a3a3a3;
+  --color-border: #e5e5e5;
+  --color-border-strong: #d4d4d4;
+  --color-accent: #0a0a0a;
+  --color-accent-fg: #ffffff;
+
+  /* Vertical text label colors */
+  --color-vt-label: #0a0a0a;
+  --color-vt-label-muted: #a3a3a3;
+}
+
+[data-theme="light"] {
+  --color-bg: #ffffff;
+  --color-bg-subtle: #f9f9f9;
+  --color-bg-muted: #f3f3f3;
+  --color-fg: #0a0a0a;
+  --color-fg-muted: #737373;
+  --color-fg-subtle: #a3a3a3;
+  --color-border: #e5e5e5;
+  --color-border-strong: #d4d4d4;
+  --color-accent: #0a0a0a;
+  --color-accent-fg: #ffffff;
+
+  --color-vt-label: #0a0a0a;
+  --color-vt-label-muted: #a3a3a3;
+}
+
+[data-theme="dark"] {
+  --color-bg: #0a0a0a;
+  --color-bg-subtle: #111111;
+  --color-bg-muted: #1a1a1a;
+  --color-fg: #fafafa;
+  --color-fg-muted: #a3a3a3;
+  --color-fg-subtle: #525252;
+  --color-border: #262626;
+  --color-border-strong: #404040;
+  --color-accent: #fafafa;
+  --color-accent-fg: #0a0a0a;
+
+  --color-vt-label: #fafafa;
+  --color-vt-label-muted: #525252;
+}
+
+[data-theme="sepia"] {
+  --color-bg: #f4ecd8;
+  --color-bg-subtle: #efe4cb;
+  --color-bg-muted: #e7d9ba;
+  --color-fg: #4b3b2b;
+  --color-fg-muted: #7a6650;
+  --color-fg-subtle: #a08a6d;
+  --color-border: #ddcdac;
+  --color-border-strong: #c8b58e;
+  --color-accent: #4b3b2b;
+  --color-accent-fg: #f4ecd8;
+
+  --color-vt-label: #4b3b2b;
+  --color-vt-label-muted: #a08a6d;
+}
+
+/* ─── Spacing scale ─── */
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+}
+
+/* ─── Radius scale ─── */
+:root {
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+}
+
+/* ─── Corner smoothing ─── */
+/* Continuous "squircle" corners on every rounded element — the curve eases into
+   the straight edge instead of kinking at the arc joint (Apple-style corner
+   smoothing). Progressive enhancement: browsers without corner-shape keep
+   plain circular arcs. True circles (thumbs, knobs, swatches, avatars) opt
+   back out with .corner-round so they don't square off. */
+@supports (corner-shape: squircle) {
+  *,
+  *::before,
+  *::after {
+    corner-shape: squircle;
+  }
+  .corner-round,
+  .corner-round::before,
+  .corner-round::after {
+    corner-shape: round;
+  }
+}
+
+/* ─── Motion tokens ─── */
+:root {
+  --duration-micro: 80ms;
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --duration-page: 400ms;
+
+  /* Color/opacity transitions — plain, unobtrusive */
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-in: cubic-bezier(0.4, 0, 1, 1);
+  /* Strong ease-out for entrances & UI feedback (stronger than Material's weak default) */
+  --easing-out: cubic-bezier(0.23, 1, 0.32, 1);
+  /* Strong ease-in-out for on-screen movement/morphing */
+  --easing-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  /* iOS-like drawer/panel curve (Ionic) */
+  --easing-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --easing-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Reduced motion: zero every duration token. Registry components route all
+   their motion through these variables, so they settle instantly without a
+   universal override reaching into your project's own styles. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-micro: 0ms;
+    --duration-fast: 0ms;
+    --duration-base: 0ms;
+    --duration-slow: 0ms;
+    --duration-page: 0ms;
+  }
+}
+
+/* ─── Vertical text utilities ─── */
+.writing-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.writing-vertical-upright {
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+}
+
+/* ─── Pressable — instant tactile feedback on any interactive element ─── */
+/* Subtle scale on :active makes the UI feel like it's listening. scale() also
+   scales children (icon + label), so the whole control responds as one. */
+.pressable {
+  transition: transform 140ms var(--easing-out);
+  touch-action: manipulation;
+}
+.pressable:active {
+  transform: scale(0.97);
+}
+.pressable-strong {
+  transition: transform 140ms var(--easing-out);
+  touch-action: manipulation;
+}
+.pressable-strong:active {
+  transform: scale(0.93);
+}
+@media (prefers-reduced-motion: reduce) {
+  .pressable,
+  .pressable-strong {
+    transition: none;
+  }
+  .pressable:active,
+  .pressable-strong:active {
+    transform: none;
+  }
+}
+
+/* ─── Focus ring for registry components ─── */
+/* Every interactive element in a Vertically Works component carries [data-vw],
+   so copied components keep a visible focus ring without relying on a global
+   :focus-visible rule in the host project. */
+[data-vw]:focus-visible {
+  outline: 2px solid var(--color-fg);
+  outline-offset: 2px;
+}

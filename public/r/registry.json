@@ -1,0 +1,115 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "verticallyworks",
+  "homepage": "https://vertically.works",
+  "items": [
+    {
+      "name": "tokens",
+      "type": "registry:item",
+      "title": "Design tokens",
+      "description": "Semantic colors with light/dark/sepia themes, spacing, radius, motion tokens, corner smoothing, and vertical-writing utilities.",
+      "files": [
+        {
+          "path": "registry/tokens.css",
+          "type": "registry:file"
+        }
+      ]
+    },
+    {
+      "name": "vertical-button",
+      "type": "registry:component",
+      "title": "Vertical Button",
+      "description": "A button whose label is set on the vertical reading axis — real writing-mode, never a rotation.",
+      "files": [
+        {
+          "path": "registry/components/vertical-button.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:component",
+      "title": "Vertical Toggle",
+      "description": "An on/off switch whose thumb travels the reading axis — up is on. role=\"switch\" semantics.",
+      "files": [
+        {
+          "path": "registry/components/toggle.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "vertical-list-cell",
+      "type": "registry:component",
+      "title": "Vertical List Cell",
+      "description": "The primitive behind every vertical list: a full-height column cell with leading at the top and the accessory pointing down.",
+      "files": [
+        {
+          "path": "registry/components/vertical-list-cell.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:component",
+      "title": "Vertical Tooltip",
+      "description": "A tooltip that opens to the left of its trigger — along the reading direction — with vertical content. Hover, focus, and Escape handling built in.",
+      "files": [
+        {
+          "path": "registry/components/tooltip.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:component",
+      "title": "Vertical Dialog",
+      "description": "A modal dialog whose title, description, and actions read as vertical columns. Focus trap, Escape, scrim dismiss, focus restore.",
+      "files": [
+        {
+          "path": "registry/components/dialog.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:component",
+      "title": "Vertical Sheet",
+      "description": "An edge sheet aware of the reading axis — enter from screen geometry (bottom) or reading direction (left/right). Modal semantics included.",
+      "files": [
+        {
+          "path": "registry/components/sheet.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "text-field",
+      "type": "registry:component",
+      "title": "Vertical Text Field",
+      "description": "A labeled input for vertical interfaces: vertical label, deliberately horizontal input (CJK IME composition needs the baseline), accessible help/error wiring.",
+      "files": [
+        {
+          "path": "registry/components/text-field.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:component",
+      "title": "Vertical Tabs",
+      "description": "A tab rail on the reading axis: vertical labels at the right edge, panels to their left, full tablist keyboard semantics.",
+      "files": [
+        {
+          "path": "registry/components/tabs.tsx",
+          "type": "registry:component"
+        }
+      ]
+    }
+  ]
+}
