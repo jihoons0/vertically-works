@@ -62,7 +62,7 @@ export function Playlist({
               height: "min(100%, 420px)",
               minHeight: 280,
               padding: "var(--space-4) var(--space-2)",
-              borderRadius: "var(--radius-lg)",
+              borderRadius: "var(--radius-2xl)",
               border: isCurrent ? "1px solid var(--color-fg)" : "1px solid var(--color-border)",
               background: isCurrent ? "var(--color-bg-subtle)" : "var(--color-bg)",
               boxShadow: isCurrent ? "var(--shadow-column)" : "none",
@@ -141,7 +141,7 @@ export function Playlist({
                   letterSpacing: "0.05em",
                 }}
               >
-                미리 듣기 불가
+                재생 불가
               </span>
             ) : isCurrent ? (
               <span

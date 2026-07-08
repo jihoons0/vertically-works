@@ -49,14 +49,13 @@ const APPS = [
     icon: "楽",
     href: "/apps/listen",
     description:
-      "Vertically Listen — a music player rethought for the vertical, right-to-left axis. The playlist is a shelf of full-height columns, lyrics fall like verse with line-synced karaoke, and playback advances down the reading axis — play points down, the scrubber fills from the top like text already read. A 차트 mode streams today's CJK top 10 as 30-second previews; a 팟캐스트 mode plays full episodes of today's top shows over open RSS, with Podcasting 2.0 transcripts as synced vertical verse.",
+      "Vertically Listen — a podcast player rethought for the vertical, right-to-left axis. Today's top CJK shows (한국·일본·중국·대만·홍콩) are a shelf of full-height columns, episodes stream in full over open RSS, and Podcasting 2.0 transcripts fall as time-synced vertical verse with tap-to-seek. Navigation and transport stay horizontal — a breadcrumb trace with the show's artwork up top, a conventional player bar (±15초, previous/next, volume) at the bottom — while reading stays vertical.",
     challenges: [
-      "Transport on the reading axis — previous is up, next is down, play points down",
-      "A seek scrubber that fills from the top (time flows like text) vs a volume slider that fills from the bottom (up = more)",
-      "Playlist cells as full-height columns with status pills, stacking right→left",
-      "Line-synced vertical karaoke — the active lyric column carries the accent and auto-scrolls",
-      "Live CJK charts (한국·일본·중국·대만·홍콩) played as official 30-second previews",
-      "Podcast browse → episodes → full audio, with feed transcripts as time-synced columns",
+      "Hierarchy you can trace — shows › episodes › playing, every crumb live, playback never interrupted while browsing",
+      "Shelf cells as full-height rounded columns with status pills, stacking right→left",
+      "Time-synced transcripts as vertical verse — the active line carries the accent, auto-scrolls, and seeks on tap",
+      "Show notes as a labeled intro panel when a feed has no transcript — untimed text never fakes sync",
+      "The horizontal/vertical split: reading is vertical, navigation and transport are horizontal",
     ],
   },
   {

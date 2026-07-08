@@ -35,7 +35,8 @@ export function Lyrics({
   }, [activeIndex]);
 
   if (lyrics.length === 0) {
-    // Untimed verse for chart previews — no highlight, no seek.
+    // Untimed intro panel (show notes) — visibly NOT subtitles: it has a
+    // heading and quieter type, so nobody expects it to follow the audio.
     if (plainLines && plainLines.length > 0) {
       return (
         <div
@@ -53,18 +54,32 @@ export function Lyrics({
               display: "flex",
               flexDirection: "row-reverse",
               alignItems: "center",
-              gap: "var(--space-8)",
+              gap: "var(--space-6)",
               padding: "var(--space-10) var(--space-12)",
             }}
           >
+            <span
+              style={{
+                writingMode: "vertical-rl",
+                textOrientation: "mixed",
+                fontSize: "0.8125rem",
+                fontWeight: 600,
+                letterSpacing: "0.1em",
+                color: "var(--color-fg)",
+                paddingLeft: "var(--space-3)",
+                flexShrink: 0,
+              }}
+            >
+              에피소드 소개
+            </span>
             {plainLines.map((text, i) => (
               <span
                 key={i}
                 style={{
                   writingMode: "vertical-rl",
                   textOrientation: "mixed",
-                  fontSize: "1.125rem",
-                  letterSpacing: "0.12em",
+                  fontSize: "1rem",
+                  letterSpacing: "0.1em",
                   lineHeight: 1.9,
                   maxHeight: "100%",
                   color: "var(--color-fg-muted)",

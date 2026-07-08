@@ -1,6 +1,6 @@
 "use client";
 
-import { MARKETS, type MarketCode } from "@/lib/listen/charts";
+import { MARKETS, type MarketCode } from "@/lib/listen/podcasts";
 
 /** Market chooser for chart mode — a slim column at the reading start of
  *  the shelf: pick where "most famous" is measured. */

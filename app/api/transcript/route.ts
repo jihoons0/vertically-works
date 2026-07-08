@@ -8,7 +8,8 @@ import { safeExternalUrl } from "@/lib/listen/safe-url";
 
 const MAX_BYTES = 2_000_000;
 const MAX_LINES = 600;
-const TARGET_LEN = 42;
+// Shorter merged lines advance the highlight more often — sync feels tight.
+const TARGET_LEN = 30;
 
 type Cue = { time: number; text: string };
 

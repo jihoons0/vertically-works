@@ -55,7 +55,7 @@ export function ShowShelf({
               height: "min(100%, 420px)",
               minHeight: 280,
               padding: "var(--space-4) var(--space-2)",
-              borderRadius: "var(--radius-lg)",
+              borderRadius: "var(--radius-2xl)",
               border: "1px solid var(--color-border)",
               background: "var(--color-bg)",
               cursor: disabled ? "default" : "pointer",

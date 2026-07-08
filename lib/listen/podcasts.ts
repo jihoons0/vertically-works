@@ -1,7 +1,16 @@
 "use client";
 
 import type { Track, LyricLine } from "@/lib/listen/tracks";
-import type { MarketCode } from "@/lib/listen/charts";
+
+export type MarketCode = "kr" | "jp" | "cn" | "tw" | "hk";
+
+export const MARKETS: { code: MarketCode; label: string }[] = [
+  { code: "kr", label: "한국" },
+  { code: "jp", label: "일본" },
+  { code: "cn", label: "중국" },
+  { code: "tw", label: "대만" },
+  { code: "hk", label: "홍콩" },
+];
 
 export type Show = {
   id: string;
@@ -47,9 +56,9 @@ export async function fetchEpisodes(show: Show): Promise<Track[]> {
       artwork: show.artwork ?? undefined,
       credit: `${show.title}${e.date ? ` · ${e.date}` : ""}`,
       transcriptUrl: e.transcriptUrl ?? undefined,
-      // Description shows as untimed verse unless a timed transcript loads.
+      // Show notes render as the intro panel unless a timed transcript loads.
       plainLyrics: e.descriptionLines,
-      plainNote: e.transcriptUrl ? undefined : "대본 없는 에피소드 · 소개 글",
+      plainNote: e.transcriptUrl ? undefined : "이 피드는 자막을 제공하지 않아요",
       lyrics: [],
     })
   );
