@@ -39,6 +39,7 @@ export async function fetchChart(market: MarketCode): Promise<Track[]> {
       isPreview: true,
       artwork: s.artwork ?? undefined,
       credit: `${label} 차트 ${s.rank}위 · 30초 미리 듣기`,
+      plainNote: "가사 동기화 없음 · 30초 미리 듣기",
       lyrics: [],
     })
   );

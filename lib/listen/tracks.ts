@@ -20,6 +20,10 @@ export type Track = {
   artwork?: string;
   /** Untimed verse lines shown when timed lyrics aren't applicable. */
   plainLyrics?: string[];
+  /** Caption under the untimed verse explaining why it isn't synced. */
+  plainNote?: string;
+  /** Podcasting 2.0 transcript to fetch lazily into timed `lyrics`. */
+  transcriptUrl?: string;
   lyrics: LyricLine[];
 };
 

@@ -49,13 +49,14 @@ const APPS = [
     icon: "楽",
     href: "/apps/listen",
     description:
-      "Vertically Listen — a music player rethought for the vertical, right-to-left axis. The playlist is a shelf of full-height columns, lyrics fall like verse with line-synced karaoke, and playback advances down the reading axis — play points down, the scrubber fills from the top like text already read. A 차트 mode streams today's CJK top 10 as 30-second previews.",
+      "Vertically Listen — a music player rethought for the vertical, right-to-left axis. The playlist is a shelf of full-height columns, lyrics fall like verse with line-synced karaoke, and playback advances down the reading axis — play points down, the scrubber fills from the top like text already read. A 차트 mode streams today's CJK top 10 as 30-second previews; a 팟캐스트 mode plays full episodes of today's top shows over open RSS, with Podcasting 2.0 transcripts as synced vertical verse.",
     challenges: [
       "Transport on the reading axis — previous is up, next is down, play points down",
       "A seek scrubber that fills from the top (time flows like text) vs a volume slider that fills from the bottom (up = more)",
       "Playlist cells as full-height columns with status pills, stacking right→left",
       "Line-synced vertical karaoke — the active lyric column carries the accent and auto-scrolls",
       "Live CJK charts (한국·일본·중국·대만·홍콩) played as official 30-second previews",
+      "Podcast browse → episodes → full audio, with feed transcripts as time-synced columns",
     ],
   },
   {

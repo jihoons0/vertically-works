@@ -11,13 +11,16 @@ export function Lyrics({
   activeIndex,
   onLineClick,
   plainLines,
+  plainNote,
   loading = false,
 }: {
   lyrics: LyricLine[];
   activeIndex: number;
   onLineClick: (time: number) => void;
-  /** Untimed verse (chart previews): rendered without highlight or seek. */
+  /** Untimed verse (chart previews, episode notes): no highlight or seek. */
   plainLines?: string[];
+  /** Caption explaining why the verse isn't synced. */
+  plainNote?: string;
   loading?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -71,21 +74,23 @@ export function Lyrics({
                 {text}
               </span>
             ))}
-            <span
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                fontSize: "0.625rem",
-                fontFamily: "var(--font-geist-mono)",
-                color: "var(--color-fg-subtle)",
-                letterSpacing: "0.05em",
-                alignSelf: "flex-end",
-                paddingLeft: "var(--space-4)",
-                flexShrink: 0,
-              }}
-            >
-              가사 동기화 없음 · 30초 미리 듣기
-            </span>
+            {plainNote && (
+              <span
+                style={{
+                  writingMode: "vertical-rl",
+                  textOrientation: "mixed",
+                  fontSize: "0.625rem",
+                  fontFamily: "var(--font-geist-mono)",
+                  color: "var(--color-fg-subtle)",
+                  letterSpacing: "0.05em",
+                  alignSelf: "flex-end",
+                  paddingLeft: "var(--space-4)",
+                  flexShrink: 0,
+                }}
+              >
+                {plainNote}
+              </span>
+            )}
           </div>
         </div>
       );
