@@ -4,10 +4,10 @@ import { usePathname } from "next/navigation";
 import { Navigation } from "@/components/nav/Navigation";
 import { Footer } from "@/components/layout/Footer";
 
-// Most routes are documentation and wear the site chrome. The Vertically Do to-do
-// app (/apps/notes) renders bare so it owns the whole viewport; everything else —
-// the /apps launcher, the Verse pages — keeps the site chrome.
-const BARE_ROUTES = ["/apps/notes"];
+// Most routes are documentation and wear the site chrome. The in-repo apps
+// (/apps/notes, /apps/listen) render bare so they own the whole viewport;
+// everything else — the /apps launcher, the Verse pages — keeps the site chrome.
+const BARE_ROUTES = ["/apps/notes", "/apps/listen"];
 
 export function SiteFrame({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
