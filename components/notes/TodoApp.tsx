@@ -175,7 +175,10 @@ function Board({ store, filter }: { store: ReturnType<typeof useTasks>; filter: 
             flexDirection: "row",
             alignItems: "center",
             gap: "var(--space-3)",
-            padding: "var(--space-8) var(--space-10)",
+            // Horizontal padding keeps the end columns clear of the fixed side
+            // controls (language/font on the left, filter/trash on the right),
+            // which matters most on narrow / mobile widths.
+            padding: "var(--space-8) var(--space-16)",
           }}
         >
           {showComposer && (

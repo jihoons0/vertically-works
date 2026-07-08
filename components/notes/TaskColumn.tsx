@@ -183,7 +183,9 @@ export function TaskColumn({
         flexShrink: 0,
         width: 78,
         height: "min(64vh, 520px)",
-        touchAction: "none",
+        // pan-x lets touch users scroll the board horizontally; vertical swipes
+        // still go to the delete gesture. (Mouse drag-to-reorder is unaffected.)
+        touchAction: "pan-x",
         // Entrance lives on the wrapper so the card's transform stays free for the
         // drag gesture — a filling animation on the card would lock its transform.
         animation: "vd-column-in var(--duration-slow) var(--easing-out) both",

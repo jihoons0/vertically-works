@@ -1,8 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { CJKToggle } from "@/components/notes/CJKToggle";
-import { FontPicker } from "@/components/notes/FontPicker";
+import { SettingsButton } from "@/components/notes/SettingsButton";
 import { useLocale } from "@/lib/notes/i18n";
 
 const iconBtn: React.CSSProperties = {
@@ -38,7 +37,7 @@ function ThemeToggle() {
 }
 
 // Left-edge control stack, vertically centered: theme toggle on top, then the
-// language (한/あ/中) picker, then the font (settings) picker.
+// combined language + font settings button.
 export function LeftControls() {
   return (
     <div
@@ -55,8 +54,7 @@ export function LeftControls() {
       }}
     >
       <ThemeToggle />
-      <CJKToggle />
-      <FontPicker />
+      <SettingsButton />
     </div>
   );
 }
