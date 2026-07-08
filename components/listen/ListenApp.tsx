@@ -7,19 +7,21 @@ import {
   fetchTopShows,
   fetchEpisodes,
   fetchTranscriptLines,
+  FEATURED_SHOWS,
   MARKETS,
   type MarketCode,
   type Show,
 } from "@/lib/listen/podcasts";
-import { Tray } from "@/components/listen/Tray";
+import { BrowseSheet } from "@/components/listen/BrowseSheet";
 import { NavRail } from "@/components/listen/NavRail";
 import { Lyrics } from "@/components/listen/Lyrics";
 import { PlayerBar } from "@/components/listen/PlayerBar";
 
-type Browsing = "shows" | "episodes";
+type SheetLevel = null | "shows" | "episodes";
 
-/** Idle stage — nothing chosen yet. The big type IS the interface. */
-function IdleStage({ status }: { status: "idle" | "loading" | "error" }) {
+/** Idle stage — nothing chosen yet. The big type IS the interface, and it
+ *  links straight into the browse sheet. */
+function IdleStage({ onBrowse }: { onBrowse: () => void }) {
   return (
     <div
       style={{
@@ -48,22 +50,28 @@ function IdleStage({ status }: { status: "idle" | "loading" | "error" }) {
       >
         귀로 읽는 시간
       </h2>
-      <span
+      <button
+        className="pressable"
+        onClick={onBrowse}
+        aria-haspopup="dialog"
         style={{
           writingMode: "vertical-rl",
           textOrientation: "mixed",
           fontSize: "0.875rem",
           color: "var(--color-fg-muted)",
           letterSpacing: "0.12em",
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          fontFamily: "inherit",
           paddingTop: "var(--space-8)",
+          textDecoration: "underline",
+          textDecorationColor: "var(--color-border-strong)",
+          textUnderlineOffset: 4,
         }}
       >
-        {status === "loading"
-          ? "오늘의 팟캐스트를 여는 중…"
-          : status === "error"
-            ? "목록을 불러오지 못했어요"
-            : "오른쪽 목록에서 팟캐스트를 골라 주세요"}
-      </span>
+        오늘의 팟캐스트 고르기
+      </button>
     </div>
   );
 }
@@ -71,29 +79,65 @@ function IdleStage({ status }: { status: "idle" | "loading" | "error" }) {
 export function ListenApp() {
   const [market, setMarket] = useState<MarketCode>("kr");
   const [shows, setShows] = useState<Show[]>([]);
-  const [browsing, setBrowsing] = useState<Browsing>("shows");
+  const [sheet, setSheet] = useState<SheetLevel>(null);
+  // What the sheet is browsing — independent of what's playing.
+  const [sheetShow, setSheetShow] = useState<Show | null>(null);
+  const [sheetEpisodes, setSheetEpisodes] = useState<Track[]>([]);
+  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
+  // The committed queue.
   const [activeShow, setActiveShow] = useState<Show | null>(null);
   const [episodeTracks, setEpisodeTracks] = useState<Track[]>([]);
-  const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
+  // Chart shows found (by probing feeds) to publish transcripts.
+  const [transcriptIds, setTranscriptIds] = useState<Set<string>>(new Set());
   const requestRef = useRef(0);
+  const probeSeqRef = useRef(0);
   const transcriptTriedRef = useRef(new Set<string>());
   const [lyricsLoading, setLyricsLoading] = useState(false);
 
   const player = usePlayer(episodeTracks);
-  const { track, togglePlay, next, prev, seek, play, pause, resetToStart } = player;
+  const { track, togglePlay, next, prev, seek, play, pause, startAt } = player;
 
-  const loadShows = useCallback(async (mkt: MarketCode) => {
-    const requestId = ++requestRef.current;
-    setStatus("loading");
-    try {
-      const loaded = await fetchTopShows(mkt);
-      if (requestId !== requestRef.current) return;
-      setShows(loaded);
-      setStatus("idle");
-    } catch {
-      if (requestId === requestRef.current) setStatus("error");
-    }
+  // Feeds are cached server-side, so this doubles as prefetch: opening a
+  // probed show later is instant.
+  const probeTranscripts = useCallback(async (list: Show[]) => {
+    const probeId = ++probeSeqRef.current;
+    const results = await Promise.allSettled(
+      list
+        .filter((s) => s.feedUrl)
+        .map(async (s) => {
+          const res = await fetch(`/api/episodes?feed=${encodeURIComponent(s.feedUrl!)}`);
+          if (!res.ok) return null;
+          const data = (await res.json()) as { episodes?: { transcriptUrl: string | null }[] };
+          return data.episodes?.some((e) => e.transcriptUrl) ? s.id : null;
+        })
+    );
+    if (probeId !== probeSeqRef.current) return;
+    setTranscriptIds(
+      new Set(
+        results
+          .filter((r): r is PromiseFulfilledResult<string | null> => r.status === "fulfilled")
+          .map((r) => r.value)
+          .filter((v): v is string => v !== null)
+      )
+    );
   }, []);
+
+  const loadShows = useCallback(
+    async (mkt: MarketCode) => {
+      const requestId = ++requestRef.current;
+      setStatus("loading");
+      try {
+        const loaded = await fetchTopShows(mkt);
+        if (requestId !== requestRef.current) return;
+        setShows(loaded);
+        setStatus("idle");
+        void probeTranscripts(loaded);
+      } catch {
+        if (requestId === requestRef.current) setStatus("error");
+      }
+    },
+    [probeTranscripts]
+  );
 
   useEffect(() => {
     void loadShows("kr");
@@ -103,42 +147,68 @@ export function ListenApp() {
     (mkt: MarketCode) => {
       if (mkt === market) return;
       setMarket(mkt);
-      void loadShows(mkt); // the playing queue is untouched — keep listening
+      void loadShows(mkt);
     },
     [market, loadShows]
   );
 
-  const selectShow = useCallback(
+  const openShows = useCallback(() => {
+    setSheet("shows");
+    if (shows.length === 0 && status !== "loading") void loadShows(market);
+  }, [shows.length, status, market, loadShows]);
+
+  const openEpisodes = useCallback(() => {
+    if (!activeShow) return;
+    setSheetShow(activeShow);
+    setSheetEpisodes(episodeTracks);
+    setSheet("episodes");
+  }, [activeShow, episodeTracks]);
+
+  const closeSheet = useCallback(() => {
+    setSheet(null);
+    if (status === "error") setStatus("idle");
+  }, [status]);
+
+  // Browse a show inside the sheet — playback stays untouched.
+  const browseShow = useCallback(
     async (show: Show) => {
+      setSheet("episodes");
+      setSheetShow(show);
+      if (show.id === activeShow?.id) {
+        setSheetEpisodes(episodeTracks); // already loaded as the queue
+        return;
+      }
       const requestId = ++requestRef.current;
       setStatus("loading");
-      setBrowsing("episodes");
+      setSheetEpisodes([]);
       try {
         const episodes = await fetchEpisodes(show);
         if (requestId !== requestRef.current) return;
         if (episodes.length === 0) throw new Error("no playable episodes");
-        resetToStart();
-        setActiveShow(show);
-        setEpisodeTracks(episodes);
+        setSheetEpisodes(episodes);
         setStatus("idle");
       } catch {
-        if (requestId === requestRef.current) {
-          setStatus("error");
-          setBrowsing("shows");
-        }
+        if (requestId === requestRef.current) setStatus("error");
       }
     },
-    [resetToStart]
+    [activeShow, episodeTracks]
   );
 
-  // Back-trace: shows ⇄ episodes without touching playback.
-  const showShows = useCallback(() => {
-    setBrowsing("shows");
-    if (status === "error") setStatus("idle");
-  }, [status]);
-  const showEpisodes = useCallback(() => {
-    if (activeShow) setBrowsing("episodes");
-  }, [activeShow]);
+  // Picking an episode commits the browsed show as the queue and plays.
+  const pickEpisode = useCallback(
+    (index: number) => {
+      if (!sheetShow) return;
+      if (sheetShow.id === activeShow?.id) {
+        player.select(index);
+      } else {
+        setActiveShow(sheetShow);
+        setEpisodeTracks(sheetEpisodes);
+        startAt(index);
+      }
+      setSheet(null);
+    },
+    [sheetShow, sheetEpisodes, activeShow, player, startAt]
+  );
 
   // Lazy timed-transcript fetch for the current episode (Podcasting 2.0).
   useEffect(() => {
@@ -230,6 +300,7 @@ export function ListenApp() {
   }, [play, pause, prev, next, seek, player.currentTime]);
 
   const marketLabel = MARKETS.find((m) => m.code === market)?.label ?? "";
+  const currentEpisodeId = track && sheetShow?.id === activeShow?.id ? track.id : null;
 
   return (
     <div
@@ -244,31 +315,15 @@ export function ListenApp() {
     >
       <audio {...player.audioProps} />
 
-      {/* Middle — reading starts at the right edge: nav rail, tray, stage */}
+      {/* Reading zone — the stage owns the width; the rail is the trace */}
       <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "row-reverse" }}>
         <NavRail
-          browsing={browsing}
+          sheetLevel={sheet}
           activeShow={activeShow}
           track={track}
           marketLabel={marketLabel}
-          onRoot={showShows}
-          onShow={showEpisodes}
-        />
-
-        <Tray
-          browsing={browsing}
-          shows={shows}
-          episodes={player.tracks}
-          currentIndex={player.currentIndex}
-          isPlaying={player.isPlaying}
-          activeShow={activeShow}
-          market={market}
-          status={status}
-          onMarket={changeMarket}
-          onSelectShow={selectShow}
-          onSelectEpisode={player.select}
-          onBack={showShows}
-          onRetry={() => void loadShows(market)}
+          onOpenShows={openShows}
+          onOpenEpisodes={openEpisodes}
         />
 
         <main style={{ flex: 1, minWidth: 0, height: "100%" }}>
@@ -283,7 +338,7 @@ export function ListenApp() {
               onLineClick={player.seek}
             />
           ) : (
-            <IdleStage status={status} />
+            <IdleStage onBrowse={openShows} />
           )}
         </main>
       </div>
@@ -313,6 +368,29 @@ export function ListenApp() {
           onToggleMute={player.toggleMute}
         />
       </div>
+
+      {/* The browse sheet — full width, from the top, over a scrim */}
+      {sheet !== null && (
+        <BrowseSheet
+          level={sheet}
+          shows={shows}
+          featured={FEATURED_SHOWS}
+          transcriptIds={transcriptIds}
+          episodes={sheetEpisodes}
+          browsingShow={sheetShow}
+          activeShowId={activeShow?.id ?? null}
+          currentEpisodeId={currentEpisodeId}
+          isPlaying={player.isPlaying}
+          market={market}
+          status={status}
+          onMarket={changeMarket}
+          onBrowseShow={browseShow}
+          onPickEpisode={pickEpisode}
+          onBack={() => setSheet("shows")}
+          onClose={closeSheet}
+          onRetry={() => (sheet === "shows" ? void loadShows(market) : sheetShow && void browseShow(sheetShow))}
+        />
+      )}
     </div>
   );
 }

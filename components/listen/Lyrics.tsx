@@ -167,16 +167,16 @@ export function Lyrics({
                 letterSpacing: "0.12em",
                 lineHeight: 1.9,
                 maxHeight: "100%",
-                fontWeight: isActive ? 500 : 400,
+                fontWeight: isActive ? 600 : 400,
+                // Karaoke: the line you're on is unmistakable — inverted.
                 color: isActive
-                  ? "var(--color-fg)"
+                  ? "var(--color-bg)"
                   : isPast
                     ? "var(--color-fg-subtle)"
                     : "var(--color-fg-muted)",
-                background: isActive ? "var(--color-bg-muted)" : "transparent",
+                background: isActive ? "var(--color-fg)" : "transparent",
                 border: "none",
-                borderRight: isActive ? "3px solid var(--color-fg)" : "3px solid transparent",
-                borderRadius: 4,
+                borderRadius: "var(--radius-lg)",
                 padding: "var(--space-3) 3px",
                 cursor: "pointer",
                 fontFamily: "inherit",

@@ -21,6 +21,39 @@ export type Show = {
   feedUrl: string | null;
 };
 
+/** Shows verified to publish Podcasting 2.0 transcripts — the karaoke
+ *  experience is guaranteed here, so they get top billing. (Today's CJK
+ *  charts carry none; this list keeps the synced path reachable.) */
+export const FEATURED_SHOWS: Show[] = [
+  {
+    id: "featured-podnews",
+    rank: 0,
+    title: "Podnews Daily",
+    publisher: "Podnews LLC",
+    artwork:
+      "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/aa/38/88/aa388802-31b0-2874-3fb6-a6eca9e54e3a/mza_17374429396168435629.png/512x512bb.jpg",
+    feedUrl: "https://podnews.net/rss",
+  },
+  {
+    id: "featured-pc20",
+    rank: 0,
+    title: "Podcasting 2.0",
+    publisher: "Podcast Index LLC",
+    artwork:
+      "https://is1-ssl.mzstatic.com/image/thumb/Podcasts116/v4/75/16/2d/75162db9-1089-687d-7726-df2e4861ba24/mza_2968058896728768246.png/512x512bb.jpg",
+    feedUrl: "https://feeds.podcastindex.org/pc20.xml",
+  },
+  {
+    id: "featured-buzzcast",
+    rank: 0,
+    title: "Buzzcast",
+    publisher: "Buzzsprout",
+    artwork:
+      "https://is1-ssl.mzstatic.com/image/thumb/Podcasts221/v4/d0/ff/ca/d0ffca4a-4ec4-564b-a572-5b4857e17866/mza_2780923671060629160.jpg/512x512bb.jpg",
+    feedUrl: "https://rss.buzzsprout.com/231452.rss",
+  },
+];
+
 /** Today's top podcasts for a market. */
 export async function fetchTopShows(market: MarketCode): Promise<Show[]> {
   const res = await fetch(`/api/podcasts?sf=${market}`);

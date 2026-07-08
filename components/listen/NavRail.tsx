@@ -6,21 +6,22 @@ import { ThemeToggle } from "@/components/listen/ThemeToggle";
 
 /** The vertical nav rail at the reading start (far right): the breadcrumb
  *  trace runs top→bottom — 인기 팟캐스트, then the chosen show (with its
- *  artwork), then the playing episode. Every crumb is live. */
+ *  artwork), then the playing episode. The crumbs are the hyperlinks that
+ *  open the browse sheet. */
 export function NavRail({
-  browsing,
+  sheetLevel,
   activeShow,
   track,
   marketLabel,
-  onRoot,
-  onShow,
+  onOpenShows,
+  onOpenEpisodes,
 }: {
-  browsing: "shows" | "episodes";
+  sheetLevel: null | "shows" | "episodes";
   activeShow: Show | null;
   track: Track | undefined;
   marketLabel: string;
-  onRoot: () => void;
-  onShow: () => void;
+  onOpenShows: () => void;
+  onOpenEpisodes: () => void;
 }) {
   return (
     <nav
@@ -39,15 +40,16 @@ export function NavRail({
     >
       <button
         className="pressable"
-        onClick={onRoot}
-        aria-current={browsing === "shows" ? "true" : undefined}
+        onClick={onOpenShows}
+        aria-haspopup="dialog"
+        aria-expanded={sheetLevel === "shows"}
         style={{
           writingMode: "vertical-rl",
           textOrientation: "mixed",
           fontSize: "0.8125rem",
-          fontWeight: browsing === "shows" ? 600 : 400,
+          fontWeight: sheetLevel === "shows" ? 600 : 400,
           letterSpacing: "0.08em",
-          color: browsing === "shows" ? "var(--color-fg)" : "var(--color-fg-muted)",
+          color: sheetLevel === "shows" ? "var(--color-fg)" : "var(--color-fg-muted)",
           background: "none",
           border: "none",
           borderRadius: "var(--radius-lg)",
@@ -55,6 +57,9 @@ export function NavRail({
           cursor: "pointer",
           fontFamily: "inherit",
           flexShrink: 0,
+          textDecoration: "underline",
+          textDecorationColor: "var(--color-border-strong)",
+          textUnderlineOffset: 4,
           transition: "color var(--duration-fast) var(--easing-out)",
         }}
       >
@@ -80,15 +85,16 @@ export function NavRail({
           </span>
           <button
             className="pressable"
-            onClick={onShow}
+            onClick={onOpenEpisodes}
             aria-label={`${activeShow.title} 에피소드 목록`}
-            aria-current={browsing === "episodes" ? "true" : undefined}
+            aria-haspopup="dialog"
+            aria-expanded={sheetLevel === "episodes"}
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               gap: "var(--space-2)",
-              background: browsing === "episodes" ? "var(--color-bg-muted)" : "none",
+              background: sheetLevel === "episodes" ? "var(--color-bg-muted)" : "none",
               border: "none",
               borderRadius: "var(--radius-xl)",
               padding: "var(--space-2)",

@@ -114,12 +114,23 @@ export function usePlayer(tracks: Track[]) {
     setDuration(0);
   }, []);
 
-  // After the <audio> src swaps, resume if we were playing.
+  /** Jump to an index and play — for committing a pick as the queue swaps
+   *  in the same render (the src-keyed effect below fires either way). */
+  const startAt = useCallback((index: number) => {
+    pendingPlayRef.current = true;
+    setCurrentIndex(Math.max(0, index));
+    setCurrentTime(0);
+    setDuration(0);
+  }, []);
+
+  // After the <audio> src swaps (index change OR queue swap), resume if
+  // a play is pending.
+  const src = track?.src;
   useEffect(() => {
-    if (!pendingPlayRef.current) return;
+    if (!src || !pendingPlayRef.current) return;
     pendingPlayRef.current = false;
     audioRef.current?.play().catch(() => setIsPlaying(false));
-  }, [currentIndex]);
+  }, [src]);
 
   const next = useCallback(() => {
     if (currentIndex >= tracks.length - 1) return;
@@ -210,6 +221,7 @@ export function usePlayer(tracks: Track[]) {
     setVolume,
     toggleMute,
     resetToStart,
+    startAt,
   };
 }
 
