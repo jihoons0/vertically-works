@@ -165,10 +165,9 @@ function ShowColumn({
 
 export function BrowseSheet({
   t,
+  open,
   level,
   shows,
-  featured,
-  transcriptIds,
   episodes,
   browsingShow,
   activeShowId,
@@ -182,10 +181,9 @@ export function BrowseSheet({
   onRetry,
 }: {
   t: Strings;
+  open: boolean;
   level: "shows" | "episodes";
   shows: Show[];
-  featured: Show[];
-  transcriptIds: Set<string>;
   episodes: Track[];
   browsingShow: Show | null;
   activeShowId: string | null;
@@ -201,24 +199,32 @@ export function BrowseSheet({
   const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!open) return;
     dialogRef.current?.focus();
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, [open, onClose]);
 
   return (
     <div
       role="presentation"
       onClick={onClose}
+      inert={!open || undefined}
       style={{
         position: "fixed",
         inset: 0,
         zIndex: 50,
         background: "rgba(0, 0, 0, 0.45)",
-        animation: "vl-fade-in var(--duration-base) var(--easing-out) both",
+        opacity: open ? 1 : 0,
+        visibility: open ? "visible" : "hidden",
+        pointerEvents: open ? "auto" : "none",
+        // Enter savours the reveal; exit gets out of the way (asymmetric).
+        transition: open
+          ? "opacity var(--duration-page) var(--easing-out), visibility 0s"
+          : "opacity var(--duration-base) var(--easing-out), visibility 0s var(--duration-base)",
       }}
     >
       <div
@@ -241,7 +247,10 @@ export function BrowseSheet({
           borderRadius: "var(--radius-2xl) 0 0 var(--radius-2xl)",
           boxShadow: "var(--shadow-lift)",
           outline: "none",
-          animation: "vl-drawer-in var(--duration-slow) var(--easing-drawer) both",
+          transform: open ? "translateX(0)" : "translateX(100%)",
+          transition: open
+            ? "transform var(--duration-page) var(--easing-drawer)"
+            : "transform var(--duration-base) var(--easing-out)",
         }}
       >
         {/* Sheet header — a vertical bar at the right edge, read top→bottom */}
@@ -360,8 +369,21 @@ export function BrowseSheet({
           )}
         </div>
 
-        {/* Sheet body — vertical UI: column cells flowing right→left */}
-        <div style={{ flex: 1, minWidth: 0, overflowY: "auto", padding: "var(--space-4) var(--space-6) var(--space-6)" }}>
+        {/* Sheet body — vertical UI: column cells flowing right→left.
+            A slight parallax against the drawer's own travel adds depth. */}
+        <div
+          style={{
+            flex: 1,
+            minWidth: 0,
+            overflowY: "auto",
+            padding: "var(--space-4) var(--space-6) var(--space-6)",
+            transform: open ? "translateX(0)" : "translateX(24px)",
+            opacity: open ? 1 : 0,
+            transition: open
+              ? "transform var(--duration-page) var(--easing-drawer), opacity var(--duration-page) var(--easing-out)"
+              : "transform var(--duration-base) var(--easing-out), opacity var(--duration-base) var(--easing-out)",
+          }}
+        >
           {status === "loading" && (
             <span role="status" style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
               {t.loading}
@@ -387,57 +409,30 @@ export function BrowseSheet({
           )}
 
           {status === "idle" && level === "shows" && (
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-5)" }}>
-              {/* Guaranteed karaoke — shows that publish transcripts */}
-              <div
-                role="listbox"
-                aria-label={t.subtitledBand}
-                style={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "stretch",
-                  gap: "var(--space-3)",
-                  overflowX: "auto",
-                  paddingBottom: "var(--space-1)",
-                }}
-              >
-                <VLabel text={t.subtitledBand} />
-                {featured.map((show) => (
-                  <ShowColumn
-                    key={show.id}
-                    show={show}
-                    isActive={show.id === activeShowId}
-                    hasTranscript
-                    badgeText={t.subtitleBadge}
-                    onClick={() => onBrowseShow(show)}
-                  />
-                ))}
-              </div>
-
-              <div
-                role="listbox"
-                aria-label={t.chartBand}
-                style={{
-                  display: "flex",
-                  flexDirection: "row-reverse",
-                  alignItems: "stretch",
-                  gap: "var(--space-3)",
-                  overflowX: "auto",
-                  paddingBottom: "var(--space-1)",
-                }}
-              >
-                <VLabel text={t.chartBand} />
-                {shows.map((show) => (
-                  <ShowColumn
-                    key={show.id}
-                    show={show}
-                    isActive={show.id === activeShowId}
-                    hasTranscript={transcriptIds.has(show.id)}
-                    badgeText={t.subtitleBadge}
-                    onClick={() => onBrowseShow(show)}
-                  />
-                ))}
-              </div>
+            <div
+              role="listbox"
+              aria-label={t.subtitledBand}
+              style={{
+                display: "flex",
+                flexDirection: "row-reverse",
+                alignItems: "stretch",
+                gap: "var(--space-3)",
+                overflowX: "auto",
+                paddingBottom: "var(--space-1)",
+                height: "100%",
+              }}
+            >
+              <VLabel text={t.subtitledBand} />
+              {shows.map((show) => (
+                <ShowColumn
+                  key={show.id}
+                  show={show}
+                  isActive={show.id === activeShowId}
+                  hasTranscript
+                  badgeText={t.subtitleBadge}
+                  onClick={() => onBrowseShow(show)}
+                />
+              ))}
             </div>
           )}
 

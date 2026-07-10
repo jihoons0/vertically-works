@@ -4,10 +4,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { usePlayer } from "@/lib/listen/store";
 import type { Track } from "@/lib/listen/tracks";
 import {
-  fetchTopShows,
   fetchEpisodes,
   fetchTranscriptLines,
-  FEATURED_SHOWS,
+  showsForLanguage,
   type MarketCode,
   type Show,
 } from "@/lib/listen/podcasts";
@@ -19,7 +18,7 @@ import { ThemeToggle } from "@/components/listen/ThemeToggle";
 import { Lyrics } from "@/components/listen/Lyrics";
 import { PlayerBar } from "@/components/listen/PlayerBar";
 
-type SheetLevel = null | "shows" | "episodes";
+type SheetLevel = "shows" | "episodes";
 
 /** Idle stage — nothing chosen yet. The big type IS the interface, and it
  *  links straight into the browse sheet. */
@@ -80,8 +79,8 @@ function IdleStage({ t, onBrowse }: { t: Strings; onBrowse: () => void }) {
 
 export function ListenApp() {
   const [market, setMarket] = useState<MarketCode>("kr");
-  const [shows, setShows] = useState<Show[]>([]);
-  const [sheet, setSheet] = useState<SheetLevel>(null);
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [sheetLevel, setSheetLevel] = useState<SheetLevel>("shows");
   // What the sheet is browsing — independent of what's playing.
   const [sheetShow, setSheetShow] = useState<Show | null>(null);
   const [sheetEpisodes, setSheetEpisodes] = useState<Track[]>([]);
@@ -89,69 +88,25 @@ export function ListenApp() {
   // The committed queue.
   const [activeShow, setActiveShow] = useState<Show | null>(null);
   const [episodeTracks, setEpisodeTracks] = useState<Track[]>([]);
-  // Chart shows found (by probing feeds) to publish transcripts.
-  const [transcriptIds, setTranscriptIds] = useState<Set<string>>(new Set());
   const requestRef = useRef(0);
-  const probeSeqRef = useRef(0);
   const transcriptTriedRef = useRef(new Set<string>());
   const [lyricsLoading, setLyricsLoading] = useState(false);
 
   const player = usePlayer(episodeTracks);
   const { track, togglePlay, next, prev, seek, play, pause, startAt } = player;
 
-  // Feeds are cached server-side, so this doubles as prefetch: opening a
-  // probed show later is instant.
-  const probeTranscripts = useCallback(async (list: Show[]) => {
-    const probeId = ++probeSeqRef.current;
-    const results = await Promise.allSettled(
-      list
-        .filter((s) => s.feedUrl)
-        .map(async (s) => {
-          const res = await fetch(`/api/episodes?feed=${encodeURIComponent(s.feedUrl!)}`);
-          if (!res.ok) return null;
-          const data = (await res.json()) as { episodes?: { transcriptUrl: string | null }[] };
-          return data.episodes?.some((e) => e.transcriptUrl) ? s.id : null;
-        })
-    );
-    if (probeId !== probeSeqRef.current) return;
-    setTranscriptIds(
-      new Set(
-        results
-          .filter((r): r is PromiseFulfilledResult<string | null> => r.status === "fulfilled")
-          .map((r) => r.value)
-          .filter((v): v is string => v !== null)
-      )
-    );
-  }, []);
-
-  const loadShows = useCallback(
-    async (mkt: MarketCode) => {
-      const requestId = ++requestRef.current;
-      setStatus("loading");
-      try {
-        const loaded = await fetchTopShows(mkt);
-        if (requestId !== requestRef.current) return;
-        setShows(loaded);
-        setStatus("idle");
-        void probeTranscripts(loaded);
-      } catch {
-        if (requestId === requestRef.current) setStatus("error");
-      }
-    },
-    [probeTranscripts]
-  );
+  // The catalog is static and curated (all subtitle-supported); it just
+  // reorders so the chosen language leads.
+  const shows = showsForLanguage(market);
 
   useEffect(() => {
-    let saved: MarketCode = "kr";
     try {
       const raw = localStorage.getItem("vl:market") as MarketCode | null;
-      if (raw && raw in STRINGS) saved = raw;
+      if (raw && raw in STRINGS) setMarket(raw);
     } catch {
       // Storage unavailable — default market.
     }
-    setMarket(saved);
-    void loadShows(saved);
-  }, [loadShows]);
+  }, []);
 
   const changeMarket = useCallback(
     (mkt: MarketCode) => {
@@ -162,32 +117,32 @@ export function ListenApp() {
       } catch {
         // Storage unavailable — selection still applies this session.
       }
-      void loadShows(mkt);
     },
-    [market, loadShows]
+    [market]
   );
 
   const openShows = useCallback(() => {
-    setSheet("shows");
-    if (shows.length === 0 && status !== "loading") void loadShows(market);
-  }, [shows.length, status, market, loadShows]);
+    setSheetLevel("shows");
+    setSheetOpen(true);
+  }, []);
 
   const openEpisodes = useCallback(() => {
     if (!activeShow) return;
     setSheetShow(activeShow);
     setSheetEpisodes(episodeTracks);
-    setSheet("episodes");
+    setSheetLevel("episodes");
+    setSheetOpen(true);
   }, [activeShow, episodeTracks]);
 
   const closeSheet = useCallback(() => {
-    setSheet(null);
+    setSheetOpen(false);
     if (status === "error") setStatus("idle");
   }, [status]);
 
   // Browse a show inside the sheet — playback stays untouched.
   const browseShow = useCallback(
     async (show: Show) => {
-      setSheet("episodes");
+      setSheetLevel("episodes");
       setSheetShow(show);
       if (show.id === activeShow?.id) {
         setSheetEpisodes(episodeTracks); // already loaded as the queue
@@ -220,7 +175,7 @@ export function ListenApp() {
         setEpisodeTracks(sheetEpisodes);
         startAt(index);
       }
-      setSheet(null);
+      setSheetOpen(false);
     },
     [sheetShow, sheetEpisodes, activeShow, player, startAt]
   );
@@ -365,7 +320,7 @@ export function ListenApp() {
       <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "row-reverse" }}>
         <NavRail
           t={t}
-          sheetLevel={sheet}
+          sheetLevel={sheetOpen ? sheetLevel : null}
           activeShow={activeShow}
           track={track}
           onOpenShows={openShows}
@@ -418,14 +373,13 @@ export function ListenApp() {
         />
       </div>
 
-      {/* The browse sheet — full width, from the top, over a scrim */}
-      {sheet !== null && (
+      {/* The browse drawer — always mounted so exit can animate */}
+      {(
         <BrowseSheet
           t={t}
-          level={sheet}
+          open={sheetOpen}
+          level={sheetLevel}
           shows={shows}
-          featured={FEATURED_SHOWS}
-          transcriptIds={transcriptIds}
           episodes={sheetEpisodes}
           browsingShow={sheetShow}
           activeShowId={activeShow?.id ?? null}
@@ -434,9 +388,9 @@ export function ListenApp() {
           status={status}
           onBrowseShow={browseShow}
           onPickEpisode={pickEpisode}
-          onBack={() => setSheet("shows")}
+          onBack={() => setSheetLevel("shows")}
           onClose={closeSheet}
-          onRetry={() => (sheet === "shows" ? void loadShows(market) : sheetShow && void browseShow(sheetShow))}
+          onRetry={() => sheetShow && void browseShow(sheetShow)}
         />
       )}
     </div>
