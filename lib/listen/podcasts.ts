@@ -26,6 +26,17 @@ export type Show = {
  *  charts carry none; this list keeps the synced path reachable.) */
 export const FEATURED_SHOWS: Show[] = [
   {
+    // LISTEN (listen.style) hosts Japanese podcasts and auto-publishes
+    // podcast:transcript VTTs for every episode — native CJK karaoke.
+    id: "featured-listennews",
+    rank: 0,
+    title: "LISTEN NEWS",
+    publisher: "LISTEN · 日本語",
+    artwork:
+      "https://image.listen.style/p/01gyeap39wden4y84seygpawrv/images/SMQ5QbLxxF9DiJ3Pn7IGTDl5wv90euSESLyRi1PO.png",
+    feedUrl: "https://listen.style/p/listennews/rss",
+  },
+  {
     id: "featured-podnews",
     rank: 0,
     title: "Podnews Daily",
