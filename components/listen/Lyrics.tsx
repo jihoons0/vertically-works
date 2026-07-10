@@ -56,12 +56,14 @@ export function Lyrics({
         >
           <div
             style={{
-              margin: "auto",
+              marginInline: "auto",
+              height: "100%",
               display: "flex",
               flexDirection: "row-reverse",
-              alignItems: "center",
+              alignItems: "stretch",
               gap: "var(--space-6)",
-              padding: "var(--space-10) var(--space-12)",
+              padding: "var(--space-8) var(--space-12)",
+              boxSizing: "border-box",
             }}
           >
             <span
@@ -87,7 +89,8 @@ export function Lyrics({
                   fontSize: "1rem",
                   letterSpacing: "0.1em",
                   lineHeight: 1.9,
-                  maxHeight: "100%",
+                  height: "100%",
+                  boxSizing: "border-box",
                   color: "var(--color-fg-muted)",
                   flexShrink: 0,
                 }}
@@ -145,15 +148,19 @@ export function Lyrics({
         animation: "vl-fade-in var(--duration-slow) var(--easing-out) both",
       }}
     >
-      {/* margin:auto centers short songs and yields to scrolling on long ones */}
+      {/* margin-inline:auto centers short transcripts; the track is full
+          height so every column matches and long lines wrap into more
+          columns instead of overflowing (and clipping) top and bottom. */}
       <div
         style={{
-          margin: "auto",
+          marginInline: "auto",
+          height: "100%",
           display: "flex",
           flexDirection: "row-reverse",
-          alignItems: "center",
-          gap: "var(--space-8)",
-          padding: "var(--space-10) var(--space-12)",
+          alignItems: "stretch",
+          gap: "var(--space-6)",
+          padding: "var(--space-8) var(--space-12)",
+          boxSizing: "border-box",
         }}
       >
         {lyrics.map((line, i) => {
@@ -169,10 +176,11 @@ export function Lyrics({
               style={{
                 writingMode: "vertical-rl",
                 textOrientation: "mixed",
-                fontSize: "1.25rem",
-                letterSpacing: "0.12em",
-                lineHeight: 1.9,
-                maxHeight: "100%",
+                fontSize: "1.1875rem",
+                letterSpacing: "0.1em",
+                lineHeight: 2,
+                height: "100%",
+                boxSizing: "border-box",
                 fontWeight: isActive ? 600 : 400,
                 // Karaoke: the line you're on is unmistakable — inverted.
                 color: isActive
@@ -183,7 +191,7 @@ export function Lyrics({
                 background: isActive ? "var(--color-fg)" : "transparent",
                 border: "none",
                 borderRadius: "var(--radius-lg)",
-                padding: "var(--space-3) 3px",
+                padding: "var(--space-4) var(--space-2)",
                 cursor: "pointer",
                 fontFamily: "inherit",
                 userSelect: "none",
