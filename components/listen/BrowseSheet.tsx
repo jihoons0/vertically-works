@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { MARKETS, type MarketCode, type Show } from "@/lib/listen/podcasts";
+import type { Show } from "@/lib/listen/podcasts";
 import type { Track } from "@/lib/listen/tracks";
+import type { Strings } from "@/lib/listen/i18n";
 
 /** Full-width browse sheet dropping from the top, over a scrim. The body is
  *  vertical UI: shows and episodes are column cells flowing right-to-left,
@@ -37,11 +38,13 @@ function ShowColumn({
   show,
   isActive,
   hasTranscript,
+  badgeText,
   onClick,
 }: {
   show: Show;
   isActive: boolean;
   hasTranscript: boolean;
+  badgeText: string;
   onClick: () => void;
 }) {
   const disabled = !show.feedUrl;
@@ -51,7 +54,7 @@ function ShowColumn({
       role="option"
       aria-selected={isActive}
       aria-disabled={disabled || undefined}
-      aria-label={`${show.title} — ${show.publisher}${hasTranscript ? " · 자막 지원" : ""}`}
+      aria-label={`${show.title} — ${show.publisher}${hasTranscript ? ` · ${badgeText}` : ""}`}
       onClick={() => !disabled && onClick()}
       style={{
         display: "flex",
@@ -102,7 +105,7 @@ function ShowColumn({
               boxShadow: "var(--shadow-column)",
             }}
           >
-            자막
+            {badgeText}
           </span>
         )}
       </span>
@@ -160,6 +163,7 @@ function ShowColumn({
 }
 
 export function BrowseSheet({
+  t,
   level,
   shows,
   featured,
@@ -169,15 +173,14 @@ export function BrowseSheet({
   activeShowId,
   currentEpisodeId,
   isPlaying,
-  market,
   status,
-  onMarket,
   onBrowseShow,
   onPickEpisode,
   onBack,
   onClose,
   onRetry,
 }: {
+  t: Strings;
   level: "shows" | "episodes";
   shows: Show[];
   featured: Show[];
@@ -187,9 +190,7 @@ export function BrowseSheet({
   activeShowId: string | null;
   currentEpisodeId: string | null;
   isPlaying: boolean;
-  market: MarketCode;
   status: "idle" | "loading" | "error";
-  onMarket: (market: MarketCode) => void;
   onBrowseShow: (show: Show) => void;
   onPickEpisode: (index: number) => void;
   onBack: () => void;
@@ -223,7 +224,7 @@ export function BrowseSheet({
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-label={level === "shows" ? "인기 팟캐스트 고르기" : `${browsingShow?.title ?? ""} 에피소드 고르기`}
+        aria-label={level === "shows" ? t.choosePodcast : t.episodeListOf(browsingShow?.title ?? "")}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
         style={{
@@ -256,38 +257,8 @@ export function BrowseSheet({
           {level === "shows" ? (
             <>
               <span style={{ fontSize: "0.875rem", fontWeight: 600, letterSpacing: "0.02em", whiteSpace: "nowrap" }}>
-                오늘의 인기 팟캐스트
+                {t.todaysPodcasts}
               </span>
-              <div role="radiogroup" aria-label="차트 지역" style={{ display: "flex", gap: "var(--space-1)", flexWrap: "wrap" }}>
-                {MARKETS.map(({ code, label }) => {
-                  const active = code === market;
-                  return (
-                    <button
-                      key={code}
-                      className="pressable"
-                      role="radio"
-                      aria-checked={active}
-                      disabled={status === "loading"}
-                      onClick={() => onMarket(code)}
-                      style={{
-                        fontSize: "0.6875rem",
-                        letterSpacing: "0.02em",
-                        padding: "3px 10px",
-                        borderRadius: "var(--radius-full)",
-                        border: active ? "1px solid var(--color-fg)" : "1px solid var(--color-border)",
-                        background: active ? "var(--color-fg)" : "transparent",
-                        color: active ? "var(--color-bg)" : "var(--color-fg-muted)",
-                        cursor: status === "loading" ? "default" : "pointer",
-                        fontFamily: "inherit",
-                        transition:
-                          "background var(--duration-fast) var(--easing-out), color var(--duration-fast) var(--easing-out), border-color var(--duration-fast) var(--easing-out)",
-                      }}
-                    >
-                      {label}
-                    </button>
-                  );
-                })}
-              </div>
             </>
           ) : (
             <>
@@ -309,7 +280,7 @@ export function BrowseSheet({
                   whiteSpace: "nowrap",
                 }}
               >
-                <span aria-hidden>‹</span> 인기 팟캐스트
+                <span aria-hidden>‹</span> {t.backToShows}
               </button>
               {browsingShow?.artwork && (
                 // eslint-disable-next-line @next/next/no-img-element
@@ -340,7 +311,7 @@ export function BrowseSheet({
           <button
             className="pressable"
             onClick={onClose}
-            aria-label="닫기"
+            aria-label={t.close}
             style={{
               display: "flex",
               alignItems: "center",
@@ -365,7 +336,7 @@ export function BrowseSheet({
         <div style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "var(--space-4) var(--space-6) var(--space-6)" }}>
           {status === "loading" && (
             <span role="status" style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
-              여는 중…
+              {t.loading}
             </span>
           )}
           {status === "error" && (
@@ -383,7 +354,7 @@ export function BrowseSheet({
                 fontFamily: "inherit",
               }}
             >
-              불러오지 못했어요 · 다시 시도
+              {t.loadError}
             </button>
           )}
 
@@ -392,7 +363,7 @@ export function BrowseSheet({
               {/* Guaranteed karaoke — shows that publish transcripts */}
               <div
                 role="listbox"
-                aria-label="자막 지원 팟캐스트"
+                aria-label={t.subtitledBand}
                 style={{
                   display: "flex",
                   flexDirection: "row-reverse",
@@ -402,13 +373,14 @@ export function BrowseSheet({
                   paddingBottom: "var(--space-1)",
                 }}
               >
-                <VLabel text="자막 지원 · 따라 읽기" />
+                <VLabel text={t.subtitledBand} />
                 {featured.map((show) => (
                   <ShowColumn
                     key={show.id}
                     show={show}
                     isActive={show.id === activeShowId}
                     hasTranscript
+                    badgeText={t.subtitleBadge}
                     onClick={() => onBrowseShow(show)}
                   />
                 ))}
@@ -416,7 +388,7 @@ export function BrowseSheet({
 
               <div
                 role="listbox"
-                aria-label="오늘의 인기 차트"
+                aria-label={t.chartBand}
                 style={{
                   display: "flex",
                   flexDirection: "row-reverse",
@@ -426,13 +398,14 @@ export function BrowseSheet({
                   paddingBottom: "var(--space-1)",
                 }}
               >
-                <VLabel text="오늘의 인기 차트" />
+                <VLabel text={t.chartBand} />
                 {shows.map((show) => (
                   <ShowColumn
                     key={show.id}
                     show={show}
                     isActive={show.id === activeShowId}
                     hasTranscript={transcriptIds.has(show.id)}
+                    badgeText={t.subtitleBadge}
                     onClick={() => onBrowseShow(show)}
                   />
                 ))}
@@ -443,7 +416,7 @@ export function BrowseSheet({
           {status === "idle" && level === "episodes" && (
             <div
               role="listbox"
-              aria-label={`${browsingShow?.title ?? ""} 에피소드`}
+              aria-label={t.episodeListOf(browsingShow?.title ?? "")}
               style={{
                 display: "flex",
                 flexDirection: "row-reverse",
@@ -453,7 +426,7 @@ export function BrowseSheet({
                 paddingBottom: "var(--space-1)",
               }}
             >
-              <VLabel text="에피소드 · 최신부터" />
+              <VLabel text={t.episodesBand} />
               {episodes.map((episode, i) => {
                 const isCurrent = episode.id === currentEpisodeId;
                 const date = episode.credit?.split("·").pop()?.trim() ?? "";
@@ -544,7 +517,7 @@ export function BrowseSheet({
                           flexShrink: 0,
                         }}
                       >
-                        {isPlaying ? "재생 중" : "일시 정지"}
+                        {isPlaying ? t.playingPill : t.pausedPill}
                       </span>
                     ) : (
                       <span

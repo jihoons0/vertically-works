@@ -102,7 +102,6 @@ export async function fetchEpisodes(show: Show): Promise<Track[]> {
       transcriptUrl: e.transcriptUrl ?? undefined,
       // Show notes render as the intro panel unless a timed transcript loads.
       plainLyrics: e.descriptionLines,
-      plainNote: e.transcriptUrl ? undefined : "이 피드는 자막을 제공하지 않아요",
       lyrics: [],
     })
   );

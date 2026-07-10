@@ -2,30 +2,30 @@
 
 import type { Show } from "@/lib/listen/podcasts";
 import type { Track } from "@/lib/listen/tracks";
-import { ThemeToggle } from "@/components/listen/ThemeToggle";
+import type { Strings } from "@/lib/listen/i18n";
 
-/** The vertical nav rail at the reading start (far right): the breadcrumb
- *  trace runs top→bottom — 인기 팟캐스트, then the chosen show (with its
- *  artwork), then the playing episode. The crumbs are the hyperlinks that
- *  open the browse sheet. */
+/** The vertical nav rail at the reading start (far right): the trace runs
+ *  top→bottom — choose-podcast, then the chosen show (with its artwork),
+ *  then the playing episode. The crumbs are the hyperlinks that open the
+ *  browse sheet. */
 export function NavRail({
+  t,
   sheetLevel,
   activeShow,
   track,
-  marketLabel,
   onOpenShows,
   onOpenEpisodes,
 }: {
+  t: Strings;
   sheetLevel: null | "shows" | "episodes";
   activeShow: Show | null;
   track: Track | undefined;
-  marketLabel: string;
   onOpenShows: () => void;
   onOpenEpisodes: () => void;
 }) {
   return (
     <nav
-      aria-label="위치"
+      aria-label={t.trace}
       style={{
         display: "flex",
         flexDirection: "column",
@@ -57,26 +57,15 @@ export function NavRail({
           cursor: "pointer",
           fontFamily: "inherit",
           flexShrink: 0,
+          whiteSpace: "nowrap",
           textDecoration: "underline",
           textDecorationColor: "var(--color-border-strong)",
           textUnderlineOffset: 4,
           transition: "color var(--duration-fast) var(--easing-out)",
         }}
       >
-        인기 팟캐스트
+        {t.choosePodcast}
       </button>
-      <span
-        style={{
-          writingMode: "vertical-rl",
-          textOrientation: "mixed",
-          fontSize: "0.625rem",
-          color: "var(--color-fg-subtle)",
-          letterSpacing: "0.06em",
-          flexShrink: 0,
-        }}
-      >
-        {marketLabel}
-      </span>
 
       {activeShow && (
         <>
@@ -86,7 +75,7 @@ export function NavRail({
           <button
             className="pressable"
             onClick={onOpenEpisodes}
-            aria-label={`${activeShow.title} 에피소드 목록`}
+            aria-label={t.episodeListOf(activeShow.title)}
             aria-haspopup="dialog"
             aria-expanded={sheetLevel === "episodes"}
             style={{
@@ -158,24 +147,6 @@ export function NavRail({
           </span>
         </>
       )}
-
-      <div style={{ flex: 1, minHeight: "var(--space-2)" }} />
-
-      <ThemeToggle />
-      <span
-        style={{
-          writingMode: "vertical-rl",
-          textOrientation: "mixed",
-          fontSize: "0.625rem",
-          fontFamily: "var(--font-geist-mono)",
-          color: "var(--color-fg-subtle)",
-          letterSpacing: "0.08em",
-          flexShrink: 0,
-          paddingTop: "var(--space-2)",
-        }}
-      >
-        세로로 듣기
-      </span>
     </nav>
   );
 }

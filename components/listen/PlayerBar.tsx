@@ -2,6 +2,9 @@
 
 import { useRef } from "react";
 import { formatTime } from "@/lib/listen/store";
+import { MARKETS, type MarketCode } from "@/lib/listen/podcasts";
+import { STRINGS, type Strings } from "@/lib/listen/i18n";
+import { ThemeToggle } from "@/components/listen/ThemeToggle";
 
 /** Conventional bottom-center player bar: horizontal progress with times,
  *  volume, ±15s, previous/next episode, play/pause. Navigation is
@@ -48,6 +51,9 @@ function IconButton({
 }
 
 export function PlayerBar({
+  t,
+  market,
+  onMarket,
   currentTime,
   duration,
   isPlaying,
@@ -61,6 +67,9 @@ export function PlayerBar({
   onVolumeChange,
   onToggleMute,
 }: {
+  t: Strings;
+  market: MarketCode;
+  onMarket: (market: MarketCode) => void;
   currentTime: number;
   duration: number;
   isPlaying: boolean;
@@ -123,7 +132,7 @@ export function PlayerBar({
         <div
           role="slider"
           tabIndex={disabled ? -1 : 0}
-          aria-label="재생 위치"
+          aria-label={t.seek}
           aria-valuemin={0}
           aria-valuemax={Math.round(duration)}
           aria-valuenow={Math.round(currentTime)}
@@ -207,17 +216,43 @@ export function PlayerBar({
         </span>
       </div>
 
-      {/* Controls — transport centered, volume on the right */}
+      {/* Controls — language+theme left, transport centered, volume right */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center" }}>
-        <div />
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-          <IconButton ariaLabel="이전 에피소드" onClick={onPrev} disabled={disabled}>
+          <select
+            aria-label={t.langSelector}
+            value={market}
+            onChange={(e) => onMarket(e.target.value as MarketCode)}
+            style={{
+              fontSize: "0.6875rem",
+              fontFamily: "inherit",
+              letterSpacing: "0.02em",
+              padding: "6px 10px",
+              borderRadius: "var(--radius-full)",
+              border: "1px solid var(--color-border)",
+              background: "var(--color-bg)",
+              color: "var(--color-fg-muted)",
+              cursor: "pointer",
+              appearance: "none",
+              WebkitAppearance: "none",
+            }}
+          >
+            {MARKETS.map(({ code }) => (
+              <option key={code} value={code}>
+                {STRINGS[code].langName}
+              </option>
+            ))}
+          </select>
+          <ThemeToggle />
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+          <IconButton ariaLabel={t.prevEp} onClick={onPrev} disabled={disabled}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M19 20L9 12l10-8v16z" fill="currentColor" stroke="none" />
               <path d="M5 5v14" />
             </svg>
           </IconButton>
-          <IconButton ariaLabel="15초 뒤로" onClick={() => onSeek(Math.max(0, currentTime - 15))} disabled={disabled}>
+          <IconButton ariaLabel={t.back15} onClick={() => onSeek(Math.max(0, currentTime - 15))} disabled={disabled}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M2 4v6h6" />
               <path d="M3.5 13a8.5 8.5 0 1 0 2-6.5L2 10" />
@@ -229,7 +264,7 @@ export function PlayerBar({
           <button
             className="pressable"
             onClick={onTogglePlay}
-            aria-label={isPlaying ? "일시 정지" : "재생"}
+            aria-label={isPlaying ? t.pause : t.play}
             disabled={disabled}
             style={{
               display: "flex",
@@ -257,7 +292,7 @@ export function PlayerBar({
               </svg>
             )}
           </button>
-          <IconButton ariaLabel="15초 앞으로" onClick={() => onSeek(currentTime + 15)} disabled={disabled}>
+          <IconButton ariaLabel={t.fwd15} onClick={() => onSeek(currentTime + 15)} disabled={disabled}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M22 4v6h-6" />
               <path d="M20.5 13a8.5 8.5 0 1 1-2-6.5L22 10" />
@@ -266,7 +301,7 @@ export function PlayerBar({
               </text>
             </svg>
           </IconButton>
-          <IconButton ariaLabel="다음 에피소드" onClick={onNext} disabled={disabled}>
+          <IconButton ariaLabel={t.nextEp} onClick={onNext} disabled={disabled}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M5 4l10 8-10 8V4z" fill="currentColor" stroke="none" />
               <path d="M19 5v14" />
@@ -274,7 +309,7 @@ export function PlayerBar({
           </IconButton>
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-1)" }}>
-          <IconButton ariaLabel={muted ? "음소거 해제" : "음소거"} onClick={onToggleMute} size={36}>
+          <IconButton ariaLabel={muted ? t.unmute : t.mute} onClick={onToggleMute} size={36}>
             {muted ? (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 <path d="M11 5L6 9H2v6h4l5 4V5z" />
@@ -290,11 +325,11 @@ export function PlayerBar({
           <div
             role="slider"
             tabIndex={0}
-            aria-label="음량"
+            aria-label={t.volume}
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={Math.round(level * 100)}
-            aria-valuetext={muted ? "음소거" : `${Math.round(level * 100)}%`}
+            aria-valuetext={muted ? t.mute : `${Math.round(level * 100)}%`}
             onPointerDown={(e) => {
               e.currentTarget.setPointerCapture(e.pointerId);
               volumeFromPointer(e);

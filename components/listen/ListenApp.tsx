@@ -8,10 +8,10 @@ import {
   fetchEpisodes,
   fetchTranscriptLines,
   FEATURED_SHOWS,
-  MARKETS,
   type MarketCode,
   type Show,
 } from "@/lib/listen/podcasts";
+import { STRINGS, type Strings } from "@/lib/listen/i18n";
 import { BrowseSheet } from "@/components/listen/BrowseSheet";
 import { NavRail } from "@/components/listen/NavRail";
 import { Lyrics } from "@/components/listen/Lyrics";
@@ -21,7 +21,7 @@ type SheetLevel = null | "shows" | "episodes";
 
 /** Idle stage — nothing chosen yet. The big type IS the interface, and it
  *  links straight into the browse sheet. */
-function IdleStage({ onBrowse }: { onBrowse: () => void }) {
+function IdleStage({ t, onBrowse }: { t: Strings; onBrowse: () => void }) {
   return (
     <div
       style={{
@@ -48,7 +48,7 @@ function IdleStage({ onBrowse }: { onBrowse: () => void }) {
           color: "var(--color-fg)",
         }}
       >
-        귀로 읽는 시간
+        {t.idleTitle}
       </h2>
       <button
         className="pressable"
@@ -70,7 +70,7 @@ function IdleStage({ onBrowse }: { onBrowse: () => void }) {
           textUnderlineOffset: 4,
         }}
       >
-        오늘의 팟캐스트 고르기
+        {t.browseToday}
       </button>
     </div>
   );
@@ -140,13 +140,26 @@ export function ListenApp() {
   );
 
   useEffect(() => {
-    void loadShows("kr");
+    let saved: MarketCode = "kr";
+    try {
+      const raw = localStorage.getItem("vl:market") as MarketCode | null;
+      if (raw && raw in STRINGS) saved = raw;
+    } catch {
+      // Storage unavailable — default market.
+    }
+    setMarket(saved);
+    void loadShows(saved);
   }, [loadShows]);
 
   const changeMarket = useCallback(
     (mkt: MarketCode) => {
       if (mkt === market) return;
       setMarket(mkt);
+      try {
+        localStorage.setItem("vl:market", mkt);
+      } catch {
+        // Storage unavailable — selection still applies this session.
+      }
       void loadShows(mkt);
     },
     [market, loadShows]
@@ -222,15 +235,7 @@ export function ListenApp() {
       .then((lines) => {
         if (cancelled) return;
         setEpisodeTracks((prev) =>
-          prev.map((t) =>
-            t.id === id
-              ? {
-                  ...t,
-                  lyrics: lines,
-                  plainNote: lines.length > 0 ? t.plainNote : "이 피드는 자막을 제공하지 않아요",
-                }
-              : t
-          )
+          prev.map((ep) => (ep.id === id ? { ...ep, lyrics: lines } : ep))
         );
       })
       .catch(() => undefined)
@@ -299,7 +304,7 @@ export function ListenApp() {
     navigator.mediaSession.setActionHandler("seekforward", () => seek(player.currentTime + 15));
   }, [play, pause, prev, next, seek, player.currentTime]);
 
-  const marketLabel = MARKETS.find((m) => m.code === market)?.label ?? "";
+  const t = STRINGS[market];
   const currentEpisodeId = track && sheetShow?.id === activeShow?.id ? track.id : null;
 
   return (
@@ -318,10 +323,10 @@ export function ListenApp() {
       {/* Reading zone — the stage owns the width; the rail is the trace */}
       <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "row-reverse" }}>
         <NavRail
+          t={t}
           sheetLevel={sheet}
           activeShow={activeShow}
           track={track}
-          marketLabel={marketLabel}
           onOpenShows={openShows}
           onOpenEpisodes={openEpisodes}
         />
@@ -332,13 +337,16 @@ export function ListenApp() {
               key={track.id}
               lyrics={track.lyrics}
               plainLines={track.plainLyrics}
-              plainNote={track.plainNote}
+              plainNote={track.transcriptUrl ? undefined : t.noTranscript}
               loading={lyricsLoading}
               activeIndex={player.activeLyricIndex}
               onLineClick={player.seek}
+              introLabel={t.epIntro}
+              loadingText={t.findingLyrics}
+              emptyText={t.noTranscript}
             />
           ) : (
-            <IdleStage onBrowse={openShows} />
+            <IdleStage t={t} onBrowse={openShows} />
           )}
         </main>
       </div>
@@ -354,6 +362,9 @@ export function ListenApp() {
         }}
       >
         <PlayerBar
+          t={t}
+          market={market}
+          onMarket={changeMarket}
           currentTime={player.currentTime}
           duration={player.duration}
           isPlaying={player.isPlaying}
@@ -372,6 +383,7 @@ export function ListenApp() {
       {/* The browse sheet — full width, from the top, over a scrim */}
       {sheet !== null && (
         <BrowseSheet
+          t={t}
           level={sheet}
           shows={shows}
           featured={FEATURED_SHOWS}
@@ -381,9 +393,7 @@ export function ListenApp() {
           activeShowId={activeShow?.id ?? null}
           currentEpisodeId={currentEpisodeId}
           isPlaying={player.isPlaying}
-          market={market}
           status={status}
-          onMarket={changeMarket}
           onBrowseShow={browseShow}
           onPickEpisode={pickEpisode}
           onBack={() => setSheet("shows")}

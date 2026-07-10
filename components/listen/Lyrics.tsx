@@ -13,6 +13,9 @@ export function Lyrics({
   plainLines,
   plainNote,
   loading = false,
+  introLabel = "에피소드 소개",
+  loadingText = "자막 찾는 중…",
+  emptyText = "자막이 없는 에피소드입니다",
 }: {
   lyrics: LyricLine[];
   activeIndex: number;
@@ -22,6 +25,9 @@ export function Lyrics({
   /** Caption explaining why the verse isn't synced. */
   plainNote?: string;
   loading?: boolean;
+  introLabel?: string;
+  loadingText?: string;
+  emptyText?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -70,7 +76,7 @@ export function Lyrics({
                 flexShrink: 0,
               }}
             >
-              에피소드 소개
+              {introLabel}
             </span>
             {plainLines.map((text, i) => (
               <span
@@ -122,7 +128,7 @@ export function Lyrics({
             letterSpacing: "0.1em",
           }}
         >
-          {loading ? "가사 찾는 중…" : "가사가 없는 곡입니다"}
+          {loading ? loadingText : emptyText}
         </span>
       </div>
     );
