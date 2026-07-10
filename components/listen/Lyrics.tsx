@@ -86,6 +86,8 @@ export function Lyrics({
                 style={{
                   writingMode: "vertical-rl",
                   textOrientation: "mixed",
+                  lineBreak: "strict",
+                  wordBreak: "keep-all",
                   fontSize: "1rem",
                   letterSpacing: "0.1em",
                   lineHeight: 1.9,
@@ -176,6 +178,11 @@ export function Lyrics({
               style={{
                 writingMode: "vertical-rl",
                 textOrientation: "mixed",
+                // VERTICAL_TYPOGRAPHY §5 kinsoku + Korean-first 띄어쓰기 integrity:
+                // a 。/、/closing bracket can't begin a wrapped column, and
+                // words don't split mid-token.
+                lineBreak: "strict",
+                wordBreak: "keep-all",
                 fontSize: "1.1875rem",
                 letterSpacing: "0.1em",
                 lineHeight: 2,

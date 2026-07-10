@@ -67,7 +67,24 @@ export function parseJsonTranscript(raw: string): Cue[] {
 // once silently swallowed the hangul block into this range).
 const SPACELESS_CJK_RE = /[\u3040-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/;
 const HANGUL_RE = /[\u1100-\u11FF\u3130-\u318F\uAC00-\uD7AF]/;
+// Any CJK letter \u2014 Han, Kana, or Hangul \u2014 for punctuation context tests.
+const CJK_ANY_RE = /[\u1100-\u11FF\u3040-\u30FF\u3130-\u318F\u3400-\u4DBF\u4E00-\u9FFF\uAC00-\uD7AF\uF900-\uFAFF]/;
 const HANGUL_TARGET = 22;
+
+/** VERTICAL_TYPOGRAPHY \u00A74.1 \u2014 set ASCII period/comma as their \uC138\uB85C\uC4F0\uAE30 forms
+ *  (\uACE0\uB9AC\uC810 / \uBAA8\uC810) but ONLY when the mark sits in CJK context (the char before
+ *  it is Han/Kana/Hangul). Bilingual shows keep their English "tonight." and
+ *  decimals "1.5" exactly as written. */
+function verticalizeCJKPunctuation(text: string): string {
+  let out = "";
+  for (const ch of text) {
+    const prev = out.slice(-1);
+    if (ch === "." && CJK_ANY_RE.test(prev)) out += "\u3002";
+    else if (ch === "," && CJK_ANY_RE.test(prev)) out += "\u3001";
+    else out += ch;
+  }
+  return out;
+}
 const isSpacelessCJK = (ch: string) => SPACELESS_CJK_RE.test(ch);
 const endsSentence = (s: string) => /[.!?。！？…]["'」』”’]?$/.test(s);
 
@@ -104,7 +121,10 @@ export function mergeCues(cues: Cue[]): Cue[] {
     if (out.length >= MAX_LINES) break;
   }
   if (cur && out.length < MAX_LINES) out.push(cur);
-  return out.map((c) => ({ time: Math.round(c.time * 100) / 100, text: c.text }));
+  return out.map((c) => ({
+    time: Math.round(c.time * 100) / 100,
+    text: verticalizeCJKPunctuation(c.text),
+  }));
 }
 
 /** Raw transcript body → merged lines (null when nothing parses). */
