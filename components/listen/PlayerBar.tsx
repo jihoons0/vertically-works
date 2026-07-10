@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { formatTime } from "@/lib/listen/store";
 import { MARKETS, type MarketCode } from "@/lib/listen/podcasts";
-import { STRINGS, type Strings } from "@/lib/listen/i18n";
+import { LANG_GLYPHS, STRINGS, type Strings } from "@/lib/listen/i18n";
 import { ThemeToggle } from "@/components/listen/ThemeToggle";
 
 /** Conventional bottom-center player bar: horizontal progress with times,
@@ -104,7 +104,7 @@ export function PlayerBar({
   return (
     <div
       style={{
-        width: "min(680px, 100%)",
+        width: "min(760px, 100%)",
         display: "flex",
         flexDirection: "column",
         gap: "var(--space-2)",
@@ -219,30 +219,65 @@ export function PlayerBar({
       {/* Controls — language+theme left, transport centered, volume right */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-          <select
+          <div
+            role="radiogroup"
             aria-label={t.langSelector}
-            value={market}
-            onChange={(e) => onMarket(e.target.value as MarketCode)}
             style={{
-              fontSize: "0.6875rem",
-              fontFamily: "inherit",
-              letterSpacing: "0.02em",
-              padding: "6px 10px",
+              position: "relative",
+              display: "flex",
+              gap: 2,
+              padding: 3,
               borderRadius: "var(--radius-full)",
+              background: "var(--color-bg-subtle)",
               border: "1px solid var(--color-border)",
-              background: "var(--color-bg)",
-              color: "var(--color-fg-muted)",
-              cursor: "pointer",
-              appearance: "none",
-              WebkitAppearance: "none",
             }}
           >
-            {MARKETS.map(({ code }) => (
-              <option key={code} value={code}>
-                {STRINGS[code].langName}
-              </option>
-            ))}
-          </select>
+            <span
+              aria-hidden
+              style={{
+                position: "absolute",
+                top: 3,
+                bottom: 3,
+                left: 3,
+                width: 28,
+                borderRadius: "var(--radius-full)",
+                background: "var(--color-fg)",
+                transform: `translateX(${MARKETS.findIndex((m) => m.code === market) * 30}px)`,
+                transition: "transform var(--duration-base) var(--easing-drawer)",
+              }}
+            />
+            {MARKETS.map(({ code }) => {
+              const on = code === market;
+              return (
+                <button
+                  key={code}
+                  role="radio"
+                  aria-checked={on}
+                  aria-label={STRINGS[code].langName}
+                  className="pressable"
+                  onClick={() => onMarket(code)}
+                  style={{
+                    position: "relative",
+                    zIndex: 1,
+                    width: 28,
+                    height: 28,
+                    borderRadius: "var(--radius-full)",
+                    border: "none",
+                    background: "transparent",
+                    cursor: "pointer",
+                    fontFamily: "inherit",
+                    fontSize: "0.8125rem",
+                    fontWeight: 600,
+                    lineHeight: 1,
+                    color: on ? "var(--color-bg)" : "var(--color-fg-muted)",
+                    transition: "color var(--duration-base) var(--easing-default)",
+                  }}
+                >
+                  {LANG_GLYPHS[code]}
+                </button>
+              );
+            })}
+          </div>
           <ThemeToggle />
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>

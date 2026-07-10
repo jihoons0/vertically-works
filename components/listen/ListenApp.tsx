@@ -358,7 +358,6 @@ export function ListenApp() {
           justifyContent: "center",
           padding: "var(--space-3) var(--space-6) var(--space-5)",
           flexShrink: 0,
-          borderTop: "1px solid var(--color-border)",
         }}
       >
         <PlayerBar

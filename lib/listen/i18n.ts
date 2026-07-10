@@ -39,6 +39,15 @@ export type Strings = {
   episodeListOf: (show: string) => string;
 };
 
+/** Capsule glyphs — the Vertically Do 한/あ/中 control, extended. */
+export const LANG_GLYPHS: Record<MarketCode, string> = {
+  kr: "한",
+  jp: "あ",
+  cn: "中",
+  tw: "台",
+  hk: "港",
+};
+
 export const STRINGS: Record<MarketCode, Strings> = {
   kr: {
     langName: "한국어",
