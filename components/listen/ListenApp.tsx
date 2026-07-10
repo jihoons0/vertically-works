@@ -14,6 +14,8 @@ import {
 import { STRINGS, type Strings } from "@/lib/listen/i18n";
 import { BrowseSheet } from "@/components/listen/BrowseSheet";
 import { NavRail } from "@/components/listen/NavRail";
+import { LangCapsule } from "@/components/listen/LangCapsule";
+import { ThemeToggle } from "@/components/listen/ThemeToggle";
 import { Lyrics } from "@/components/listen/Lyrics";
 import { PlayerBar } from "@/components/listen/PlayerBar";
 
@@ -320,6 +322,45 @@ export function ListenApp() {
     >
       <audio {...player.audioProps} />
 
+      {/* Left edge — language & theme at the reading tail, v-centered
+          (mirrors Vertically Do), wordmark in the bottom-left corner */}
+      <div
+        style={{
+          position: "fixed",
+          left: "var(--space-4)",
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 40,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "var(--space-3)",
+        }}
+      >
+        <ThemeToggle />
+        <LangCapsule t={t} market={market} onMarket={changeMarket} />
+      </div>
+      <span
+        style={{
+          position: "fixed",
+          left: "var(--space-4)",
+          bottom: "var(--space-5)",
+          zIndex: 40,
+          writingMode: "vertical-rl",
+          textOrientation: "mixed",
+          fontSize: "0.625rem",
+          fontFamily: "var(--font-geist-mono)",
+          color: "var(--color-fg-subtle)",
+          letterSpacing: "0.08em",
+          maxHeight: "38vh",
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          pointerEvents: "none",
+        }}
+      >
+        © 2026 Vertically Listen
+      </span>
+
       {/* Reading zone — the stage owns the width; the rail is the trace */}
       <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "row-reverse" }}>
         <NavRail
@@ -362,8 +403,6 @@ export function ListenApp() {
       >
         <PlayerBar
           t={t}
-          market={market}
-          onMarket={changeMarket}
           currentTime={player.currentTime}
           duration={player.duration}
           isPlaying={player.isPlaying}

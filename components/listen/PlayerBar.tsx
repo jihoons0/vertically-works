@@ -2,9 +2,7 @@
 
 import { useRef } from "react";
 import { formatTime } from "@/lib/listen/store";
-import { MARKETS, type MarketCode } from "@/lib/listen/podcasts";
-import { LANG_GLYPHS, STRINGS, type Strings } from "@/lib/listen/i18n";
-import { ThemeToggle } from "@/components/listen/ThemeToggle";
+import type { Strings } from "@/lib/listen/i18n";
 
 /** Conventional bottom-center player bar: horizontal progress with times,
  *  volume, ±15s, previous/next episode, play/pause. Navigation is
@@ -52,8 +50,6 @@ function IconButton({
 
 export function PlayerBar({
   t,
-  market,
-  onMarket,
   currentTime,
   duration,
   isPlaying,
@@ -68,8 +64,6 @@ export function PlayerBar({
   onToggleMute,
 }: {
   t: Strings;
-  market: MarketCode;
-  onMarket: (market: MarketCode) => void;
   currentTime: number;
   duration: number;
   isPlaying: boolean;
@@ -104,7 +98,7 @@ export function PlayerBar({
   return (
     <div
       style={{
-        width: "min(760px, 100%)",
+        width: "min(680px, 100%)",
         display: "flex",
         flexDirection: "column",
         gap: "var(--space-2)",
@@ -216,70 +210,9 @@ export function PlayerBar({
         </span>
       </div>
 
-      {/* Controls — language+theme left, transport centered, volume right */}
+      {/* Controls — transport centered, volume right */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
-          <div
-            role="radiogroup"
-            aria-label={t.langSelector}
-            style={{
-              position: "relative",
-              display: "flex",
-              gap: 2,
-              padding: 3,
-              borderRadius: "var(--radius-full)",
-              background: "var(--color-bg-subtle)",
-              border: "1px solid var(--color-border)",
-            }}
-          >
-            <span
-              aria-hidden
-              style={{
-                position: "absolute",
-                top: 3,
-                bottom: 3,
-                left: 3,
-                width: 28,
-                borderRadius: "var(--radius-full)",
-                background: "var(--color-fg)",
-                transform: `translateX(${MARKETS.findIndex((m) => m.code === market) * 30}px)`,
-                transition: "transform var(--duration-base) var(--easing-drawer)",
-              }}
-            />
-            {MARKETS.map(({ code }) => {
-              const on = code === market;
-              return (
-                <button
-                  key={code}
-                  role="radio"
-                  aria-checked={on}
-                  aria-label={STRINGS[code].langName}
-                  className="pressable"
-                  onClick={() => onMarket(code)}
-                  style={{
-                    position: "relative",
-                    zIndex: 1,
-                    width: 28,
-                    height: 28,
-                    borderRadius: "var(--radius-full)",
-                    border: "none",
-                    background: "transparent",
-                    cursor: "pointer",
-                    fontFamily: "inherit",
-                    fontSize: "0.8125rem",
-                    fontWeight: 600,
-                    lineHeight: 1,
-                    color: on ? "var(--color-bg)" : "var(--color-fg-muted)",
-                    transition: "color var(--duration-base) var(--easing-default)",
-                  }}
-                >
-                  {LANG_GLYPHS[code]}
-                </button>
-              );
-            })}
-          </div>
-          <ThemeToggle />
-        </div>
+        <div />
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
           <IconButton ariaLabel={t.prevEp} onClick={onPrev} disabled={disabled}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
