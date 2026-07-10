@@ -54,13 +54,13 @@
   }
 }
 
-/* The browse sheet dropping in from the top edge */
-@keyframes vl-sheet-in {
-  from { transform: translateY(-100%); }
-  to { transform: translateY(0); }
+/* The browse drawer expanding in from the right edge (the rail grows) */
+@keyframes vl-drawer-in {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  @keyframes vl-sheet-in {
+  @keyframes vl-drawer-in {
     from { opacity: 0; }
     to { opacity: 1; }
   }

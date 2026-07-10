@@ -5,7 +5,8 @@ import type { Show } from "@/lib/listen/podcasts";
 import type { Track } from "@/lib/listen/tracks";
 import type { Strings } from "@/lib/listen/i18n";
 
-/** Full-width browse sheet dropping from the top, over a scrim. The body is
+/** Browse drawer expanding from the right edge — the rail grows into the
+ *  menu — over a scrim. The body is
  *  vertical UI: shows and episodes are column cells flowing right-to-left,
  *  each section labeled by a vertical column at its reading start. Browsing
  *  here never touches playback; only picking an episode commits. */
@@ -230,84 +231,33 @@ export function BrowseSheet({
         style={{
           position: "absolute",
           top: 0,
-          left: 0,
           right: 0,
-          maxHeight: "min(82vh, 780px)",
+          bottom: 0,
+          width: "min(780px, 88vw)",
           display: "flex",
-          flexDirection: "column",
+          flexDirection: "row-reverse", // header bar at the reading start
           background: "var(--color-bg)",
-          borderBottom: "1px solid var(--color-border)",
-          borderRadius: "0 0 var(--radius-2xl) var(--radius-2xl)",
+          borderLeft: "1px solid var(--color-border)",
+          borderRadius: "var(--radius-2xl) 0 0 var(--radius-2xl)",
           boxShadow: "var(--shadow-lift)",
           outline: "none",
-          animation: "vl-sheet-in var(--duration-slow) var(--easing-drawer) both",
+          animation: "vl-drawer-in var(--duration-slow) var(--easing-drawer) both",
         }}
       >
-        {/* Sheet header — thin horizontal chrome */}
+        {/* Sheet header — a vertical bar at the right edge, read top→bottom */}
         <div
           style={{
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
-            gap: "var(--space-4)",
-            padding: "var(--space-4) var(--space-6)",
-            borderBottom: "1px solid var(--color-border)",
+            gap: "var(--space-3)",
+            padding: "var(--space-4) var(--space-2)",
+            width: 64,
             flexShrink: 0,
+            borderLeft: "1px solid var(--color-border)",
+            minHeight: 0,
           }}
         >
-          {level === "shows" ? (
-            <>
-              <span style={{ fontSize: "0.875rem", fontWeight: 600, letterSpacing: "0.02em", whiteSpace: "nowrap" }}>
-                {t.todaysPodcasts}
-              </span>
-            </>
-          ) : (
-            <>
-              <button
-                className="pressable"
-                onClick={onBack}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "var(--space-1)",
-                  fontSize: "0.8125rem",
-                  color: "var(--color-fg-muted)",
-                  background: "none",
-                  border: "none",
-                  borderRadius: "var(--radius-lg)",
-                  padding: "var(--space-1) var(--space-2)",
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                <span aria-hidden>‹</span> {t.backToShows}
-              </button>
-              {browsingShow?.artwork && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={browsingShow.artwork}
-                  alt=""
-                  width={32}
-                  height={32}
-                  style={{ borderRadius: "var(--radius-md)", display: "block", flexShrink: 0 }}
-                />
-              )}
-              <span
-                style={{
-                  fontSize: "0.875rem",
-                  fontWeight: 600,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  minWidth: 0,
-                }}
-              >
-                {browsingShow?.title}
-              </span>
-            </>
-          )}
-
-          <div style={{ flex: 1 }} />
           <button
             className="pressable"
             onClick={onClose}
@@ -330,10 +280,88 @@ export function BrowseSheet({
               <path d="M6 6l12 12M18 6L6 18" />
             </svg>
           </button>
+
+          {level === "shows" ? (
+            <span
+              style={{
+                writingMode: "vertical-rl",
+                textOrientation: "mixed",
+                fontSize: "0.875rem",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                whiteSpace: "nowrap",
+                minHeight: 0,
+                overflow: "hidden",
+              }}
+            >
+              {t.todaysPodcasts}
+            </span>
+          ) : (
+            <>
+              <button
+                className="pressable"
+                onClick={onBack}
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "var(--space-1)",
+                  background: "none",
+                  border: "none",
+                  borderRadius: "var(--radius-lg)",
+                  padding: "var(--space-2) var(--space-1)",
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                  color: "var(--color-fg-muted)",
+                  flexShrink: 0,
+                }}
+              >
+                {/* Back = up the reading axis */}
+                <span aria-hidden style={{ transform: "rotate(90deg)", fontSize: "0.875rem", lineHeight: 1 }}>
+                  ‹
+                </span>
+                <span
+                  style={{
+                    writingMode: "vertical-rl",
+                    textOrientation: "mixed",
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.06em",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {t.backToShows}
+                </span>
+              </button>
+              {browsingShow?.artwork && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={browsingShow.artwork}
+                  alt=""
+                  width={40}
+                  height={40}
+                  style={{ borderRadius: "var(--radius-lg)", display: "block", flexShrink: 0 }}
+                />
+              )}
+              <span
+                style={{
+                  writingMode: "vertical-rl",
+                  textOrientation: "mixed",
+                  fontSize: "0.8125rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.06em",
+                  whiteSpace: "nowrap",
+                  minHeight: 0,
+                  overflow: "hidden",
+                }}
+              >
+                {browsingShow?.title}
+              </span>
+            </>
+          )}
         </div>
 
         {/* Sheet body — vertical UI: column cells flowing right→left */}
-        <div style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "var(--space-4) var(--space-6) var(--space-6)" }}>
+        <div style={{ flex: 1, minWidth: 0, overflowY: "auto", padding: "var(--space-4) var(--space-6) var(--space-6)" }}>
           {status === "loading" && (
             <span role="status" style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
               {t.loading}

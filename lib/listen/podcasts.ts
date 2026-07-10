@@ -26,6 +26,16 @@ export type Show = {
  *  charts carry none; this list keeps the synced path reachable.) */
 export const FEATURED_SHOWS: Show[] = [
   {
+    // Spotify for Creators feeds expose Spotify's auto-transcripts as SRT
+    // (transcript-files.spotifycdn.com) — properly Korean, timestamped.
+    id: "featured-lfweekly",
+    rank: 0,
+    title: "라플위클리",
+    publisher: "LIFEPLUS TV · 한국어",
+    artwork: "https://d3t3ozftmdmh3i.cloudfront.net/staging/podcast_uploaded_nologo/44434731/44434731-1778737002867-a3ad079a2d676.jpg",
+    feedUrl: "https://anchor.fm/s/109729b4c/podcast/rss",
+  },
+  {
     // LISTEN (listen.style) hosts Japanese podcasts and auto-publishes
     // podcast:transcript VTTs for every episode — native CJK karaoke.
     id: "featured-listennews",
