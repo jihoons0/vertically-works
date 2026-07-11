@@ -99,7 +99,6 @@ function Shell() {
             onClearDone={handleClearDone}
             onHelp={() => setHelp(true)}
             onZoomOut={zoomOut}
-            onRename={(title) => store.renameBoard(activeBoard.id, title)}
           />
         </div>
       )}

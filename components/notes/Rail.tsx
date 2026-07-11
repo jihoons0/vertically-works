@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useLocale } from "@/lib/notes/i18n";
 import type { Board } from "@/lib/notes/store";
-import { VTextField } from "@/components/notes/VTextField";
 
 export type Filter = "active" | "done" | "all";
 
@@ -11,21 +10,6 @@ const FILTER_IDS: Filter[] = ["active", "done", "all"];
 
 const CELL = 46; // filter cell height
 const GAP = 2;
-
-const iconBtn: React.CSSProperties = {
-  width: 40,
-  height: 40,
-  borderRadius: "var(--radius-full)",
-  border: "1px solid var(--color-border)",
-  background: "var(--color-bg)",
-  color: "var(--color-fg)",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  cursor: "pointer",
-  boxShadow: "var(--shadow-column)",
-  fontFamily: "inherit",
-};
 
 function TrashIcon({ size = 16 }: { size?: number }) {
   return (
@@ -56,7 +40,6 @@ export function Rail({
   setFilter,
   onClearDone,
   onZoomOut,
-  onRename,
 }: {
   board: Board;
   total: number;
@@ -66,19 +49,10 @@ export function Rail({
   onClearDone: () => void;
   onHelp: () => void;
   onZoomOut: () => void;
-  onRename: (title: string) => void;
 }) {
   const { t } = useLocale();
   const [tip, setTip] = useState(false);
-  const [editing, setEditing] = useState(false);
-  const [draft, setDraft] = useState(board.title);
   const activeIndex = FILTER_IDS.indexOf(filter);
-
-  const commitRename = () => {
-    if (draft.trim() && draft.trim() !== board.title) onRename(draft);
-    else setDraft(board.title);
-    setEditing(false);
-  };
 
   return (
     <aside
@@ -96,39 +70,35 @@ export function Rail({
         gap: "var(--space-3)",
       }}
     >
-      {/* Board header — vertical title + zoom-out (grid), above the filter. */}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-3)" }}>
-        {editing ? (
-          <VTextField
-            value={draft}
-            onChange={setDraft}
-            onEnter={commitRename}
-            onEscape={() => {
-              setDraft(board.title);
-              setEditing(false);
-            }}
-            onBlur={commitRename}
-            autoFocus
-            ariaLabel={board.title}
-            style={{ fontSize: "1.0625rem", fontWeight: 700, letterSpacing: "0.08em", color: "var(--color-fg)" }}
-          />
-        ) : (
-          <button
-            className="v-text pressable"
-            onClick={() => {
-              setDraft(board.title);
-              setEditing(true);
-            }}
-            aria-label={board.title}
-            style={{ background: "none", border: "none", cursor: "text", fontFamily: "inherit", fontSize: "1.0625rem", fontWeight: 700, letterSpacing: "0.08em", color: "var(--color-fg)", whiteSpace: "nowrap", maxHeight: "38vh", overflow: "hidden", padding: 0 }}
-          >
-            {board.title}
-          </button>
-        )}
-        <button className="pressable" aria-label={t.boards.back} onClick={onZoomOut} style={iconBtn}>
-          <GridIcon />
-        </button>
-      </div>
+      {/* Board header — a single icon-over-text button (grid icon on top, board
+          name below) that zooms back out to the overview. Sits above the filter. */}
+      <button
+        className="pressable new-tile"
+        aria-label={`${t.boards.back} · ${board.title}`}
+        onClick={onZoomOut}
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: "var(--space-2)",
+          padding: "var(--space-3) var(--space-2)",
+          borderRadius: "var(--radius-xl)",
+          border: "1px solid var(--color-border)",
+          background: "var(--color-bg-subtle)",
+          color: "var(--color-fg)",
+          cursor: "pointer",
+          fontFamily: "inherit",
+          boxShadow: "var(--shadow-column)",
+        }}
+      >
+        <GridIcon size={18} />
+        <span
+          className="v-text"
+          style={{ fontSize: "1.0625rem", fontWeight: 700, letterSpacing: "0.08em", whiteSpace: "nowrap", maxHeight: "34vh", overflow: "hidden" }}
+        >
+          {board.title}
+        </span>
+      </button>
 
       {/* Filter — a capsule styled exactly like the language toggle, with a
           sliding indicator. No title, no panel, no divider. */}
