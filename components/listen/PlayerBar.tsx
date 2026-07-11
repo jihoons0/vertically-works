@@ -236,7 +236,7 @@ export function PlayerBar({
             </svg>
           </IconButton>
           <button
-            className="pressable"
+            className="pressable vl-play"
             onClick={onTogglePlay}
             aria-label={isPlaying ? t.pause : t.play}
             disabled={disabled}
@@ -283,6 +283,7 @@ export function PlayerBar({
           </IconButton>
         </div>
         <div className="vl-player-volume" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-1)" }}>
+          <span className="vl-mute" style={{ display: "flex", alignItems: "center" }}>
           <IconButton ariaLabel={muted ? t.unmute : t.mute} onClick={onToggleMute} size={36}>
             {muted ? (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -296,7 +297,9 @@ export function PlayerBar({
               </svg>
             )}
           </IconButton>
+          </span>
           <div
+            className="vl-volume-slider"
             role="slider"
             tabIndex={0}
             aria-label={t.volume}

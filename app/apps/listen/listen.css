@@ -54,8 +54,9 @@
   }
 }
 
-/* Phones: keep the transport, drop the on-screen volume (device's job),
-   tighten spacing so nothing overflows the bar. */
+/* Phones: keep the transport AND the volume knob, but make room — drop the
+   redundant mute button (the knob mutes at 0), shorten the volume track,
+   zero the play button's extra margin, and tighten spacing. */
 @media (max-width: 600px) {
   .vl-player-shell {
     padding-left: var(--space-2) !important;
@@ -65,10 +66,17 @@
     padding-left: var(--space-3) !important;
     padding-right: var(--space-3) !important;
   }
-  .vl-player-volume {
-    display: none !important;
-  }
   .vl-transport {
     gap: var(--space-1) !important;
+  }
+  .vl-play {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .vl-mute {
+    display: none !important;
+  }
+  .vl-volume-slider {
+    width: 48px !important;
   }
 }
