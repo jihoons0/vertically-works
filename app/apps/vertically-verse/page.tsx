@@ -99,9 +99,11 @@ export default function VerticallyVersePage() {
                 column — the same interactions documented across this site.
               </p>
               <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
-                {/* TestFlight distribution — placeholder href until the public beta link is live */}
+                {/* TestFlight public beta */}
                 <a
-                  href="#"
+                  href="https://testflight.apple.com/join/DY7MKU7m"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="btn-primary-hover pressable"
                   style={{
                     display: "inline-flex", alignItems: "center", gap: 8,
