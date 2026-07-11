@@ -83,7 +83,17 @@ function NewTile({ onAdd, label }: { onAdd: (title: string) => void; label: stri
   }
 
   return (
-    <div style={{ ...base, border: "1.5px dashed var(--color-fg)", padding: "var(--space-4)" }}>
+    <div
+      style={{
+        ...base,
+        // Right-aligned to the reading start (top-right), matching where a
+        // finished tile shows its title.
+        alignItems: "flex-start",
+        justifyContent: "flex-end",
+        border: "1.5px dashed var(--color-fg)",
+        padding: "var(--space-5) var(--space-4)",
+      }}
+    >
       <VTextField
         value={title}
         onChange={setTitle}
