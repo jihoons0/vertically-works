@@ -127,6 +127,27 @@ function Shell() {
         </>
       )}
 
+      {/* Wordmark — persistent, bottom-left, on both the overview and board views */}
+      {mounted && (
+        <span
+          className="v-text"
+          style={{
+            position: "fixed",
+            bottom: "var(--space-6)",
+            left: "var(--space-6)",
+            zIndex: 20,
+            fontSize: "0.625rem",
+            letterSpacing: "0.14em",
+            color: "var(--color-fg-subtle)",
+            fontFamily: "var(--font-geist-mono)",
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+        >
+          Vertically Notes
+        </span>
+      )}
+
       <HelpSheet open={help} onClose={() => setHelp(false)} />
     </div>
   );
@@ -262,24 +283,6 @@ function Board({ store, board, filter }: { store: Store; board: BoardType; filte
           transition: "opacity var(--duration-base) var(--easing-default)",
         }}
       />
-
-      {/* Studio footer — vertical, bottom-left */}
-      <span
-        className="v-text"
-        style={{
-          position: "absolute",
-          bottom: "var(--space-6)",
-          left: "var(--space-6)",
-          fontSize: "0.625rem",
-          letterSpacing: "0.14em",
-          color: "var(--color-fg-subtle)",
-          fontFamily: "var(--font-geist-mono)",
-          pointerEvents: "none",
-          userSelect: "none",
-        }}
-      >
-        © 2026 Vertically Works
-      </span>
     </div>
   );
 }
