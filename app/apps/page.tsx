@@ -32,11 +32,11 @@ const APPS = [
     icon: "記",
     href: "/apps/notes",
     description:
-      "Vertically Do — a to-do list rethought for the vertical, right-to-left axis. Tasks are columns you read top→bottom, newest at the reading start; drag a column down to delete (a trashcan opens behind it in the vacated slot), sideways to reorder, and switch the whole interface across 한 / あ / 中.",
+      "Vertically Do · a to-do list rethought for the vertical, right-to-left axis. Tasks are columns you read top→bottom, newest at the reading start; drag a column down to delete (a trashcan opens behind it in the vacated slot), sideways to reorder, and switch the whole interface across 한 / あ / 中.",
     challenges: [
       "Tasks as full-height columns that stack right→left and scroll on the column axis",
       "Vertical pull-to-delete with a trashcan revealed behind the card",
-      "Orthogonal drag axes — vertical deletes, horizontal reorders",
+      "Orthogonal drag axes · vertical deletes, horizontal reorders",
       "contentEditable vertical-text input that stays column-centered",
       "한 / あ / 中 language toggle re-localizing the entire interface",
     ],
@@ -49,12 +49,12 @@ const APPS = [
     icon: "楽",
     href: "/apps/listen",
     description:
-      "Vertically Listen — a podcast player rethought for the vertical, right-to-left axis. Today's top CJK shows (한국·일본·중국·대만·홍콩) are a shelf of full-height columns, episodes stream in full over open RSS, and Podcasting 2.0 transcripts fall as time-synced vertical verse with tap-to-seek. Navigation and transport stay horizontal — a breadcrumb trace with the show's artwork up top, a conventional player bar (±15초, previous/next, volume) at the bottom — while reading stays vertical.",
+      "Vertically Listen · a podcast player rethought for the vertical, right-to-left axis. Today's top CJK shows (한국·일본·중국·대만·홍콩) are a shelf of full-height columns, episodes stream in full over open RSS, and Podcasting 2.0 transcripts fall as time-synced vertical verse with tap-to-seek. Navigation and transport stay horizontal · a breadcrumb trace with the show's artwork up top, a conventional player bar (±15초, previous/next, volume) at the bottom · while reading stays vertical.",
     challenges: [
-      "Hierarchy you can trace — shows › episodes › playing, every crumb live, playback never interrupted while browsing",
+      "Hierarchy you can trace · shows › episodes › playing, every crumb live, playback never interrupted while browsing",
       "Shelf cells as full-height rounded columns with status pills, stacking right→left",
-      "Time-synced transcripts as vertical verse — the active line carries the accent, auto-scrolls, and seeks on tap",
-      "Show notes as a labeled intro panel when a feed has no transcript — untimed text never fakes sync",
+      "Time-synced transcripts as vertical verse · the active line carries the accent, auto-scrolls, and seeks on tap",
+      "Show notes as a labeled intro panel when a feed has no transcript · untimed text never fakes sync",
       "The horizontal/vertical split: reading is vertical, navigation and transport are horizontal",
     ],
   },

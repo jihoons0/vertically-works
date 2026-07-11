@@ -13,7 +13,7 @@ const COLUMNS = [
 const REF_Y = 44;
 
 /** A vertical column with a reference trigger up top, as in TooltipDemo: on
- *  hover the ref underlines and a vertical tooltip opens to its left —
+ *  hover the ref underlines and a vertical tooltip opens to its left,
  *  following reading direction, never below where it would break the column. */
 function TooltipColumn({
   x,
@@ -57,7 +57,7 @@ function TooltipColumn({
       >
         {refLabel}
 
-        {/* Tooltip — enters leftward, along the reading axis */}
+        {/* Tooltip · enters leftward, along the reading axis */}
         <span
           style={{
             position: "absolute",
@@ -132,7 +132,7 @@ export function LoopTooltip() {
     <BentoTile
       index="04"
       label="Tooltip on hover"
-      description="Hover still exists in vertical UI: the tooltip opens to the left of the trigger — following reading direction — never below, where it would break the column."
+      description="Hover still exists in vertical UI: the tooltip opens to the left of the trigger · following reading direction · never below, where it would break the column."
     >
       <TooltipColumn x={COLUMNS[0].x} refLabel={COLUMNS[0].ref} text={COLUMNS[0].text} tip={COLUMNS[0].tip} hovered={hover1} />
       <TooltipColumn x={COLUMNS[1].x} refLabel={COLUMNS[1].ref} text={COLUMNS[1].text} tip={COLUMNS[1].tip} hovered={hover2} />

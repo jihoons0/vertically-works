@@ -108,7 +108,7 @@ export function ButtonDefault() {
 >
   <svg width="16" height="16" viewBox="0 0 24 24"
     fill="none" stroke="currentColor" strokeWidth="2">
-    {/* Down arrow — reading direction */}
+    {/* Down arrow · reading direction */}
     <path d="M12 5v14M5 12l7 7 7-7" />
   </svg>
 </button>`,
@@ -121,7 +121,7 @@ export function ButtonDefault() {
     ],
     dontList: [
       "Use ambiguous icons without labels in novel vertical contexts",
-      "Flip horizontal directional icons — redesign them for the vertical axis",
+      "Flip horizontal directional icons · redesign them for the vertical axis",
       "Rely on tooltip alone for accessibility",
     ],
     accessibility: "aria-label required. Role button implicit. Focus indicator must be visible at all sizes.",
@@ -132,9 +132,9 @@ export function ButtonDefault() {
     slug: "toggle",
     name: "Toggle",
     category: "Actions",
-    description: "A pressable element that switches between two states — on and off.",
+    description: "A pressable element that switches between two states · on and off.",
     problem: "Does the binary on/off axis conflict with vertical reading direction, or does its perpendicular orientation provide useful contrast?",
-    intent: "In a vertical interface the toggle runs on the reading axis — the thumb travels up for on, matching the direction the eye already moves.",
+    intent: "In a vertical interface the toggle runs on the reading axis · the thumb travels up for on, matching the direction the eye already moves.",
     variants: [
       {
         name: "Default",
@@ -158,12 +158,12 @@ function Settings() {
       },
     ],
     doList: [
-      "Run the toggle on the reading axis — thumb up = on, matching how the eye moves",
+      "Run the toggle on the reading axis · thumb up = on, matching how the eye moves",
       "Always pair with a label that explains current state effect",
       "Use haptic feedback on state change in native implementations",
     ],
     dontList: [
-      "Rotate a horizontal toggle with transform — build the vertical travel natively",
+      "Rotate a horizontal toggle with transform · build the vertical travel natively",
       "Use color alone to convey state",
       "Place toggle labels vertically unless they are single CJK characters",
     ],
@@ -179,12 +179,12 @@ function Settings() {
     category: "Inputs",
     description: "Single-line text input with CJK IME composition support in a vertical interface.",
     problem: "How does a text input compose CJK characters in a vertical context, and where does the IME candidate window appear?",
-    intent: "CJK input requires IME composition — an intermediate state where the candidate characters are shown before confirmation. The candidate window placement in a vertical context is largely unsolved.",
+    intent: "CJK input requires IME composition · an intermediate state where the candidate characters are shown before confirmation. The candidate window placement in a vertical context is largely unsolved.",
     variants: [
       {
         name: "Default",
         demo: <TextFieldDemo />,
-        code: `// Vertical text field — composition-aware
+        code: `// Vertical text field · composition-aware
 <div style={{ position: "relative" }}>
   <input
     type="text"
@@ -215,7 +215,7 @@ function Settings() {
     ],
     doList: [
       "Set lang attribute to match content language for IME accuracy",
-      "Keep input field horizontal even in vertical layouts — rotating input is disorienting",
+      "Keep input field horizontal even in vertical layouts · rotating input is disorienting",
       "Show placeholder text in the target language",
     ],
     dontList: [
@@ -251,7 +251,7 @@ function Settings() {
       display: "flex",
       flexDirection: "column",
     }}>
-      {/* Search input — horizontal, at top */}
+      {/* Search input · horizontal, at top */}
       <div style={{ padding: "12px 16px", borderBottom: "1px solid var(--color-border)" }}>
         <input
           autoFocus
@@ -263,7 +263,7 @@ function Settings() {
         />
       </div>
 
-      {/* Results — vertical text, scrollable */}
+      {/* Results · vertical text, scrollable */}
       <div style={{ flex: 1, overflowY: "auto" }}>
         {results.map((r, i) => (
           <div key={i} style={{
@@ -282,13 +282,13 @@ function Settings() {
       },
     ],
     doList: [
-      "Keep the search input horizontal — composition requires horizontal baseline",
+      "Keep the search input horizontal · composition requires horizontal baseline",
       "Show results in a scannable list, not vertical columns",
       "Highlight matches with background color, not text rotation",
     ],
     dontList: [
-      "Display search results as vertical text — this slows scanning",
-      "Open search in a new page — use an overlay so position is preserved",
+      "Display search results as vertical text · this slows scanning",
+      "Open search in a new page · use an overlay so position is preserved",
       "Assume Korean/Japanese/Chinese input works without IME event handling",
     ],
     accessibility: "role='search'. aria-live region for results count. Results list with role='listbox'.",
@@ -367,10 +367,10 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
     doList: [
       "Use drag-up-to-increase: upward motion = more, matches physical weight metaphor",
       "Show current value adjacent to the track in horizontal text",
-      "Keep the track short and vertical — 120–200px is enough",
+      "Keep the track short and vertical · 120–200px is enough",
     ],
     dontList: [
-      "Rotate a horizontal slider 90° — the interaction model breaks",
+      "Rotate a horizontal slider 90° · the interaction model breaks",
       "Use a vertical slider for fine-grained color or date selection",
       "Place the slider on the reading axis where it competes with text",
     ],
@@ -429,7 +429,7 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
       },
     ],
     doList: [
-      "Keep tabs horizontal — the horizontal axis separates content categories from reading content",
+      "Keep tabs horizontal · the horizontal axis separates content categories from reading content",
       "Limit labels to 3 CJK characters or a short word",
       "Place tab panel content in the vertical reading layout that follows",
     ],
@@ -448,9 +448,9 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
     slug: "verse",
     name: "Verse",
     category: "Text",
-    description: "The atomic unit of vertical scripture layout — a selectable, highlightable text cell within a vertical column.",
+    description: "The atomic unit of vertical scripture layout · a selectable, highlightable text cell within a vertical column.",
     problem: "How should selection and highlight behave for a body-text unit inside a top-to-bottom, right-to-left column layout?",
-    intent: "Each verse is a discrete unit that must support tapping, long-pressing, highlighting, and annotation — all while maintaining correct RTL column order. Rendered as plain body text so the reading surface stays uncluttered; reference numbers live in the chrome, not the column.",
+    intent: "Each verse is a discrete unit that must support tapping, long-pressing, highlighting, and annotation · all while maintaining correct RTL column order. Rendered as plain body text so the reading surface stays uncluttered; reference numbers live in the chrome, not the column.",
     variants: [
       {
         name: "Default",
@@ -465,7 +465,7 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
       }}
       onClick={onTap}
     >
-      {/* Body text only — reference numbers live in the chrome, not the column */}
+      {/* Body text only · reference numbers live in the chrome, not the column */}
       <span style={{
         fontSize: "1rem",
         letterSpacing: "0.1em",
@@ -492,13 +492,13 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
       },
     ],
     doList: [
-      "Keep the reading column as pure body text — surface the reference in the chrome or on selection",
+      "Keep the reading column as pure body text · surface the reference in the chrome or on selection",
       "Treat tate-chu-yoko digit groups as single selection units",
-      "Use background-color + leading border for highlights — not text inversion",
+      "Use background-color + leading border for highlights · not text inversion",
     ],
     dontList: [
-      "Use the OS text selection API for vertical content — it breaks at column boundaries",
-      "Inject verse numbers as inline column elements — they interrupt the vertical reading rhythm",
+      "Use the OS text selection API for vertical content · it breaks at column boundaries",
+      "Inject verse numbers as inline column elements · they interrupt the vertical reading rhythm",
       "Apply highlight via text-shadow or outline",
     ],
     accessibility: "Each verse is a paragraph with aria-label including reference. Highlight announced via live region.",
@@ -511,7 +511,7 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
     category: "Overlays",
     description: "A dark vertical popover that opens from a trigger, offering highlight color swatches and action items with vertical Korean labels. Scales in from its trigger origin, collapses on close.",
     problem: "How should a contextual popover menu orient and animate in a vertical reading interface? Horizontal toolbars break the reading flow, and a menu that scales from center feels disconnected from the trigger.",
-    intent: "The menu reads top-to-bottom — matching the reading axis it serves. Highlight swatches at the top, labeled actions below. Icons sit above their vertical labels. It opens from a compact trigger and collapses back to it.",
+    intent: "The menu reads top-to-bottom · matching the reading axis it serves. Highlight swatches at the top, labeled actions below. Icons sit above their vertical labels. It opens from a compact trigger and collapses back to it.",
     variants: [
       {
         name: "Default",
@@ -552,7 +552,7 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
 
       <div style={{ width: 24, height: 1, background: "rgba(255,255,255,0.15)" }} />
 
-      {/* Actions — icon + vertical label */}
+      {/* Actions · icon + vertical label */}
       {[
         { id: "save",  label: "저장", icon: <BookmarkIcon /> },
         { id: "note",  label: "노트", icon: <NoteIcon /> },
@@ -590,14 +590,14 @@ function VerticalSlider({ value, onChange, min = 12, max = 32 }) {
     ],
     doList: [
       "Arrange actions top-to-bottom matching the vertical reading axis",
-      "Place highlight swatches at the top — they're the most frequent action",
+      "Place highlight swatches at the top · they're the most frequent action",
       "Use vertical Korean labels (저장, 노트, 복사) below each icon",
       "Scale the menu in from its trigger, not from the viewport center",
     ],
     dontList: [
-      "Use a horizontal toolbar — it forces the user's eye off the reading axis",
+      "Use a horizontal toolbar · it forces the user's eye off the reading axis",
       "Label actions with horizontal text in a vertical reading context",
-      "Place the menu on the reading axis — it should sit at the edge of the selected column",
+      "Place the menu on the reading axis · it should sit at the edge of the selected column",
     ],
     accessibility: "Trigger is a labeled button; the open menu is role='toolbar', aria-label='구절 동작'. Each button has aria-label. Keyboard: arrow keys navigate within the menu, Escape collapses it.",
     openQuestion: "When the selected verse is in the leftmost column (reading terminus), where does the popover go? It can't extend further left.",
@@ -644,14 +644,14 @@ function useChapterPull(scrollRef, onNext, onPrev) {
       },
     ],
     doList: [
-      "Use the horizontal overscroll gesture — it matches the column scrolling axis",
+      "Use the horizontal overscroll gesture · it matches the column scrolling axis",
       "Show a progress ring filling as the user pulls",
       "Add haptic ticks at 25%, 50%, 75%, 100% and a strong landing haptic on trigger",
     ],
     dontList: [
-      "Use vertical pull for chapter navigation — it conflicts with scroll",
-      "Trigger immediately on overscroll — require a release gesture to confirm",
-      "Show a spinner on chapter load — show the skeleton of the next chapter instead",
+      "Use vertical pull for chapter navigation · it conflicts with scroll",
+      "Trigger immediately on overscroll · require a release gesture to confirm",
+      "Show a spinner on chapter load · show the skeleton of the next chapter instead",
     ],
     accessibility: "Provide accessible alternative (toolbar buttons) for this gesture. Announce chapter change via aria-live.",
     openQuestion: "On desktop, what keyboard shortcut maps to chapter navigation in a vertical reader? Arrow keys are taken by text navigation.",
@@ -663,12 +663,12 @@ function useChapterPull(scrollRef, onNext, onPrev) {
     category: "Text",
     description: "Marking an inline run of text as a link without an underline.",
     problem: "A hyperlink is conventionally underlined. Rotated into vertical text, that underline falls to one side of the column and collides with the neighbouring line. How is a link marked instead?",
-    intent: "The underline is a horizontal-writing artifact — a rule that runs along the baseline. Vertical writing already has a mechanism for marking a run of characters: the emphasis mark (방점 / 傍點), a dot set beside each character, on the right in vertical text. Reused as the link affordance, it rides alongside the column instead of crossing into the next line.",
+    intent: "The underline is a horizontal-writing artifact · a rule that runs along the baseline. Vertical writing already has a mechanism for marking a run of characters: the emphasis mark (방점 / 傍點), a dot set beside each character, on the right in vertical text. Reused as the link affordance, it rides alongside the column instead of crossing into the next line.",
     variants: [
       {
         name: "Interpunct vs underline",
         demo: <HyperlinkTreatmentDemo />,
-        code: `// The interpunct rides to the right of every character in the run —
+        code: `// The interpunct rides to the right of every character in the run,
 // this is the CSS text-emphasis (emphasis-mark) mechanism, which in
 // vertical writing places one mark per character on the right by default.
 
@@ -687,16 +687,16 @@ function useChapterPull(scrollRef, onNext, onPrev) {
       },
     ],
     doList: [
-      "Use text-emphasis (방점) to mark links — it is the native vertical-writing mechanism for a character run",
+      "Use text-emphasis (방점) to mark links · it is the native vertical-writing mechanism for a character run",
       "Keep the mark to the right of the character (the vertical default), where readers expect emphasis",
       "Pair the mark with a color shift so the link is legible without relying on the dot alone",
     ],
     dontList: [
-      "Underline links in vertical text — the rule lands on the column's side and reads as a border",
+      "Underline links in vertical text · the rule lands on the column's side and reads as a border",
       "Rotate a horizontal underline 90° and call it done",
-      "Use the interpunct mark for non-interactive emphasis on the same screen — it will be mistaken for a link",
+      "Use the interpunct mark for non-interactive emphasis on the same screen · it will be mistaken for a link",
     ],
-    accessibility: "Use a real <a> element so it is focusable and announced as a link. The mark is decorative (text-emphasis) — never encode the link's meaning in the dot alone; keep a color or focus cue. Ensure a visible focus ring on the vertical run.",
+    accessibility: "Use a real <a> element so it is focusable and announced as a link. The mark is decorative (text-emphasis) · never encode the link's meaning in the dot alone; keep a color or focus cue. Ensure a visible focus ring on the vertical run.",
     openQuestion: "Emphasis marks also signal non-link emphasis in CJK typography. When a page needs both, what second channel (color, weight, mark shape) keeps links distinct from emphasized text?",
     status: "built",
   },
@@ -764,12 +764,12 @@ function useChapterPull(scrollRef, onNext, onPrev) {
       },
     ],
     doList: [
-      "Default to left placement — tooltip appears in the direction reader came from",
+      "Default to left placement · tooltip appears in the direction reader came from",
       "Keep tooltip width ≤ 240px",
       "Dismiss on Escape and pointer leave with 200ms delay",
     ],
     dontList: [
-      "Place tooltips below vertical text triggers — they interrupt the column below",
+      "Place tooltips below vertical text triggers · they interrupt the column below",
       "Use tooltips for interactive content",
       "Animate tooltips on the reading axis",
     ],
@@ -841,8 +841,8 @@ function useChapterPull(scrollRef, onNext, onPrev) {
       "Always provide a visible dismiss handle and Escape key support",
     ],
     dontList: [
-      "Animate from the right in an RTL interface — it travels against reading flow",
-      "Open sheets with fade only — directional entry communicates spatial relationship",
+      "Animate from the right in an RTL interface · it travels against reading flow",
+      "Open sheets with fade only · directional entry communicates spatial relationship",
       "Use sheets for content that needs to be compared with what's behind it",
     ],
     accessibility: "role='dialog', aria-modal='true'. Focus trapped. Dismiss via Escape. Focus returns to trigger on close.",
@@ -855,7 +855,7 @@ function useChapterPull(scrollRef, onNext, onPrev) {
     category: "Overlays",
     description: "A modal window requiring user decision before proceeding.",
     problem: "How does a dialog present in a full-vertical interface without disorienting the user?",
-    intent: "Dialogs interrupt reading. Their animation should feel orthogonal to reading direction — appearing from above (scale) rather than from a reading-axis edge.",
+    intent: "Dialogs interrupt reading. Their animation should feel orthogonal to reading direction · appearing from above (scale) rather than from a reading-axis edge.",
     variants: [
       {
         name: "Default",
@@ -914,14 +914,14 @@ function useChapterPull(scrollRef, onNext, onPrev) {
       },
     ],
     doList: [
-      "Animate with scale-up from center — avoids reading-axis conflict",
+      "Animate with scale-up from center · avoids reading-axis conflict",
       "Keep dialogs to a maximum of 2 actions",
       "Trap focus inside the dialog until dismissed",
     ],
     dontList: [
       "Animate dialogs from the reading direction edges",
       "Use dialogs for non-critical information (use Toast instead)",
-      "Place vertical text inside a dialog — it reads like content, not a decision interface",
+      "Place vertical text inside a dialog · it reads like content, not a decision interface",
     ],
     accessibility: "role='dialog', aria-modal, aria-labelledby, aria-describedby. Focus trapped. Escape closes. Focus returns to trigger.",
     openQuestion: "Should a dialog's action buttons be arranged horizontally (conventional) or vertically (matching the layout) in a fully vertical interface?",
@@ -935,7 +935,7 @@ function useChapterPull(scrollRef, onNext, onPrev) {
     category: "Conversation",
     description: "An inline status, system note, or labeled separator in a conversation or reading thread.",
     problem: "How do reading progress markers, chapter completions, and system events appear in a vertical reading context without interrupting the column flow?",
-    intent: "Markers in horizontal chat are centered text separators. In a vertical reading interface, markers must orient vertically to match the reading axis — or appear at column boundaries to separate sections.",
+    intent: "Markers in horizontal chat are centered text separators. In a vertical reading interface, markers must orient vertically to match the reading axis · or appear at column boundaries to separate sections.",
     variants: [
       {
         name: "Reading progress & conversation",
@@ -994,7 +994,7 @@ function ThreadSeparator({ label, sub }) {
     ],
     dontList: [
       "Place horizontal separators across the middle of a vertical column",
-      "Use markers as navigation elements — they are informational only",
+      "Use markers as navigation elements · they are informational only",
       "Override the vertical reading flow with a horizontal marker that requires head rotation",
     ],
     accessibility: "aria-label on the marker element. Role='separator' for visual dividers. Status markers use role='status'.",
@@ -1012,7 +1012,7 @@ function ThreadSeparator({ label, sub }) {
       {
         name: "Horizontal vs Vertical",
         demo: <MessageDemo />,
-        code: `// Horizontal message — conventional
+        code: `// Horizontal message · conventional
 function HorizontalMessage({ from, text, time, avatar }) {
   const me = from === "me"
   return (
@@ -1039,7 +1039,7 @@ function HorizontalMessage({ from, text, time, avatar }) {
   )
 }
 
-// Vertical adaptation — message as a column
+// Vertical adaptation · message as a column
 function VerticalMessage({ from, text, time, avatar }) {
   const me = from === "me"
   return (
@@ -1070,14 +1070,14 @@ function VerticalMessage({ from, text, time, avatar }) {
       },
     ],
     doList: [
-      "Keep horizontal bubbles for mixed-language interfaces — vertical layout works best for pure CJK content",
+      "Keep horizontal bubbles for mixed-language interfaces · vertical layout works best for pure CJK content",
       "In vertical mode, arrange columns RTL: latest message on the left",
       "Avatars should sit at the top of each message column, matching reading start",
     ],
     dontList: [
-      "Force vertical bubbles without user control — this is an open UX question, not a resolved decision",
-      "Rotate horizontal bubble text 90° — reflow it properly with writing-mode",
-      "Use vertical messages for long multi-paragraph messages — truncate or expand differently",
+      "Force vertical bubbles without user control · this is an open UX question, not a resolved decision",
+      "Rotate horizontal bubble text 90° · reflow it properly with writing-mode",
+      "Use vertical messages for long multi-paragraph messages · truncate or expand differently",
     ],
     accessibility: "Each message has aria-label including sender and timestamp. Messages list uses role='log'. New messages announced via aria-live='polite'.",
     openQuestion: "This is one of the most contested open questions in vertical UI. Horizontal bubbles are familiar to all users; vertical columns are consistent with reading direction. Which wins? The answer may depend on the content type.",
@@ -1091,7 +1091,7 @@ function VerticalMessage({ from, text, time, avatar }) {
     category: "Feedback",
     description: "A brief, auto-dismissing notification that doesn't interrupt the reading experience.",
     problem: "Where does a transient notification appear in a vertical interface without interrupting reading flow?",
-    intent: "Toasts in horizontal apps appear at the top or bottom. In a vertical reading interface, the columns create visual corridors — a toast should appear outside the active reading column.",
+    intent: "Toasts in horizontal apps appear at the top or bottom. In a vertical reading interface, the columns create visual corridors · a toast should appear outside the active reading column.",
     variants: [
       {
         name: "Default",
@@ -1130,15 +1130,15 @@ function VerticalMessage({ from, text, time, avatar }) {
     ],
     doList: [
       "Position toasts at the top, above the reading area",
-      "Keep messages to one line — this is acknowledgement, not information",
+      "Keep messages to one line · this is acknowledgement, not information",
       "Auto-dismiss after 2 seconds, with a 300ms fade-out",
     ],
     dontList: [
-      "Position toasts at the bottom of reading columns — they'll appear mid-sentence",
-      "Use toasts for errors — use an inline alert or dialog instead",
-      "Stack multiple toasts — replace with the latest",
+      "Position toasts at the bottom of reading columns · they'll appear mid-sentence",
+      "Use toasts for errors · use an inline alert or dialog instead",
+      "Stack multiple toasts · replace with the latest",
     ],
-    accessibility: "aria-live='polite', aria-atomic='true'. Not positioned based on visual layout — screenreaders announce regardless of position.",
+    accessibility: "aria-live='polite', aria-atomic='true'. Not positioned based on visual layout · screenreaders announce regardless of position.",
     openQuestion: "In a full-screen vertical reader, is 'above the content' still the right position for toasts, or does it interrupt the reading start point?",
     status: "built",
   },
@@ -1148,7 +1148,7 @@ function VerticalMessage({ from, text, time, avatar }) {
     category: "Feedback",
     description: "A vertical-column shimmer that mirrors real reader metrics while content loads.",
     problem: "How should loading state look in a column-based vertical reader without layout shift?",
-    intent: "The skeleton should mirror the actual column geometry — same column width, same approximate glyph density — so content lands where the ghosts were.",
+    intent: "The skeleton should mirror the actual column geometry · same column width, same approximate glyph density · so content lands where the ghosts were.",
     variants: [
       {
         name: "Column skeleton",
@@ -1200,13 +1200,13 @@ function VerticalMessage({ from, text, time, avatar }) {
     ],
     doList: [
       "Match skeleton column width and cell height to actual rendered values",
-      "Use RTL column order in the skeleton — columns flow right-to-left",
+      "Use RTL column order in the skeleton · columns flow right-to-left",
       "Vary glyph-level density slightly for visual realism",
     ],
     dontList: [
       "Use horizontal paragraph skeletons in a vertical reader",
-      "Animate skeleton with a horizontal shimmer — use pulse opacity instead",
-      "Show skeletons for less than 200ms — content loads too fast to need them",
+      "Animate skeleton with a horizontal shimmer · use pulse opacity instead",
+      "Show skeletons for less than 200ms · content loads too fast to need them",
     ],
     accessibility: "aria-busy='true' on the container. aria-label describing what's loading. Remove when content appears.",
     openQuestion: "Should the skeleton shimmer animate top-to-bottom (following reading direction) or use a simple pulse? Does directionality in the loading animation matter?",
@@ -1220,7 +1220,7 @@ function VerticalMessage({ from, text, time, avatar }) {
     category: "Lists",
     description: "The primitive behind every vertical list. A row cell rotated onto the vertical axis: a full-height column with a leading edge at the top, vertical title/subtitle, and a trailing accessory at the bottom.",
     problem: "A horizontal list cell is [leading] [title/subtitle] … [trailing accessory] laid out as a full-width row. What is its shape when the list stacks as columns and scrolls right-to-left?",
-    intent: "Rotate the cell's anatomy, don't rotate the cell. Leading moves to the top (reading start), title and subtitle become vertical text, and the disclosure accessory sits at the bottom pointing down — along the reading axis, not across it.",
+    intent: "Rotate the cell's anatomy, don't rotate the cell. Leading moves to the top (reading start), title and subtitle become vertical text, and the disclosure accessory sits at the bottom pointing down · along the reading axis, not across it.",
     variants: [
       {
         name: "Default",
@@ -1247,14 +1247,14 @@ export function ContentsList() {
       },
     ],
     doList: [
-      "Put the leading element (index, icon, avatar) at the top — the reading-start edge",
+      "Put the leading element (index, icon, avatar) at the top · the reading-start edge",
       "Point the disclosure chevron down (rotate 90°): 'forward' is downward along the vertical axis",
       "Keep every cell the same height so the row of columns reads as one list",
       "Give each cell a 44px+ hit target and stack cells right-to-left",
     ],
     dontList: [
       "Rotate a finished horizontal cell with transform: rotate(90deg)",
-      "Leave the chevron pointing right — it should follow the reading axis, not the scroll edge",
+      "Leave the chevron pointing right · it should follow the reading axis, not the scroll edge",
       "Mix upright and vertical text within the same cell for title and subtitle",
     ],
     accessibility: "Container role='listbox' (or 'list'); each cell role='option' with aria-selected (or a plain button). Keyboard: arrow keys move selection; the visual R→L order must match DOM/tab order.",

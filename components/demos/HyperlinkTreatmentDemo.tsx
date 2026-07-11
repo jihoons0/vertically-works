@@ -5,11 +5,11 @@ import { useState } from "react";
 type Treatment = "emphasis" | "underline";
 
 // A vertical passage with two phrases that act as links. In horizontal text a link
-// is underlined — a rule that runs *along* the baseline. Rotated into vertical text
+// is underlined · a rule that runs *along* the baseline. Rotated into vertical text
 // that rule falls to one side of the column, colliding with the neighbouring line.
 // The CJK convention for marking a run of characters is the emphasis mark (방점):
 // a small dot set beside each character, on the right in vertical writing. We reuse
-// it as the hyperlink affordance — an interpunct to the right of every character.
+// it as the hyperlink affordance · an interpunct to the right of every character.
 const BEFORE = "글씨를 세로로 쓰는 것을 ";
 const LINK_1 = "세로쓰기";
 const MIDDLE = "라 한다. 우종서의 기록은 ";
@@ -50,7 +50,7 @@ export function HyperlinkTreatmentDemo() {
         ))}
       </div>
 
-      {/* Reading panel — a single vertical column with two inline links */}
+      {/* Reading panel · a single vertical column with two inline links */}
       <div
         style={{
           background: "var(--color-bg-muted)",
@@ -89,7 +89,7 @@ export function HyperlinkTreatmentDemo() {
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6, maxWidth: "54ch", marginInline: "auto" }}>
         {treatment === "emphasis"
-          ? "An interpunct (·) sits to the right of every character in the linked run — the CJK emphasis-mark (방점) convention, reused as the hyperlink affordance. It rides alongside the column without crossing into the next line."
+          ? "An interpunct (·) sits to the right of every character in the linked run · the CJK emphasis-mark (방점) convention, reused as the hyperlink affordance. It rides alongside the column without crossing into the next line."
           : "An underline rotates onto the left side of the column, colliding with the neighbouring line and reading as a rule, not a link. This is why vertical text marks links with side dots instead."}
       </p>
 
@@ -102,7 +102,7 @@ export function HyperlinkTreatmentDemo() {
         }
         .vw-link:hover { color: var(--color-fg-muted); }
 
-        /* Emphasis-mark treatment — one interpunct per character, on the right (vertical default). */
+        /* Emphasis-mark treatment · one interpunct per character, on the right (vertical default). */
         .vw-link--emphasis {
           -webkit-text-emphasis: "·";
           text-emphasis: "·";
@@ -110,7 +110,7 @@ export function HyperlinkTreatmentDemo() {
           text-emphasis-position: right;
         }
 
-        /* Underline treatment — shown to demonstrate why it fails in vertical text. */
+        /* Underline treatment · shown to demonstrate why it fails in vertical text. */
         .vw-link--underline {
           text-decoration: underline;
           text-underline-offset: 3px;

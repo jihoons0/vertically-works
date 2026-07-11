@@ -46,7 +46,7 @@ export function SliderDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        Drag up to increase. Vertical sliders match the reading axis — up = more, down = less. Labels in vertical Korean above each track.
+        Drag up to increase. Vertical sliders match the reading axis · up = more, down = less. Labels in vertical Korean above each track.
       </p>
     </div>
   );

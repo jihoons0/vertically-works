@@ -61,7 +61,7 @@ export default async function ComponentPage({ params }: Props) {
   const comp = getComponent(slug);
   if (!comp) notFound();
 
-  // Installable components show their real, shipping source — read at build
+  // Installable components show their real, shipping source · read at build
   // time (these pages are statically generated) straight from registry/.
   const installMeta = getInstallMeta(slug);
   const source = installMeta
@@ -75,7 +75,7 @@ export default async function ComponentPage({ params }: Props) {
 
   return (
     <div className="components-detail">
-      {/* Sidebar — component nav; hidden on mobile (.components-sidebar) */}
+      {/* Sidebar · component nav; hidden on mobile (.components-sidebar) */}
       <aside
         className="components-sidebar"
         style={{
@@ -168,7 +168,7 @@ export default async function ComponentPage({ params }: Props) {
           </p>
         </div>
 
-        {/* Install command — this component ships from the registry */}
+        {/* Install command · this component ships from the registry */}
         {installMeta && (
           <div style={{ marginBottom: "var(--space-8)" }}>
             <InstallCommand name={installMeta.installName} />
@@ -196,7 +196,7 @@ export default async function ComponentPage({ params }: Props) {
           </p>
         </div>
 
-        {/* Variants — shadcn style: demo canvas + code block */}
+        {/* Variants · shadcn style: demo canvas + code block */}
         <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-12)" }}>
           {comp.variants.map((variant) => (
             <div key={variant.name}>
@@ -229,7 +229,7 @@ export default async function ComponentPage({ params }: Props) {
           ))}
         </div>
 
-        {/* Source — the exact file `npx verticallyworks add` copies */}
+        {/* Source · the exact file `npx verticallyworks add` copies */}
         {source && installMeta && (
           <div style={{ marginTop: "var(--space-16)", paddingTop: "var(--space-12)", borderTop: "1px solid var(--color-border)" }}>
             <h2 style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-fg)", margin: "0 0 var(--space-3)" }}>
@@ -237,7 +237,7 @@ export default async function ComponentPage({ params }: Props) {
             </h2>
             <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-5)", lineHeight: 1.65, maxWidth: "60ch" }}>
               The exact file <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>npx verticallyworks add {installMeta.installName}</code> copies
-              into your project — yours to edit. Styling comes entirely from the design tokens.
+              into your project · yours to edit. Styling comes entirely from the design tokens.
             </p>
             <CodeBlock code={source.trim()} language="tsx" />
           </div>

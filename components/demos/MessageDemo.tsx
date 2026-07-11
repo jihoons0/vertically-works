@@ -89,7 +89,7 @@ export function MessageDemo() {
               );
             })
           ) : (
-            /* Vertical adaptation — messages flow as vertical text columns */
+            /* Vertical adaptation · messages flow as vertical text columns */
             <div style={{
               display: "flex",
               flexDirection: "row-reverse", // RTL: latest message on left
@@ -164,7 +164,7 @@ export function MessageDemo() {
             }}
             aria-label="전송"
           >
-            {/* Send arrow points left — the forward/RTL reading direction */}
+            {/* Send arrow points left · the forward/RTL reading direction */}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ transform: "rotate(180deg)" }}>
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
@@ -175,8 +175,8 @@ export function MessageDemo() {
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6, maxWidth: "52ch", marginInline: "auto" }}>
         {mode === "horizontal"
-          ? "Standard horizontal bubbles — familiar but misaligned with vertical reading direction."
-          : "Vertical adaptation — each message is a column flowing right-to-left, matching the reading axis. Latest message on the left."}
+          ? "Standard horizontal bubbles · familiar but misaligned with vertical reading direction."
+          : "Vertical adaptation · each message is a column flowing right-to-left, matching the reading axis. Latest message on the left."}
       </p>
     </div>
   );

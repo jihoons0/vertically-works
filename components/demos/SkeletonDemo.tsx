@@ -47,7 +47,7 @@ export function SkeletonDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        The skeleton mirrors the real column geometry — same width, same cell height, same RTL column order — so text lands exactly where the ghosts were. It pulses (opacity) rather than sweeping a horizontal shimmer.
+        The skeleton mirrors the real column geometry · same width, same cell height, same RTL column order · so text lands exactly where the ghosts were. It pulses (opacity) rather than sweeping a horizontal shimmer.
       </p>
 
       <style>{`

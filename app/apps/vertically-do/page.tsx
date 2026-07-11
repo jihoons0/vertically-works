@@ -6,7 +6,7 @@ import { AppEmbed } from "@/components/apps/AppEmbed";
 
 export const metadata: Metadata = {
   title: "Vertically Do",
-  description: "A to-do list rethought for the vertical, right-to-left axis — tasks are columns you read top to bottom.",
+  description: "A to-do list rethought for the vertical, right-to-left axis · tasks are columns you read top to bottom.",
 };
 
 const FEATURES = [
@@ -16,7 +16,7 @@ const FEATURES = [
   },
   {
     title: "Pull down to delete",
-    description: "Drag a column down — past the end of its own text — and a trashcan opens behind it in the vacated slot. The gesture continues the reading direction to its conclusion.",
+    description: "Drag a column down · past the end of its own text · and a trashcan opens behind it in the vacated slot. The gesture continues the reading direction to its conclusion.",
   },
   {
     title: "Orthogonal drag axes",
@@ -24,18 +24,18 @@ const FEATURES = [
   },
   {
     title: "Vertical text input",
-    description: "Composing a task happens in a contentEditable vertical column that stays column-centered as you type — writing and reading share one axis.",
+    description: "Composing a task happens in a contentEditable vertical column that stays column-centered as you type · writing and reading share one axis.",
   },
   {
     title: "한 / あ / 中",
-    description: "One toggle re-localizes the entire interface across Korean, Japanese, and Chinese — the same interface logic expressed in three vertical scripts.",
+    description: "One toggle re-localizes the entire interface across Korean, Japanese, and Chinese · the same interface logic expressed in three vertical scripts.",
   },
 ];
 
 const DECISIONS = [
   {
     title: "Why are tasks full-height columns?",
-    body: "A to-do is a written line, and in vertical writing a line is a column. Giving every task the full column height keeps the page's rhythm — the list reads like text, not like a table of rows rotated sideways.",
+    body: "A to-do is a written line, and in vertical writing a line is a column. Giving every task the full column height keeps the page's rhythm · the list reads like text, not like a table of rows rotated sideways.",
   },
   {
     title: "Why does pulling down delete?",
@@ -43,7 +43,7 @@ const DECISIONS = [
   },
   {
     title: "Why split the drag axes?",
-    body: "With two orthogonal axes, direction alone carries intent — vertical removes from the flow, horizontal rearranges it. No modes, no delays: the first few pixels of movement declare what the gesture means.",
+    body: "With two orthogonal axes, direction alone carries intent · vertical removes from the flow, horizontal rearranges it. No modes, no delays: the first few pixels of movement declare what the gesture means.",
   },
 ];
 
@@ -58,12 +58,12 @@ export default function VerticallyDoPage() {
       />
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
-        {/* Core visual — the real app, running in the page */}
+        {/* Core visual · the real app, running in the page */}
         <Reveal style={{ marginBottom: "var(--space-20)" }}>
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: "var(--space-4)", marginBottom: "var(--space-6)" }}>
             <div>
               <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
-                Try it — this is the live app
+                Try it · this is the live app
               </h2>
               <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: 0, maxWidth: "56ch" }}>
                 Add a task, drag a column down to delete it, sideways to reorder, and flip
@@ -85,7 +85,7 @@ export default function VerticallyDoPage() {
               Open full screen ↗
             </Link>
           </div>
-          <AppEmbed src="/apps/notes" title="Vertically Do — live to-do app" height={560} />
+          <AppEmbed src="/apps/notes" title="Vertically Do · live to-do app" height={560} />
         </Reveal>
 
         {/* Features */}

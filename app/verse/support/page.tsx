@@ -46,7 +46,7 @@ const FAQ: { q: string; a: React.ReactNode }[] = [
     a: (
       <>
         Tap the language capsule (한 / あ / 中) on the left rail. Each language is its own bundled
-        translation — Korean 한글 킹제임스, Japanese 口語訳, Chinese 和合本.
+        translation · Korean 한글 킹제임스, Japanese 口語訳, Chinese 和合本.
       </>
     ),
   },
@@ -98,7 +98,7 @@ export default function SupportPage() {
       <PageHeader
         eyebrow="Vertically Verse"
         title="Support"
-        description="A vertical, right-to-left CJK scripture reader. Questions, problems, or feedback — we’re glad to help."
+        description="A vertical, right-to-left CJK scripture reader. Questions, problems, or feedback · we’re glad to help."
       />
 
       <div style={wrap}>

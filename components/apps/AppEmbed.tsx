@@ -1,5 +1,5 @@
 /**
- * The live application embedded in a minimal browser frame — the core visual
+ * The live application embedded in a minimal browser frame · the core visual
  * for web apps on their detail pages: not a mockup, the real thing running.
  */
 export function AppEmbed({

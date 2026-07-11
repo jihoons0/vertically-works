@@ -117,7 +117,7 @@ export function Footer() {
             © 2026 Vertically Works. Open knowledge.
           </span>
 
-          {/* #8: 3 separate vertical columns — shorter height, wider spread */}
+          {/* #8: 3 separate vertical columns · shorter height, wider spread */}
           <div style={{ display: "flex", gap: "var(--space-3)", userSelect: "none" }} aria-hidden>
             {["縦書き", "세로쓰기", "竖排"].map((text) => (
               <span

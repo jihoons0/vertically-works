@@ -14,14 +14,14 @@ export function TabsDemo() {
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div style={{ width: 300, height: 260, border: "2px solid var(--color-border-strong)", borderRadius: 24, background: "var(--color-bg)", overflow: "hidden", display: "flex", flexDirection: "row" }}>
-          {/* Tab panel — vertical content */}
+          {/* Tab panel · vertical content */}
           <div role="tabpanel" style={{ flex: 1, padding: "var(--space-6)", display: "flex", justifyContent: "center", alignItems: "center" }}>
             <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.9375rem", letterSpacing: "0.1em", lineHeight: 1.9, color: active === "read" ? "var(--color-fg)" : "var(--color-fg-muted)" }}>
               {TABS.find((t) => t.id === active)?.content}
             </span>
           </div>
 
-          {/* Tabs — vertical rail on the right (leading edge in RTL) */}
+          {/* Tabs · vertical rail on the right (leading edge in RTL) */}
           <div role="tablist" style={{ display: "flex", flexDirection: "column", borderLeft: "1px solid var(--color-border)", background: "var(--color-bg-subtle)" }}>
             {TABS.map((tab) => (
               <button className="pressable"
@@ -54,7 +54,7 @@ export function TabsDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        The tabs run as a vertical rail on the right (leading) edge — each label set vertically — with the active tab marked by a bar on its content-facing edge. Categories live on the same axis as the reading.
+        The tabs run as a vertical rail on the right (leading) edge · each label set vertically · with the active tab marked by a bar on its content-facing edge. Categories live on the same axis as the reading.
       </p>
     </div>
   );

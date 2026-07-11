@@ -10,7 +10,7 @@ import { AppVideo } from "@/components/home/AppVideo";
 import { Beam } from "@/components/ui/Beam";
 
 export const metadata: Metadata = {
-  title: "Vertically Works — Designing Interfaces for Vertical Writing Systems",
+  title: "Vertically Works · Designing Interfaces for Vertical Writing Systems",
   description: "A living design system exploring interaction patterns for vertical interfaces.",
 };
 
@@ -35,7 +35,7 @@ const APPLICATIONS = [
     href: "/apps/vertically-do",
     video: null,
     description:
-      "A to-do list where tasks are columns read top→bottom. Drag a column down to delete, sideways to reorder — and flip the whole interface across 한 / あ / 中.",
+      "A to-do list where tasks are columns read top→bottom. Drag a column down to delete, sideways to reorder · and flip the whole interface across 한 / あ / 中.",
   },
   {
     id: "listen",
@@ -49,7 +49,7 @@ const APPLICATIONS = [
   },
 ];
 
-// Challenges — all eight, animated; full write-ups live on /challenges
+// Challenges · all eight, animated; full write-ups live on /challenges
 const CHALLENGES = [
   { id: "motion-direction", tag: "Motion", question: "Should a sheet animate from screen geometry or reading direction?" },
   { id: "mixed-language", tag: "Typography", question: "How should mixed CJK and Latin content behave in the same column?" },
@@ -75,7 +75,7 @@ const PRINCIPLES = [
 function AppCardContent({ app }: { app: (typeof APPLICATIONS)[number] }) {
   return (
     <>
-      {/* Media slot — full-bleed video when we have one, phone-frame placeholder otherwise */}
+      {/* Media slot · full-bleed video when we have one, phone-frame placeholder otherwise */}
       <div
         style={{
           height: 380,
@@ -193,14 +193,14 @@ export default function HomePage() {
             </div>
           </Reveal>
 
-          {/* Vertical writing, writing itself — hidden on narrow screens */}
+          {/* Vertical writing, writing itself · hidden on narrow screens */}
           <Reveal delay={150} className="home-hero-motif">
             <HeroVerticalMotif />
           </Reveal>
         </div>
       </section>
 
-      {/* ═══════════════ The System in Motion — self-playing demos ═════════════ */}
+      {/* ═══════════════ The System in Motion · self-playing demos ═════════════ */}
       <section
         style={{
           borderTop: "1px solid var(--color-border)",
@@ -214,8 +214,8 @@ export default function HomePage() {
               Components
             </h2>
             <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-10)", maxWidth: "56ch", lineHeight: 1.65 }}>
-              The interaction primitives of a vertical interface — buttons, toggles,
-              dialogs, lists — each answering a design question the horizontal web never
+              The interaction primitives of a vertical interface · buttons, toggles,
+              dialogs, lists · each answering a design question the horizontal web never
               had to. Real, accessible React components you copy into your project with one
               command. Below, four of them replay as they behave on the reading axis.
             </p>
@@ -337,7 +337,7 @@ export default function HomePage() {
           </p>
           </Reveal>
 
-          {/* Challenges — all eight, each card acting out its question */}
+          {/* Challenges · all eight, each card acting out its question */}
           <div
             style={{
               display: "grid",
@@ -388,7 +388,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          {/* Principles — numbered, one pass to scan */}
+          {/* Principles · numbered, one pass to scan */}
           <span style={{ display: "inline-block", fontSize: "0.75rem", fontWeight: 500, color: "var(--color-fg-subtle)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "var(--space-8)" }}>
             Derived Principles
           </span>
@@ -410,7 +410,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════ Playground — embedded, try it here ══════════════════ */}
+      {/* ═══════════════════ Playground · embedded, try it here ══════════════════ */}
       <section
         id="playground"
         style={{
@@ -426,7 +426,7 @@ export default function HomePage() {
             </h2>
             <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-8)", maxWidth: "52ch", lineHeight: 1.65 }}>
               The full playground, embedded. Language, writing and reading direction, theme,
-              device, and type size — every control updates the canvas live.
+              device, and type size · every control updates the canvas live.
             </p>
           </Reveal>
 

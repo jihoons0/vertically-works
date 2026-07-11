@@ -62,7 +62,7 @@ export function MarkerDemo() {
                   {text}
                 </span>
 
-                {/* Marker between columns — appears as horizontal separator in vertical flow */}
+                {/* Marker between columns · appears as horizontal separator in vertical flow */}
                 {i < VERSES.length - 1 && i === 1 && (
                   <div style={{
                     writingMode: "vertical-rl",
@@ -88,7 +88,7 @@ export function MarkerDemo() {
             ))}
           </div>
         ) : (
-          /* Conversation thread — vertical: entries flow as columns R→L (oldest
+          /* Conversation thread · vertical: entries flow as columns R→L (oldest
              rightmost), each reading top→bottom. Separators become vertical rules. */
           <div style={{ display: "flex", flexDirection: "row-reverse", gap: "var(--space-4)", justifyContent: "center", alignItems: "center", minHeight: 240 }}>
             {MARKERS.map((marker, i) => {
@@ -128,7 +128,7 @@ export function MarkerDemo() {
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
         {mode === "reading"
-          ? "Chapter completion markers appear between vertical columns — in vertical writing direction to match the reading axis."
+          ? "Chapter completion markers appear between vertical columns · in vertical writing direction to match the reading axis."
           : "A vertical conversation thread: status and system markers flow as columns right-to-left (oldest on the right), each reading top→bottom. Session breaks become vertical rules between entries."}
       </p>
     </div>

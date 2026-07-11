@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import { useSyncExternalStore, type CSSProperties, type ReactNode } from "react";
 
 const emptySubscribe = () => () => {};
-/** False during SSR/hydration, true after — without a setState-in-effect. */
+/** False during SSR/hydration, true after · without a setState-in-effect. */
 function useMounted() {
   return useSyncExternalStore(emptySubscribe, () => true, () => false);
 }
@@ -32,7 +32,7 @@ export function Beam({
   const mounted = useMounted();
   const dark = mounted && resolvedTheme === "dark";
 
-  // The package's light presets run the stroke at ~0.12 opacity — a whisper on
+  // The package's light presets run the stroke at ~0.12 opacity · a whisper on
   // white. Its opacity math multiplies by these CSS hook variables (default 1),
   // so boost them in light/sepia to match the dark theme's visibility.
   const lightBoost: CSSProperties = dark

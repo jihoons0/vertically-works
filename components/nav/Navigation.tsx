@@ -141,7 +141,7 @@ export function Navigation() {
                   )}
                 </Link>
 
-                {/* Applications dropdown — hover/focus disclosure */}
+                {/* Applications dropdown · hover/focus disclosure */}
                 {hasDropdown && (
                   <div
                     aria-hidden={!appsOpen}
@@ -149,7 +149,7 @@ export function Navigation() {
                       position: "absolute",
                       top: "100%",
                       left: 0,
-                      paddingTop: "var(--space-2)", // hover bridge — no dead gap
+                      paddingTop: "var(--space-2)", // hover bridge · no dead gap
                       zIndex: 60,
                       opacity: appsOpen ? 1 : 0,
                       transform: appsOpen ? "none" : "translateY(-4px)",
@@ -255,7 +255,7 @@ export function Navigation() {
 
           <ThemeToggle />
 
-          {/* Mobile hamburger — visibility controlled by .nav-mobile-btn CSS class */}
+          {/* Mobile hamburger · visibility controlled by .nav-mobile-btn CSS class */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}

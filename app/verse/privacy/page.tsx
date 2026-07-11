@@ -57,7 +57,7 @@ const SECTIONS: { heading: string; body: React.ReactNode }[] = [
       <ul style={{ ...p, paddingLeft: "1.2em", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
         <li>All scripture text and fonts are bundled inside the app and read entirely on your device.</li>
         <li>The app makes no network requests and requires no internet connection to function.</li>
-        <li>Your settings — language, font size, theme, and highlights — are stored only on your device and are never sent anywhere.</li>
+        <li>Your settings · language, font size, theme, and highlights · are stored only on your device and are never sent anywhere.</li>
       </ul>
     ),
   },

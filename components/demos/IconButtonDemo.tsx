@@ -57,7 +57,7 @@ export function IconButtonDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        {labelMode === "vertical" ? "Vertical labels below icons follow the reading axis — 다음/이전 orient naturally." : "Icon-only requires strong visual metaphors. Directional icons must be designed for the vertical axis."}
+        {labelMode === "vertical" ? "Vertical labels below icons follow the reading axis · 다음/이전 orient naturally." : "Icon-only requires strong visual metaphors. Directional icons must be designed for the vertical axis."}
       </p>
     </div>
   );

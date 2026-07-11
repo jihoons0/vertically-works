@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLoopStep } from "./bento-shared";
 
-// "Vertical writing" in Japanese, Korean, and Chinese — the columns reveal in
+// "Vertical writing" in Japanese, Korean, and Chinese · the columns reveal in
 // reading order: rightmost column first, each column top→bottom.
 const COLUMNS = [
   { text: "縦書き", color: "var(--color-fg)" },

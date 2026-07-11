@@ -23,7 +23,7 @@ const CHALLENGES = [
     status: "Partially Resolved",
     question: "How should mixed CJK and Latin content behave in the same column?",
     description:
-      "A verse reference like 「창 1:1」 contains hangul, ASCII colon, Latin digits, and CJK brackets — each needing different orientation. Unicode defines orientation per character class, but browser and OS implementations vary significantly.",
+      "A verse reference like 「창 1:1」 contains hangul, ASCII colon, Latin digits, and CJK brackets · each needing different orientation. Unicode defines orientation per character class, but browser and OS implementations vary significantly.",
     related: ["Tate-chu-yoko", "Glyph Orientation", "Mixed Scripts"],
   },
   {
@@ -50,7 +50,7 @@ const CHALLENGES = [
     status: "Open",
     question: "Where does the IME candidate window appear when input is vertical?",
     description:
-      "Input Method Editors (CJK composition) display candidate windows horizontally by default. In a vertical context, the candidate window placement must not obscure the composition point — but the platform IME API rarely exposes enough control to correct this.",
+      "Input Method Editors (CJK composition) display candidate windows horizontally by default. In a vertical context, the candidate window placement must not obscure the composition point · but the platform IME API rarely exposes enough control to correct this.",
     related: ["Search", "Text Field", "CJK Input"],
   },
   {
@@ -68,7 +68,7 @@ const CHALLENGES = [
     status: "Open",
     question: "How does drag-and-drop reordering work when list items are columns?",
     description:
-      "List reordering assumes a vertical list of horizontal rows. In a vertical reading interface, a list of columns flowing RTL has a different primary axis for reorder gestures — left-right drag maps to position change, not the usual up-down.",
+      "List reordering assumes a vertical list of horizontal rows. In a vertical reading interface, a list of columns flowing RTL has a different primary axis for reorder gestures · left-right drag maps to position change, not the usual up-down.",
     related: ["Sortable List", "Drag and Drop", "Gesture"],
   },
   {

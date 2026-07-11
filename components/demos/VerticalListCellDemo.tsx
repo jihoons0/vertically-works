@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 // A list cell reoriented for the vertical axis. In a horizontal list a cell is a
-// full-width row — [leading] [title / subtitle] … [trailing accessory]. Rotated,
+// full-width row · [leading] [title / subtitle] … [trailing accessory]. Rotated,
 // it becomes a full-height column: leading at the top (reading start), title +
 // subtitle as vertical text, and the disclosure accessory at the bottom. Cells
 // stack as columns and the list scrolls right-to-left.
@@ -20,7 +20,7 @@ export function VerticalListCellDemo() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
-      {/* The list — cells as columns flowing R→L, horizontally scrollable */}
+      {/* The list · cells as columns flowing R→L, horizontally scrollable */}
       <div
         role="listbox"
         aria-label="목차"
@@ -63,12 +63,12 @@ export function VerticalListCellDemo() {
                 transition: "border-color 150ms var(--easing-out), background 150ms var(--easing-out)",
               }}
             >
-              {/* Leading — index at the reading-start (top) edge */}
+              {/* Leading · index at the reading-start (top) edge */}
               <span style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)" }}>
                 {String(i + 1).padStart(2, "0")}
               </span>
 
-              {/* Title + subtitle — vertical text, reading R→L */}
+              {/* Title + subtitle · vertical text, reading R→L */}
               <div style={{ display: "flex", flexDirection: "row-reverse", alignItems: "flex-start", gap: "var(--space-2)" }}>
                 <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "1rem", fontWeight: 600, color: "var(--color-fg)", letterSpacing: "0.06em" }}>
                   {cell.title}
@@ -78,7 +78,7 @@ export function VerticalListCellDemo() {
                 </span>
               </div>
 
-              {/* Trailing accessory — at the end (bottom) of the reading flow.
+              {/* Trailing accessory · at the end (bottom) of the reading flow.
                   The disclosure chevron points DOWN, along the reading axis. */}
               {cell.accessory === "chevron" ? (
                 <span aria-hidden style={{ transform: "rotate(90deg)", fontSize: "1rem", color: "var(--color-fg-subtle)", lineHeight: 1 }}>›</span>
@@ -93,7 +93,7 @@ export function VerticalListCellDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        The primitive behind every vertical list. A cell is a full-height column — leading index at the top, vertical title + subtitle, and a trailing accessory (a down-pointing disclosure chevron, or a status pill) at the bottom. Cells stack as columns and the list scrolls right-to-left.
+        The primitive behind every vertical list. A cell is a full-height column · leading index at the top, vertical title + subtitle, and a trailing accessory (a down-pointing disclosure chevron, or a status pill) at the bottom. Cells stack as columns and the list scrolls right-to-left.
       </p>
     </div>
   );

@@ -11,7 +11,7 @@ const CELL_GAP = 12;
 const PANEL_TOP = 28;
 
 /** One vertical list cell from the Toggle component: label up top, the
- *  toggle pill at the bottom — its thumb travels the reading axis (up = on). */
+ *  toggle pill at the bottom · its thumb travels the reading axis (up = on). */
 function ToggleCell({ label, sub, on }: { label: string; sub: string; on: boolean }) {
   return (
     <div
@@ -100,7 +100,7 @@ export function LoopToggle() {
     <BentoTile
       index="02"
       label="List-cell toggle"
-      description="The on/off thumb travels the reading axis — up is on — and flipping it re-themes the panel, so the toggle matches the direction the eye moves."
+      description="The on/off thumb travels the reading axis · up is on · and flipping it re-themes the panel, so the toggle matches the direction the eye moves."
     >
       {/* Mini settings panel, as in the Toggle component: cells stack as
           columns flowing R→L, and data-theme flips its tokens when toggled */}

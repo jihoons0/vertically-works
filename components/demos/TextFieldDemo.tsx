@@ -8,7 +8,7 @@ export function TextFieldDemo() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
       <div style={{ background: "var(--color-bg-muted)", borderRadius: "var(--radius-xl)", border: "1px solid var(--color-border)", padding: "var(--space-10)", display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-6)", minHeight: 220 }}>
-        {/* The input stays horizontal — composition needs a horizontal baseline */}
+        {/* The input stays horizontal · composition needs a horizontal baseline */}
         <div style={{ width: "100%", maxWidth: 320 }}>
           <label htmlFor="tf-demo" style={{ display: "block", fontSize: "0.75rem", color: "var(--color-fg-subtle)", marginBottom: "var(--space-2)", letterSpacing: "0.04em" }}>
             검색어
@@ -36,7 +36,7 @@ export function TextFieldDemo() {
             }}
           />
           <p style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)", marginTop: "var(--space-2)", margin: "var(--space-2) 0 0" }}>
-            The input itself stays horizontal — CJK IME composition requires a horizontal baseline.
+            The input itself stays horizontal · CJK IME composition requires a horizontal baseline.
           </p>
         </div>
 

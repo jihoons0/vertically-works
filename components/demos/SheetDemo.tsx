@@ -5,7 +5,7 @@ import { useState } from "react";
 type Edge = "bottom" | "right" | "left";
 
 const EDGES: { id: Edge; label: string; note: string }[] = [
-  { id: "bottom", label: "↑ Bottom", note: "Screen geometry. Feels like a new layer — natural on horizontal phones, ambiguous in vertical context." },
+  { id: "bottom", label: "↑ Bottom", note: "Screen geometry. Feels like a new layer · natural on horizontal phones, ambiguous in vertical context." },
   { id: "right", label: "← Right", note: "Travels against RTL reading direction. Feels like content arriving from behind the reader." },
   { id: "left", label: "→ Left", note: "Follows reading direction. New content arrives from where the reader is heading." },
 ];
@@ -169,11 +169,11 @@ export function SheetDemo() {
                         flexShrink: 0,
                       }}
                     >
-                      {/* Reference — vertical, sits to the right of the text like a verse number */}
+                      {/* Reference · vertical, sits to the right of the text like a verse number */}
                       <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)", letterSpacing: "0.05em" }}>
                         {bm.ref}
                       </span>
-                      {/* Text — vertical */}
+                      {/* Text · vertical */}
                       <span
                         style={{
                           writingMode: "vertical-rl",

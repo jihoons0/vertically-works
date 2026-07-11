@@ -2,7 +2,7 @@ import { Reveal } from "@/components/Reveal";
 
 /**
  * Header for application detail pages: eyebrow, title, and a status/platform
- * row on a subtle band — the core visual (video or live embed) leads directly
+ * row on a subtle band · the core visual (video or live embed) leads directly
  * below it.
  */
 export function AppHero({

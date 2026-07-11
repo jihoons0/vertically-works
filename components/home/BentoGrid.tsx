@@ -4,7 +4,7 @@ import { LoopAccordion } from "./LoopAccordion";
 import { LoopTooltip } from "./LoopTooltip";
 
 /**
- * Four self-playing interaction loops — the design system demonstrating
+ * Four self-playing interaction loops · the design system demonstrating
  * itself. 2×2 on desktop, single column on small screens (.home-bento).
  */
 export function BentoGrid() {

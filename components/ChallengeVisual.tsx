@@ -1,4 +1,4 @@
-// Compact, monochrome diagrams of each challenge's core axis conflict — each
+// Compact, monochrome diagrams of each challenge's core axis conflict · each
 // one a self-playing CSS loop that acts out the question it illustrates
 // (motion always along the axis under discussion, never decorative). Token-based
 // only; vertical text used where it sharpens the point. Shared by the
@@ -54,7 +54,7 @@ export function ChallengeVisual({ id }: { id: string }) {
         </span>
       );
     case "navigation-direction":
-      // The rail auditions each edge — right, bottom, left — and none quite fits.
+      // The rail auditions each edge · right, bottom, left · and none quite fits.
       return (
         <div style={{ position: "relative", width: 60, height: 92, border: `1.5px solid ${strong}`, borderRadius: 10, background: bg, overflow: "hidden" }}>
           <div style={{ position: "absolute", left: 22, top: 8, bottom: 20, right: 22, display: "flex", flexDirection: "row-reverse", gap: 4 }}>

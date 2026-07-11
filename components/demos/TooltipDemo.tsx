@@ -80,7 +80,7 @@ export function TooltipDemo() {
                 >
                   {verse.ref}
 
-                  {/* Tooltip — anchored to the reference it annotates. Content is vertical too. */}
+                  {/* Tooltip · anchored to the reference it annotates. Content is vertical too. */}
                   {hoveredVerse === i && (
                     <span
                       role="tooltip"
@@ -151,7 +151,7 @@ export function TooltipDemo() {
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
         {placement === "left"
-          ? "Hover a verse reference. Tooltip is vertical — it matches the reading axis it annotates."
+          ? "Hover a verse reference. Tooltip is vertical · it matches the reading axis it annotates."
           : "Tooltip below breaks the column below it. Left placement is preferred."}
       </p>
     </div>

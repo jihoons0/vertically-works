@@ -16,7 +16,7 @@ const FEATURES = [
   },
   {
     title: "Tate-chu-yoko (縦中横)",
-    description: "Verse numbers and digit groups (e.g., \"1:1\") are set as upright horizontal clusters within the vertical stream — a typographic convention from Japanese publishing.",
+    description: "Verse numbers and digit groups (e.g., \"1:1\") are set as upright horizontal clusters within the vertical stream · a typographic convention from Japanese publishing.",
   },
   {
     title: "Scroll-driven immersion",
@@ -24,7 +24,7 @@ const FEATURES = [
   },
   {
     title: "Horizontal pull-to-paginate",
-    description: "Overscrolling past the last column fills a circular progress ring and triggers the adjacent chapter — with haptic ticks climbing to a landing haptic.",
+    description: "Overscrolling past the last column fills a circular progress ring and triggers the adjacent chapter · with haptic ticks climbing to a landing haptic.",
   },
   {
     title: "RTL-native chrome",
@@ -39,7 +39,7 @@ const FEATURES = [
 const DECISIONS = [
   {
     title: "Why columns, not pages?",
-    body: "Traditional CJK books do not paginate — they scroll. A digital reader should preserve that continuity. Column-snapping gives the feel of pages without the imposed boundary.",
+    body: "Traditional CJK books do not paginate · they scroll. A digital reader should preserve that continuity. Column-snapping gives the feel of pages without the imposed boundary.",
   },
   {
     title: "Why RTL scroll direction?",
@@ -47,7 +47,7 @@ const DECISIONS = [
   },
   {
     title: "Why haptic feedback for chapter turns?",
-    body: "The pull gesture has no visual feedback until the ring is visible. Haptic ticks give progressive feedback during the blind portion of the pull — the same reason analog clocks tick.",
+    body: "The pull gesture has no visual feedback until the ring is visible. Haptic ticks give progressive feedback during the blind portion of the pull · the same reason analog clocks tick.",
   },
 ];
 
@@ -62,7 +62,7 @@ export default function VerticallyVersePage() {
       />
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
-        {/* Core visual — the app itself, running */}
+        {/* Core visual · the app itself, running */}
         <Reveal>
           <div className="app-detail-lead" style={{ marginBottom: "var(--space-20)" }}>
             <div
@@ -78,7 +78,7 @@ export default function VerticallyVersePage() {
                 <AppVideo
                   src="/videos/vertically-verse.mp4"
                   poster="/images/apps/verse-poster.jpg"
-                  label="Vertically Verse demo — reading and highlighting vertical scripture"
+                  label="Vertically Verse demo · reading and highlighting vertical scripture"
                 />
               </div>
             </div>
@@ -90,13 +90,13 @@ export default function VerticallyVersePage() {
               <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: "0 0 var(--space-5)", maxWidth: "52ch" }}>
                 A fully vertical, right-to-left scripture reader for Korean, Japanese, and
                 Chinese. Every control, gesture, and transition is rethought for the
-                top→bottom, R→L axis — columns instead of pages, chrome that reads
+                top→bottom, R→L axis · columns instead of pages, chrome that reads
                 vertically, and motion that always follows the reading direction.
               </p>
               <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: "0 0 var(--space-8)", maxWidth: "52ch" }}>
                 The recording is the real app: verse-anchored highlights, the color
                 palette at the reading edge, and text selection that travels down the
-                column — the same interactions documented across this site.
+                column · the same interactions documented across this site.
               </p>
               <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
                 {/* TestFlight public beta */}

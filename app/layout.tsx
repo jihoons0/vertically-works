@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: {
     default: "Vertically Works",
-    template: "%s — Vertically Works",
+    template: "%s · Vertically Works",
   },
   description:
     "The canonical reference for vertical interface design. Exploring interaction patterns for vertical writing systems.",

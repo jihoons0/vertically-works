@@ -1,6 +1,6 @@
 "use client";
 
-// Dogfoods the real registry component — the same file
+// Dogfoods the real registry component · the same file
 // `npx verticallyworks add vertical-button` copies into a project.
 import { VerticalButton } from "@/components/vw/vertical-button";
 
@@ -14,7 +14,7 @@ const VARIANTS = [
 export function ButtonDemo() {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
-      {/* Interactive demo — press feedback comes from the component itself */}
+      {/* Interactive demo · press feedback comes from the component itself */}
       <div
         style={{
           background: "var(--color-bg-muted)",

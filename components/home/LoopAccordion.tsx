@@ -6,7 +6,7 @@ import { BentoTile, Cursor, useLoopStep } from "./bento-shared";
 const DURATIONS = [1000, 900, 240, 2100, 240, 700] as const;
 const REDUCED_STEP = 3; // resolved state: expanded, no cursor
 
-const CELL_LEFT = 40; // % — the left edge stays put; detail unfolds rightward
+const CELL_LEFT = 40; // % · the left edge stays put; detail unfolds rightward
 const CELL_TOP = 52;
 const CURSOR_X = `calc(${CELL_LEFT}% + 22px)`;
 const CURSOR_Y = 104;
@@ -39,7 +39,7 @@ export function LoopAccordion() {
           background: "var(--color-bg)",
         }}
       >
-        {/* Header column — title with a chevron pointing where detail unfolds */}
+        {/* Header column · title with a chevron pointing where detail unfolds */}
         <div
           style={{
             display: "flex",
@@ -80,7 +80,7 @@ export function LoopAccordion() {
           </svg>
         </div>
 
-        {/* Detail — slides out to the right */}
+        {/* Detail · slides out to the right */}
         <div
           style={{
             width: open ? NOTE_W : 0,

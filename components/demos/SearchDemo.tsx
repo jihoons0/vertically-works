@@ -20,7 +20,7 @@ export function SearchDemo() {
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div style={{ width: 320, height: 420, border: "2px solid var(--color-border-strong)", borderRadius: 24, background: "var(--color-bg)", overflow: "hidden", display: "flex", flexDirection: "row-reverse" }}>
-          {/* Vertical search bar — runs top→bottom on the reading-start (right) edge */}
+          {/* Vertical search bar · runs top→bottom on the reading-start (right) edge */}
           <div style={{ padding: "var(--space-4) var(--space-3)", borderLeft: "1px solid var(--color-border)", display: "flex", justifyContent: "center" }} role="search">
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-2)", padding: "var(--space-3) var(--space-2)", background: "var(--color-bg-muted)", borderRadius: "var(--radius-full)" }}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--color-fg-subtle)" strokeWidth="2" aria-hidden><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -37,7 +37,7 @@ export function SearchDemo() {
             </div>
           </div>
 
-          {/* Results — vertical columns flowing R→L, matching the reading axis */}
+          {/* Results · vertical columns flowing R→L, matching the reading axis */}
           <div style={{ flex: 1, overflowX: "auto", overflowY: "hidden" }} aria-live="polite">
             {query.trim() === "" ? (
               <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "100%", padding: "var(--space-6)" }}>
@@ -75,7 +75,7 @@ export function SearchDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        The search field itself runs vertically on the reading-start (right) edge — the caret and query text advance top→bottom via `writing-mode: vertical-rl`. Results read as vertical columns flowing right-to-left on the same axis, each match highlighted by background, never rotation.
+        The search field itself runs vertically on the reading-start (right) edge · the caret and query text advance top→bottom via `writing-mode: vertical-rl`. Results read as vertical columns flowing right-to-left on the same axis, each match highlighted by background, never rotation.
       </p>
     </div>
   );

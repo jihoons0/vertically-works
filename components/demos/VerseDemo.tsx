@@ -39,7 +39,7 @@ export function VerseDemo() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
-      {/* RTL column layout — row-reverse puts col 0 on right (reading start) */}
+      {/* RTL column layout · row-reverse puts col 0 on right (reading start) */}
       <div
         style={{
           background: "var(--color-bg-muted)",

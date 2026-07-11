@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 
-/** Matches the guard in components/Reveal.tsx — true when the user asks for reduced motion. */
+/** Matches the guard in components/Reveal.tsx · true when the user asks for reduced motion. */
 export function useReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
 
@@ -20,8 +20,8 @@ export function useReducedMotion(): boolean {
 /**
  * Cycles through the steps of a self-playing demo loop. `durations[i]` is how
  * long step `i` holds before advancing (wraps around). Pauses while the tab is
- * hidden. Under prefers-reduced-motion the loop parks on `reducedStep` — a
- * representative resolved state — and `reduced` is returned so callers can
+ * hidden. Under prefers-reduced-motion the loop parks on `reducedStep` · a
+ * representative resolved state · and `reduced` is returned so callers can
  * also hide the animated cursor.
  */
 export function useLoopStep(
@@ -32,7 +32,7 @@ export function useLoopStep(
   const reduced = useReducedMotion();
 
   useEffect(() => {
-    if (reduced) return; // parked on reducedStep below — no timers
+    if (reduced) return; // parked on reducedStep below · no timers
     let timer: number | undefined;
     const advance = () => setStep((s) => (s + 1) % durations.length);
     const start = () => {
@@ -57,7 +57,7 @@ export function useLoopStep(
 /**
  * The animated pointer for the loop demos. `x` as a number is a percentage of
  * the stage width (the pointer tip lands on that vertical line); `y` as a
- * number is px from the stage top — stages have a fixed height, so px keeps
+ * number is px from the stage top · stages have a fixed height, so px keeps
  * targets exact while width stays fluid. Either accepts a CSS length string
  * (e.g. `calc(50% + 40px)`) for targets offset from a centered element.
  * Glides between positions; `pressed` pulses a click.

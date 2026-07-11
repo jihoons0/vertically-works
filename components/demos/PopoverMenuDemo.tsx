@@ -61,7 +61,7 @@ export function PopoverMenuDemo() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
-      {/* Demo panel — just the open/close menu */}
+      {/* Demo panel · just the open/close menu */}
       <div
         style={{
           background: "var(--color-bg-muted)",
@@ -74,7 +74,7 @@ export function PopoverMenuDemo() {
           minHeight: 320,
         }}
       >
-        {/* Closed state — a single button that opens the menu */}
+        {/* Closed state · a single button that opens the menu */}
         {!open && (
           <button className="pressable"
             onClick={() => setOpen(true)}
@@ -104,7 +104,7 @@ export function PopoverMenuDemo() {
           </button>
         )}
 
-        {/* The action bar — dark vertical panel matching the screenshot */}
+        {/* The action bar · dark vertical panel matching the screenshot */}
         {open && (
           <div
             role="toolbar"
@@ -122,7 +122,7 @@ export function PopoverMenuDemo() {
               animation: "vab-in 220ms cubic-bezier(0.32,0.72,0,1) both",
             }}
           >
-            {/* Close button — collapses the menu */}
+            {/* Close button · collapses the menu */}
             <button className="pressable corner-round"
               onClick={() => setOpen(false)}
               aria-label="메뉴 닫기"
@@ -207,7 +207,7 @@ export function PopoverMenuDemo() {
                     </svg>
                   ) : action.icon}
                 </span>
-                {/* Label — vertical Korean text */}
+                {/* Label · vertical Korean text */}
                 <span
                   style={{
                     writingMode: "vertical-rl",
@@ -228,7 +228,7 @@ export function PopoverMenuDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        Tap the <strong>menu icon</strong> to open the action bar, then <strong>×</strong> to collapse it. Highlight swatches at top, action labels in vertical Korean text — the bar itself reads top-to-bottom, matching the reading axis.
+        Tap the <strong>menu icon</strong> to open the action bar, then <strong>×</strong> to collapse it. Highlight swatches at top, action labels in vertical Korean text · the bar itself reads top-to-bottom, matching the reading axis.
       </p>
 
       <style>{`

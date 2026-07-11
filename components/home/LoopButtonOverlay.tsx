@@ -19,9 +19,9 @@ export function LoopButtonOverlay() {
     <BentoTile
       index="01"
       label="Vertical dialog"
-      description="Title, body, and actions read as columns, right to left — the overlay is a layer above the flow, so it scales from center."
+      description="Title, body, and actions read as columns, right to left · the overlay is a layer above the flow, so it scales from center."
     >
-      {/* Trigger — a vertical pill button, like DialogDemo's 열기 */}
+      {/* Trigger · a vertical pill button, like DialogDemo's 열기 */}
       <div
         style={{
           position: "absolute",
@@ -55,7 +55,7 @@ export function LoopButtonOverlay() {
         }}
       />
 
-      {/* Dialog — vertical columns reading R→L: title rightmost, actions last */}
+      {/* Dialog · vertical columns reading R→L: title rightmost, actions last */}
       <div
         style={{
           position: "absolute",

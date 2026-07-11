@@ -45,7 +45,7 @@ const RESOURCES = [
         author: "W3C",
         source: "W3C",
         href: "https://www.w3.org/TR/css-text-4/#tate-chu-yoko",
-        description: "Specification for tate-chu-yoko (縦中横) — upright horizontal text within a vertical line — critical for verse numbers and date formatting.",
+        description: "Specification for tate-chu-yoko (縦中横) · upright horizontal text within a vertical line · critical for verse numbers and date formatting.",
         year: "2023",
       },
       {
@@ -74,7 +74,7 @@ const RESOURCES = [
         author: "Google",
         source: "Material Design",
         href: "https://m3.material.io/foundations/layout/understanding-layout/bidirectionality",
-        description: "Google's treatment of RTL layout adaptation in Material Design. Useful as a contrast — it handles bidirectionality but not vertical writing systems.",
+        description: "Google's treatment of RTL layout adaptation in Material Design. Useful as a contrast · it handles bidirectionality but not vertical writing systems.",
         year: "2023",
       },
       {
@@ -95,7 +95,7 @@ const RESOURCES = [
         author: "Apple",
         source: "Apple Developer Documentation",
         href: "https://developer.apple.com/library/archive/documentation/StringsTextFonts/Conceptual/CoreText_Programming/Introduction/Introduction.html",
-        description: "Apple's Core Text framework supports vertical glyph form and right-to-left frame progression — the basis for a proper vertical renderer on iOS.",
+        description: "Apple's Core Text framework supports vertical glyph form and right-to-left frame progression · the basis for a proper vertical renderer on iOS.",
         year: "2023",
       },
     ],

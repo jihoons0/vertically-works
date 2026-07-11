@@ -37,7 +37,7 @@ const DEFAULTS: State = {
 
 const DEVICE_WIDTH: Record<Device, number> = { mobile: 320, tablet: 600, desktop: 900 };
 
-// ── URL persistence (plain history API — no Suspense needed) ──
+// ── URL persistence (plain history API · no Suspense needed) ──
 function encode(s: State): string {
   const p = new URLSearchParams();
   p.set("lang", s.lang);
@@ -77,7 +77,7 @@ export function PlaygroundClient({ embedded = false }: { embedded?: boolean }) {
   const set = <K extends keyof State>(key: K, value: State[K]) => setS((prev) => ({ ...prev, [key]: value }));
 
   // Hydrate from URL once on mount. When embedded (e.g. on the home page) the
-  // page's URL isn't ours — leave it alone in both directions.
+  // page's URL isn't ours · leave it alone in both directions.
   useEffect(() => {
     if (embedded) return;
     const fromUrl = decode(window.location.search);

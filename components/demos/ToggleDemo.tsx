@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-// Dogfoods the real registry component — the same file
+// Dogfoods the real registry component · the same file
 // `npx verticallyworks add toggle` copies into a project.
 import { VerticalToggle } from "@/components/vw/toggle";
 
@@ -16,7 +16,7 @@ export function ToggleDemo() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
-      {/* Phone mockup — looks like a vertical app settings panel */}
+      {/* Phone mockup · looks like a vertical app settings panel */}
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div
           data-theme={states.darkMode ? "dark" : "light"}
@@ -30,7 +30,7 @@ export function ToggleDemo() {
             transition: "background 200ms ease",
           }}
         >
-          {/* Toggle cells — a vertical list: cells stacked as columns, flowing R→L.
+          {/* Toggle cells · a vertical list: cells stacked as columns, flowing R→L.
               Each cell reads top→bottom; its toggle runs on the same vertical axis. */}
           <div style={{ padding: "var(--space-4)", display: "flex", flexDirection: "row-reverse", justifyContent: "center", gap: "var(--space-3)" }}>
             {SETTINGS.map(({ key, label, sub }) => (
@@ -50,7 +50,7 @@ export function ToggleDemo() {
                   minHeight: 200,
                 }}
               >
-                {/* Label — vertical Korean with its Latin subtitle set beside it */}
+                {/* Label · vertical Korean with its Latin subtitle set beside it */}
                 <div style={{ display: "flex", flexDirection: "row-reverse", alignItems: "flex-start", gap: "var(--space-2)" }}>
                   <span id={`${baseId}-${key}`} style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.9375rem", fontWeight: 500, color: "var(--color-fg)", letterSpacing: "0.05em" }}>{label}</span>
                   <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", color: "var(--color-fg-subtle)", letterSpacing: "0.05em", paddingTop: 2 }}>{sub}</span>
@@ -66,7 +66,7 @@ export function ToggleDemo() {
             ))}
           </div>
 
-          {/* Live preview — shows the toggles' effect on vertical reading text */}
+          {/* Live preview · shows the toggles' effect on vertical reading text */}
           <div
             style={{
               margin: "var(--space-3) var(--space-4) var(--space-5)",
@@ -102,7 +102,7 @@ export function ToggleDemo() {
       </div>
 
       <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)", textAlign: "center", margin: 0, lineHeight: 1.6 }}>
-        A vertical list: two cells stacked as columns flowing right-to-left, each reading top→bottom. The toggle runs on that same axis — thumb up = on — so the control matches the reading direction instead of cutting across it. The preview updates live.
+        A vertical list: two cells stacked as columns flowing right-to-left, each reading top→bottom. The toggle runs on that same axis · thumb up = on · so the control matches the reading direction instead of cutting across it. The preview updates live.
       </p>
     </div>
   );
