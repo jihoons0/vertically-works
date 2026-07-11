@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useLocale } from "@/lib/notes/i18n";
+import type { Board } from "@/lib/notes/store";
+import { VTextField } from "@/components/notes/VTextField";
 
 export type Filter = "active" | "done" | "all";
 
@@ -9,6 +11,21 @@ const FILTER_IDS: Filter[] = ["active", "done", "all"];
 
 const CELL = 46; // filter cell height
 const GAP = 2;
+
+const iconBtn: React.CSSProperties = {
+  width: 40,
+  height: 40,
+  borderRadius: "var(--radius-full)",
+  border: "1px solid var(--color-border)",
+  background: "var(--color-bg)",
+  color: "var(--color-fg)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  cursor: "pointer",
+  boxShadow: "var(--shadow-column)",
+  fontFamily: "inherit",
+};
 
 function TrashIcon({ size = 16 }: { size?: number }) {
   return (
@@ -21,22 +38,47 @@ function TrashIcon({ size = 16 }: { size?: number }) {
   );
 }
 
+function GridIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="3" y="3" width="7" height="7" rx="1.5" />
+      <rect x="14" y="3" width="7" height="7" rx="1.5" />
+      <rect x="3" y="14" width="7" height="7" rx="1.5" />
+      <rect x="14" y="14" width="7" height="7" rx="1.5" />
+    </svg>
+  );
+}
+
 export function Rail({
+  board,
   done,
   filter,
   setFilter,
   onClearDone,
+  onZoomOut,
+  onRename,
 }: {
+  board: Board;
   total: number;
   done: number;
   filter: Filter;
   setFilter: (f: Filter) => void;
   onClearDone: () => void;
   onHelp: () => void;
+  onZoomOut: () => void;
+  onRename: (title: string) => void;
 }) {
   const { t } = useLocale();
   const [tip, setTip] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(board.title);
   const activeIndex = FILTER_IDS.indexOf(filter);
+
+  const commitRename = () => {
+    if (draft.trim() && draft.trim() !== board.title) onRename(draft);
+    else setDraft(board.title);
+    setEditing(false);
+  };
 
   return (
     <aside
@@ -54,6 +96,40 @@ export function Rail({
         gap: "var(--space-3)",
       }}
     >
+      {/* Board header — vertical title + zoom-out (grid), above the filter. */}
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-3)" }}>
+        {editing ? (
+          <VTextField
+            value={draft}
+            onChange={setDraft}
+            onEnter={commitRename}
+            onEscape={() => {
+              setDraft(board.title);
+              setEditing(false);
+            }}
+            onBlur={commitRename}
+            autoFocus
+            ariaLabel={board.title}
+            style={{ fontSize: "1.0625rem", fontWeight: 700, letterSpacing: "0.08em", color: "var(--color-fg)" }}
+          />
+        ) : (
+          <button
+            className="v-text pressable"
+            onClick={() => {
+              setDraft(board.title);
+              setEditing(true);
+            }}
+            aria-label={board.title}
+            style={{ background: "none", border: "none", cursor: "text", fontFamily: "inherit", fontSize: "1.0625rem", fontWeight: 700, letterSpacing: "0.08em", color: "var(--color-fg)", whiteSpace: "nowrap", maxHeight: "38vh", overflow: "hidden", padding: 0 }}
+          >
+            {board.title}
+          </button>
+        )}
+        <button className="pressable" aria-label={t.boards.back} onClick={onZoomOut} style={iconBtn}>
+          <GridIcon />
+        </button>
+      </div>
+
       {/* Filter — a capsule styled exactly like the language toggle, with a
           sliding indicator. No title, no panel, no divider. */}
       <div

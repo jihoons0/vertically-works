@@ -9,7 +9,6 @@ import { Composer, type ComposerHandle } from "@/components/notes/Composer";
 import { HelpSheet } from "@/components/notes/HelpSheet";
 import { LeftControls } from "@/components/notes/LeftControls";
 import { Overview } from "@/components/notes/Overview";
-import { VTextField } from "@/components/notes/VTextField";
 import { LocaleProvider, useLocale } from "@/lib/notes/i18n";
 import { FontProvider } from "@/lib/notes/font";
 
@@ -90,14 +89,17 @@ function Shell() {
         </div>
       ) : (
         <div key={activeBoard.id} style={{ height: "100%", animation: "vd-zoom-in var(--duration-slow) var(--easing-out) both" }}>
-          <Board store={store} board={activeBoard} filter={filter} onZoomOut={zoomOut} />
+          <Board store={store} board={activeBoard} filter={filter} />
           <Rail
+            board={activeBoard}
             total={total}
             done={done}
             filter={filter}
             setFilter={setFilter}
             onClearDone={handleClearDone}
             onHelp={() => setHelp(true)}
+            onZoomOut={zoomOut}
+            onRename={(title) => store.renameBoard(activeBoard.id, title)}
           />
         </div>
       )}
@@ -107,96 +109,8 @@ function Shell() {
   );
 }
 
-function GridIcon({ size = 16 }: { size?: number }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <rect x="3" y="3" width="7" height="7" rx="1.5" />
-      <rect x="14" y="3" width="7" height="7" rx="1.5" />
-      <rect x="3" y="14" width="7" height="7" rx="1.5" />
-      <rect x="14" y="14" width="7" height="7" rx="1.5" />
-    </svg>
-  );
-}
-
-function BoardHeader({ board, onZoomOut, onRename }: { board: BoardType; onZoomOut: () => void; onRename: (title: string) => void }) {
-  const { t } = useLocale();
-  const [editing, setEditing] = useState(false);
-  const [draft, setDraft] = useState(board.title);
-
-  const commit = () => {
-    if (draft.trim() && draft.trim() !== board.title) onRename(draft);
-    else setDraft(board.title);
-    setEditing(false);
-  };
-
-  return (
-    <div
-      style={{
-        position: "fixed",
-        top: "var(--space-5)",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 30,
-        display: "flex",
-        flexDirection: "row-reverse",
-        alignItems: "center",
-        gap: "var(--space-3)",
-      }}
-    >
-      <button
-        className="pressable"
-        aria-label={t.boards.back}
-        onClick={onZoomOut}
-        style={{
-          width: 40,
-          height: 40,
-          borderRadius: "var(--radius-full)",
-          border: "1px solid var(--color-border)",
-          background: "var(--color-bg)",
-          color: "var(--color-fg)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          cursor: "pointer",
-          boxShadow: "var(--shadow-column)",
-        }}
-      >
-        <GridIcon />
-      </button>
-
-      {editing ? (
-        <VTextField
-          value={draft}
-          onChange={setDraft}
-          onEnter={commit}
-          onEscape={() => {
-            setDraft(board.title);
-            setEditing(false);
-          }}
-          onBlur={commit}
-          autoFocus
-          ariaLabel={board.title}
-          style={{ fontSize: "1.0625rem", fontWeight: 700, letterSpacing: "0.08em", color: "var(--color-fg)" }}
-        />
-      ) : (
-        <button
-          className="v-text pressable"
-          onClick={() => {
-            setDraft(board.title);
-            setEditing(true);
-          }}
-          aria-label={board.title}
-          style={{ background: "none", border: "none", cursor: "text", fontFamily: "inherit", fontSize: "1.0625rem", fontWeight: 700, letterSpacing: "0.08em", color: "var(--color-fg)", whiteSpace: "nowrap", padding: 0 }}
-        >
-          {board.title}
-        </button>
-      )}
-    </div>
-  );
-}
-
-function Board({ store, board, filter, onZoomOut }: { store: Store; board: BoardType; filter: Filter; onZoomOut: () => void }) {
-  const { tasks, add, toggle, star, remove, edit, move, readd, renameBoard } = store;
+function Board({ store, board, filter }: { store: Store; board: BoardType; filter: Filter }) {
+  const { tasks, add, toggle, star, remove, edit, move, readd } = store;
   const boardId = board.id;
   const composerRef = useRef<ComposerHandle>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -260,8 +174,6 @@ function Board({ store, board, filter, onZoomOut }: { store: Store; board: Board
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%" }}>
-      <BoardHeader board={board} onZoomOut={onZoomOut} onRename={(title) => renameBoard(boardId, title)} />
-
       <div
         ref={scrollerRef}
         role="list"
