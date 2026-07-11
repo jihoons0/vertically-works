@@ -35,6 +35,7 @@ function GridIcon({ size = 16 }: { size?: number }) {
 
 export function Rail({
   board,
+  closing,
   done,
   filter,
   setFilter,
@@ -42,6 +43,7 @@ export function Rail({
   onZoomOut,
 }: {
   board: Board;
+  closing?: boolean;
   total: number;
   done: number;
   filter: Filter;
@@ -58,6 +60,7 @@ export function Rail({
     <aside
       aria-label={t.a11y.controls}
       className="vd-rail"
+      data-closing={closing ? "" : undefined}
       style={{
         position: "fixed",
         right: "var(--space-4)",

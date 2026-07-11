@@ -29,21 +29,36 @@ export function TodoApp() {
 function Shell() {
   const store = useNotes();
   const { boards, tasks, mounted } = store;
-  const [view, setView] = useState<"overview" | "board">("overview");
   const [activeBoardId, setActiveBoardId] = useState<string | null>(null);
+  const [closing, setClosing] = useState(false);
+  const [origin, setOrigin] = useState("50% 50%");
   const [filter, setFilter] = useState<Filter>("active");
   const [help, setHelp] = useState(false);
   const toast = useToast();
   const { t } = useLocale();
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const activeBoard = boards.find((b) => b.id === activeBoardId) ?? null;
+  const boardOpen = !!activeBoard && !closing; // fully open (drives the overview recede)
 
-  const openBoard = useCallback((id: string) => {
-    setActiveBoardId(id);
+  // Zoom in from the tapped tile's centre.
+  const openBoard = useCallback((id: string, rect?: DOMRect) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    if (rect) setOrigin(`${Math.round(rect.left + rect.width / 2)}px ${Math.round(rect.top + rect.height / 2)}px`);
     setFilter("active");
-    setView("board");
+    setClosing(false);
+    setActiveBoardId(id);
   }, []);
-  const zoomOut = useCallback(() => setView("overview"), []);
+
+  // Zoom out: play the exit, then unmount the board layer.
+  const zoomOut = useCallback(() => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setClosing(true);
+    closeTimer.current = setTimeout(() => {
+      setActiveBoardId(null);
+      setClosing(false);
+    }, 260);
+  }, []);
 
   const handleClearDone = useCallback(() => {
     if (!activeBoardId) return;
@@ -61,13 +76,13 @@ function Shell() {
       if (e.key === "?" && !typing) {
         e.preventDefault();
         setHelp((h) => !h);
-      } else if (e.key === "Escape" && !typing && !help) {
-        setView("overview");
+      } else if (e.key === "Escape" && !typing && !help && activeBoardId) {
+        zoomOut();
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [help]);
+  }, [help, activeBoardId, zoomOut]);
 
   const boardTasks = activeBoardId ? tasks.filter((x) => x.boardId === activeBoardId) : [];
   const total = mounted ? boardTasks.length : 0;
@@ -83,24 +98,33 @@ function Shell() {
             {t.loading}
           </span>
         </div>
-      ) : view === "overview" || !activeBoard ? (
-        <div key="overview" style={{ height: "100%", animation: "vd-zoom-back var(--duration-slow) var(--easing-out) both" }}>
-          <Overview boards={boards} tasks={tasks} onOpen={openBoard} onAddBoard={store.addBoard} />
-        </div>
       ) : (
-        <div key={activeBoard.id} style={{ height: "100%", animation: "vd-zoom-in var(--duration-slow) var(--easing-out) both" }}>
-          <Board store={store} board={activeBoard} filter={filter} />
-          <Rail
-            board={activeBoard}
-            total={total}
-            done={done}
-            filter={filter}
-            setFilter={setFilter}
-            onClearDone={handleClearDone}
-            onHelp={() => setHelp(true)}
-            onZoomOut={zoomOut}
-          />
-        </div>
+        <>
+          {/* Overview — the base layer; recedes behind an open board. */}
+          <div className="vd-ov-layer" data-recede={boardOpen ? "" : undefined}>
+            <Overview boards={boards} tasks={tasks} onOpen={openBoard} onAddBoard={store.addBoard} />
+          </div>
+
+          {/* Focused board — zooms in from the tapped tile; rail animates in on its own. */}
+          {activeBoard && (
+            <>
+              <div className="vd-board-layer" data-closing={closing ? "" : undefined} style={{ transformOrigin: origin }}>
+                <Board store={store} board={activeBoard} filter={filter} />
+              </div>
+              <Rail
+                board={activeBoard}
+                closing={closing}
+                total={total}
+                done={done}
+                filter={filter}
+                setFilter={setFilter}
+                onClearDone={handleClearDone}
+                onHelp={() => setHelp(true)}
+                onZoomOut={zoomOut}
+              />
+            </>
+          )}
+        </>
       )}
 
       <HelpSheet open={help} onClose={() => setHelp(false)} />

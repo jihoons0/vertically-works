@@ -14,7 +14,7 @@ export function PostItTile({
 }: {
   board: Board;
   tasks: Task[];
-  onOpen: (id: string) => void;
+  onOpen: (id: string, rect: DOMRect) => void;
 }) {
   const boardTasks = tasks.filter((t) => t.boardId === board.id);
   const active = boardTasks.filter((t) => !t.done);
@@ -24,7 +24,7 @@ export function PostItTile({
     <button
       className={`pressable tile tile-${board.accent ?? "sky"}`}
       aria-label={board.title}
-      onClick={() => onOpen(board.id)}
+      onClick={(e) => onOpen(board.id, e.currentTarget.getBoundingClientRect())}
       style={{
         position: "relative",
         aspectRatio: "1 / 1",

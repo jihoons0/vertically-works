@@ -18,7 +18,7 @@ export function Overview({
 }: {
   boards: Board[];
   tasks: Task[];
-  onOpen: (id: string) => void;
+  onOpen: (id: string, rect: DOMRect) => void;
   onAddBoard: (title: string) => void;
 }) {
   const { t } = useLocale();
