@@ -106,21 +106,25 @@
   padding: var(--space-16);
 }
 .vd-overview-grid {
-  display: grid;
-  /* fixed-width columns + centered tracks → the tile set stays horizontally
-     centered no matter how many tiles there are. */
-  grid-template-columns: repeat(auto-fill, 180px);
+  /* Flex-wrap so every row — including a partial last row — stays horizontally
+     centered (grid left-aligns partial rows). */
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  align-content: flex-start;
   gap: var(--space-4);
   width: 100%;
   max-width: 1120px;
-  align-items: start;
+}
+.tile-cell {
+  flex: 0 0 auto;
+  width: 176px;
 }
 @media (max-width: 640px) {
-  /* Two columns on phones; extra left padding keeps tiles clear of the fixed
+  /* Two per row on phones; extra left padding keeps tiles clear of the fixed
      left controls. */
   .vd-overview-pad { padding: var(--space-12) var(--space-5) var(--space-12) var(--space-16); }
-  .vd-overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile-cell { width: calc(50% - var(--space-2)); }
 }
 
 /* ─── Post-it tiles (overview) ─── */

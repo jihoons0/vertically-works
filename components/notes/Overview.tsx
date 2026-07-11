@@ -29,9 +29,13 @@ export function Overview({
       <div className="vd-overview-pad">
         <div role="list" aria-label={t.boards.overview} className="vd-overview-grid">
           {boards.map((b) => (
-            <PostItTile key={b.id} board={b} tasks={tasks} onOpen={onOpen} />
+            <div key={b.id} className="tile-cell">
+              <PostItTile board={b} tasks={tasks} onOpen={onOpen} />
+            </div>
           ))}
-          <NewTile onAdd={onAddBoard} label={t.boards.newBoard} />
+          <div className="tile-cell">
+            <NewTile onAdd={onAddBoard} label={t.boards.newBoard} />
+          </div>
         </div>
       </div>
     </div>
