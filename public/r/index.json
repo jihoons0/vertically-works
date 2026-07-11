@@ -10,13 +10,13 @@
     {
       "name": "vertical-button",
       "title": "Vertical Button",
-      "description": "A button whose label is set on the vertical reading axis — real writing-mode, never a rotation.",
+      "description": "A button whose label is set on the vertical reading axis · real writing-mode, never a rotation.",
       "docs": "https://vertically.works/components/button"
     },
     {
       "name": "toggle",
       "title": "Vertical Toggle",
-      "description": "An on/off switch whose thumb travels the reading axis — up is on. role=\"switch\" semantics.",
+      "description": "An on/off switch whose thumb travels the reading axis · up is on. role=\"switch\" semantics.",
       "docs": "https://vertically.works/components/toggle"
     },
     {
@@ -28,7 +28,7 @@
     {
       "name": "tooltip",
       "title": "Vertical Tooltip",
-      "description": "A tooltip that opens to the left of its trigger — along the reading direction — with vertical content. Hover, focus, and Escape handling built in.",
+      "description": "A tooltip that opens to the left of its trigger · along the reading direction · with vertical content. Hover, focus, and Escape handling built in.",
       "docs": "https://vertically.works/components/tooltip"
     },
     {
@@ -40,7 +40,7 @@
     {
       "name": "sheet",
       "title": "Vertical Sheet",
-      "description": "An edge sheet aware of the reading axis — enter from screen geometry (bottom) or reading direction (left/right). Modal semantics included.",
+      "description": "An edge sheet aware of the reading axis · enter from screen geometry (bottom) or reading direction (left/right). Modal semantics included.",
       "docs": "https://vertically.works/components/sheet"
     },
     {

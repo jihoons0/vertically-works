@@ -1,10 +1,10 @@
 /*
- * Vertically Works — design tokens & vertical-writing utilities
+ * Vertically Works · design tokens & vertical-writing utilities
  * https://vertically.works · installed by `npx verticallyworks init`
  *
  * Usage:
  *   - Import this file once, globally (e.g. in your root layout or global CSS,
- *     right after `@import "tailwindcss";` if you use Tailwind — plain CSS
+ *     right after `@import "tailwindcss";` if you use Tailwind · plain CSS
  *     projects can import it anywhere).
  *   - Themes: set `data-theme="light" | "dark" | "sepia"` on <html>. With no
  *     attribute you get light.
@@ -105,7 +105,7 @@
 }
 
 /* ─── Corner smoothing ─── */
-/* Continuous "squircle" corners on every rounded element — the curve eases into
+/* Continuous "squircle" corners on every rounded element · the curve eases into
    the straight edge instead of kinking at the arc joint (Apple-style corner
    smoothing). Progressive enhancement: browsers without corner-shape keep
    plain circular arcs. True circles (thumbs, knobs, swatches, avatars) opt
@@ -131,7 +131,7 @@
   --duration-slow: 300ms;
   --duration-page: 400ms;
 
-  /* Color/opacity transitions — plain, unobtrusive */
+  /* Color/opacity transitions · plain, unobtrusive */
   --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
   --easing-in: cubic-bezier(0.4, 0, 1, 1);
   /* Strong ease-out for entrances & UI feedback (stronger than Material's weak default) */
@@ -167,7 +167,7 @@
   text-orientation: upright;
 }
 
-/* ─── Pressable — instant tactile feedback on any interactive element ─── */
+/* ─── Pressable · instant tactile feedback on any interactive element ─── */
 /* Subtle scale on :active makes the UI feel like it's listening. scale() also
    scales children (icon + label), so the whole control responds as one. */
 .pressable {

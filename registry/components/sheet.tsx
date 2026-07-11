@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * VerticalSheet — an edge sheet aware of the reading axis.
+ * VerticalSheet · an edge sheet aware of the reading axis.
  *
  * Screen geometry says a sheet slides up from the bottom; a vertical RTL
  * reading flow often disagrees. The `edge` prop makes the choice explicit:
@@ -19,7 +19,7 @@ export interface VerticalSheetProps {
   onClose: () => void;
   /** Which edge the sheet enters from. */
   edge?: "bottom" | "left" | "right";
-  /** Accessible name for the sheet (required — the sheet has no implicit title). */
+  /** Accessible name for the sheet (required · the sheet has no implicit title). */
   "aria-label": string;
   children: ReactNode;
   style?: CSSProperties;
@@ -118,7 +118,7 @@ export function VerticalSheet({
         @keyframes vw-sheet-in-right { from { transform: translateX(100%); } to { transform: translateX(0); } }
         @keyframes vw-sheet-fade { from { opacity: 0; } to { opacity: 1; } }
         @media (prefers-reduced-motion: reduce) {
-          /* Slide becomes a fade — position never animates */
+          /* Slide becomes a fade · position never animates */
           @keyframes vw-sheet-in-bottom { from { opacity: 0; } to { opacity: 1; } }
           @keyframes vw-sheet-in-left { from { opacity: 0; } to { opacity: 1; } }
           @keyframes vw-sheet-in-right { from { opacity: 0; } to { opacity: 1; } }

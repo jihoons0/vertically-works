@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * VerticalTextField — a labeled text input for vertical interfaces.
+ * VerticalTextField · a labeled text input for vertical interfaces.
  *
  * The input itself deliberately stays horizontal: CJK IME composition
  * (candidate windows, inline conversion) assumes a horizontal baseline, and

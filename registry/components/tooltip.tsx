@@ -1,10 +1,10 @@
 "use client";
 
 /**
- * VerticalTooltip — a tooltip that opens along the reading direction.
+ * VerticalTooltip · a tooltip that opens along the reading direction.
  *
  * In a vertical RTL interface the tooltip's default home is to the LEFT of its
- * trigger — where reading is headed — with vertical content of its own.
+ * trigger · where reading is headed · with vertical content of its own.
  * Opening below would break the column it annotates. Shows on hover and on
  * keyboard focus; Escape dismisses; the trigger is described via
  * `aria-describedby` while open.

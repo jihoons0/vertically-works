@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * VerticalDialog — a modal dialog whose content reads as vertical columns.
+ * VerticalDialog · a modal dialog whose content reads as vertical columns.
  *
  * Title, description, and actions flow right→left as columns, but the dialog
  * itself scales from center: an overlay is a layer above the reading flow,
@@ -16,11 +16,11 @@ import { useEffect, useId, useRef, type CSSProperties, type ReactNode } from "re
 export interface VerticalDialogProps {
   open: boolean;
   onClose: () => void;
-  /** Dialog title — the rightmost (first-read) column. */
+  /** Dialog title · the rightmost (first-read) column. */
   title: string;
   /** Supporting text, set as a column to the title's left. */
   description?: string;
-  /** Action buttons (e.g. VerticalButton) — rendered at the end of the reading flow. */
+  /** Action buttons (e.g. VerticalButton) · rendered at the end of the reading flow. */
   actions?: ReactNode;
   /** Containing block: `fixed` covers the viewport (default). Place inside a
    *  `transform`ed ancestor to confine the dialog to that box instead. */

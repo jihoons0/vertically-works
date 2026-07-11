@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * VerticalButton — a button whose label is set on the vertical reading axis.
+ * VerticalButton · a button whose label is set on the vertical reading axis.
  *
  * The label uses real `writing-mode: vertical-rl` (never a rotation transform),
  * so mixed CJK/Latin content orients correctly per glyph. The horizontal

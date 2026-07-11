@@ -1,11 +1,11 @@
 "use client";
 
 /**
- * VerticalListCell — the primitive behind every vertical list.
+ * VerticalListCell · the primitive behind every vertical list.
  *
  * Rotate the cell's anatomy, not the cell: leading moves to the top (the
  * reading start), title and subtitle become vertical text columns reading
- * right→left, and the disclosure accessory sits at the bottom pointing down —
+ * right→left, and the disclosure accessory sits at the bottom pointing down,
  * along the reading axis, not across it. Stack cells in a container with
  * `display: flex; flex-direction: row-reverse` (plus `role="listbox"` when
  * cells are selectable options) so the first cell sits at the reading start.
@@ -19,15 +19,15 @@ export interface VerticalListCellProps
   extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "title"> {
   /** Main label, set vertically. */
   title: string;
-  /** Secondary label, set vertically beside the title (to its left — read second). */
+  /** Secondary label, set vertically beside the title (to its left · read second). */
   subtitle?: string;
-  /** Slot at the top of the column — the reading start (index, icon, avatar…). */
+  /** Slot at the top of the column · the reading start (index, icon, avatar…). */
   leading?: ReactNode;
   /** Bottom accessory. `chevron` points down: "continues along the reading axis". */
   accessory?: "chevron" | "none" | ReactNode;
   /** When provided, the cell renders `aria-selected` (pair with a `role="listbox"` parent). */
   selected?: boolean;
-  /** Column height — full-height columns keep the list's reading rhythm. */
+  /** Column height · full-height columns keep the list's reading rhythm. */
   height?: number;
   style?: CSSProperties;
 }
@@ -75,7 +75,7 @@ export function VerticalListCell({
         </span>
       )}
 
-      {/* Title rightmost, subtitle to its left — reading order within the cell */}
+      {/* Title rightmost, subtitle to its left · reading order within the cell */}
       <span
         style={{
           display: "flex",

@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * VerticalToggle — an on/off switch whose thumb travels the reading axis.
+ * VerticalToggle · an on/off switch whose thumb travels the reading axis.
  *
  * In a vertical interface the toggle runs vertically: up is on, matching the
  * direction the eye moves instead of cutting across it. Semantics are a native
@@ -17,7 +17,7 @@ export interface VerticalToggleProps {
   onCheckedChange: (next: boolean) => void;
   disabled?: boolean;
   id?: string;
-  /** Accessible name — required unless `aria-labelledby` points at a visible label. */
+  /** Accessible name · required unless `aria-labelledby` points at a visible label. */
   "aria-label"?: string;
   "aria-labelledby"?: string;
   style?: CSSProperties;

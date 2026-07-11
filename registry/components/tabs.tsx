@@ -1,9 +1,9 @@
 "use client";
 
 /**
- * VerticalTabs — a tab rail on the reading axis.
+ * VerticalTabs · a tab rail on the reading axis.
  *
- * The tablist is a vertical rail at the right edge — the reading start — with
+ * The tablist is a vertical rail at the right edge · the reading start · with
  * vertical labels, and panels sit to its left, where reading continues.
  * Full `tablist`/`tab`/`tabpanel` semantics with `aria-orientation="vertical"`,
  * roving tabindex, and Up/Down/Home/End keyboard movement (selection follows
