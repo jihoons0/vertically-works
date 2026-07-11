@@ -1,6 +1,6 @@
 "use client";
 
-import { BentoTile, Cursor, useLoopStep } from "./bento-shared";
+import { BentoTile, Cursor, useLoopStep, type Lang } from "./bento-shared";
 
 // Steps: 0 idle → 1 glide to button → 2 press → 3 dialog open → 4 dialog closing
 const DURATIONS = [1100, 900, 240, 2100, 420] as const;
@@ -9,8 +9,15 @@ const REDUCED_STEP = 3; // resolved state: dialog open, no cursor
 const BUTTON_X = 50;
 const BUTTON_Y = 130;
 
-export function LoopButtonOverlay() {
+const T: Record<Lang, { open: string; title: string; cancel: string; go: string }> = {
+  ko: { open: "열기", title: "다음 장으로 갈까요?", cancel: "취소", go: "이동" },
+  ja: { open: "開く", title: "次の章へ進みますか？", cancel: "キャンセル", go: "移動" },
+  zh: { open: "打開", title: "前往下一章？", cancel: "取消", go: "前往" },
+};
+
+export function LoopButtonOverlay({ lang }: { lang: Lang }) {
   const { step, reduced } = useLoopStep(DURATIONS, REDUCED_STEP);
+  const t = T[lang];
 
   const pressed = step === 2;
   const open = step === 3;
@@ -19,9 +26,9 @@ export function LoopButtonOverlay() {
     <BentoTile
       index="01"
       label="Vertical dialog"
-      description="Title, body, and actions read as columns, right to left · the overlay is a layer above the flow, so it scales from center."
+      description="Title, body, and actions read as columns, right to left. The overlay is a layer above the flow, so it scales from center."
     >
-      {/* Trigger · a vertical pill button, like DialogDemo's 열기 */}
+      {/* Trigger · a vertical pill button */}
       <div
         style={{
           position: "absolute",
@@ -40,7 +47,7 @@ export function LoopButtonOverlay() {
           letterSpacing: "0.05em",
         }}
       >
-        열기
+        {t.open}
       </div>
 
       {/* Backdrop */}
@@ -88,7 +95,7 @@ export function LoopButtonOverlay() {
             letterSpacing: "0.05em",
           }}
         >
-          다음 장으로 갈까요?
+          {t.title}
         </span>
         <div style={{ display: "flex", flexDirection: "row-reverse", gap: "var(--space-2)" }}>
           <span
@@ -104,7 +111,7 @@ export function LoopButtonOverlay() {
               letterSpacing: "0.05em",
             }}
           >
-            취소
+            {t.cancel}
           </span>
           <span
             style={{
@@ -119,7 +126,7 @@ export function LoopButtonOverlay() {
               letterSpacing: "0.05em",
             }}
           >
-            이동
+            {t.go}
           </span>
         </div>
       </div>

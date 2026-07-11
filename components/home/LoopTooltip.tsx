@@ -1,20 +1,26 @@
 "use client";
 
-import { BentoTile, Cursor, useLoopStep } from "./bento-shared";
+import { BentoTile, Cursor, useLoopStep, type Lang } from "./bento-shared";
 
 // Steps: 0 idle → 1 glide to ref 1 → 2 hover (tooltip) → 3 glide to ref 2 → 4 hover → 5 drift away
 const DURATIONS = [900, 850, 1600, 850, 1600, 700] as const;
 const REDUCED_STEP = 2; // resolved state: first tooltip open, no cursor
 
-const COLUMNS = [
-  { x: 57, ref: "1", text: "글씨를 세로로 쓰고", tip: "첫째 줄" },
-  { x: 43, ref: "2", text: "오른쪽에서 왼쪽으로", tip: "둘째 줄" },
+const T: Record<Lang, { texts: [string, string]; tips: [string, string] }> = {
+  ko: { texts: ["글씨를 세로로 쓰고", "오른쪽에서 왼쪽으로"], tips: ["첫째 줄", "둘째 줄"] },
+  ja: { texts: ["文字を縦に書き", "右から左へ"], tips: ["一行目", "二行目"] },
+  zh: { texts: ["文字豎著書寫", "從右到左"], tips: ["第一行", "第二行"] },
+};
+
+const COLS = [
+  { x: 57, ref: "1" },
+  { x: 43, ref: "2" },
 ];
 const REF_Y = 44;
 
-/** A vertical column with a reference trigger up top, as in TooltipDemo: on
- *  hover the ref underlines and a vertical tooltip opens to its left,
- *  following reading direction, never below where it would break the column. */
+/** A vertical column with a reference trigger up top: on hover the ref
+ *  underlines and a vertical tooltip opens to its left. The hovered column is
+ *  lifted (zIndex) so its tooltip sits above the other column's ref and text. */
 function TooltipColumn({
   x,
   refLabel,
@@ -39,6 +45,7 @@ function TooltipColumn({
         flexDirection: "column",
         alignItems: "center",
         gap: "var(--space-2)",
+        zIndex: hovered ? 50 : 1, // lift the active column above the other's ref/text
       }}
     >
       <span
@@ -63,7 +70,7 @@ function TooltipColumn({
             position: "absolute",
             right: "calc(100% + 10px)",
             top: "50%",
-            zIndex: 10,
+            zIndex: 60,
             display: "flex",
             background: "var(--color-fg)",
             color: "var(--color-bg)",
@@ -71,9 +78,7 @@ function TooltipColumn({
             padding: "var(--space-2)",
             boxShadow: "0 4px 16px rgba(0, 0, 0, 0.15)",
             opacity: hovered ? 1 : 0,
-            transform: hovered
-              ? "translateY(-50%)"
-              : "translateY(-50%) translateX(4px)",
+            transform: hovered ? "translateY(-50%)" : "translateY(-50%) translateX(4px)",
             transition:
               "opacity var(--duration-base) var(--easing-out), transform var(--duration-base) var(--easing-out)",
           }}
@@ -121,8 +126,9 @@ function TooltipColumn({
   );
 }
 
-export function LoopTooltip() {
+export function LoopTooltip({ lang }: { lang: Lang }) {
   const { step, reduced } = useLoopStep(DURATIONS, REDUCED_STEP);
+  const t = T[lang];
   const hover1 = step === 2;
   const hover2 = step === 4;
   const atRef1 = step === 1 || step === 2;
@@ -132,13 +138,13 @@ export function LoopTooltip() {
     <BentoTile
       index="04"
       label="Tooltip on hover"
-      description="Hover still exists in vertical UI: the tooltip opens to the left of the trigger · following reading direction · never below, where it would break the column."
+      description="Hover still exists in vertical UI: the tooltip opens to the left of the trigger, following reading direction, never below, where it would break the column."
     >
-      <TooltipColumn x={COLUMNS[0].x} refLabel={COLUMNS[0].ref} text={COLUMNS[0].text} tip={COLUMNS[0].tip} hovered={hover1} />
-      <TooltipColumn x={COLUMNS[1].x} refLabel={COLUMNS[1].ref} text={COLUMNS[1].text} tip={COLUMNS[1].tip} hovered={hover2} />
+      <TooltipColumn x={COLS[0].x} refLabel={COLS[0].ref} text={t.texts[0]} tip={t.tips[0]} hovered={hover1} />
+      <TooltipColumn x={COLS[1].x} refLabel={COLS[1].ref} text={t.texts[1]} tip={t.tips[1]} hovered={hover2} />
 
       <Cursor
-        x={atRef1 ? COLUMNS[0].x : atRef2 ? COLUMNS[1].x : 78}
+        x={atRef1 ? COLS[0].x : atRef2 ? COLS[1].x : 78}
         y={atRef1 || atRef2 ? REF_Y : 216}
         shown={!reduced}
       />

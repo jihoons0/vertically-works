@@ -2,6 +2,60 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 
+/** Preview language for the bento demos. */
+export type Lang = "ko" | "ja" | "zh";
+
+const LANGS: { id: Lang; label: string }[] = [
+  { id: "ko", label: "한" },
+  { id: "ja", label: "あ" },
+  { id: "zh", label: "中" },
+];
+
+/** 한 / あ / 中 segmented toggle that drives the demos' language. */
+export function CjkToggle({ value, onChange }: { value: Lang; onChange: (l: Lang) => void }) {
+  return (
+    <div
+      role="group"
+      aria-label="Preview language"
+      style={{
+        display: "inline-flex",
+        gap: 2,
+        padding: 3,
+        borderRadius: "var(--radius-lg)",
+        background: "var(--color-bg-muted)",
+        border: "1px solid var(--color-border)",
+      }}
+    >
+      {LANGS.map((l) => {
+        const active = l.id === value;
+        return (
+          <button
+            key={l.id}
+            onClick={() => onChange(l.id)}
+            aria-pressed={active}
+            className="pressable"
+            style={{
+              width: 34,
+              height: 30,
+              borderRadius: "var(--radius-md)",
+              border: "none",
+              cursor: "pointer",
+              fontFamily: "inherit",
+              fontSize: "0.9375rem",
+              fontWeight: 500,
+              background: active ? "var(--color-fg)" : "transparent",
+              color: active ? "var(--color-bg)" : "var(--color-fg-muted)",
+              transition: "background 150ms var(--easing-out), color 150ms var(--easing-out)",
+            }}
+          >
+            {l.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 /** Matches the guard in components/Reveal.tsx · true when the user asks for reduced motion. */
 export function useReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);

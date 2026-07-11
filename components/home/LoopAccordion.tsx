@@ -1,21 +1,26 @@
 "use client";
 
-import { BentoTile, Cursor, useLoopStep } from "./bento-shared";
+import { BentoTile, Cursor, useLoopStep, type Lang } from "./bento-shared";
 
 // Steps: 0 idle → 1 glide to cell → 2 press → 3 expanded → 4 press again → 5 collapsed
 const DURATIONS = [1000, 900, 240, 2100, 240, 700] as const;
 const REDUCED_STEP = 3; // resolved state: expanded, no cursor
 
 const CELL_LEFT = 40; // % · the left edge stays put; detail unfolds rightward
-const CELL_TOP = 52;
+const CELL_TOP = 84;
 const CURSOR_X = `calc(${CELL_LEFT}% + 22px)`;
-const CURSOR_Y = 104;
+const CURSOR_Y = 130;
 const NOTE_W = 68;
 
-const NOTES = ["우유 사기", "산책 하기"];
+const T: Record<Lang, { title: string; notes: [string, string] }> = {
+  ko: { title: "할 일", notes: ["우유 사기", "산책 하기"] },
+  ja: { title: "用事", notes: ["牛乳を買う", "散歩する"] },
+  zh: { title: "待辦", notes: ["買牛奶", "去散步"] },
+};
 
-export function LoopAccordion() {
+export function LoopAccordion({ lang }: { lang: Lang }) {
   const { step, reduced } = useLoopStep(DURATIONS, REDUCED_STEP);
+  const t = T[lang];
   const open = step === 3 || step === 4;
   const pressed = step === 2 || step === 4;
   const atCell = step >= 1 && step <= 4;
@@ -57,9 +62,10 @@ export function LoopAccordion() {
               fontWeight: 600,
               letterSpacing: "0.08em",
               color: "var(--color-fg)",
+              whiteSpace: "nowrap", // one column, never wrap to a second line
             }}
           >
-            오늘 할 일
+            {t.title}
           </span>
           <svg
             width="12"
@@ -101,7 +107,7 @@ export function LoopAccordion() {
               width: NOTE_W,
             }}
           >
-            {NOTES.map((note) => (
+            {t.notes.map((note) => (
               <span
                 key={note}
                 style={{
@@ -111,6 +117,7 @@ export function LoopAccordion() {
                   letterSpacing: "0.08em",
                   lineHeight: 1.7,
                   color: "var(--color-fg-muted)",
+                  whiteSpace: "nowrap",
                 }}
               >
                 {note}
