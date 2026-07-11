@@ -96,13 +96,16 @@ function ShowColumn({
               position: "absolute",
               top: -6,
               right: -6,
+              writingMode: "vertical-rl",
+              textOrientation: "mixed",
               fontSize: "0.5625rem",
               fontWeight: 600,
-              letterSpacing: "0.04em",
+              letterSpacing: "0.06em",
+              lineHeight: 1,
               color: "var(--color-bg)",
               background: "var(--color-fg)",
               borderRadius: "var(--radius-full)",
-              padding: "3px 7px",
+              padding: "7px 3px",
               boxShadow: "var(--shadow-column)",
             }}
           >
