@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import { SEED_TASKS, detectInitialLocale } from "@/lib/notes/i18n";
+import { useCallback, useEffect, useState } from "react";
+import { SEED_TASKS, STRINGS, detectInitialLocale } from "@/lib/notes/i18n";
 
 export interface Task {
   id: string;
+  boardId: string;
   text: string;
   note?: string;
   done: boolean;
@@ -13,17 +14,39 @@ export interface Task {
   completedAt?: number;
 }
 
-const STORAGE_KEY = "vd:tasks:v1";
+export interface Board {
+  id: string;
+  title: string;
+  accent?: string; // paper-tint key → styled in notes.css (.tile-<accent>)
+  createdAt: number;
+}
+
+const TASKS_KEY = "vd:tasks:v1";
+const BOARDS_KEY = "vd:boards:v1";
+
+// Subtle paper tints, cycled across new boards.
+export const ACCENTS = ["amber", "rose", "sky", "sage", "lilac"] as const;
+// Fixed accents for the seeded starter boards (메모 / last = plain white paper).
+const STARTER_ACCENTS = ["amber", "rose", "sky", "paper"] as const;
 
 function uid() {
   return Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
 }
 
-// Seed the teaching tasks in whichever CJK script the visitor lands in.
-function buildSeed(): Task[] {
+// A fresh start: starter category boards, with the teaching tasks in the first one.
+function buildInitial(): { boards: Board[]; tasks: Task[] } {
   const now = Date.now();
-  return SEED_TASKS[detectInitialLocale()].map((s, i) => ({
+  const locale = detectInitialLocale();
+  const boards: Board[] = STRINGS[locale].boards.starters.map((title, i) => ({
     id: uid(),
+    title,
+    accent: STARTER_ACCENTS[i] ?? ACCENTS[i % ACCENTS.length],
+    createdAt: now - i * 1000,
+  }));
+  const firstId = boards[0].id;
+  const tasks: Task[] = SEED_TASKS[locale].map((s, i) => ({
+    id: uid(),
+    boardId: firstId,
     text: s.text,
     note: s.note,
     done: !!s.done,
@@ -31,56 +54,89 @@ function buildSeed(): Task[] {
     createdAt: now - i * 1000,
     completedAt: s.done ? now - 9000 : undefined,
   }));
+  return { boards, tasks };
 }
 
-export function useTasks() {
+// Lossless upgrade from the old flat task list → one default board.
+function migrateLegacy(legacy: Task[]): { boards: Board[]; tasks: Task[] } {
+  const now = Date.now();
+  const board: Board = {
+    id: uid(),
+    title: STRINGS[detectInitialLocale()].boards.defaultTitle,
+    accent: ACCENTS[0],
+    createdAt: now,
+  };
+  return { boards: [board], tasks: legacy.map((t) => ({ ...t, boardId: t.boardId || board.id })) };
+}
+
+export function useNotes() {
+  const [boards, setBoards] = useState<Board[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [mounted, setMounted] = useState(false);
-  const firstWrite = useRef(true);
 
   useEffect(() => {
+    let init: { boards: Board[]; tasks: Task[] };
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        setTasks(JSON.parse(raw));
+      const rawBoards = localStorage.getItem(BOARDS_KEY);
+      const rawTasks = localStorage.getItem(TASKS_KEY);
+      if (rawBoards) {
+        init = { boards: JSON.parse(rawBoards), tasks: rawTasks ? JSON.parse(rawTasks) : [] };
+      } else if (rawTasks) {
+        init = migrateLegacy(JSON.parse(rawTasks));
       } else {
-        setTasks(buildSeed());
+        init = buildInitial();
       }
     } catch {
-      setTasks(buildSeed());
+      init = buildInitial();
     }
+    setBoards(init.boards);
+    setTasks(init.tasks);
     setMounted(true);
   }, []);
 
   useEffect(() => {
     if (!mounted) return;
-    // Skip the very first write so a fresh seed isn't clobbered before hydration settles.
-    if (firstWrite.current) {
-      firstWrite.current = false;
-    }
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(tasks));
+      localStorage.setItem(BOARDS_KEY, JSON.stringify(boards));
+      localStorage.setItem(TASKS_KEY, JSON.stringify(tasks));
     } catch {
       /* storage full or unavailable — in-memory still works */
     }
-  }, [tasks, mounted]);
+  }, [boards, tasks, mounted]);
 
-  const add = useCallback((text: string, note?: string, starred = false) => {
+  // ── Board ops ──
+  const addBoard = useCallback((title: string): string | undefined => {
+    const t = title.trim();
+    if (!t) return;
+    const id = uid();
+    setBoards((prev) => [...prev, { id, title: t, accent: ACCENTS[prev.length % ACCENTS.length], createdAt: Date.now() }]);
+    return id;
+  }, []);
+
+  const renameBoard = useCallback((id: string, title: string) => {
+    const t = title.trim();
+    if (!t) return;
+    setBoards((prev) => prev.map((b) => (b.id === id ? { ...b, title: t } : b)));
+  }, []);
+
+  const removeBoard = useCallback((id: string) => {
+    setBoards((prev) => prev.filter((b) => b.id !== id));
+    setTasks((prev) => prev.filter((t) => t.boardId !== id));
+  }, []);
+
+  // ── Task ops (scoped to a board) ──
+  const add = useCallback((boardId: string, text: string, note?: string, starred = false) => {
     const t = text.trim();
     if (!t) return;
     setTasks((prev) => [
-      { id: uid(), text: t, note: note?.trim() || undefined, done: false, starred, createdAt: Date.now() },
+      { id: uid(), boardId, text: t, note: note?.trim() || undefined, done: false, starred, createdAt: Date.now() },
       ...prev,
     ]);
   }, []);
 
   const toggle = useCallback((id: string) => {
     setTasks((prev) =>
-      prev.map((t) =>
-        t.id === id
-          ? { ...t, done: !t.done, completedAt: !t.done ? Date.now() : undefined }
-          : t
-      )
+      prev.map((t) => (t.id === id ? { ...t, done: !t.done, completedAt: !t.done ? Date.now() : undefined } : t))
     );
   }, []);
 
@@ -95,17 +151,13 @@ export function useTasks() {
   const edit = useCallback((id: string, text: string, note?: string) => {
     const t = text.trim();
     if (!t) return;
-    setTasks((prev) =>
-      prev.map((x) => (x.id === id ? { ...x, text: t, note: note?.trim() || undefined } : x))
-    );
+    setTasks((prev) => prev.map((x) => (x.id === id ? { ...x, text: t, note: note?.trim() || undefined } : x)));
   }, []);
 
-  const clearDone = useCallback(() => {
-    setTasks((prev) => prev.filter((t) => !t.done));
+  const clearDone = useCallback((boardId: string) => {
+    setTasks((prev) => prev.filter((t) => !(t.done && t.boardId === boardId)));
   }, []);
 
-  // Re-insert previously removed task(s) — used to power undo. Keeps each task's
-  // original id/createdAt so it sorts back roughly where it was.
   const readd = useCallback((task: Task) => {
     setTasks((prev) => (prev.some((t) => t.id === task.id) ? prev : [task, ...prev]));
   }, []);
@@ -113,26 +165,24 @@ export function useTasks() {
   const readdMany = useCallback((restored: Task[]) => {
     setTasks((prev) => {
       const have = new Set(prev.map((t) => t.id));
-      const fresh = restored.filter((t) => !have.has(t.id));
-      return [...prev, ...fresh];
+      return [...prev, ...restored.filter((t) => !have.has(t.id))];
     });
   }, []);
 
-  const move = useCallback((id: string, dir: -1 | 1) => {
-    // Reorder among *active* tasks. dir -1 = toward reading start (right/earlier),
-    // dir +1 = toward the tail (left/later).
+  // Reorder among a board's active tasks. dir -1 = toward reading start, +1 = tail.
+  const move = useCallback((boardId: string, id: string, dir: -1 | 1) => {
     setTasks((prev) => {
-      const active = prev.filter((t) => !t.done);
-      const done = prev.filter((t) => t.done);
-      const i = active.findIndex((t) => t.id === id);
+      const inBoard = prev.filter((t) => t.boardId === boardId && !t.done);
+      const rest = prev.filter((t) => !(t.boardId === boardId && !t.done));
+      const i = inBoard.findIndex((t) => t.id === id);
       if (i < 0) return prev;
       const j = i + dir;
-      if (j < 0 || j >= active.length) return prev;
-      const next = [...active];
+      if (j < 0 || j >= inBoard.length) return prev;
+      const next = [...inBoard];
       [next[i], next[j]] = [next[j], next[i]];
-      return [...next, ...done];
+      return [...next, ...rest];
     });
   }, []);
 
-  return { tasks, mounted, add, toggle, star, remove, edit, clearDone, move, readd, readdMany };
+  return { boards, tasks, mounted, addBoard, renameBoard, removeBoard, add, toggle, star, remove, edit, clearDone, move, readd, readdMany };
 }

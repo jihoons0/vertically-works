@@ -1,15 +1,19 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useTasks, type Task } from "@/lib/notes/store";
+import { useNotes, type Board as BoardType, type Task } from "@/lib/notes/store";
 import { ToastProvider, useToast } from "@/components/notes/Toast";
 import { Rail, type Filter } from "@/components/notes/Rail";
 import { TaskColumn } from "@/components/notes/TaskColumn";
 import { Composer, type ComposerHandle } from "@/components/notes/Composer";
 import { HelpSheet } from "@/components/notes/HelpSheet";
 import { LeftControls } from "@/components/notes/LeftControls";
+import { Overview } from "@/components/notes/Overview";
+import { VTextField } from "@/components/notes/VTextField";
 import { LocaleProvider, useLocale } from "@/lib/notes/i18n";
 import { FontProvider } from "@/lib/notes/font";
+
+type Store = ReturnType<typeof useNotes>;
 
 export function TodoApp() {
   return (
@@ -24,55 +28,176 @@ export function TodoApp() {
 }
 
 function Shell() {
-  const store = useTasks();
+  const store = useNotes();
+  const { boards, tasks, mounted } = store;
+  const [view, setView] = useState<"overview" | "board">("overview");
+  const [activeBoardId, setActiveBoardId] = useState<string | null>(null);
   const [filter, setFilter] = useState<Filter>("active");
   const [help, setHelp] = useState(false);
   const toast = useToast();
   const { t } = useLocale();
 
-  const handleClearDone = useCallback(() => {
-    const removed: Task[] = store.tasks.filter((task) => task.done);
-    if (removed.length === 0) return;
-    store.clearDone();
-    toast(t.toast.clearedDone, { label: t.toast.undo, onClick: () => store.readdMany(removed) });
-  }, [store, toast, t]);
+  const activeBoard = boards.find((b) => b.id === activeBoardId) ?? null;
 
-  // Global "?" opens help (ignored while typing).
+  const openBoard = useCallback((id: string) => {
+    setActiveBoardId(id);
+    setFilter("active");
+    setView("board");
+  }, []);
+  const zoomOut = useCallback(() => setView("overview"), []);
+
+  const handleClearDone = useCallback(() => {
+    if (!activeBoardId) return;
+    const removed = store.tasks.filter((x) => x.done && x.boardId === activeBoardId);
+    if (removed.length === 0) return;
+    store.clearDone(activeBoardId);
+    toast(t.toast.clearedDone, { label: t.toast.undo, onClick: () => store.readdMany(removed) });
+  }, [store, toast, t, activeBoardId]);
+
+  // Global keys: "?" toggles help; Escape zooms out of a board.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const el = e.target as HTMLElement;
-      if (el && (el.tagName === "TEXTAREA" || el.tagName === "INPUT")) return;
-      if (e.key === "?") {
+      const typing = el && (el.tagName === "TEXTAREA" || el.tagName === "INPUT" || el.isContentEditable);
+      if (e.key === "?" && !typing) {
         e.preventDefault();
         setHelp((h) => !h);
+      } else if (e.key === "Escape" && !typing && !help) {
+        setView("overview");
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  }, [help]);
 
-  const total = store.mounted ? store.tasks.length : 0;
-  const done = store.mounted ? store.tasks.filter((task) => task.done).length : 0;
+  const boardTasks = activeBoardId ? tasks.filter((x) => x.boardId === activeBoardId) : [];
+  const total = mounted ? boardTasks.length : 0;
+  const done = mounted ? boardTasks.filter((x) => x.done).length : 0;
 
   return (
-    <div style={{ display: "flex", flexDirection: "row", height: "100dvh", width: "100%" }}>
+    <div style={{ position: "relative", height: "100dvh", width: "100%", overflow: "hidden" }}>
       <LeftControls />
-      <Board store={store} filter={filter} />
-      <Rail
-        total={total}
-        done={done}
-        filter={filter}
-        setFilter={setFilter}
-        onClearDone={handleClearDone}
-        onHelp={() => setHelp(true)}
-      />
+
+      {!mounted ? (
+        <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <span className="v-text" style={{ color: "var(--color-fg-subtle)", fontSize: "0.875rem", letterSpacing: "0.1em" }}>
+            {t.loading}
+          </span>
+        </div>
+      ) : view === "overview" || !activeBoard ? (
+        <div key="overview" style={{ height: "100%", animation: "vd-zoom-back var(--duration-slow) var(--easing-out) both" }}>
+          <Overview boards={boards} tasks={tasks} onOpen={openBoard} onAddBoard={store.addBoard} />
+        </div>
+      ) : (
+        <div key={activeBoard.id} style={{ height: "100%", animation: "vd-zoom-in var(--duration-slow) var(--easing-out) both" }}>
+          <Board store={store} board={activeBoard} filter={filter} onZoomOut={zoomOut} />
+          <Rail
+            total={total}
+            done={done}
+            filter={filter}
+            setFilter={setFilter}
+            onClearDone={handleClearDone}
+            onHelp={() => setHelp(true)}
+          />
+        </div>
+      )}
+
       <HelpSheet open={help} onClose={() => setHelp(false)} />
     </div>
   );
 }
 
-function Board({ store, filter }: { store: ReturnType<typeof useTasks>; filter: Filter }) {
-  const { tasks, mounted, add, toggle, star, remove, edit, move, readd } = store;
+function GridIcon({ size = 16 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="3" y="3" width="7" height="7" rx="1.5" />
+      <rect x="14" y="3" width="7" height="7" rx="1.5" />
+      <rect x="3" y="14" width="7" height="7" rx="1.5" />
+      <rect x="14" y="14" width="7" height="7" rx="1.5" />
+    </svg>
+  );
+}
+
+function BoardHeader({ board, onZoomOut, onRename }: { board: BoardType; onZoomOut: () => void; onRename: (title: string) => void }) {
+  const { t } = useLocale();
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState(board.title);
+
+  const commit = () => {
+    if (draft.trim() && draft.trim() !== board.title) onRename(draft);
+    else setDraft(board.title);
+    setEditing(false);
+  };
+
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: "var(--space-5)",
+        left: "50%",
+        transform: "translateX(-50%)",
+        zIndex: 30,
+        display: "flex",
+        flexDirection: "row-reverse",
+        alignItems: "center",
+        gap: "var(--space-3)",
+      }}
+    >
+      <button
+        className="pressable"
+        aria-label={t.boards.back}
+        onClick={onZoomOut}
+        style={{
+          width: 40,
+          height: 40,
+          borderRadius: "var(--radius-full)",
+          border: "1px solid var(--color-border)",
+          background: "var(--color-bg)",
+          color: "var(--color-fg)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          boxShadow: "var(--shadow-column)",
+        }}
+      >
+        <GridIcon />
+      </button>
+
+      {editing ? (
+        <VTextField
+          value={draft}
+          onChange={setDraft}
+          onEnter={commit}
+          onEscape={() => {
+            setDraft(board.title);
+            setEditing(false);
+          }}
+          onBlur={commit}
+          autoFocus
+          ariaLabel={board.title}
+          style={{ fontSize: "1.0625rem", fontWeight: 700, letterSpacing: "0.08em", color: "var(--color-fg)" }}
+        />
+      ) : (
+        <button
+          className="v-text pressable"
+          onClick={() => {
+            setDraft(board.title);
+            setEditing(true);
+          }}
+          aria-label={board.title}
+          style={{ background: "none", border: "none", cursor: "text", fontFamily: "inherit", fontSize: "1.0625rem", fontWeight: 700, letterSpacing: "0.08em", color: "var(--color-fg)", whiteSpace: "nowrap", padding: 0 }}
+        >
+          {board.title}
+        </button>
+      )}
+    </div>
+  );
+}
+
+function Board({ store, board, filter, onZoomOut }: { store: Store; board: BoardType; filter: Filter; onZoomOut: () => void }) {
+  const { tasks, add, toggle, star, remove, edit, move, readd, renameBoard } = store;
+  const boardId = board.id;
   const composerRef = useRef<ComposerHandle>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const toast = useToast();
@@ -80,28 +205,22 @@ function Board({ store, filter }: { store: ReturnType<typeof useTasks>; filter: 
   const [overflowing, setOverflowing] = useState(false);
 
   const { active, done } = useMemo(() => {
-    // Active tasks keep their array order so drag-to-reorder actually sticks;
-    // newest are unshifted to the front (the reading start). Starring is pure
-    // emphasis (the ★ + border), not a re-sort. Done tasks show most-recent-first.
-    const a = tasks.filter((t) => !t.done);
-    const d = tasks
-      .filter((t) => t.done)
-      .sort((x, y) => (y.completedAt ?? 0) - (x.completedAt ?? 0));
+    const mine = tasks.filter((x) => x.boardId === boardId);
+    const a = mine.filter((x) => !x.done);
+    const d = mine.filter((x) => x.done).sort((x, y) => (y.completedAt ?? 0) - (x.completedAt ?? 0));
     return { active: a, done: d };
-  }, [tasks]);
+  }, [tasks, boardId]);
 
-  // Keep the reading start (right / newest) in view, and track overflow for the
-  // trailing-edge fade.
   useEffect(() => {
     const el = scrollerRef.current;
     if (!el) return;
-    el.scrollLeft = 0; // rtl scroll origin sits at the right (the reading start)
+    el.scrollLeft = 0;
     const check = () => setOverflowing(el.scrollWidth - el.clientWidth > 4);
     check();
     const ro = new ResizeObserver(check);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [tasks.length, filter, mounted]);
+  }, [active.length, done.length, filter, boardId]);
 
   const handleToggle = useCallback(
     (id: string) => {
@@ -113,10 +232,10 @@ function Board({ store, filter }: { store: ReturnType<typeof useTasks>; filter: 
   );
   const handleAdd = useCallback(
     (text: string, starred: boolean) => {
-      add(text, undefined, starred);
+      add(boardId, text, undefined, starred);
       toast(t.toast.added);
     },
-    [add, toast, t]
+    [add, boardId, toast, t]
   );
   const handleRemove = useCallback(
     (id: string) => {
@@ -126,58 +245,36 @@ function Board({ store, filter }: { store: ReturnType<typeof useTasks>; filter: 
     },
     [tasks, remove, toast, readd, t]
   );
-  if (!mounted) {
-    return (
-      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        <span className="v-text" style={{ color: "var(--color-fg-subtle)", fontSize: "0.875rem", letterSpacing: "0.1em" }}>
-          {t.loading}
-        </span>
-      </div>
-    );
-  }
+  const handleMove = useCallback((id: string, dir: -1 | 1) => move(boardId, id, dir), [move, boardId]);
 
   const showComposer = filter !== "done";
   const showActive = filter !== "done";
   const showDone = filter !== "active";
   const showDivider = filter === "all" && active.length > 0 && done.length > 0;
-
   const isEmpty =
     (filter === "active" && active.length === 0) ||
     (filter === "done" && done.length === 0) ||
-    (filter === "all" && tasks.length === 0);
+    (filter === "all" && active.length === 0 && done.length === 0);
 
-  const columnProps = {
-    onToggle: handleToggle,
-    onStar: star,
-    onRemove: handleRemove,
-    onEdit: edit,
-    onMove: move,
-  };
+  const columnProps = { onToggle: handleToggle, onStar: star, onRemove: handleRemove, onEdit: edit, onMove: handleMove };
 
   return (
-    <div style={{ position: "relative", flex: 1, minWidth: 0, height: "100%" }}>
+    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      <BoardHeader board={board} onZoomOut={onZoomOut} onRename={(title) => renameBoard(boardId, title)} />
+
       <div
         ref={scrollerRef}
         role="list"
-        aria-label={t.a11y.board}
-        style={{
-          direction: "rtl", // lay columns right→left and put scroll origin at the right
-          height: "100%",
-          display: "flex",
-          overflowX: "auto",
-          overflowY: "hidden",
-        }}
+        aria-label={board.title}
+        style={{ direction: "rtl", height: "100%", display: "flex", overflowX: "auto", overflowY: "hidden" }}
       >
         <div
           style={{
-            margin: "auto", // center when it fits; scroll when it overflows
+            margin: "auto",
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
             gap: "var(--space-3)",
-            // Horizontal padding keeps the end columns clear of the fixed side
-            // controls (language/font on the left, filter/trash on the right),
-            // which matters most on narrow / mobile widths.
             padding: "var(--space-8) var(--space-16)",
           }}
         >
@@ -188,23 +285,20 @@ function Board({ store, filter }: { store: ReturnType<typeof useTasks>; filter: 
           )}
 
           {showActive &&
-            active.map((t, i) => (
-              <ColumnDir key={t.id}>
-                <TaskColumn task={t} index={i} {...columnProps} />
+            active.map((task, i) => (
+              <ColumnDir key={task.id}>
+                <TaskColumn task={task} index={i} {...columnProps} />
               </ColumnDir>
             ))}
 
           {showDivider && (
-            <div
-              aria-hidden
-              style={{ flexShrink: 0, alignSelf: "stretch", width: 1, margin: "var(--space-8) var(--space-2)", background: "var(--color-border)" }}
-            />
+            <div aria-hidden style={{ flexShrink: 0, alignSelf: "stretch", width: 1, margin: "var(--space-8) var(--space-2)", background: "var(--color-border)" }} />
           )}
 
           {showDone &&
-            done.map((t, i) => (
-              <ColumnDir key={t.id}>
-                <TaskColumn task={t} index={i} {...columnProps} />
+            done.map((task, i) => (
+              <ColumnDir key={task.id}>
+                <TaskColumn task={task} index={i} {...columnProps} />
               </ColumnDir>
             ))}
 
@@ -218,8 +312,7 @@ function Board({ store, filter }: { store: ReturnType<typeof useTasks>; filter: 
         </div>
       </div>
 
-      {/* Trailing-edge fade — the tail (older / done) dissolves at the far left,
-          echoing the Verse flowing-reader dimmed trailing edge. */}
+      {/* Trailing-edge fade */}
       <div
         aria-hidden
         style={{
@@ -256,8 +349,6 @@ function Board({ store, filter }: { store: ReturnType<typeof useTasks>; filter: 
   );
 }
 
-// Resets writing direction to ltr inside each column so its explicitly-authored
-// flex layout is unaffected by the board's rtl scroll container.
 function ColumnDir({ children }: { children: React.ReactNode }) {
   return <div style={{ direction: "ltr", display: "flex", flexShrink: 0 }}>{children}</div>;
 }

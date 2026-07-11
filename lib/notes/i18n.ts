@@ -51,6 +51,13 @@ export interface Strings {
     close: string;
     rows: { keys: string; label: string }[];
   };
+  boards: {
+    starters: string[];
+    defaultTitle: string;
+    newBoard: string;
+    overview: string;
+    back: string;
+  };
 }
 
 export const STRINGS: Record<Locale, Strings> = {
@@ -107,6 +114,13 @@ export const STRINGS: Record<Locale, Strings> = {
         { keys: "?", label: "이 도움말" },
       ],
     },
+    boards: {
+      starters: ["오늘", "장보기", "아이디어", "메모"],
+      defaultTitle: "메모",
+      newBoard: "새 보드",
+      overview: "보드",
+      back: "축소",
+    },
   },
   ja: {
     appTitle: "縦のやること",
@@ -161,6 +175,13 @@ export const STRINGS: Record<Locale, Strings> = {
         { keys: "?", label: "このヘルプ" },
       ],
     },
+    boards: {
+      starters: ["今日", "買い物", "アイデア", "メモ"],
+      defaultTitle: "メモ",
+      newBoard: "新しいボード",
+      overview: "ボード",
+      back: "縮小",
+    },
   },
   zh: {
     appTitle: "直書待辦",
@@ -214,6 +235,13 @@ export const STRINGS: Record<Locale, Strings> = {
         { keys: "Delete", label: "刪除" },
         { keys: "?", label: "本說明" },
       ],
+    },
+    boards: {
+      starters: ["今天", "購物", "點子", "備忘"],
+      defaultTitle: "備忘",
+      newBoard: "新看板",
+      overview: "看板",
+      back: "縮小",
     },
   },
 };

@@ -80,10 +80,88 @@
   from { opacity: 1; transform: translateX(0) scale(1); }
   to { opacity: 0; transform: translateX(calc(100% + 20px)) scale(0.96); }
 }
+/* Zoom between the post-it overview and a focused board. */
+@keyframes vd-zoom-in {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+@keyframes vd-zoom-back {
+  from { opacity: 0; transform: scale(1.05); }
+  to { opacity: 1; transform: scale(1); }
+}
 @media (prefers-reduced-motion: reduce) {
   @keyframes vd-column-in { from { opacity: 0; } to { opacity: 1; } }
   @keyframes vd-toast-in { from { opacity: 0; } to { opacity: 1; } }
   @keyframes vd-toast-out { from { opacity: 1; } to { opacity: 0; } }
+  @keyframes vd-zoom-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes vd-zoom-back { from { opacity: 0; } to { opacity: 1; } }
+}
+
+/* ─── Overview grid ─── */
+.vd-overview-pad {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-16);
+}
+.vd-overview-grid {
+  display: grid;
+  /* fixed-width columns + centered tracks → the tile set stays horizontally
+     centered no matter how many tiles there are. */
+  grid-template-columns: repeat(auto-fill, 180px);
+  justify-content: center;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: 1120px;
+  align-items: start;
+}
+@media (max-width: 640px) {
+  /* Two columns on phones; extra left padding keeps tiles clear of the fixed
+     left controls. */
+  .vd-overview-pad { padding: var(--space-12) var(--space-5) var(--space-12) var(--space-16); }
+  .vd-overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ─── Post-it tiles (overview) ─── */
+.tile {
+  --tile-bg: var(--color-bg-subtle);
+  transition: transform var(--duration-fast) var(--easing-out),
+    box-shadow var(--duration-fast) var(--easing-out),
+    border-color var(--duration-fast) var(--easing-out);
+}
+.tile-paper { --tile-bg: #ffffff; }
+.tile-amber { --tile-bg: #fbf3e0; }
+.tile-rose  { --tile-bg: #fbeef0; }
+.tile-sky   { --tile-bg: #eef4fb; }
+.tile-sage  { --tile-bg: #eef6f0; }
+.tile-lilac { --tile-bg: #f3eefb; }
+[data-theme="dark"] .tile-paper { --tile-bg: #1a1a1a; }
+[data-theme="dark"] .tile-amber { --tile-bg: #221d10; }
+[data-theme="dark"] .tile-rose  { --tile-bg: #221217; }
+[data-theme="dark"] .tile-sky   { --tile-bg: #101a24; }
+[data-theme="dark"] .tile-sage  { --tile-bg: #10201a; }
+[data-theme="dark"] .tile-lilac { --tile-bg: #191324; }
+
+/* New-board tile */
+.new-tile {
+  transition: border-color var(--duration-fast) var(--easing-out),
+    color var(--duration-fast) var(--easing-out),
+    background var(--duration-fast) var(--easing-out);
+}
+
+/* Hover only on real pointers (not touch). */
+@media (hover: hover) and (pointer: fine) {
+  .tile:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lift);
+    border-color: var(--color-border-strong);
+  }
+  .new-tile:hover {
+    border-color: var(--color-fg);
+    color: var(--color-fg);
+    background: var(--color-bg-subtle);
+  }
 }
 
 /* Full-viewport shell for the notes route (the site chrome is hidden here). */
