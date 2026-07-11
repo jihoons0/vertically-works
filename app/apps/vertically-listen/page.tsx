@@ -52,8 +52,6 @@ export default function VerticallyListenPage() {
     <>
       <AppHero
         title="Vertically Listen"
-        banner="/images/apps/listen-banner.png"
-        bannerAlt="Vertically Listen — a podcast player with vertical text, a CJK top-shows shelf, and a horizontal player bar"
         status="Live"
         platform="Web"
         meta="한국 · 日本 · 中国 · 台湾 · 香港"

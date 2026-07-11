@@ -52,8 +52,6 @@ export default function VerticallyDoPage() {
     <>
       <AppHero
         title="Vertically Do"
-        banner="/images/apps/do-banner.png"
-        bannerAlt="Vertically Do — a to-do list whose tasks are vertical columns stacking right to left"
         status="Live"
         platform="Web"
         meta="한국어 · 日本語 · 中文"

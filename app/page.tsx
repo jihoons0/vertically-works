@@ -48,32 +48,16 @@ const APPLICATIONS = [
   },
 ];
 
-// Challenges and Principles merged — no sub-pages, content lives here
+// Challenges — all eight, animated; full write-ups live on /challenges
 const CHALLENGES = [
-  {
-    id: "motion-direction",
-    tag: "Motion",
-    question: "Should a sheet animate from screen geometry or reading direction?",
-    why: "Screen geometry says slide up; the reading axis often disagrees. Motion has to pick a side.",
-  },
-  {
-    id: "mixed-language",
-    tag: "Typography",
-    question: "How should mixed CJK and Latin content behave in the same column?",
-    why: "Dates, names, and references mix scripts — and each glyph class needs its own orientation.",
-  },
-  {
-    id: "navigation-direction",
-    tag: "Navigation",
-    question: "Where does the navigation rail belong in a vertical-first interface?",
-    why: "Columns read down and pages flow right-to-left. Neither a bottom bar nor a left rail maps cleanly.",
-  },
-  {
-    id: "selection",
-    tag: "Interaction",
-    question: "How does text selection work when reading flows top-to-bottom, right-to-left?",
-    why: "Drag-to-select assumes horizontal baselines. In vertical columns the anchor sits at the top and selection crosses columns rightward.",
-  },
+  { id: "motion-direction", tag: "Motion", question: "Should a sheet animate from screen geometry or reading direction?" },
+  { id: "mixed-language", tag: "Typography", question: "How should mixed CJK and Latin content behave in the same column?" },
+  { id: "navigation-direction", tag: "Navigation", question: "Where does the navigation rail belong in a vertical-first interface?" },
+  { id: "selection", tag: "Interaction", question: "How does text selection work when reading flows top-to-bottom, right-to-left?" },
+  { id: "ime-vertical", tag: "IME", question: "Where does the IME candidate window appear when input is vertical?" },
+  { id: "keyboard-navigation", tag: "Accessibility", question: "What do the arrow keys mean in a vertical, RTL interface?" },
+  { id: "drag-reorder", tag: "Interaction", question: "How does drag-and-drop reordering work when list items are columns?" },
+  { id: "ai-chat", tag: "AI", question: "How should AI chat interfaces adapt to vertical writing systems?" },
 ];
 
 const PRINCIPLES = [
@@ -160,19 +144,6 @@ export default function HomePage() {
       >
         <div className="home-hero">
           <Reveal style={{ paddingTop: 0 }}>
-            <p
-              style={{
-                fontSize: "0.8125rem",
-                color: "var(--color-fg-subtle)",
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                fontWeight: 500,
-                margin: "0 0 var(--space-5)",
-              }}
-            >
-              Design System · Vertical Writing Systems
-            </p>
-
             <h1
               style={{
                 fontSize: "clamp(2.5rem, 6vw, 5.5rem)",
@@ -186,18 +157,6 @@ export default function HomePage() {
             >
               Designing Interfaces for Vertical Writing Systems
             </h1>
-
-            <p
-              style={{
-                fontSize: "clamp(1rem, 2vw, 1.25rem)",
-                color: "var(--color-fg-muted)",
-                lineHeight: 1.65,
-                maxWidth: "44ch",
-                margin: "0 0 var(--space-8)",
-              }}
-            >
-              A living design system exploring interaction patterns for vertical interfaces.
-            </p>
 
             <div
               style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap", alignItems: "center" }}
@@ -250,11 +209,8 @@ export default function HomePage() {
       >
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
           <Reveal>
-            <span style={{ display: "inline-block", fontSize: "0.75rem", fontWeight: 500, color: "var(--color-fg-subtle)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "var(--space-4)" }}>
-              The System in Motion
-            </span>
             <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
-              Interaction, demonstrated
+              Components
             </h2>
             <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-10)", maxWidth: "52ch", lineHeight: 1.65 }}>
               Four core patterns replaying as they behave in a vertical, right-to-left
@@ -287,11 +243,8 @@ export default function HomePage() {
       {/* ══════════════════════════ Applications ═══════════════════════════════ */}
       <section style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
         <Reveal>
-          <span style={{ display: "inline-block", fontSize: "0.75rem", fontWeight: 500, color: "var(--color-fg-subtle)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "var(--space-4)" }}>
-            Applications
-          </span>
           <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
-            Real Implementations
+            Applications
           </h2>
           <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-10)", maxWidth: "48ch", lineHeight: 1.65 }}>
             What happens when vertical-first thinking is applied to actual product categories.
@@ -358,9 +311,6 @@ export default function HomePage() {
       >
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
           <Reveal>
-          <span style={{ display: "inline-block", fontSize: "0.75rem", fontWeight: 500, color: "var(--color-fg-subtle)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "var(--space-4)" }}>
-            Challenges & Principles
-          </span>
           <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
             What This Project Explores
           </h2>
@@ -369,41 +319,33 @@ export default function HomePage() {
           </p>
           </Reveal>
 
-          {/* Challenges — the question is the hook; scannable rows */}
-          <div style={{ borderTop: "1px solid var(--color-border)", marginBottom: "var(--space-16)" }}>
+          {/* Challenges — all eight, each card acting out its question */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))",
+              gap: "var(--space-4)",
+              marginBottom: "var(--space-16)",
+            }}
+          >
             {CHALLENGES.map((c, i) => (
               <Reveal
                 key={c.id}
-                delay={i * 60}
+                delay={(i % 3) * 60}
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 148px",
-                  gap: "var(--space-8)",
-                  padding: "var(--space-6) 0",
-                  borderBottom: "1px solid var(--color-border)",
-                  alignItems: "center",
+                  borderRadius: "var(--radius-xl)",
+                  border: "1px solid var(--color-border)",
+                  background: "var(--color-bg)",
+                  padding: "var(--space-5)",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "var(--space-4)",
                 }}
               >
-                <div>
-                  <div style={{ display: "flex", gap: "var(--space-3)", alignItems: "baseline", marginBottom: "var(--space-2)" }}>
-                    <span style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)" }}>
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span style={{ fontSize: "0.6875rem", fontWeight: 500, color: "var(--color-fg-subtle)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                      {c.tag}
-                    </span>
-                  </div>
-                  <p style={{ fontSize: "1.0625rem", fontWeight: 600, color: "var(--color-fg)", margin: "0 0 var(--space-2)", letterSpacing: "-0.01em", lineHeight: 1.45 }}>
-                    {c.question}
-                  </p>
-                  <p style={{ fontSize: "0.875rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.6, maxWidth: "60ch" }}>
-                    {c.why}
-                  </p>
-                </div>
                 <div
                   aria-hidden
                   style={{
-                    height: 112,
+                    height: 124,
                     borderRadius: "var(--radius-lg)",
                     background: "var(--color-bg-muted)",
                     display: "flex",
@@ -411,9 +353,18 @@ export default function HomePage() {
                     justifyContent: "center",
                     padding: "var(--space-3)",
                     overflow: "hidden",
+                    flexShrink: 0,
                   }}
                 >
                   <ChallengeVisual id={c.id} />
+                </div>
+                <div>
+                  <span style={{ display: "block", fontSize: "0.6875rem", fontWeight: 500, color: "var(--color-fg-subtle)", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "var(--space-2)" }}>
+                    {c.tag}
+                  </span>
+                  <p style={{ fontSize: "0.9375rem", fontWeight: 600, color: "var(--color-fg)", margin: 0, letterSpacing: "-0.01em", lineHeight: 1.45 }}>
+                    {c.question}
+                  </p>
                 </div>
               </Reveal>
             ))}
@@ -452,11 +403,8 @@ export default function HomePage() {
       >
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
           <Reveal>
-            <span style={{ display: "inline-block", fontSize: "0.75rem", fontWeight: 500, color: "var(--color-fg-subtle)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "var(--space-4)" }}>
-              Playground
-            </span>
             <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
-              Try it yourself
+              Playground
             </h2>
             <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-8)", maxWidth: "52ch", lineHeight: 1.65 }}>
               The full playground, embedded. Language, writing and reading direction, theme,

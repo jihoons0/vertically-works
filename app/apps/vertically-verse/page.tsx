@@ -56,8 +56,6 @@ export default function VerticallyVersePage() {
     <>
       <AppHero
         title="Vertically Verse"
-        banner="/images/apps/verse-banner.jpg"
-        bannerAlt="Hands holding a phone running Vertically Verse, vertical Japanese scripture with highlights on screen"
         status="Live"
         platform="iOS"
         meta="한국어 · 日本語 · 中文 (Traditional)"
@@ -101,6 +99,20 @@ export default function VerticallyVersePage() {
                 column — the same interactions documented across this site.
               </p>
               <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap" }}>
+                {/* TestFlight distribution — placeholder href until the public beta link is live */}
+                <a
+                  href="#"
+                  className="btn-primary-hover pressable"
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 8,
+                    height: 40, padding: "0 var(--space-5)",
+                    fontSize: "0.9375rem", fontWeight: 500,
+                    borderRadius: "var(--radius-lg)",
+                    background: "var(--color-fg)", color: "var(--color-bg)",
+                  }}
+                >
+                  Join the TestFlight beta ↗
+                </a>
                 <Link
                   href="https://github.com/jihoons/exploring"
                   target="_blank"
@@ -150,52 +162,6 @@ export default function VerticallyVersePage() {
             ))}
           </div>
         </section>
-
-        {/* The reading surface — live vertical text */}
-        <Reveal>
-          <div
-            style={{
-              marginBottom: "var(--space-16)",
-              padding: "var(--space-16)",
-              borderRadius: "var(--radius-xl)",
-              border: "1px solid var(--color-border)",
-              background: "var(--color-bg-subtle)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              minHeight: 320,
-              gap: "var(--space-8)",
-            }}
-          >
-            <div
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                display: "flex",
-                flexDirection: "row",
-                gap: "var(--space-8)",
-                fontSize: "1.125rem",
-                letterSpacing: "0.12em",
-                lineHeight: 1.9,
-                userSelect: "none",
-              }}
-              aria-label="Sample vertical text: Genesis 1:1 in Korean, Japanese, and Chinese"
-            >
-              <div style={{ color: "var(--color-fg)" }}>
-                <span style={{ color: "var(--color-fg-subtle)", fontSize: "0.75rem", display: "block", marginBottom: "var(--space-3)" }}>창 1:1</span>
-                태초에 하나님이 천지를 창조하시니라
-              </div>
-              <div style={{ color: "var(--color-fg-muted)" }}>
-                <span style={{ color: "var(--color-fg-subtle)", fontSize: "0.75rem", display: "block", marginBottom: "var(--space-3)" }}>創 1:1</span>
-                初めに、神が天と地を創造された
-              </div>
-              <div style={{ color: "var(--color-fg-subtle)" }}>
-                <span style={{ color: "var(--color-fg-subtle)", fontSize: "0.75rem", display: "block", marginBottom: "var(--space-3)" }}>創 1:1</span>
-                起初　神創造天地
-              </div>
-            </div>
-          </div>
-        </Reveal>
 
         {/* Design decisions */}
         <section style={{ marginBottom: "var(--space-16)" }}>
