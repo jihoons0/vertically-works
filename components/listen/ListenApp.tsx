@@ -62,9 +62,14 @@ function IdleStage({ t, onBrowse }: { t: Strings; onBrowse: () => void }) {
           cursor: "pointer",
           fontFamily: "inherit",
           paddingTop: "var(--space-8)",
-          textDecoration: "underline",
-          textDecorationColor: "var(--color-border-strong)",
-          textUnderlineOffset: 4,
+          // Vertical-text hyperlink affordance: the 방점 emphasis mark (an
+          // interpunct right of each glyph), matching the Hyperlink Treatment
+          // component. An underline would fall alongside the column and read
+          // as a rule, not a link.
+          WebkitTextEmphasis: '"·"',
+          textEmphasis: '"·"',
+          WebkitTextEmphasisPosition: "right",
+          textEmphasisPosition: "right",
         }}
       >
         {t.browseToday}

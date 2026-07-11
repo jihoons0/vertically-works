@@ -56,9 +56,14 @@ export function NavRail({
           fontFamily: "inherit",
           flexShrink: 0,
           whiteSpace: "nowrap",
-          textDecoration: "underline",
-          textDecorationColor: "var(--color-border-strong)",
-          textUnderlineOffset: 4,
+          // Vertical-text hyperlink affordance: the 방점 emphasis mark (an
+          // interpunct right of each glyph), matching the Hyperlink Treatment
+          // component. An underline would fall alongside the column and read
+          // as a rule, not a link.
+          WebkitTextEmphasis: '"·"',
+          textEmphasis: '"·"',
+          WebkitTextEmphasisPosition: "right",
+          textEmphasisPosition: "right",
           transition: "color var(--duration-fast) var(--easing-out)",
         }}
       >

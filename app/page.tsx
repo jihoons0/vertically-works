@@ -5,7 +5,7 @@ import { ChallengeVisual } from "@/components/ChallengeVisual";
 import { PlaygroundClient } from "@/components/PlaygroundClient";
 import { BentoGrid } from "@/components/home/BentoGrid";
 import { HeroVerticalMotif } from "@/components/home/HeroVerticalMotif";
-import { InstallCommand } from "@/components/ui/InstallCommand";
+import { InstallCard } from "@/components/ui/InstallCard";
 import { AppVideo } from "@/components/home/AppVideo";
 import { Beam } from "@/components/ui/Beam";
 
@@ -25,7 +25,7 @@ const APPLICATIONS = [
     href: "/apps/vertically-verse",
     video: "/videos/vertically-verse.mp4",
     description:
-      "A fully vertical, right-to-left scripture reader for Korean, Japanese, and Chinese. Every control, gesture, and transition rethought for the top→bottom, R→L axis.",
+      "A fully vertical, right-to-left Bible for Korean, Japanese, and Chinese.",
   },
   {
     id: "notes",
@@ -35,7 +35,7 @@ const APPLICATIONS = [
     href: "/apps/vertically-do",
     video: null,
     description:
-      "A to-do list where tasks are columns read top→bottom. Drag a column down to delete, sideways to reorder · and flip the whole interface across 한 / あ / 中.",
+      "A to-do list where every task is a column you read top to bottom.",
   },
   {
     id: "listen",
@@ -45,7 +45,7 @@ const APPLICATIONS = [
     href: "/apps/vertically-listen",
     video: null,
     description:
-      "A podcast player where today's top CJK shows stack as a shelf of full-height columns, and time-synced transcripts fall as vertical verse. Reading stays vertical; transport stays horizontal.",
+      "A podcast player where transcripts fall as time-synced vertical verse.",
   },
 ];
 
@@ -225,34 +225,28 @@ export default function HomePage() {
             <BentoGrid />
           </Reveal>
 
-          <div style={{ marginTop: "var(--space-10)", display: "flex", flexDirection: "column", gap: "var(--space-4)", alignItems: "flex-start" }}>
-            <InstallCommand command="npx verticallyworks init" />
-            <div style={{ display: "flex", alignItems: "center", gap: "var(--space-4)", flexWrap: "wrap" }}>
-              <Link
-                href="/components"
-                className="btn-cta-hover pressable"
-                style={{
-                  display: "inline-flex", alignItems: "center", gap: 8,
-                  height: 40, padding: "0 var(--space-5)",
-                  fontSize: "0.9375rem", fontWeight: 500,
-                  borderRadius: "var(--radius-lg)",
-                  border: "1px solid", color: "var(--color-fg)",
-                }}
-              >
-                View all components →
-              </Link>
-              <a
-                href="https://github.com/jihoons0/vertically-works"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="link-muted-hover"
-                style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: "0.875rem", fontWeight: 500, color: "var(--color-fg-muted)" }}
-              >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                  <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" />
-                </svg>
-                GitHub ↗
-              </a>
+          <div style={{ marginTop: "var(--space-10)", display: "flex", flexDirection: "column", gap: "var(--space-8)", alignItems: "flex-start" }}>
+            <Link
+              href="/components"
+              className="btn-cta-hover pressable"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                height: 40, padding: "0 var(--space-5)",
+                fontSize: "0.9375rem", fontWeight: 500,
+                borderRadius: "var(--radius-lg)",
+                border: "1px solid", color: "var(--color-fg)",
+              }}
+            >
+              View all components →
+            </Link>
+
+            {/* Or install them: shortest snippet + GitHub, one card */}
+            <div style={{ maxWidth: 460, width: "100%" }}>
+              <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-3)", lineHeight: 1.6 }}>
+                Or copy them straight into your project. Run <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>init</code> once for the tokens, then{" "}
+                <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>add</code> any component.
+              </p>
+              <InstallCard command="npx verticallyworks init" github="https://github.com/jihoons0/vertically-works" />
             </div>
           </div>
         </div>
