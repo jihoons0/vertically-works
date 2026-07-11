@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { formatTime } from "@/lib/listen/store";
 import type { Strings } from "@/lib/listen/i18n";
+import { ThemeToggle } from "@/components/listen/ThemeToggle";
 
 /** Conventional bottom-center player bar: horizontal progress with times,
  *  volume, ±15s, previous/next episode, play/pause. Navigation is
@@ -97,8 +98,11 @@ export function PlayerBar({
 
   return (
     <div
+      className="vl-player"
       style={{
         width: "min(680px, 100%)",
+        maxWidth: "100%",
+        boxSizing: "border-box",
         display: "flex",
         flexDirection: "column",
         gap: "var(--space-2)",
@@ -210,10 +214,12 @@ export function PlayerBar({
         </span>
       </div>
 
-      {/* Controls — transport centered, volume right */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center" }}>
-        <div />
-        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
+      {/* Controls — theme bottom-left, transport centered, volume right */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr auto 1fr", alignItems: "center", gap: "var(--space-1)" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-start" }}>
+          <ThemeToggle />
+        </div>
+        <div className="vl-transport" style={{ display: "flex", alignItems: "center", gap: "var(--space-2)" }}>
           <IconButton ariaLabel={t.prevEp} onClick={onPrev} disabled={disabled}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M19 20L9 12l10-8v16z" fill="currentColor" stroke="none" />
@@ -276,7 +282,7 @@ export function PlayerBar({
             </svg>
           </IconButton>
         </div>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-1)" }}>
+        <div className="vl-player-volume" style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: "var(--space-1)" }}>
           <IconButton ariaLabel={muted ? t.unmute : t.mute} onClick={onToggleMute} size={36}>
             {muted ? (
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>

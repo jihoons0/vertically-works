@@ -10,18 +10,16 @@ import type { Strings } from "@/lib/listen/i18n";
  *  browse sheet. */
 export function NavRail({
   t,
-  sheetLevel,
+  open,
   activeShow,
   track,
-  onOpenShows,
-  onOpenEpisodes,
+  onOpen,
 }: {
   t: Strings;
-  sheetLevel: null | "shows" | "episodes";
+  open: boolean;
   activeShow: Show | null;
   track: Track | undefined;
-  onOpenShows: () => void;
-  onOpenEpisodes: () => void;
+  onOpen: () => void;
 }) {
   return (
     <nav
@@ -40,16 +38,16 @@ export function NavRail({
     >
       <button
         className="pressable"
-        onClick={onOpenShows}
+        onClick={onOpen}
         aria-haspopup="dialog"
-        aria-expanded={sheetLevel === "shows"}
+        aria-expanded={open}
         style={{
           writingMode: "vertical-rl",
           textOrientation: "mixed",
           fontSize: "0.8125rem",
-          fontWeight: sheetLevel === "shows" ? 600 : 400,
+          fontWeight: open && !activeShow ? 600 : 400,
           letterSpacing: "0.08em",
-          color: sheetLevel === "shows" ? "var(--color-fg)" : "var(--color-fg-muted)",
+          color: open && !activeShow ? "var(--color-fg)" : "var(--color-fg-muted)",
           background: "none",
           border: "none",
           borderRadius: "var(--radius-lg)",
@@ -74,16 +72,16 @@ export function NavRail({
           </span>
           <button
             className="pressable"
-            onClick={onOpenEpisodes}
+            onClick={onOpen}
             aria-label={t.episodeListOf(activeShow.title)}
             aria-haspopup="dialog"
-            aria-expanded={sheetLevel === "episodes"}
+            aria-expanded={open}
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               gap: "var(--space-2)",
-              background: sheetLevel === "episodes" ? "var(--color-bg-muted)" : "none",
+              background: open ? "var(--color-bg-muted)" : "none",
               border: "none",
               borderRadius: "var(--radius-xl)",
               padding: "var(--space-2)",

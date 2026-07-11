@@ -54,3 +54,21 @@
   }
 }
 
+/* Phones: keep the transport, drop the on-screen volume (device's job),
+   tighten spacing so nothing overflows the bar. */
+@media (max-width: 600px) {
+  .vl-player-shell {
+    padding-left: var(--space-2) !important;
+    padding-right: var(--space-2) !important;
+  }
+  .vl-player {
+    padding-left: var(--space-3) !important;
+    padding-right: var(--space-3) !important;
+  }
+  .vl-player-volume {
+    display: none !important;
+  }
+  .vl-transport {
+    gap: var(--space-1) !important;
+  }
+}

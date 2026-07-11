@@ -13,12 +13,8 @@ import {
 import { STRINGS, type Strings } from "@/lib/listen/i18n";
 import { BrowseSheet } from "@/components/listen/BrowseSheet";
 import { NavRail } from "@/components/listen/NavRail";
-import { LangCapsule } from "@/components/listen/LangCapsule";
-import { ThemeToggle } from "@/components/listen/ThemeToggle";
 import { Lyrics } from "@/components/listen/Lyrics";
 import { PlayerBar } from "@/components/listen/PlayerBar";
-
-type SheetLevel = "shows" | "episodes";
 
 /** Idle stage — nothing chosen yet. The big type IS the interface, and it
  *  links straight into the browse sheet. */
@@ -80,7 +76,6 @@ function IdleStage({ t, onBrowse }: { t: Strings; onBrowse: () => void }) {
 export function ListenApp() {
   const [market, setMarket] = useState<MarketCode>("kr");
   const [sheetOpen, setSheetOpen] = useState(false);
-  const [sheetLevel, setSheetLevel] = useState<SheetLevel>("shows");
   // What the sheet is browsing — independent of what's playing.
   const [sheetShow, setSheetShow] = useState<Show | null>(null);
   const [sheetEpisodes, setSheetEpisodes] = useState<Track[]>([]);
@@ -121,31 +116,14 @@ export function ListenApp() {
     [market]
   );
 
-  const openShows = useCallback(() => {
-    setSheetLevel("shows");
-    setSheetOpen(true);
-  }, []);
-
-  const openEpisodes = useCallback(() => {
-    if (!activeShow) return;
-    setSheetShow(activeShow);
-    setSheetEpisodes(episodeTracks);
-    setSheetLevel("episodes");
-    setSheetOpen(true);
-  }, [activeShow, episodeTracks]);
-
-  const closeSheet = useCallback(() => {
-    setSheetOpen(false);
-    if (status === "error") setStatus("idle");
-  }, [status]);
-
-  // Browse a show inside the sheet — playback stays untouched.
+  // Browse a show inside the sheet — loads its episodes into the lower
+  // band. Playback stays untouched until an episode is picked.
   const browseShow = useCallback(
     async (show: Show) => {
-      setSheetLevel("episodes");
       setSheetShow(show);
       if (show.id === activeShow?.id) {
         setSheetEpisodes(episodeTracks); // already loaded as the queue
+        setStatus("idle");
         return;
       }
       const requestId = ++requestRef.current;
@@ -163,6 +141,21 @@ export function ListenApp() {
     },
     [activeShow, episodeTracks]
   );
+
+  // The crumbs and idle link all open the same stacked drawer. Default the
+  // lower band to what's playing (or the first show) so it's never empty.
+  const openBrowse = useCallback(() => {
+    setSheetOpen(true);
+    if (!sheetShow) {
+      const target = activeShow ?? shows[0];
+      if (target) void browseShow(target);
+    }
+  }, [sheetShow, activeShow, shows, browseShow]);
+
+  const closeSheet = useCallback(() => {
+    setSheetOpen(false);
+    if (status === "error") setStatus("idle");
+  }, [status]);
 
   // Picking an episode commits the browsed show as the queue and plays.
   const pickEpisode = useCallback(
@@ -277,24 +270,8 @@ export function ListenApp() {
     >
       <audio {...player.audioProps} />
 
-      {/* Left edge — language & theme at the reading tail, v-centered
-          (mirrors Vertically Do), wordmark in the bottom-left corner */}
-      <div
-        style={{
-          position: "fixed",
-          left: "var(--space-4)",
-          top: "50%",
-          transform: "translateY(-50%)",
-          zIndex: 40,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "var(--space-3)",
-        }}
-      >
-        <ThemeToggle />
-        <LangCapsule t={t} market={market} onMarket={changeMarket} />
-      </div>
+      {/* Left edge — just the wordmark in the bottom-left corner. Theme and
+          language now live in the player bar and the browse drawer. */}
       <span
         style={{
           position: "fixed",
@@ -320,11 +297,10 @@ export function ListenApp() {
       <div style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "row-reverse" }}>
         <NavRail
           t={t}
-          sheetLevel={sheetOpen ? sheetLevel : null}
+          open={sheetOpen}
           activeShow={activeShow}
           track={track}
-          onOpenShows={openShows}
-          onOpenEpisodes={openEpisodes}
+          onOpen={openBrowse}
         />
 
         <main style={{ flex: 1, minWidth: 0, height: "100%" }}>
@@ -342,13 +318,14 @@ export function ListenApp() {
               emptyText={t.noTranscript}
             />
           ) : (
-            <IdleStage t={t} onBrowse={openShows} />
+            <IdleStage t={t} onBrowse={openBrowse} />
           )}
         </main>
       </div>
 
       {/* Bottom — the player bar, centered like a normal player */}
       <div
+        className="vl-player-shell"
         style={{
           display: "flex",
           justifyContent: "center",
@@ -378,17 +355,16 @@ export function ListenApp() {
         <BrowseSheet
           t={t}
           open={sheetOpen}
-          level={sheetLevel}
+          market={market}
+          onMarket={changeMarket}
           shows={shows}
           episodes={sheetEpisodes}
           browsingShow={sheetShow}
-          activeShowId={activeShow?.id ?? null}
           currentEpisodeId={currentEpisodeId}
           isPlaying={player.isPlaying}
           status={status}
           onBrowseShow={browseShow}
           onPickEpisode={pickEpisode}
-          onBack={() => setSheetLevel("shows")}
           onClose={closeSheet}
           onRetry={() => sheetShow && void browseShow(sheetShow)}
         />

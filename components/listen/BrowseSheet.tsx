@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { Show } from "@/lib/listen/podcasts";
+import type { MarketCode, Show } from "@/lib/listen/podcasts";
 import type { Track } from "@/lib/listen/tracks";
 import type { Strings } from "@/lib/listen/i18n";
+import { LangCapsule } from "@/components/listen/LangCapsule";
 
 /** Browse drawer expanding from the right edge — the rail grows into the
  *  menu — over a scrim. The body is
@@ -63,7 +64,9 @@ function ShowColumn({
         alignItems: "center",
         flexShrink: 0,
         width: 104,
-        height: 296,
+        height: "100%",
+        minHeight: 0,
+        maxHeight: 300,
         padding: "var(--space-3)",
         gap: "var(--space-3)",
         borderRadius: "var(--radius-2xl)",
@@ -169,33 +172,31 @@ function ShowColumn({
 export function BrowseSheet({
   t,
   open,
-  level,
+  market,
+  onMarket,
   shows,
   episodes,
   browsingShow,
-  activeShowId,
   currentEpisodeId,
   isPlaying,
   status,
   onBrowseShow,
   onPickEpisode,
-  onBack,
   onClose,
   onRetry,
 }: {
   t: Strings;
   open: boolean;
-  level: "shows" | "episodes";
+  market: MarketCode;
+  onMarket: (market: MarketCode) => void;
   shows: Show[];
   episodes: Track[];
   browsingShow: Show | null;
-  activeShowId: string | null;
   currentEpisodeId: string | null;
   isPlaying: boolean;
   status: "idle" | "loading" | "error";
   onBrowseShow: (show: Show) => void;
   onPickEpisode: (index: number) => void;
-  onBack: () => void;
   onClose: () => void;
   onRetry: () => void;
 }) {
@@ -234,7 +235,7 @@ export function BrowseSheet({
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
-        aria-label={level === "shows" ? t.choosePodcast : t.episodeListOf(browsingShow?.title ?? "")}
+        aria-label={t.choosePodcast}
         tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
         style={{
@@ -293,93 +294,34 @@ export function BrowseSheet({
             </svg>
           </button>
 
-          {level === "shows" ? (
-            <span
-              style={{
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                fontSize: "0.875rem",
-                fontWeight: 600,
-                letterSpacing: "0.08em",
-                whiteSpace: "nowrap",
-                minHeight: 0,
-                overflow: "hidden",
-              }}
-            >
-              {t.todaysPodcasts}
-            </span>
-          ) : (
-            <>
-              <button
-                className="pressable"
-                onClick={onBack}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "var(--space-1)",
-                  background: "none",
-                  border: "none",
-                  borderRadius: "var(--radius-lg)",
-                  padding: "var(--space-2) var(--space-1)",
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  color: "var(--color-fg-muted)",
-                  flexShrink: 0,
-                }}
-              >
-                {/* Back = up the reading axis */}
-                <span aria-hidden style={{ transform: "rotate(90deg)", fontSize: "0.875rem", lineHeight: 1 }}>
-                  ‹
-                </span>
-                <span
-                  style={{
-                    writingMode: "vertical-rl",
-                    textOrientation: "mixed",
-                    fontSize: "0.75rem",
-                    letterSpacing: "0.06em",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {t.backToShows}
-                </span>
-              </button>
-              {browsingShow?.artwork && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={browsingShow.artwork}
-                  alt=""
-                  width={40}
-                  height={40}
-                  style={{ borderRadius: "var(--radius-lg)", display: "block", flexShrink: 0 }}
-                />
-              )}
-              <span
-                style={{
-                  writingMode: "vertical-rl",
-                  textOrientation: "mixed",
-                  fontSize: "0.8125rem",
-                  fontWeight: 600,
-                  letterSpacing: "0.06em",
-                  whiteSpace: "nowrap",
-                  minHeight: 0,
-                  overflow: "hidden",
-                }}
-              >
-                {browsingShow?.title}
-              </span>
-            </>
-          )}
+          <span
+            style={{
+              writingMode: "vertical-rl",
+              textOrientation: "mixed",
+              fontSize: "0.875rem",
+              fontWeight: 600,
+              letterSpacing: "0.08em",
+              whiteSpace: "nowrap",
+              minHeight: 0,
+              overflow: "hidden",
+            }}
+          >
+            {t.todaysPodcasts}
+          </span>
+
+          {/* Language lives here now (moved off the left edge) */}
+          <div style={{ flex: 1, minHeight: "var(--space-2)" }} />
+          <LangCapsule t={t} market={market} onMarket={onMarket} />
         </div>
 
-        {/* Sheet body — vertical UI: column cells flowing right→left.
+        {/* Sheet body — shows and episodes STACKED, split by an h-divider.
             A slight parallax against the drawer's own travel adds depth. */}
         <div
           style={{
             flex: 1,
             minWidth: 0,
-            overflowY: "auto",
-            padding: "var(--space-4) var(--space-6) var(--space-6)",
+            display: "flex",
+            flexDirection: "column",
             transform: open ? "translateX(0)" : "translateX(24px)",
             opacity: open ? 1 : 0,
             transition: open
@@ -387,73 +329,97 @@ export function BrowseSheet({
               : "transform var(--duration-base) var(--easing-out), opacity var(--duration-base) var(--easing-out)",
           }}
         >
-          {status === "loading" && (
-            <span role="status" style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
-              {t.loading}
-            </span>
-          )}
-          {status === "error" && (
-            <button
-              className="pressable"
-              onClick={onRetry}
-              style={{
-                fontSize: "0.8125rem",
-                color: "var(--color-fg-muted)",
-                padding: "var(--space-3) var(--space-4)",
-                background: "none",
-                border: "1px solid var(--color-border)",
-                borderRadius: "var(--radius-xl)",
-                cursor: "pointer",
-                fontFamily: "inherit",
-              }}
-            >
-              {t.loadError}
-            </button>
-          )}
+          {/* Shows band (top) — pick one; its episodes fill the band below */}
+          <div
+            role="listbox"
+            aria-label={t.subtitledBand}
+            style={{
+              flex: "1 1 0",
+              minHeight: 0,
+              display: "flex",
+              flexDirection: "row-reverse",
+              alignItems: "stretch",
+              gap: "var(--space-3)",
+              overflowX: "auto",
+              overflowY: "hidden",
+              padding: "var(--space-4) var(--space-6) var(--space-3)",
+            }}
+          >
+            <VLabel text={t.subtitledBand} />
+            {shows.map((show) => (
+              <ShowColumn
+                key={show.id}
+                show={show}
+                isActive={show.id === browsingShow?.id}
+                hasTranscript
+                badgeText={t.subtitleBadge}
+                onClick={() => onBrowseShow(show)}
+              />
+            ))}
+          </div>
 
-          {status === "idle" && level === "shows" && (
-            <div
-              role="listbox"
-              aria-label={t.subtitledBand}
-              style={{
-                display: "flex",
-                flexDirection: "row-reverse",
-                alignItems: "stretch",
-                gap: "var(--space-3)",
-                overflowX: "auto",
-                paddingBottom: "var(--space-1)",
-                height: "100%",
-              }}
-            >
-              <VLabel text={t.subtitledBand} />
-              {shows.map((show) => (
-                <ShowColumn
-                  key={show.id}
-                  show={show}
-                  isActive={show.id === activeShowId}
-                  hasTranscript
-                  badgeText={t.subtitleBadge}
-                  onClick={() => onBrowseShow(show)}
-                />
-              ))}
-            </div>
-          )}
+          {/* H-divider between the two stacked sections */}
+          <div
+            style={{
+              height: 1,
+              flexShrink: 0,
+              background: "var(--color-border)",
+              marginInline: "var(--space-6)",
+            }}
+          />
 
-          {status === "idle" && level === "episodes" && (
-            <div
-              role="listbox"
-              aria-label={t.episodeListOf(browsingShow?.title ?? "")}
-              style={{
-                display: "flex",
-                flexDirection: "row-reverse",
-                alignItems: "stretch",
-                gap: "var(--space-3)",
-                overflowX: "auto",
-                paddingBottom: "var(--space-1)",
-              }}
-            >
-              <VLabel text={t.episodesBand} />
-              {episodes.map((episode, i) => {
+          {/* Episodes band (bottom) — the selected show's episodes */}
+          <div
+            role="listbox"
+            aria-label={t.episodeListOf(browsingShow?.title ?? "")}
+            style={{
+              flex: "1 1 0",
+              minHeight: 0,
+              display: "flex",
+              flexDirection: "row-reverse",
+              alignItems: "stretch",
+              gap: "var(--space-3)",
+              overflowX: "auto",
+              overflowY: "hidden",
+              padding: "var(--space-3) var(--space-6) var(--space-4)",
+            }}
+          >
+            <VLabel text={t.episodesBand} />
+            {status === "loading" ? (
+              <span
+                role="status"
+                style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.8125rem", color: "var(--color-fg-subtle)", padding: "var(--space-2)", alignSelf: "center" }}
+              >
+                {t.loading}
+              </span>
+            ) : status === "error" ? (
+              <button
+                className="pressable"
+                onClick={onRetry}
+                style={{
+                  writingMode: "vertical-rl",
+                  textOrientation: "mixed",
+                  fontSize: "0.8125rem",
+                  color: "var(--color-fg-muted)",
+                  padding: "var(--space-3) var(--space-2)",
+                  background: "none",
+                  border: "1px solid var(--color-border)",
+                  borderRadius: "var(--radius-xl)",
+                  cursor: "pointer",
+                  fontFamily: "inherit",
+                  alignSelf: "center",
+                }}
+              >
+                {t.loadError}
+              </button>
+            ) : episodes.length === 0 ? (
+              <span
+                style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.8125rem", color: "var(--color-fg-subtle)", letterSpacing: "0.08em", padding: "var(--space-2)", alignSelf: "center" }}
+              >
+                {t.pickShowHint}
+              </span>
+            ) : (
+              episodes.map((episode, i) => {
                 const isCurrent = episode.id === currentEpisodeId;
                 const date = episode.credit?.split("·").pop()?.trim() ?? "";
                 return (
@@ -470,7 +436,9 @@ export function BrowseSheet({
                       justifyContent: "space-between",
                       flexShrink: 0,
                       width: 76,
-                      height: 296,
+                      height: "100%",
+                      minHeight: 0,
+                      maxHeight: 300,
                       padding: "var(--space-3) var(--space-2)",
                       gap: "var(--space-3)",
                       borderRadius: "var(--radius-2xl)",
@@ -555,9 +523,9 @@ export function BrowseSheet({
                     )}
                   </button>
                 );
-              })}
-            </div>
-          )}
+              })
+            )}
+          </div>
         </div>
       </div>
     </div>
