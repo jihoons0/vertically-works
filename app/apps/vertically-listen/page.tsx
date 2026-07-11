@@ -6,7 +6,7 @@ import { AppEmbed } from "@/components/apps/AppEmbed";
 
 export const metadata: Metadata = {
   title: "Vertically Listen",
-  description: "A podcast player rethought for the vertical, right-to-left axis — transcripts fall as time-synced vertical verse.",
+  description: "A podcast player rethought for the vertical, right-to-left axis, where transcripts fall as time-synced vertical verse.",
 };
 
 const FEATURES = [
@@ -24,18 +24,18 @@ const FEATURES = [
   },
   {
     title: "Honest text",
-    description: "When a feed has no transcript, show notes appear as a labeled intro panel instead — untimed text never pretends to be synced.",
+    description: "When a feed has no transcript, show notes appear as a labeled intro panel instead. Untimed text never pretends to be synced.",
   },
   {
     title: "Full episodes, open RSS",
-    description: "Episodes stream in full over each show's open RSS feed — the real audio, not previews, with a conventional player bar (±15초, previous/next, volume).",
+    description: "Episodes stream in full over each show's open RSS feed: the real audio, not previews, with a conventional player bar (±15초, previous/next, volume).",
   },
 ];
 
 const DECISIONS = [
   {
     title: "Why do transcripts read as verse?",
-    body: "A transcript is prose you follow in time. Setting each timed line as its own column makes progress legible on the page itself — the columns you have heard sit to the right, the ones still coming wait on the left, and the accent marks now.",
+    body: "A transcript is prose you follow in time. Setting each timed line as its own column makes progress legible on the page itself. The columns you have heard sit to the right, the ones still coming wait on the left, and the accent marks now.",
   },
   {
     title: "Why does transport stay horizontal?",
@@ -43,7 +43,7 @@ const DECISIONS = [
   },
   {
     title: "Why does browsing never stop playback?",
-    body: "The breadcrumb trace keeps shows, episodes, and the playing state simultaneously alive. In a reading interface you can look back at the shelf without losing your place in the text — audio deserves the same.",
+    body: "The breadcrumb trace keeps shows, episodes, and the playing state simultaneously alive. In a reading interface you can look back at the shelf without losing your place in the text. Audio deserves the same.",
   },
 ];
 
@@ -58,16 +58,16 @@ export default function VerticallyListenPage() {
       />
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
-        {/* Core visual — the real app, running in the page */}
+        {/* Core visual: the real app, running in the page */}
         <Reveal style={{ marginBottom: "var(--space-20)" }}>
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: "var(--space-4)", marginBottom: "var(--space-6)" }}>
             <div>
               <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
-                Listen here — this is the live app
+                Listen here, this is the live app
               </h2>
               <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: 0, maxWidth: "56ch" }}>
                 Pick a show from today&apos;s charts, play an episode, and watch the transcript
-                fall as vertical verse — 귀로 읽는 시간.
+                fall as vertical verse.
               </p>
             </div>
             <Link
@@ -85,7 +85,7 @@ export default function VerticallyListenPage() {
               Open full screen ↗
             </Link>
           </div>
-          <AppEmbed src="/apps/listen" title="Vertically Listen — live podcast player" height={600} />
+          <AppEmbed src="/apps/listen" title="Vertically Listen live podcast player" height={600} />
         </Reveal>
 
         {/* Features */}
