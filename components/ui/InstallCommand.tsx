@@ -3,9 +3,9 @@
 import { useState } from "react";
 
 /** One-line install command with copy-to-clipboard, shown on installable component pages. */
-export function InstallCommand({ name }: { name: string }) {
+export function InstallCommand({ name, command: commandProp }: { name?: string; command?: string }) {
   const [copied, setCopied] = useState(false);
-  const command = `npx verticallyworks add ${name}`;
+  const command = commandProp ?? `npx verticallyworks add ${name}`;
 
   const copy = () => {
     navigator.clipboard?.writeText(command);

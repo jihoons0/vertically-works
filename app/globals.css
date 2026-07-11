@@ -245,6 +245,40 @@ a {
   }
 }
 
+/* ─── Components surfaces ─── */
+.components-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+  gap: var(--space-4);
+}
+.components-detail {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: calc(100dvh - 56px);
+  align-items: start;
+}
+.components-sidebar {
+  display: none;
+}
+.components-twoup {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+@media (min-width: 640px) {
+  .components-twoup {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (min-width: 900px) {
+  .components-detail {
+    grid-template-columns: 240px 1fr;
+  }
+  .components-sidebar {
+    display: block;
+  }
+}
+
 /* ─── Hover utility classes (CSS-only, works in Server Components) ─── */
 
 .card-hover {

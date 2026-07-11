@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -24,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 function DosDonts({ doList, dontList }: { doList: string[]; dontList: string[] }) {
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-6)" }}>
+    <div className="components-twoup">
       <div>
         <div style={{ fontSize: "0.75rem", fontWeight: 700, color: "#16a34a", textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "var(--space-4)" }}>
           Do
@@ -73,16 +74,10 @@ export default async function ComponentPage({ params }: Props) {
   const next = currentIdx < allComponents.length - 1 ? allComponents[currentIdx + 1] : null;
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "240px 1fr",
-        minHeight: "calc(100dvh - 56px)",
-        alignItems: "start",
-      }}
-    >
-      {/* Sidebar */}
+    <div className="components-detail">
+      {/* Sidebar — component nav; hidden on mobile (.components-sidebar) */}
       <aside
+        className="components-sidebar"
         style={{
           position: "sticky",
           top: 56,
@@ -109,7 +104,7 @@ export default async function ComponentPage({ params }: Props) {
               {cat}
             </div>
             {allComponents.filter((c) => c.category === cat).map((c) => (
-              <a
+              <Link
                 key={c.slug}
                 href={`/components/${c.slug}`}
                 style={{
@@ -124,17 +119,17 @@ export default async function ComponentPage({ params }: Props) {
                 }}
               >
                 {c.name}
-              </a>
+              </Link>
             ))}
           </div>
         ))}
       </aside>
 
       {/* Main content */}
-      <main style={{ padding: "var(--space-12) var(--space-10) var(--space-24)", maxWidth: 860 }}>
+      <main style={{ padding: "var(--space-12) clamp(var(--space-5), 5vw, var(--space-10)) var(--space-24)", maxWidth: 860, width: "100%", minWidth: 0 }}>
         {/* Breadcrumb */}
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-8)", fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
-          <a href="/components" style={{ color: "inherit" }}>Components</a>
+          <Link href="/components" style={{ color: "inherit" }}>Components</Link>
           <span>›</span>
           <span style={{ color: "var(--color-fg)" }}>{comp.name}</span>
         </div>
@@ -295,17 +290,15 @@ export default async function ComponentPage({ params }: Props) {
 
         {/* Prev / Next navigation */}
         <div
+          className="components-twoup"
           style={{
             marginTop: "var(--space-16)",
             paddingTop: "var(--space-8)",
             borderTop: "1px solid var(--color-border)",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "var(--space-4)",
           }}
         >
           {prev ? (
-            <a
+            <Link
               href={`/components/${prev.slug}`}
               style={{
                 display: "flex",
@@ -321,11 +314,11 @@ export default async function ComponentPage({ params }: Props) {
             >
               <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>← Previous</span>
               <span style={{ fontSize: "0.9375rem", fontWeight: 600, color: "var(--color-fg)" }}>{prev.name}</span>
-            </a>
+            </Link>
           ) : <div />}
 
           {next ? (
-            <a
+            <Link
               href={`/components/${next.slug}`}
               style={{
                 display: "flex",
@@ -342,7 +335,7 @@ export default async function ComponentPage({ params }: Props) {
             >
               <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>Next →</span>
               <span style={{ fontSize: "0.9375rem", fontWeight: 600, color: "var(--color-fg)" }}>{next.name}</span>
-            </a>
+            </Link>
           ) : <div />}
         </div>
       </main>
