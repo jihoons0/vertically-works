@@ -8,6 +8,11 @@
       "description": "Semantic colors with light/dark/sepia themes, spacing, radius, motion tokens, corner smoothing, and vertical-writing utilities."
     },
     {
+      "name": "vertical-typography",
+      "title": "Vertical Typography & Punctuation Rules",
+      "description": "The canonical rules for setting CJK text vertically (top→bottom, RTL): glyph orientation, tate-chu-yoko digits, punctuation verticalization, and 금칙/kinsoku line breaking — per KLREQ / JLREQ / UAX #50."
+    },
+    {
       "name": "vertical-button",
       "title": "Vertical Button",
       "description": "A button whose label is set on the vertical reading axis · real writing-mode, never a rotation.",

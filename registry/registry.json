@@ -12,6 +12,15 @@
       ]
     },
     {
+      "name": "vertical-typography",
+      "title": "Vertical Typography & Punctuation Rules",
+      "description": "The canonical rules for setting CJK text vertically (top→bottom, RTL): glyph orientation, tate-chu-yoko digits, punctuation verticalization, and 금칙/kinsoku line breaking — per KLREQ / JLREQ / UAX #50.",
+      "type": "registry:item",
+      "files": [
+        { "path": "registry/vertical-typography.md", "type": "registry:file", "target": "components/vw/vertical-typography.md" }
+      ]
+    },
+    {
       "name": "vertical-button",
       "siteSlug": "button",
       "title": "Vertical Button",

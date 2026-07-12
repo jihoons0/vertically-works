@@ -12,6 +12,14 @@ const RESOURCES = [
     category: "Original Work",
     items: [
       {
+        title: "Vertical Typography & Punctuation Rules",
+        author: "Vertically Works",
+        source: "GitHub",
+        href: "https://github.com/jihoons0/vertically-works/blob/main/registry/vertical-typography.md",
+        description: "The canonical rules this project sets CJK text by · per-glyph orientation, tate-chu-yoko digits, punctuation verticalization, and 금칙/kinsoku line breaking · synthesized from KLREQ, JLREQ, and UAX #50. Install into any project with `npx verticallyworks add vertical-typography`.",
+        year: "2026",
+      },
+      {
         title: "Vertically Works: Design Exploration on Vertical Typography",
         author: "Jihoon Suh & Yanlin Ma",
         source: "UX Design / Medium",
