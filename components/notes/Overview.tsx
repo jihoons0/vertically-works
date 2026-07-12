@@ -28,14 +28,16 @@ export function Overview({
       {/* min-height wrapper centers the grid vertically but still lets it scroll. */}
       <div className="vd-overview-pad">
         <div role="list" aria-label={t.boards.overview} className="vd-overview-grid">
+          {/* Create-board tile leads the grid (top), so making a new group is
+              always the first thing in reach. */}
+          <div className="tile-cell">
+            <NewTile onAdd={onAddBoard} label={t.boards.newBoard} />
+          </div>
           {boards.map((b) => (
             <div key={b.id} className="tile-cell">
               <PostItTile board={b} tasks={tasks} onOpen={onOpen} />
             </div>
           ))}
-          <div className="tile-cell">
-            <NewTile onAdd={onAddBoard} label={t.boards.newBoard} />
-          </div>
         </div>
       </div>
     </div>

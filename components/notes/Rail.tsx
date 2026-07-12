@@ -33,6 +33,15 @@ function GridIcon({ size = 16 }: { size?: number }) {
   );
 }
 
+function PencilIcon({ size = 14 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+    </svg>
+  );
+}
+
 export function Rail({
   board,
   closing,
@@ -41,6 +50,7 @@ export function Rail({
   setFilter,
   onClearDone,
   onZoomOut,
+  onEditBoard,
 }: {
   board: Board;
   closing?: boolean;
@@ -51,6 +61,7 @@ export function Rail({
   onClearDone: () => void;
   onHelp: () => void;
   onZoomOut: () => void;
+  onEditBoard: () => void;
 }) {
   const { t } = useLocale();
   const [tip, setTip] = useState(false);
@@ -73,12 +84,38 @@ export function Rail({
         gap: "var(--space-3)",
       }}
     >
-      {/* Board header — a single icon-over-text button (grid icon on top, board
-          name below) that zooms back out to the overview. Sits above the filter. */}
+      {/* Grid — a circular icon button that zooms back out to the overview
+          (the group tree). Just the icon; the board's identity is the button
+          below it. */}
+      <button
+        className="pressable"
+        aria-label={t.boards.back}
+        onClick={onZoomOut}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          width: 44,
+          height: 44,
+          borderRadius: "var(--radius-full)",
+          border: "1px solid var(--color-border)",
+          background: "var(--color-bg-subtle)",
+          color: "var(--color-fg)",
+          cursor: "pointer",
+          fontFamily: "inherit",
+          boxShadow: "var(--shadow-column)",
+          flexShrink: 0,
+        }}
+      >
+        <GridIcon size={18} />
+      </button>
+
+      {/* Board name + pencil — the group's identity; tapping opens the
+          rename / delete overlay. Name on top, pencil below. */}
       <button
         className="pressable new-tile"
-        aria-label={`${t.boards.back} · ${board.title}`}
-        onClick={onZoomOut}
+        aria-label={`${t.boards.editBoard} · ${board.title}`}
+        onClick={onEditBoard}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -94,13 +131,13 @@ export function Rail({
           boxShadow: "var(--shadow-column)",
         }}
       >
-        <GridIcon size={18} />
         <span
           className="v-text"
-          style={{ fontSize: "1.0625rem", fontWeight: 700, letterSpacing: "0.08em", whiteSpace: "nowrap", maxHeight: "34vh", overflow: "hidden" }}
+          style={{ fontSize: "1.0625rem", fontWeight: 700, letterSpacing: "0.08em", whiteSpace: "nowrap", maxHeight: "30vh", overflow: "hidden" }}
         >
           {board.title}
         </span>
+        <PencilIcon size={13} />
       </button>
 
       {/* Filter — a capsule styled exactly like the language toggle, with a

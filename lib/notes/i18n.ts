@@ -24,6 +24,7 @@ export interface Strings {
     uncompleted: string;
     deleted: string;
     clearedDone: string;
+    boardDeleted: string;
     undo: string;
   };
   a11y: {
@@ -57,6 +58,9 @@ export interface Strings {
     newBoard: string;
     overview: string;
     back: string;
+    editBoard: string;
+    rename: string;
+    deleteBoard: string;
   };
 }
 
@@ -75,6 +79,7 @@ export const STRINGS: Record<Locale, Strings> = {
       uncompleted: "다시 진행으로",
       deleted: "지웠어요",
       clearedDone: "완료를 비웠어요",
+      boardDeleted: "보드를 지웠어요",
       undo: "되돌리기",
     },
     a11y: {
@@ -120,6 +125,9 @@ export const STRINGS: Record<Locale, Strings> = {
       newBoard: "새 보드",
       overview: "보드",
       back: "축소",
+      editBoard: "이름 편집",
+      rename: "보드 이름",
+      deleteBoard: "보드 삭제",
     },
   },
   ja: {
@@ -136,6 +144,7 @@ export const STRINGS: Record<Locale, Strings> = {
       uncompleted: "未完に戻す",
       deleted: "削除しました",
       clearedDone: "完了を消しました",
+      boardDeleted: "ボードを削除しました",
       undo: "元に戻す",
     },
     a11y: {
@@ -181,6 +190,9 @@ export const STRINGS: Record<Locale, Strings> = {
       newBoard: "新しいボード",
       overview: "ボード",
       back: "縮小",
+      editBoard: "名前を編集",
+      rename: "ボード名",
+      deleteBoard: "ボードを削除",
     },
   },
   zh: {
@@ -197,6 +209,7 @@ export const STRINGS: Record<Locale, Strings> = {
       uncompleted: "恢復進行",
       deleted: "已刪除",
       clearedDone: "已清除完成",
+      boardDeleted: "已刪除看板",
       undo: "復原",
     },
     a11y: {
@@ -242,6 +255,9 @@ export const STRINGS: Record<Locale, Strings> = {
       newBoard: "新看板",
       overview: "看板",
       back: "縮小",
+      editBoard: "編輯名稱",
+      rename: "看板名稱",
+      deleteBoard: "刪除看板",
     },
   },
 };

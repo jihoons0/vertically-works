@@ -124,6 +124,15 @@ export function useNotes() {
     setTasks((prev) => prev.filter((t) => t.boardId !== id));
   }, []);
 
+  // Undo a board deletion: put the board and its tasks back (idempotent).
+  const restoreBoard = useCallback((board: Board, boardTasks: Task[]) => {
+    setBoards((prev) => (prev.some((b) => b.id === board.id) ? prev : [...prev, board]));
+    setTasks((prev) => {
+      const have = new Set(prev.map((t) => t.id));
+      return [...prev, ...boardTasks.filter((t) => !have.has(t.id))];
+    });
+  }, []);
+
   // ── Task ops (scoped to a board) ──
   const add = useCallback((boardId: string, text: string, note?: string, starred = false) => {
     const t = text.trim();
@@ -184,5 +193,5 @@ export function useNotes() {
     });
   }, []);
 
-  return { boards, tasks, mounted, addBoard, renameBoard, removeBoard, add, toggle, star, remove, edit, clearDone, move, readd, readdMany };
+  return { boards, tasks, mounted, addBoard, renameBoard, removeBoard, restoreBoard, add, toggle, star, remove, edit, clearDone, move, readd, readdMany };
 }

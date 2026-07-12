@@ -7,6 +7,7 @@ import { Rail, type Filter } from "@/components/notes/Rail";
 import { TaskColumn } from "@/components/notes/TaskColumn";
 import { Composer, type ComposerHandle } from "@/components/notes/Composer";
 import { HelpSheet } from "@/components/notes/HelpSheet";
+import { BoardEditSheet } from "@/components/notes/BoardEditSheet";
 import { LeftControls } from "@/components/notes/LeftControls";
 import { Overview } from "@/components/notes/Overview";
 import { LocaleProvider, useLocale } from "@/lib/notes/i18n";
@@ -34,6 +35,7 @@ function Shell() {
   const [origin, setOrigin] = useState("50% 50%");
   const [filter, setFilter] = useState<Filter>("active");
   const [help, setHelp] = useState(false);
+  const [editingBoard, setEditingBoard] = useState(false);
   const toast = useToast();
   const { t } = useLocale();
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -67,6 +69,27 @@ function Shell() {
     store.clearDone(activeBoardId);
     toast(t.toast.clearedDone, { label: t.toast.undo, onClick: () => store.readdMany(removed) });
   }, [store, toast, t, activeBoardId]);
+
+  const handleRenameBoard = useCallback(
+    (title: string) => {
+      if (activeBoardId) store.renameBoard(activeBoardId, title);
+    },
+    [store, activeBoardId]
+  );
+
+  // Delete the active board and return to the overview — the deleted board
+  // has no tile to zoom back to. Undo restores the board and its tasks.
+  const handleDeleteBoard = useCallback(() => {
+    if (!activeBoardId) return;
+    const board = boards.find((b) => b.id === activeBoardId);
+    if (!board) return;
+    const boardTasks = tasks.filter((x) => x.boardId === activeBoardId);
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    store.removeBoard(activeBoardId);
+    setClosing(false);
+    setActiveBoardId(null);
+    toast(t.toast.boardDeleted, { label: t.toast.undo, onClick: () => store.restoreBoard(board, boardTasks) });
+  }, [activeBoardId, boards, tasks, store, toast, t]);
 
   // Global keys: "?" toggles help; Escape zooms out of a board.
   useEffect(() => {
@@ -121,6 +144,7 @@ function Shell() {
                 onClearDone={handleClearDone}
                 onHelp={() => setHelp(true)}
                 onZoomOut={zoomOut}
+                onEditBoard={() => setEditingBoard(true)}
               />
             </>
           )}
@@ -149,6 +173,13 @@ function Shell() {
       )}
 
       <HelpSheet open={help} onClose={() => setHelp(false)} />
+      <BoardEditSheet
+        open={editingBoard && !!activeBoard}
+        board={activeBoard}
+        onRename={handleRenameBoard}
+        onDelete={handleDeleteBoard}
+        onClose={() => setEditingBoard(false)}
+      />
     </div>
   );
 }
