@@ -63,8 +63,8 @@
     padding-right: var(--space-2) !important;
   }
   .vl-player {
-    padding-left: var(--space-3) !important;
-    padding-right: var(--space-3) !important;
+    padding-left: var(--space-4) !important;
+    padding-right: var(--space-4) !important;
   }
   .vl-transport {
     gap: var(--space-1) !important;
@@ -77,6 +77,6 @@
     display: none !important;
   }
   .vl-volume-slider {
-    width: 48px !important;
+    width: 52px !important;
   }
 }

@@ -328,6 +328,11 @@ export function PlayerBar({
               height: 24,
               display: "flex",
               alignItems: "center",
+              // Inset the track by the knob's radius so the knob's travel
+              // stays inside the slider box (at 0% and 100% it would else
+              // overhang each end by ~6px and touch the bar edge).
+              paddingInline: 6,
+              boxSizing: "border-box",
               cursor: "ew-resize",
               touchAction: "none",
             }}
