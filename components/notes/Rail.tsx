@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useLocale } from "@/lib/notes/i18n";
 import type { Board } from "@/lib/notes/store";
 
@@ -11,7 +10,7 @@ const FILTER_IDS: Filter[] = ["active", "done", "all"];
 const CELL = 46; // filter cell height
 const GAP = 2;
 
-function TrashIcon({ size = 16 }: { size?: number }) {
+export function TrashIcon({ size = 16 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d="M3 6h18" />
@@ -45,10 +44,8 @@ function PencilIcon({ size = 14 }: { size?: number }) {
 export function Rail({
   board,
   closing,
-  done,
   filter,
   setFilter,
-  onClearDone,
   onZoomOut,
   onEditBoard,
 }: {
@@ -58,13 +55,11 @@ export function Rail({
   done: number;
   filter: Filter;
   setFilter: (f: Filter) => void;
-  onClearDone: () => void;
   onHelp: () => void;
   onZoomOut: () => void;
   onEditBoard: () => void;
 }) {
   const { t } = useLocale();
-  const [tip, setTip] = useState(false);
   const activeIndex = FILTER_IDS.indexOf(filter);
 
   return (
@@ -208,64 +203,6 @@ export function Rail({
         })}
       </div>
 
-      {/* Clear completed — a red trashcan icon button with a hover tooltip. */}
-      {done > 0 && (
-        <div
-          style={{ position: "relative", display: "flex" }}
-          onPointerEnter={() => setTip(true)}
-          onPointerLeave={() => setTip(false)}
-        >
-          <button
-            className="pressable"
-            aria-label={t.clearDone}
-            onClick={onClearDone}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: "var(--radius-full)",
-              border: "none",
-              background: "#ef4444",
-              color: "#ffffff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              boxShadow: "0 2px 8px rgba(239,68,68,0.35)",
-              transition: "transform 140ms var(--easing-out), background var(--duration-fast) var(--easing-default)",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "#dc2626"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "#ef4444"; }}
-          >
-            <TrashIcon />
-          </button>
-          {tip && (
-            <span
-              role="tooltip"
-              style={{
-                position: "absolute",
-                right: "calc(100% + var(--space-2))",
-                top: "50%",
-                transform: "translateY(-50%)",
-                writingMode: "vertical-rl",
-                textOrientation: "mixed",
-                background: "var(--color-fg)",
-                color: "var(--color-bg)",
-                padding: "var(--space-3) var(--space-2)",
-                borderRadius: "var(--radius-full)",
-                fontSize: "0.6875rem",
-                fontWeight: 600,
-                letterSpacing: "0.06em",
-                whiteSpace: "nowrap",
-                boxShadow: "var(--shadow-column)",
-                pointerEvents: "none",
-                animation: "vd-fade-in 120ms ease both",
-              }}
-            >
-              {t.clearDone}
-            </span>
-          )}
-        </div>
-      )}
     </aside>
   );
 }

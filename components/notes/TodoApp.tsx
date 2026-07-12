@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNotes, type Board as BoardType, type Task } from "@/lib/notes/store";
 import { ToastProvider, useToast } from "@/components/notes/Toast";
-import { Rail, type Filter } from "@/components/notes/Rail";
+import { Rail, TrashIcon, type Filter } from "@/components/notes/Rail";
 import { TaskColumn } from "@/components/notes/TaskColumn";
 import { Composer, type ComposerHandle } from "@/components/notes/Composer";
 import { HelpSheet } from "@/components/notes/HelpSheet";
@@ -132,7 +132,7 @@ function Shell() {
           {activeBoard && (
             <>
               <div className="vd-board-layer" data-closing={closing ? "" : undefined} style={{ transformOrigin: origin }}>
-                <Board store={store} board={activeBoard} filter={filter} />
+                <Board store={store} board={activeBoard} filter={filter} onClearDone={handleClearDone} />
               </div>
               <Rail
                 board={activeBoard}
@@ -141,7 +141,6 @@ function Shell() {
                 done={done}
                 filter={filter}
                 setFilter={setFilter}
-                onClearDone={handleClearDone}
                 onHelp={() => setHelp(true)}
                 onZoomOut={zoomOut}
                 onEditBoard={() => setEditingBoard(true)}
@@ -184,7 +183,17 @@ function Shell() {
   );
 }
 
-function Board({ store, board, filter }: { store: Store; board: BoardType; filter: Filter }) {
+function Board({
+  store,
+  board,
+  filter,
+  onClearDone,
+}: {
+  store: Store;
+  board: BoardType;
+  filter: Filter;
+  onClearDone: () => void;
+}) {
   const { tasks, add, toggle, star, remove, edit, move, readd } = store;
   const boardId = board.id;
   const composerRef = useRef<ComposerHandle>(null);
@@ -192,6 +201,7 @@ function Board({ store, board, filter }: { store: Store; board: BoardType; filte
   const toast = useToast();
   const { t } = useLocale();
   const [overflowing, setOverflowing] = useState(false);
+  const [trashTip, setTrashTip] = useState(false);
 
   const { active, done } = useMemo(() => {
     const mine = tasks.filter((x) => x.boardId === boardId);
@@ -288,6 +298,66 @@ function Board({ store, board, filter }: { store: Store; board: BoardType; filte
                 <TaskColumn task={task} index={i} {...columnProps} />
               </ColumnDir>
             ))}
+
+          {/* Clear completed — the red trashcan rides the tail (far left) of the
+              crossed-out cells, vertically centered; only in the "done" view. */}
+          {filter === "done" && done.length > 0 && (
+            <div
+              style={{ direction: "ltr", position: "relative", flexShrink: 0, display: "flex", alignItems: "center", paddingInlineStart: "var(--space-3)" }}
+              onPointerEnter={() => setTrashTip(true)}
+              onPointerLeave={() => setTrashTip(false)}
+            >
+              <button
+                className="pressable"
+                aria-label={t.clearDone}
+                onClick={onClearDone}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: "var(--radius-full)",
+                  border: "none",
+                  background: "#ef4444",
+                  color: "#ffffff",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  cursor: "pointer",
+                  boxShadow: "0 2px 8px rgba(239,68,68,0.35)",
+                  transition: "transform 140ms var(--easing-out), background var(--duration-fast) var(--easing-default)",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.background = "#dc2626"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.background = "#ef4444"; }}
+              >
+                <TrashIcon />
+              </button>
+              {trashTip && (
+                <span
+                  role="tooltip"
+                  style={{
+                    position: "absolute",
+                    right: "calc(100% + var(--space-2))",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    writingMode: "vertical-rl",
+                    textOrientation: "mixed",
+                    background: "var(--color-fg)",
+                    color: "var(--color-bg)",
+                    padding: "var(--space-3) var(--space-2)",
+                    borderRadius: "var(--radius-full)",
+                    fontSize: "0.6875rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.06em",
+                    whiteSpace: "nowrap",
+                    boxShadow: "var(--shadow-column)",
+                    pointerEvents: "none",
+                    animation: "vd-fade-in 120ms ease both",
+                  }}
+                >
+                  {t.clearDone}
+                </span>
+              )}
+            </div>
+          )}
 
           {isEmpty && (
             <div style={{ direction: "ltr", display: "flex", alignItems: "center", color: "var(--color-fg-subtle)", paddingInline: "var(--space-12)" }}>
