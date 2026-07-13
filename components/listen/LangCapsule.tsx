@@ -3,7 +3,7 @@
 import { MARKETS, type MarketCode } from "@/lib/listen/podcasts";
 import { LANG_GLYPHS, STRINGS, type Strings } from "@/lib/listen/i18n";
 
-/** The studio's unified language control from Vertically Do, in its native
+/** The studio's unified language control from Vertically Notes, in its native
  *  vertical orientation: a glyph capsule (한 あ 中 台 港) with the inverted
  *  indicator sliding along the reading axis. Choosing a glyph localizes
  *  the chrome and points the charts at that market. */

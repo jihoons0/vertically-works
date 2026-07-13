@@ -5,7 +5,7 @@ import { AppHero } from "@/components/apps/AppHero";
 import { AppEmbed } from "@/components/apps/AppEmbed";
 
 export const metadata: Metadata = {
-  title: "Vertically Do",
+  title: "Vertically Notes",
   description: "A to-do list rethought for the vertical, right-to-left axis · tasks are columns you read top to bottom.",
 };
 
@@ -51,7 +51,7 @@ export default function VerticallyDoPage() {
   return (
     <>
       <AppHero
-        title="Vertically Do"
+        title="Vertically Notes"
         status="Live"
         platform="Web"
         meta="한국어 · 日本語 · 中文"
@@ -85,7 +85,7 @@ export default function VerticallyDoPage() {
               Open full screen ↗
             </Link>
           </div>
-          <AppEmbed src="/apps/notes" title="Vertically Do · live to-do app" height={560} />
+          <AppEmbed src="/apps/notes" title="Vertically Notes · live to-do app" height={560} />
         </Reveal>
 
         {/* Features */}
@@ -187,7 +187,7 @@ export default function VerticallyDoPage() {
               flexShrink: 0,
             }}
           >
-            Open Vertically Do →
+            Open Vertically Notes →
           </Link>
         </div>
       </div>

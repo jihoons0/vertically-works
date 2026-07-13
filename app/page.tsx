@@ -2,7 +2,6 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { ChallengeVisual } from "@/components/ChallengeVisual";
-import { PlaygroundClient } from "@/components/PlaygroundClient";
 import { BentoGrid } from "@/components/home/BentoGrid";
 import { HeroVerticalMotif } from "@/components/home/HeroVerticalMotif";
 import { InstallCard } from "@/components/ui/InstallCard";
@@ -29,7 +28,7 @@ const APPLICATIONS = [
   },
   {
     id: "notes",
-    name: "Vertically Do",
+    name: "Vertically Notes",
     platform: "Web",
     status: "Live",
     href: "/apps/vertically-do",
@@ -41,8 +40,8 @@ const APPLICATIONS = [
     id: "listen",
     name: "Vertically Listen",
     platform: "Web",
-    status: "Live",
-    href: "/apps/vertically-listen",
+    status: "WIP",
+    href: null,
     video: null,
     description:
       "A podcast player where transcripts fall as time-synced vertical verse.",
@@ -210,22 +209,13 @@ export default function HomePage() {
       >
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
           <Reveal>
-            <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
-              Components
-            </h2>
-            <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-10)", maxWidth: "56ch", lineHeight: 1.65 }}>
-              The interaction primitives of a vertical interface · buttons, toggles,
-              dialogs, lists · each answering a design question the horizontal web never
-              had to. Real, accessible React components you copy into your project with one
-              command. Below, four of them replay as they behave on the reading axis.
-            </p>
+            <BentoGrid
+              title="Components"
+              description="The interaction primitives of a vertical interface · buttons, toggles, dialogs, lists · each answering a design question the horizontal web never had to. Real, accessible React components you copy into your project with one command. Below, four of them replay as they behave on the reading axis."
+            />
           </Reveal>
 
-          <Reveal delay={80}>
-            <BentoGrid />
-          </Reveal>
-
-          <div style={{ marginTop: "var(--space-10)", display: "flex", flexDirection: "column", gap: "var(--space-8)", alignItems: "flex-start" }}>
+          <div style={{ marginTop: "var(--space-10)" }}>
             <Link
               href="/components"
               className="btn-cta-hover pressable"
@@ -239,16 +229,28 @@ export default function HomePage() {
             >
               View all components →
             </Link>
+          </div>
+        </div>
+      </section>
 
-            {/* Or install them: shortest snippet + GitHub, one card */}
-            <div style={{ maxWidth: 460, width: "100%" }}>
-              <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-3)", lineHeight: 1.6 }}>
-                Or copy them straight into your project. Run <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>init</code> once for the tokens, then{" "}
-                <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>add</code> any component.
-              </p>
+      {/* ═══════════════════ Install · copy them into your project ═════════════ */}
+      <section style={{ borderTop: "1px solid var(--color-border)", background: "var(--color-bg-subtle)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
+          <Reveal>
+            <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
+              Bring them into your project
+            </h2>
+            <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-8)", maxWidth: "52ch", lineHeight: 1.65 }}>
+              Every component is source you own · no runtime dependency. Run{" "}
+              <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>init</code> once for the tokens, then{" "}
+              <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>add</code> any component · fetched live from the registry, nothing to configure.
+            </p>
+          </Reveal>
+          <Reveal delay={80}>
+            <div style={{ maxWidth: 560 }}>
               <InstallCard command="npx verticallyworks init" github="https://github.com/jihoons0/vertically-works" />
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -404,47 +406,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════════════════ Playground · embedded, try it here ══════════════════ */}
-      <section
-        id="playground"
-        style={{
-          borderTop: "1px solid var(--color-border)",
-          background: "var(--color-bg-subtle)",
-          scrollMarginTop: 72,
-        }}
-      >
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
-          <Reveal>
-            <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
-              Playground
-            </h2>
-            <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-8)", maxWidth: "52ch", lineHeight: 1.65 }}>
-              The full playground, embedded. Language, writing and reading direction, theme,
-              device, and type size · every control updates the canvas live.
-            </p>
-          </Reveal>
-
-          <Reveal delay={80}>
-            <PlaygroundClient embedded />
-          </Reveal>
-
-          <div style={{ marginTop: "var(--space-8)" }}>
-            <Link
-              href="/playground"
-              className="btn-cta-hover pressable"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: 8,
-                height: 40, padding: "0 var(--space-5)",
-                fontSize: "0.9375rem", fontWeight: 500,
-                borderRadius: "var(--radius-lg)",
-                border: "1px solid", color: "var(--color-fg)",
-              }}
-            >
-              Open the full playground →
-            </Link>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

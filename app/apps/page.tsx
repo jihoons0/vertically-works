@@ -1,6 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { AppVideo } from "@/components/home/AppVideo";
+import { InstallCard } from "@/components/ui/InstallCard";
 
 export const metadata: Metadata = {
   title: "Applications",
@@ -13,7 +15,7 @@ const APPS = [
     name: "Vertically Verse",
     platform: "iOS",
     status: "Live",
-    icon: "聖",
+    video: "/videos/vertically-verse.mp4",
     description:
       "A fully vertical, right-to-left Bible reader for Korean, Japanese, and Chinese. Every control, gesture, transition, and reading affordance rethought for the top→bottom, R→L axis.",
     challenges: [
@@ -29,10 +31,9 @@ const APPS = [
     name: "To-do",
     platform: "Web",
     status: "Live",
-    icon: "記",
     href: "/apps/notes",
     description:
-      "Vertically Do · a to-do list rethought for the vertical, right-to-left axis. Tasks are columns you read top→bottom, newest at the reading start; drag a column down to delete (a trashcan opens behind it in the vacated slot), sideways to reorder, and switch the whole interface across 한 / あ / 中.",
+      "Vertically Notes · a to-do list rethought for the vertical, right-to-left axis. Tasks are columns you read top→bottom, newest at the reading start; drag a column down to delete (a trashcan opens behind it in the vacated slot), sideways to reorder, and switch the whole interface across 한 / あ / 中.",
     challenges: [
       "Tasks as full-height columns that stack right→left and scroll on the column axis",
       "Vertical pull-to-delete with a trashcan revealed behind the card",
@@ -45,9 +46,7 @@ const APPS = [
     id: "listen",
     name: "Listen",
     platform: "Web",
-    status: "Live",
-    icon: "楽",
-    href: "/apps/listen",
+    status: "WIP",
     description:
       "Vertically Listen · a podcast player rethought for the vertical, right-to-left axis. Today's top CJK shows (한국·일본·중국·대만·홍콩) are a shelf of full-height columns, episodes stream in full over open RSS, and Podcasting 2.0 transcripts fall as time-synced vertical verse with tap-to-seek. Navigation and transport stay horizontal · a breadcrumb trace with the show's artwork up top, a conventional player bar (±15초, previous/next, volume) at the bottom · while reading stays vertical.",
     challenges: [
@@ -63,7 +62,6 @@ const APPS = [
     name: "Maps",
     platform: "Concept",
     status: "Planned",
-    icon: "地",
     description: null,
     question: "How do directional labels and navigation instructions adapt to a vertical reading axis?",
     challenges: [
@@ -78,90 +76,149 @@ export default function ApplicationsPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Applications"
         title="Real Implementations"
         description="What happens when vertical-first thinking is applied to actual product categories. Each application surfaces a different set of design challenges."
+        descriptionWide
       />
 
       <div
         style={{
           maxWidth: 1280,
           margin: "0 auto",
-          padding: "var(--space-12) var(--space-6) var(--space-24)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "var(--space-5)",
+          padding: "var(--space-12) var(--space-6) var(--space-16)",
         }}
       >
-        {APPS.map((app) => (
-          <Link
-            key={app.id}
-            href={"href" in app && app.href ? app.href : `/apps/${app.id}`}
-            className="card-hover"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "auto 1fr",
-              gap: "var(--space-8)",
+        <div className="apps-grid">
+          {APPS.map((app) => {
+            // Only Live apps are enterable; WIP / Planned render as non-interactive cards.
+            const blocked = app.status !== "Live";
+            const video = "video" in app && app.video ? app.video : null;
+            const cardStyle = {
+              display: "block",
               padding: "var(--space-8)",
               borderRadius: "var(--radius-xl)",
               border: "1px solid",
-              alignItems: "start",
-            }}
-          >
-            <div
-              style={{
-                width: 56, height: 56,
-                borderRadius: "var(--radius-xl)",
-                background: "var(--color-bg-muted)",
-                border: "1px solid var(--color-border)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                fontSize: "1.5rem", color: "var(--color-fg-muted)", flexShrink: 0,
-              }}
-              aria-hidden
-            >
-              {app.icon}
-            </div>
+              height: "100%",
+            } as const;
 
-            <div>
-              <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-3)" }}>
-                <h2 style={{ fontSize: "1.125rem", fontWeight: 600, color: "var(--color-fg)", margin: 0, letterSpacing: "-0.02em" }}>
-                  {app.name}
-                </h2>
-                <span
-                  style={{
-                    display: "inline-flex", alignItems: "center", gap: 5,
-                    fontSize: "0.6875rem", fontWeight: 500,
-                    color: app.status === "Live" ? "var(--color-fg)" : "var(--color-fg-subtle)",
-                    padding: "2px 8px", borderRadius: "var(--radius-full)", border: "1px solid",
-                    borderColor: app.status === "Live" ? "var(--color-border-strong)" : "var(--color-border)",
-                  }}
-                >
-                  {app.status === "Live" && (
-                    <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
+            const inner = (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: video ? "1fr auto" : "1fr",
+                  gap: "var(--space-6)",
+                  alignItems: "start",
+                }}
+              >
+                <div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-3)", flexWrap: "wrap" }}>
+                    <h2 style={{ fontSize: "1.125rem", fontWeight: 600, color: "var(--color-fg)", margin: 0, letterSpacing: "-0.02em" }}>
+                      {app.name}
+                    </h2>
+                    <span
+                      style={{
+                        display: "inline-flex", alignItems: "center", gap: 5,
+                        fontSize: "0.6875rem", fontWeight: 500,
+                        color: app.status === "Live" ? "var(--color-fg)" : "var(--color-fg-subtle)",
+                        padding: "2px 8px", borderRadius: "var(--radius-full)", border: "1px solid",
+                        borderColor: app.status === "Live" ? "var(--color-border-strong)" : "var(--color-border)",
+                      }}
+                    >
+                      {app.status === "Live" && (
+                        <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
+                      )}
+                      {app.status}
+                    </span>
+                    <span style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>{app.platform}</span>
+                  </div>
+
+                  <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-5)", lineHeight: 1.65 }}>
+                    {app.description ?? app.question}
+                  </p>
+
+                  {app.challenges && (
+                    <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
+                      {app.challenges.map((c, i) => (
+                        <li key={i} style={{ display: "flex", gap: "var(--space-3)", alignItems: "baseline" }}>
+                          <span style={{ width: 4, height: 4, borderRadius: "50%", background: "var(--color-border-strong)", flexShrink: 0, marginTop: 7, display: "inline-block" }} />
+                          <span style={{ fontSize: "0.875rem", color: "var(--color-fg-muted)" }}>{c}</span>
+                        </li>
+                      ))}
+                    </ul>
                   )}
-                  {app.status}
-                </span>
-                <span style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>{app.platform}</span>
+                </div>
+
+                {video && (
+                  <div
+                    style={{
+                      width: 180,
+                      aspectRatio: "2 / 3",
+                      borderRadius: "var(--radius-lg)",
+                      overflow: "hidden",
+                      border: "1px solid var(--color-border)",
+                      background: "var(--color-bg-muted)",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <AppVideo src={video} label={`${app.name} demo`} />
+                  </div>
+                )}
               </div>
+            );
 
-              <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-5)", lineHeight: 1.65, maxWidth: "56ch" }}>
-                {app.description ?? app.question}
-              </p>
-
-              {app.challenges && (
-                <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-                  {app.challenges.map((c, i) => (
-                    <li key={i} style={{ display: "flex", gap: "var(--space-3)", alignItems: "baseline" }}>
-                      <span style={{ width: 4, height: 4, borderRadius: "50%", background: "var(--color-border-strong)", flexShrink: 0, marginTop: 7, display: "inline-block" }} />
-                      <span style={{ fontSize: "0.875rem", color: "var(--color-fg-muted)" }}>{c}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          </Link>
-        ))}
+            return blocked ? (
+              <div
+                key={app.id}
+                aria-disabled="true"
+                style={{ ...cardStyle, borderColor: "var(--color-border)", opacity: 0.7, cursor: "not-allowed" }}
+              >
+                {inner}
+              </div>
+            ) : (
+              <Link
+                key={app.id}
+                href={"href" in app && app.href ? app.href : `/apps/${app.id}`}
+                className="card-hover"
+                style={cardStyle}
+              >
+                {inner}
+              </Link>
+            );
+          })}
+        </div>
       </div>
+
+      {/* ═══════════════ Build your own · npx unite ═══════════════ */}
+      <section style={{ borderTop: "1px solid var(--color-border)", background: "var(--color-bg-subtle)" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-5)", alignItems: "flex-start" }}>
+            <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: 0, lineHeight: 1.15, maxWidth: "20ch" }}>
+              Ready to make your own vertical UI app?
+            </h2>
+            <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.65, maxWidth: "56ch" }}>
+              Every primitive these apps are built on is yours to copy · real{" "}
+              <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>writing-mode: vertical-rl</code>{" "}
+              components, tokens only, no runtime dependency. Install the tokens once, then add any component.
+            </p>
+            <div style={{ width: "100%", maxWidth: 560 }}>
+              <InstallCard command="npx verticallyworks init" github="https://github.com/jihoons0/vertically-works" />
+            </div>
+            <Link
+              href="/components"
+              className="btn-cta-hover pressable"
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 8,
+                height: 40, padding: "0 var(--space-5)",
+                fontSize: "0.9375rem", fontWeight: 500,
+                borderRadius: "var(--radius-lg)",
+                border: "1px solid", color: "var(--color-fg)",
+              }}
+            >
+              View components →
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

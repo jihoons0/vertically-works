@@ -10,14 +10,13 @@ const NAV_LINKS = [
   { href: "/components", label: "Components" },
   { href: "/challenges", label: "Challenges" },
   { href: "/principles", label: "Principles" },
-  { href: "/playground", label: "Playground" },
   { href: "/resources", label: "Resources" },
 ];
 
 // Shown in the Applications hover dropdown (desktop) and indented in the mobile menu.
 const APP_LINKS = [
   { href: "/apps/vertically-verse", name: "Vertically Verse", sub: "Scripture reader · iOS" },
-  { href: "/apps/vertically-do", name: "Vertically Do", sub: "To-do list · Web" },
+  { href: "/apps/vertically-do", name: "Vertically Notes", sub: "To-do list · Web" },
   { href: "/apps/vertically-listen", name: "Vertically Listen", sub: "Podcast player · Web" },
 ];
 

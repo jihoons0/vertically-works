@@ -1,8 +1,6 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { AppHero } from "@/components/apps/AppHero";
-import { AppEmbed } from "@/components/apps/AppEmbed";
 
 export const metadata: Metadata = {
   title: "Vertically Listen",
@@ -52,7 +50,7 @@ export default function VerticallyListenPage() {
     <>
       <AppHero
         title="Vertically Listen"
-        status="Live"
+        status="WIP"
         platform="Web"
         meta="한국 · 日本 · 中国 · 台湾 · 香港"
       />
@@ -60,32 +58,39 @@ export default function VerticallyListenPage() {
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
         {/* Core visual: the real app, running in the page */}
         <Reveal style={{ marginBottom: "var(--space-20)" }}>
-          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", flexWrap: "wrap", gap: "var(--space-4)", marginBottom: "var(--space-6)" }}>
-            <div>
-              <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
-                Listen here, this is the live app
-              </h2>
-              <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: 0, maxWidth: "56ch" }}>
-                Pick a show from today&apos;s charts, play an episode, and watch the transcript
-                fall as vertical verse.
-              </p>
-            </div>
-            <Link
-              href="/apps/listen"
-              className="btn-cta-hover pressable"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: 8,
-                height: 40, padding: "0 var(--space-5)",
-                fontSize: "0.9375rem", fontWeight: 500,
-                borderRadius: "var(--radius-lg)",
-                border: "1px solid", color: "var(--color-fg)",
-                flexShrink: 0,
-              }}
-            >
-              Open full screen ↗
-            </Link>
+          <div style={{ marginBottom: "var(--space-6)" }}>
+            <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
+              Work in progress
+            </h2>
+            <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: 0, maxWidth: "56ch" }}>
+              Vertically Listen is being reworked and isn&apos;t open to enter yet. The write-up
+              below documents where it&apos;s headed · the live player returns here when it&apos;s ready.
+            </p>
           </div>
-          <AppEmbed src="/apps/listen" title="Vertically Listen live podcast player" height={600} />
+          <div
+            role="img"
+            aria-label="Vertically Listen — work in progress, entry closed"
+            style={{
+              height: 600,
+              borderRadius: "var(--radius-xl)",
+              border: "1px dashed var(--color-border-strong)",
+              background: "var(--color-bg-subtle)",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "var(--space-3)",
+              textAlign: "center",
+              padding: "var(--space-8)",
+            }}
+          >
+            <span style={{ fontSize: "0.6875rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--color-fg-subtle)", border: "1px solid var(--color-border-strong)", borderRadius: "var(--radius-full)", padding: "3px 10px" }}>
+              WIP
+            </span>
+            <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: 0, maxWidth: "40ch", lineHeight: 1.65 }}>
+              The live player is temporarily closed while it&apos;s rebuilt. Check back soon.
+            </p>
+          </div>
         </Reveal>
 
         {/* Features */}
@@ -151,7 +156,7 @@ export default function VerticallyListenPage() {
           </div>
         </section>
 
-        {/* Open the app */}
+        {/* Entry blocked while WIP */}
         <div
           style={{
             padding: "var(--space-6) var(--space-8)",
@@ -166,12 +171,11 @@ export default function VerticallyListenPage() {
           }}
         >
           <div>
-            <p style={{ fontSize: "0.9375rem", fontWeight: 500, color: "var(--color-fg)", margin: "0 0 var(--space-1)" }}>Use it in the browser</p>
-            <p style={{ fontSize: "0.875rem", color: "var(--color-fg-muted)", margin: 0 }}>The app owns the full viewport at /apps/listen. Charts refresh daily; episodes stream from each show&apos;s open feed.</p>
+            <p style={{ fontSize: "0.9375rem", fontWeight: 500, color: "var(--color-fg)", margin: "0 0 var(--space-1)" }}>Not open yet</p>
+            <p style={{ fontSize: "0.875rem", color: "var(--color-fg-muted)", margin: 0 }}>Vertically Listen is a work in progress · entry is closed for now. It&apos;ll open here in the browser once it&apos;s ready.</p>
           </div>
-          <Link
-            href="/apps/listen"
-            className="card-hover-border"
+          <span
+            aria-disabled="true"
             style={{
               display: "inline-flex",
               alignItems: "center",
@@ -181,14 +185,15 @@ export default function VerticallyListenPage() {
               fontSize: "0.875rem",
               fontWeight: 500,
               borderRadius: "var(--radius-lg)",
-              border: "1px solid",
-              color: "var(--color-fg)",
+              border: "1px solid var(--color-border)",
+              color: "var(--color-fg-subtle)",
               background: "transparent",
               flexShrink: 0,
+              cursor: "not-allowed",
             }}
           >
-            Open Vertically Listen →
-          </Link>
+            Coming soon
+          </span>
         </div>
       </div>
     </>
