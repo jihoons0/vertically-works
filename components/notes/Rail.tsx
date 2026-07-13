@@ -5,7 +5,7 @@ import type { Board } from "@/lib/notes/store";
 
 export type Filter = "active" | "done" | "all";
 
-const FILTER_IDS: Filter[] = ["active", "done", "all"];
+const FILTER_IDS: Filter[] = ["all", "active", "done"];
 
 const CELL = 46; // filter cell height
 const GAP = 2;
@@ -32,7 +32,7 @@ function GridIcon({ size = 16 }: { size?: number }) {
   );
 }
 
-function PencilIcon({ size = 14 }: { size?: number }) {
+export function PencilIcon({ size = 14 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
       <path d="M12 20h9" />

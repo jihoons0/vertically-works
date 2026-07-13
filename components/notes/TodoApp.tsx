@@ -33,21 +33,24 @@ function Shell() {
   const [activeBoardId, setActiveBoardId] = useState<string | null>(null);
   const [closing, setClosing] = useState(false);
   const [origin, setOrigin] = useState("50% 50%");
-  const [filter, setFilter] = useState<Filter>("active");
+  const [filter, setFilter] = useState<Filter>("all");
   const [help, setHelp] = useState(false);
-  const [editingBoard, setEditingBoard] = useState(false);
+  // The board whose 이름 편집 sheet is open — reachable from the rail (open
+  // board) or straight from an overview tile's pencil.
+  const [editingBoardId, setEditingBoardId] = useState<string | null>(null);
   const toast = useToast();
   const { t } = useLocale();
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const activeBoard = boards.find((b) => b.id === activeBoardId) ?? null;
+  const editingBoard = boards.find((b) => b.id === editingBoardId) ?? null;
   const boardOpen = !!activeBoard && !closing; // fully open (drives the overview recede)
 
   // Zoom in from the tapped tile's centre.
   const openBoard = useCallback((id: string, rect?: DOMRect) => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
     if (rect) setOrigin(`${Math.round(rect.left + rect.width / 2)}px ${Math.round(rect.top + rect.height / 2)}px`);
-    setFilter("active");
+    setFilter("all");
     setClosing(false);
     setActiveBoardId(id);
   }, []);
@@ -72,24 +75,26 @@ function Shell() {
 
   const handleRenameBoard = useCallback(
     (title: string) => {
-      if (activeBoardId) store.renameBoard(activeBoardId, title);
+      if (editingBoardId) store.renameBoard(editingBoardId, title);
     },
-    [store, activeBoardId]
+    [store, editingBoardId]
   );
 
-  // Delete the active board and return to the overview — the deleted board
-  // has no tile to zoom back to. Undo restores the board and its tasks.
+  // Delete the board being edited. If it's the open board, return to the
+  // overview — it has no tile to zoom back to. Undo restores board + tasks.
   const handleDeleteBoard = useCallback(() => {
-    if (!activeBoardId) return;
-    const board = boards.find((b) => b.id === activeBoardId);
+    if (!editingBoardId) return;
+    const board = boards.find((b) => b.id === editingBoardId);
     if (!board) return;
-    const boardTasks = tasks.filter((x) => x.boardId === activeBoardId);
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    store.removeBoard(activeBoardId);
-    setClosing(false);
-    setActiveBoardId(null);
+    const boardTasks = tasks.filter((x) => x.boardId === editingBoardId);
+    store.removeBoard(editingBoardId);
+    if (activeBoardId === editingBoardId) {
+      if (closeTimer.current) clearTimeout(closeTimer.current);
+      setClosing(false);
+      setActiveBoardId(null);
+    }
     toast(t.toast.boardDeleted, { label: t.toast.undo, onClick: () => store.restoreBoard(board, boardTasks) });
-  }, [activeBoardId, boards, tasks, store, toast, t]);
+  }, [editingBoardId, activeBoardId, boards, tasks, store, toast, t]);
 
   // Global keys: "?" toggles help; Escape zooms out of a board.
   useEffect(() => {
@@ -125,7 +130,7 @@ function Shell() {
         <>
           {/* Overview — the base layer; recedes behind an open board. */}
           <div className="vd-ov-layer" data-recede={boardOpen ? "" : undefined}>
-            <Overview boards={boards} tasks={tasks} onOpen={openBoard} onAddBoard={store.addBoard} />
+            <Overview boards={boards} tasks={tasks} onOpen={openBoard} onAddBoard={store.addBoard} onEditBoard={setEditingBoardId} />
           </div>
 
           {/* Focused board — zooms in from the tapped tile; rail animates in on its own. */}
@@ -143,7 +148,7 @@ function Shell() {
                 setFilter={setFilter}
                 onHelp={() => setHelp(true)}
                 onZoomOut={zoomOut}
-                onEditBoard={() => setEditingBoard(true)}
+                onEditBoard={() => setEditingBoardId(activeBoard.id)}
               />
             </>
           )}
@@ -173,11 +178,11 @@ function Shell() {
 
       <HelpSheet open={help} onClose={() => setHelp(false)} />
       <BoardEditSheet
-        open={editingBoard && !!activeBoard}
-        board={activeBoard}
+        open={!!editingBoard}
+        board={editingBoard}
         onRename={handleRenameBoard}
         onDelete={handleDeleteBoard}
-        onClose={() => setEditingBoard(false)}
+        onClose={() => setEditingBoardId(null)}
       />
     </div>
   );
@@ -300,8 +305,8 @@ function Board({
             ))}
 
           {/* Clear completed — the red trashcan rides the tail (far left) of the
-              crossed-out cells, vertically centered; only in the "done" view. */}
-          {filter === "done" && done.length > 0 && (
+              crossed-out cells, vertically centered; in the 완료 and 전체 views. */}
+          {filter !== "active" && done.length > 0 && (
             <div
               style={{ direction: "ltr", position: "relative", flexShrink: 0, display: "flex", alignItems: "center", paddingInlineStart: "var(--space-3)" }}
               onPointerEnter={() => setTrashTip(true)}

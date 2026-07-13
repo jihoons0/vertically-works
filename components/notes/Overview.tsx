@@ -15,11 +15,13 @@ export function Overview({
   tasks,
   onOpen,
   onAddBoard,
+  onEditBoard,
 }: {
   boards: Board[];
   tasks: Task[];
   onOpen: (id: string, rect: DOMRect) => void;
   onAddBoard: (title: string) => void;
+  onEditBoard: (id: string) => void;
 }) {
   const { t } = useLocale();
 
@@ -35,7 +37,7 @@ export function Overview({
           </div>
           {boards.map((b) => (
             <div key={b.id} className="tile-cell">
-              <PostItTile board={b} tasks={tasks} onOpen={onOpen} />
+              <PostItTile board={b} tasks={tasks} onOpen={onOpen} onEdit={onEditBoard} />
             </div>
           ))}
         </div>

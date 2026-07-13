@@ -39,7 +39,10 @@ export const Composer = forwardRef<ComposerHandle, { onAdd: (text: string, starr
         className="v-col"
         style={{
           flexShrink: 0,
-          width: 78,
+          // Same shrink-wrap as TaskColumn — the draft widens the composer as it
+          // wraps into more vertical lines, up to the same cap.
+          minWidth: 78,
+          maxWidth: 220,
           height: "min(64vh, 520px)",
           display: "flex",
           flexDirection: "column",

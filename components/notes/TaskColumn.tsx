@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Task } from "@/lib/notes/store";
 import { VTextField } from "@/components/notes/VTextField";
 import { useLocale } from "@/lib/notes/i18n";
@@ -10,6 +10,8 @@ const REVEAL_RAMP = 34; // px over which the trashcan fades/scales in
 const REORDER_THRESHOLD = 52; // px of horizontal travel to shift one slot
 const FLICK_VELOCITY = 0.55; // px/ms — only a decisive flick deletes under threshold
 const FLICK_MIN_TRAVEL = 44; // px — and it must have travelled far enough to be intentional
+const CHECK_HOLD = 700; // ms the checked state stays visible before the cell departs
+const CHECK_EXIT = 220; // ms scale+fade departure
 
 function TrashIcon({ size = 17 }: { size?: number }) {
   return (
@@ -46,6 +48,33 @@ export function TaskColumn({
   const [removing, setRemoving] = useState<0 | -1 | 1>(0); // exit direction once armed
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(task.text);
+  // Check-off choreography: "checking" shows the completed state in place for a
+  // beat (tap again to change your mind), then "leaving" scales/fades the cell
+  // out before the store commit removes it from the view.
+  const [checkPhase, setCheckPhase] = useState<"idle" | "checking" | "leaving">("idle");
+  const checkTimers = useRef<number[]>([]);
+
+  useEffect(() => () => checkTimers.current.forEach(clearTimeout), []);
+
+  const shownDone = task.done || checkPhase !== "idle";
+
+  const handleCheck = () => {
+    if (task.done) {
+      onToggle(task.id); // unchecking is instant — no ceremony for undo
+      return;
+    }
+    if (checkPhase === "leaving") return;
+    if (checkPhase === "checking") {
+      // Second tap during the hold = change of mind; transitions retarget smoothly.
+      checkTimers.current.forEach(clearTimeout);
+      checkTimers.current = [];
+      setCheckPhase("idle");
+      return;
+    }
+    setCheckPhase("checking");
+    checkTimers.current.push(window.setTimeout(() => setCheckPhase("leaving"), CHECK_HOLD));
+    checkTimers.current.push(window.setTimeout(() => onToggle(task.id), CHECK_HOLD + CHECK_EXIT));
+  };
 
   const start = useRef<{ x: number; y: number } | null>(null);
   const axis = useRef<"x" | "y" | null>(null);
@@ -74,7 +103,7 @@ export function TaskColumn({
   };
 
   const onPointerDown = (e: React.PointerEvent) => {
-    if (editing || removing) return;
+    if (editing || removing || leaving) return;
     if ((e.target as HTMLElement).closest("[data-no-drag]")) return;
     start.current = { x: e.clientX, y: e.clientY };
     lastSample.current = { y: e.clientY, t: performance.now() };
@@ -137,7 +166,7 @@ export function TaskColumn({
     if (editing) return;
     if (e.key === " " || e.key === "Enter") {
       e.preventDefault();
-      onToggle(task.id);
+      handleCheck();
     } else if (e.key === "Backspace" || e.key === "Delete") {
       e.preventDefault();
       onRemove(task.id);
@@ -158,14 +187,19 @@ export function TaskColumn({
   };
 
   // ── Card transform / transition ──
+  const leaving = checkPhase === "leaving";
   const cardTransform = removing
     ? `translateY(${removing * 44}px) scale(0.9)`
-    : `translate(${shift}px, ${dyEff}px) scale(${dragging ? 1.03 : 1})`;
+    : leaving
+      ? "scale(0.9)"
+      : `translate(${shift}px, ${dyEff}px) scale(${dragging ? 1.03 : 1})`;
   const cardTransition = removing
     ? "transform 200ms var(--easing-out), opacity 200ms var(--easing-out)"
-    : dragging
-      ? "box-shadow var(--duration-fast) var(--easing-out)"
-      : "transform var(--duration-base) var(--easing-out), opacity var(--duration-base) var(--easing-out), box-shadow var(--duration-base) var(--easing-out)";
+    : leaving
+      ? `transform ${CHECK_EXIT}ms var(--easing-out), opacity ${CHECK_EXIT}ms var(--easing-out)`
+      : dragging
+        ? "box-shadow var(--duration-fast) var(--easing-out)"
+        : "transform var(--duration-base) var(--easing-out), opacity var(--duration-base) var(--easing-out), box-shadow var(--duration-base) var(--easing-out), background var(--duration-base) var(--easing-default)";
 
   return (
     <div
@@ -181,7 +215,10 @@ export function TaskColumn({
       style={{
         position: "relative",
         flexShrink: 0,
-        width: 78,
+        // Shrink-wrap to the text: long titles wrap into more vertical lines and
+        // the cell widens with them, up to a cap.
+        minWidth: 78,
+        maxWidth: 220,
         height: "min(64vh, 520px)",
         // pan-x lets touch users scroll the board horizontally; vertical swipes
         // still go to the delete gesture. (Mouse drag-to-reorder is unaffected.)
@@ -264,12 +301,12 @@ export function TaskColumn({
           justifyContent: "space-between",
           padding: "var(--space-4) var(--space-2)",
           borderRadius: "var(--radius-2xl)",
-          border: `1px solid ${task.starred && !task.done ? "var(--color-border-strong)" : "var(--color-border)"}`,
-          background: task.done ? "var(--color-bg-subtle)" : "var(--color-bg)",
+          border: `1px solid ${task.starred && !shownDone ? "var(--color-border-strong)" : "var(--color-border)"}`,
+          background: shownDone ? "var(--color-bg-subtle)" : "var(--color-bg)",
           boxShadow: dragging ? "var(--shadow-lift)" : "var(--shadow-column)",
           cursor: editing ? "text" : dragging ? "grabbing" : "grab",
           userSelect: "none",
-          opacity: removing ? 0 : task.done ? 0.62 : 1,
+          opacity: removing || leaving ? 0 : shownDone ? 0.62 : 1,
           transform: cardTransform,
           transition: cardTransition,
           overflow: "hidden",
@@ -340,9 +377,10 @@ export function TaskColumn({
                 letterSpacing: "0.08em",
                 lineHeight: 1.5,
                 textAlign: "start",
-                color: task.done ? "var(--color-done)" : "var(--color-fg)",
-                textDecoration: task.done ? "line-through" : "none",
+                color: shownDone ? "var(--color-done)" : "var(--color-fg)",
+                textDecorationLine: shownDone ? "line-through" : "none",
                 textDecorationThickness: "1.5px",
+                transition: "color 200ms var(--easing-default)",
                 maxHeight: "100%",
                 overflow: "hidden",
                 padding: 0,
@@ -357,15 +395,15 @@ export function TaskColumn({
         <button
           data-no-drag
           className="pressable"
-          aria-label={task.done ? t.a11y.uncomplete : t.a11y.complete}
-          aria-pressed={task.done}
-          onClick={() => onToggle(task.id)}
+          aria-label={shownDone ? t.a11y.uncomplete : t.a11y.complete}
+          aria-pressed={shownDone}
+          onClick={handleCheck}
           style={{
             width: 30,
             height: 30,
             borderRadius: "var(--radius-full)",
-            border: `1.5px solid ${task.done ? "var(--color-fg)" : "var(--color-border-strong)"}`,
-            background: task.done ? "var(--color-fg)" : "transparent",
+            border: `1.5px solid ${shownDone ? "var(--color-fg)" : "var(--color-border-strong)"}`,
+            background: shownDone ? "var(--color-fg)" : "transparent",
             color: "var(--color-bg)",
             display: "flex",
             alignItems: "center",
@@ -376,7 +414,19 @@ export function TaskColumn({
             transition: "background var(--duration-base) var(--easing-out), border-color var(--duration-base) var(--easing-out)",
           }}
         >
-          {task.done ? "✓" : ""}
+          {/* ✓ pops in from a visible scale — never from scale(0) */}
+          <span
+            aria-hidden
+            style={{
+              display: "block",
+              lineHeight: 1,
+              transform: shownDone ? "scale(1)" : "scale(0.5)",
+              opacity: shownDone ? 1 : 0,
+              transition: "transform 180ms var(--easing-spring), opacity 140ms var(--easing-out)",
+            }}
+          >
+            ✓
+          </span>
         </button>
       </div>
     </div>
