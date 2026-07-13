@@ -282,12 +282,32 @@ a {
     grid-template-columns: 1fr 1fr;
   }
 }
+/* Breadcrumb component picker — the mobile substitute for the sidebar. */
+.components-crumb-static {
+  display: none;
+}
+.components-crumb-picker {
+  display: inline-block;
+}
+.components-crumb-picker > summary {
+  list-style: none;
+}
+.components-crumb-picker > summary::-webkit-details-marker {
+  display: none;
+}
 @media (min-width: 900px) {
   .components-detail {
     grid-template-columns: 240px 1fr;
   }
   .components-sidebar {
     display: block;
+  }
+  /* Desktop has the sidebar → breadcrumb is plain text again. */
+  .components-crumb-static {
+    display: inline;
+  }
+  .components-crumb-picker {
+    display: none;
   }
 }
 

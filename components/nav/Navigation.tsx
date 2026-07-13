@@ -338,7 +338,6 @@ className="nav-mobile-dropdown"
                                 color: subActive ? "var(--color-fg)" : "var(--color-fg-muted)",
                                 borderRadius: "var(--radius-md)",
                                 background: subActive ? "var(--color-bg-muted)" : "transparent",
-                                borderLeft: "1px solid var(--color-border)",
                               }}
                             >
                               {app.name}

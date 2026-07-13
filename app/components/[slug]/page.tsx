@@ -127,11 +127,78 @@ export default async function ComponentPage({ params }: Props) {
 
       {/* Main content */}
       <main style={{ padding: "var(--space-12) clamp(var(--space-5), 5vw, var(--space-10)) var(--space-24)", maxWidth: 860, width: "100%", minWidth: 0 }}>
-        {/* Breadcrumb */}
+        {/* Breadcrumb — on mobile (no sidebar) the current component becomes a
+            dropdown to switch between components. */}
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-8)", fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
           <Link href="/components" style={{ color: "inherit" }}>Components</Link>
           <span>›</span>
-          <span style={{ color: "var(--color-fg)" }}>{comp.name}</span>
+          <span className="components-crumb-static" style={{ color: "var(--color-fg)" }}>{comp.name}</span>
+          <details className="components-crumb-picker" style={{ position: "relative" }}>
+            <summary
+              style={{
+                listStyle: "none",
+                cursor: "pointer",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 4,
+                color: "var(--color-fg)",
+                fontWeight: 500,
+              }}
+            >
+              {comp.name}
+              <span aria-hidden style={{ fontSize: "0.7em", color: "var(--color-fg-subtle)" }}>▾</span>
+            </summary>
+            <div
+              style={{
+                position: "absolute",
+                top: "calc(100% + var(--space-2))",
+                insetInlineStart: 0,
+                zIndex: 30,
+                minWidth: 208,
+                maxHeight: "62vh",
+                overflowY: "auto",
+                background: "var(--color-bg)",
+                border: "1px solid var(--color-border)",
+                borderRadius: "var(--radius-lg)",
+                boxShadow: "var(--shadow-lift)",
+                padding: "var(--space-2)",
+              }}
+            >
+              {Array.from(new Set(allComponents.map((c) => c.category))).map((cat) => (
+                <div key={cat} style={{ marginBottom: "var(--space-1)" }}>
+                  <div
+                    style={{
+                      fontSize: "0.625rem",
+                      fontWeight: 700,
+                      color: "var(--color-fg-subtle)",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                      padding: "var(--space-2) var(--space-3) var(--space-1)",
+                    }}
+                  >
+                    {cat}
+                  </div>
+                  {allComponents.filter((c) => c.category === cat).map((c) => (
+                    <Link
+                      key={c.slug}
+                      href={`/components/${c.slug}`}
+                      style={{
+                        display: "block",
+                        padding: "var(--space-2) var(--space-3)",
+                        borderRadius: "var(--radius-md)",
+                        fontSize: "0.875rem",
+                        color: c.slug === slug ? "var(--color-fg)" : "var(--color-fg-muted)",
+                        fontWeight: c.slug === slug ? 600 : 400,
+                        background: c.slug === slug ? "var(--color-bg-muted)" : "transparent",
+                      }}
+                    >
+                      {c.name}
+                    </Link>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </details>
         </div>
 
         {/* Header */}

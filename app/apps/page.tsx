@@ -17,7 +17,7 @@ const APPS = [
     status: "Live",
     video: "/videos/vertically-verse.mp4",
     description:
-      "A fully vertical, right-to-left Bible reader for Korean, Japanese, and Chinese. Every control, gesture, transition, and reading affordance rethought for the top→bottom, R→L axis.",
+      "A fully vertical, right-to-left Bible reader for Korean, Japanese, and Chinese.",
     challenges: [
       "Column-based layout that snaps per column, not per page",
       "Tate-chu-yoko (縦中横) for verse numbers and digit groups",
@@ -28,12 +28,12 @@ const APPS = [
   },
   {
     id: "notes",
-    name: "To-do",
+    name: "Vertically Notes",
     platform: "Web",
     status: "Live",
-    href: "/apps/notes",
+    href: "/apps/vertically-do",
     description:
-      "Vertically Notes · a to-do list rethought for the vertical, right-to-left axis. Tasks are columns you read top→bottom, newest at the reading start; drag a column down to delete (a trashcan opens behind it in the vacated slot), sideways to reorder, and switch the whole interface across 한 / あ / 中.",
+      "A to-do list on the vertical, right-to-left axis — tasks are columns you read top→bottom and reorder sideways.",
     challenges: [
       "Tasks as full-height columns that stack right→left and scroll on the column axis",
       "Vertical pull-to-delete with a trashcan revealed behind the card",
@@ -48,7 +48,7 @@ const APPS = [
     platform: "Web",
     status: "WIP",
     description:
-      "Vertically Listen · a podcast player rethought for the vertical, right-to-left axis. Today's top CJK shows (한국·일본·중국·대만·홍콩) are a shelf of full-height columns, episodes stream in full over open RSS, and Podcasting 2.0 transcripts fall as time-synced vertical verse with tap-to-seek. Navigation and transport stay horizontal · a breadcrumb trace with the show's artwork up top, a conventional player bar (±15초, previous/next, volume) at the bottom · while reading stays vertical.",
+      "A podcast player on the vertical, right-to-left axis — CJK shows over open RSS, with transcripts as time-synced vertical verse you tap to seek.",
     challenges: [
       "Hierarchy you can trace · shows › episodes › playing, every crumb live, playback never interrupted while browsing",
       "Shelf cells as full-height rounded columns with status pills, stacking right→left",
