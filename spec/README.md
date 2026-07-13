@@ -25,6 +25,7 @@ shared **VerticallyKit** package — implements *these rules* in its own stack.
 | **Design tokens** (color light/dark/sepia, spacing, radius, motion) | [`registry/tokens.css`](../registry/tokens.css) — the values; installable via `npx verticallyworks init` |
 | **Component semantics** (button, toggle, sheet, tabs, text-field, tooltip, list-cell) | [`registry/registry.json`](../registry/registry.json) titles/descriptions + [`registry/components/`](../registry/components) (TS reference impl) |
 | **Swift reference implementation** | `../../VerticallyKit` (engine) + each app's `AppTheme`/`Motion`/`Theme` (tokens) |
+| **New-project kickoff prompt** | [`docs/02_PROJECT_KICKOFF.md`](../docs/02_PROJECT_KICKOFF.md) — start a web project that inherits all of the above |
 
 ## Implementations of the spec
 
