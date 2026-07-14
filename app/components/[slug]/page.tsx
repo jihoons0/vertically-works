@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowLeft, ArrowRight, Check, ChevronRight, X } from "lucide-react";
 import { notFound } from "next/navigation";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
@@ -33,7 +34,7 @@ function DosDonts({ doList, dontList }: { doList: string[]; dontList: string[] }
         <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
           {doList.map((item, i) => (
             <li key={i} style={{ display: "flex", gap: "var(--space-3)", alignItems: "flex-start" }}>
-              <span style={{ color: "#16a34a", flexShrink: 0, fontSize: "0.875rem", marginTop: 2 }}>✓</span>
+              <Check size={14} strokeWidth={2.5} aria-hidden style={{ color: "#16a34a", flexShrink: 0, marginTop: 3 }} />
               <span style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", lineHeight: 1.6 }}>{item}</span>
             </li>
           ))}
@@ -46,7 +47,7 @@ function DosDonts({ doList, dontList }: { doList: string[]; dontList: string[] }
         <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
           {dontList.map((item, i) => (
             <li key={i} style={{ display: "flex", gap: "var(--space-3)", alignItems: "flex-start" }}>
-              <span style={{ color: "#dc2626", flexShrink: 0, fontSize: "0.875rem", marginTop: 2 }}>✗</span>
+              <X size={14} strokeWidth={2.5} aria-hidden style={{ color: "#dc2626", flexShrink: 0, marginTop: 3 }} />
               <span style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", lineHeight: 1.6 }}>{item}</span>
             </li>
           ))}
@@ -79,7 +80,7 @@ export default async function ComponentPage({ params }: Props) {
         {/* Breadcrumb · the mobile component picker lives in the docs layout bar */}
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-8)", fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
           <Link href="/components" style={{ color: "inherit" }}>Components</Link>
-          <span>›</span>
+          <ChevronRight size={12} strokeWidth={2} aria-hidden style={{ opacity: 0.8 }} />
           <span style={{ color: "var(--color-fg)" }}>{comp.name}</span>
         </div>
 
@@ -261,7 +262,7 @@ export default async function ComponentPage({ params }: Props) {
               }}
               className="card-hover-border"
             >
-              <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}><span aria-hidden style={{ fontSize: "1.05em", lineHeight: 1, transform: "rotate(180deg)" }}>➔</span> Previous</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}><ArrowLeft size={13} strokeWidth={2.25} aria-hidden /> Previous</span>
               <span style={{ fontSize: "0.9375rem", fontWeight: 600, color: "var(--color-fg)" }}>{prev.name}</span>
             </Link>
           ) : <div />}
@@ -282,7 +283,7 @@ export default async function ComponentPage({ params }: Props) {
               }}
               className="card-hover-border"
             >
-              <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: 6, fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>Next <span aria-hidden style={{ fontSize: "1.05em", lineHeight: 1 }}>➔</span></span>
+              <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: 6, fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>Next <ArrowRight size={13} strokeWidth={2.25} aria-hidden /></span>
               <span style={{ fontSize: "0.9375rem", fontWeight: 600, color: "var(--color-fg)" }}>{next.name}</span>
             </Link>
           ) : <div />}

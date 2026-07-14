@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight, ArrowUpRight, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
 import { COMPONENTS_REGISTRY } from "@/lib/components-registry";
 
@@ -16,7 +17,7 @@ export default function ComponentsIntroductionPage() {
       {/* Breadcrumb · matches component pages */}
       <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-8)", fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
         <span>Components</span>
-        <span>›</span>
+        <ChevronRight size={12} strokeWidth={2} aria-hidden style={{ opacity: 0.8 }} />
         <span style={{ color: "var(--color-fg)" }}>Introduction</span>
       </div>
 
@@ -43,7 +44,7 @@ export default function ComponentsIntroductionPage() {
           }}
         >
           Set up
-          <span aria-hidden style={{ fontSize: "1.05em", lineHeight: 1 }}>➔</span>
+          <ArrowRight size={16} strokeWidth={2.25} aria-hidden />
         </Link>
         <Link
           href="https://github.com/jihoons0/vertically-works"
@@ -58,7 +59,8 @@ export default function ComponentsIntroductionPage() {
             border: "1px solid var(--color-border-strong)", color: "var(--color-fg)",
           }}
         >
-          GitHub ↗
+          GitHub
+          <ArrowUpRight size={16} strokeWidth={2.25} aria-hidden />
         </Link>
       </div>
 

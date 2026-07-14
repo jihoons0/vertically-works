@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { AppHero } from "@/components/apps/AppHero";
@@ -83,7 +84,8 @@ export default function VerticallyDoPage() {
                 flexShrink: 0,
               }}
             >
-              Open full screen ↗
+              Open full screen
+              <ArrowUpRight size={16} strokeWidth={2.25} aria-hidden />
             </Link>
           </div>
           <AppEmbed src="/apps/notes" title="Vertically Notes · live to-do app" height={560} />
@@ -226,7 +228,7 @@ export default function VerticallyDoPage() {
               flexShrink: 0,
             }}
           >
-            Open Vertically Notes <span aria-hidden style={{ fontSize: "1.05em", lineHeight: 1 }}>➔</span>
+            Open Vertically Notes <ArrowRight size={15} strokeWidth={2.25} aria-hidden />
           </Link>
         </div>
       </div>

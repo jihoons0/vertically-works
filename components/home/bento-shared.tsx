@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /** Preview language for the bento demos. */
@@ -305,7 +306,7 @@ export function BentoTile({
         }}
       >
         View component
-        <span style={{ fontSize: "1.05em", lineHeight: 1, textDecoration: "none" }}>➔</span>
+        <ArrowRight size={13} strokeWidth={2.25} aria-hidden />
       </span>
 
       {/* Full description · screen readers only, the tile keeps teaching */}

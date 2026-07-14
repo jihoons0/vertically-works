@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { InstallBanner } from "@/components/ui/InstallBanner";
@@ -178,11 +179,7 @@ export default function ResourcesPage() {
                   </div>
 
                   {item.href.startsWith("http") && (
-                    <svg style={{ color: "var(--color-fg-subtle)", flexShrink: 0, marginTop: 3 }} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                      <polyline points="15 3 21 3 21 9" />
-                      <line x1="10" y1="14" x2="21" y2="3" />
-                    </svg>
+                    <ArrowUpRight size={15} strokeWidth={2.25} aria-hidden style={{ color: "var(--color-fg-subtle)", flexShrink: 0, marginTop: 3 }} />
                   )}
                 </Link>
               ))}

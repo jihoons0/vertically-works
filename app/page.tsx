@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { ChallengeVisual } from "@/components/ChallengeVisual";
@@ -127,7 +128,7 @@ function SectionCta({ href, children }: { href: string; children: React.ReactNod
       }}
     >
       {children}
-      <span aria-hidden style={{ fontSize: "1.05em", lineHeight: 1 }}>➔</span>
+      <ArrowRight size={16} strokeWidth={2.25} aria-hidden />
     </Link>
   );
 }
@@ -192,7 +193,7 @@ export default function HomePage() {
                 }}
               >
                 See the apps
-                <span aria-hidden style={{ fontSize: "1.05em", lineHeight: 1 }}>➔</span>
+                <ArrowRight size={16} strokeWidth={2.25} aria-hidden />
               </Link>
             </div>
           </Reveal>

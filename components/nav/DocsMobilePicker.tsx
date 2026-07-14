@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 import { usePathname } from "next/navigation";
 import type { DocsNavItem } from "./DocsSidebar";
 
@@ -58,7 +59,7 @@ export function DocsMobilePicker({ items }: { items: DocsNavItem[] }) {
         }}
       >
         {current}
-        <span aria-hidden style={{ fontSize: "0.7em", color: "var(--color-fg-subtle)" }}>▾</span>
+        <ChevronDown size={12} strokeWidth={2.5} aria-hidden style={{ color: "var(--color-fg-subtle)" }} />
       </summary>
 
       <div

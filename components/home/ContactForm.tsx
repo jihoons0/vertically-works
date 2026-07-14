@@ -22,6 +22,7 @@
 
 import { useId, useState, type CSSProperties, type FormEvent, type InputHTMLAttributes } from "react";
 import { usePreviewLang } from "@/components/providers/PreviewLangProvider";
+import { Check } from "lucide-react";
 import type { Lang } from "@/components/home/bento-shared";
 
 const CONTACT_EMAIL = "office@designwithorbital.com";
@@ -199,7 +200,7 @@ export function ContactForm() {
               style={{ width: 200 }}
             />
             <span aria-live="polite" style={{ flex: 1, minWidth: 120, fontSize: "0.75rem", color: "var(--color-fg)", fontWeight: 500 }}>
-              {sent ? "✓ Draft opened — send it from your mail app." : errors.body ?? ""}
+              {sent ? <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Check size={12} strokeWidth={2.5} aria-hidden /> Draft opened — send it from your mail app.</span> : errors.body ?? ""}
             </span>
             <button
               type="submit"

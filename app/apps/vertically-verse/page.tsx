@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
+import { ArrowUpRight } from "lucide-react";
 import { AppHero } from "@/components/apps/AppHero";
 import { AppVideo } from "@/components/home/AppVideo";
 
@@ -112,7 +113,7 @@ export default function VerticallyVersePage() {
                     background: "var(--color-fg)", color: "var(--color-bg)",
                   }}
                 >
-                  Join the TestFlight beta ↗
+                  Join the TestFlight beta <ArrowUpRight size={15} strokeWidth={2.25} aria-hidden style={{ display: "inline-block", verticalAlign: "-2px", marginLeft: 2 }} />
                 </a>
               </div>
             </div>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowUpRight, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
 import { CodeBlock } from "@/components/ui/CodeBlock";
 import { InstallCommand } from "@/components/ui/InstallCommand";
@@ -49,7 +50,7 @@ export default function SetupPage() {
       {/* Breadcrumb · matches component pages */}
       <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-8)", fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
         <Link href="/components" style={{ color: "inherit" }}>Components</Link>
-        <span>›</span>
+        <ChevronRight size={12} strokeWidth={2} aria-hidden style={{ opacity: 0.8 }} />
         <span style={{ color: "var(--color-fg)" }}>Set up</span>
       </div>
 
@@ -153,7 +154,8 @@ export default function SetupPage() {
             color: "var(--color-fg)",
           }}
         >
-          github.com/jihoons0/vertically-works ↗
+          github.com/jihoons0/vertically-works
+          <ArrowUpRight size={15} strokeWidth={2.25} aria-hidden />
         </Link>
       </div>
     </main>

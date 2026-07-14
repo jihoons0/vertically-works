@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { CjkToggle } from "@/components/home/bento-shared";
 import { usePreviewLang } from "@/components/providers/PreviewLangProvider";
+import { ChevronDown, Menu, X } from "lucide-react";
 
 // First-visit hint on the language toggle · dismissed once, remembered forever.
 const LANG_HINT_KEY = "vw-lang-hint-dismissed";
@@ -142,24 +143,16 @@ export function Navigation() {
                 >
                   {link.label}
                   {hasDropdown && (
-                    <svg
-                      width="9"
-                      height="9"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                    <ChevronDown
+                      size={11}
+                      strokeWidth={2.5}
                       aria-hidden
                       style={{
                         transform: appsOpen ? "rotate(180deg)" : "none",
                         transition: "transform var(--duration-fast) var(--easing-out)",
                         opacity: 0.6,
                       }}
-                    >
-                      <path d="m6 9 6 6 6-6" />
-                    </svg>
+                    />
                   )}
                 </Link>
 
@@ -342,7 +335,7 @@ export function Navigation() {
                     padding: 0,
                   }}
                 >
-                  ✕
+                  <X size={11} strokeWidth={2.5} aria-hidden />
                 </button>
               </span>
             )}
@@ -370,18 +363,7 @@ export function Navigation() {
             }}
             className="nav-mobile-btn"
           >
-            {mobileOpen ? (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            ) : (
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
-                <line x1="3" y1="12" x2="21" y2="12" />
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <line x1="3" y1="18" x2="21" y2="18" />
-              </svg>
-            )}
+{mobileOpen ? <X size={14} strokeWidth={2} aria-hidden /> : <Menu size={14} strokeWidth={2} aria-hidden />}
           </button>
         </div>
       </nav>
