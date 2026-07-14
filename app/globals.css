@@ -240,6 +240,100 @@ a {
   }
 }
 
+/* ─── Challenges · 8 cards as 4×2 on desktop ─── */
+.challenges-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 640px) {
+  .challenges-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1080px) {
+  .challenges-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* ─── Nav preview-language toggle · tucked away on narrow screens ─── */
+@media (max-width: 699px) {
+  .nav-lang {
+    display: none;
+  }
+}
+
+/* ─── Install section · pitch left, install card right on wide screens ─── */
+.install-twoup {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: center;
+}
+@media (min-width: 880px) {
+  .install-twoup {
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 480px);
+    gap: var(--space-16);
+  }
+}
+
+/* ─── Accent tint · the "slight light-blue gradient" moments ─── */
+/* A soft radial wash for heroes … */
+.hero-wash {
+  background: radial-gradient(1100px 520px at 82% -18%, var(--color-accent-soft), transparent 62%);
+}
+/* … and a gentle diagonal tint for feature panels. */
+.tint-panel {
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--color-accent-soft) 55%, var(--color-bg)) 0%,
+    var(--color-bg-subtle) 72%
+  );
+}
+/* Cloud fade · white at the top easing into light blue; the (home) footer
+   carries the same end color so the page settles into it seamlessly. */
+.cloud-fade {
+  background: linear-gradient(to bottom, var(--color-bg) 0%, var(--color-accent-soft) 100%);
+}
+
+/* ─── Contact card (home) · one box, hairline between sender and compose ─── */
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+.contact-sender {
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+.contact-compose {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--color-border);
+}
+@media (min-width: 880px) {
+  .contact-card {
+    flex-direction: row;
+  }
+  .contact-sender {
+    width: 300px;
+    flex-shrink: 0;
+  }
+  .contact-compose {
+    border-top: none;
+    border-left: 1px solid var(--color-border);
+  }
+}
+
 /* ─── Playground layout (standalone page + home embed) ─── */
 .playground-grid {
   display: grid;
@@ -316,12 +410,15 @@ a {
 .card-hover {
   border-color: var(--color-border);
   background: var(--color-bg);
+  box-shadow: var(--shadow-soft);
   transition: border-color var(--duration-fast) var(--easing-default),
-              background var(--duration-fast) var(--easing-default);
+              background var(--duration-fast) var(--easing-default),
+              box-shadow var(--duration-base) var(--easing-out);
 }
 .card-hover:hover {
   border-color: var(--color-border-strong);
-  background: var(--color-bg-subtle);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-lift);
 }
 
 .card-hover-border {
@@ -348,14 +445,15 @@ a {
 }
 
 .btn-outline-hover {
-  background: transparent;
-  border-color: var(--color-border);
+  background: var(--color-bg-muted);
+  border-color: transparent;
+  font-weight: 600 !important;
   transition: border-color var(--duration-fast) var(--easing-default),
               background var(--duration-fast) var(--easing-default);
 }
 .btn-outline-hover:hover {
-  border-color: var(--color-border-strong);
-  background: var(--color-bg-subtle);
+  border-color: transparent;
+  background: var(--color-border);
 }
 
 .btn-subtle-hover {
@@ -370,8 +468,10 @@ a {
 /* Section-level "view all" CTAs — outline at rest, full monochrome invert on
    hover so the action registers on both plain and subtle section backgrounds. */
 .btn-cta-hover {
-  background: transparent;
-  border-color: var(--color-border-strong);
+  /* Filled soft base · ghost buttons read as buttons at rest */
+  background: var(--color-bg-muted);
+  border-color: transparent;
+  font-weight: 600 !important;
   transition: background var(--duration-fast) var(--easing-default),
               color var(--duration-fast) var(--easing-default),
               border-color var(--duration-fast) var(--easing-default);

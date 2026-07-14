@@ -55,6 +55,12 @@
       "docs": "https://vertically.works/components/text-field"
     },
     {
+      "name": "tiered-page",
+      "title": "Tiered Page",
+      "description": "A static book page of vertical columns split into two stacked tiers · with a verse-number band + hairline, or as a plain two-row spread divided by a rule. Pages turn; the page never scrolls.",
+      "docs": "https://vertically.works/components/tiered-page"
+    },
+    {
       "name": "tabs",
       "title": "Vertical Tabs",
       "description": "A tab rail on the reading axis: vertical labels at the right edge, panels to their left, full tablist keyboard semantics.",

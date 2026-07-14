@@ -20,10 +20,12 @@
   --color-fg: #0a0a0a;
   --color-fg-muted: #737373;
   --color-fg-subtle: #a3a3a3;
-  --color-border: #e5e5e5;
-  --color-border-strong: #d4d4d4;
+  --color-border: #ededed;
+  --color-border-strong: #dfdfdf;
   --color-accent: #0a0a0a;
   --color-accent-fg: #ffffff;
+  /* Light-blue tint · used sparingly for gradient washes and highlights */
+  --color-accent-soft: #e8f2ff;
 
   /* Vertical text label colors */
   --color-vt-label: #0a0a0a;
@@ -37,10 +39,11 @@
   --color-fg: #0a0a0a;
   --color-fg-muted: #737373;
   --color-fg-subtle: #a3a3a3;
-  --color-border: #e5e5e5;
-  --color-border-strong: #d4d4d4;
+  --color-border: #ededed;
+  --color-border-strong: #dfdfdf;
   --color-accent: #0a0a0a;
   --color-accent-fg: #ffffff;
+  --color-accent-soft: #e8f2ff;
 
   --color-vt-label: #0a0a0a;
   --color-vt-label-muted: #a3a3a3;
@@ -53,10 +56,11 @@
   --color-fg: #fafafa;
   --color-fg-muted: #a3a3a3;
   --color-fg-subtle: #525252;
-  --color-border: #262626;
-  --color-border-strong: #404040;
+  --color-border: #212121;
+  --color-border-strong: #303030;
   --color-accent: #fafafa;
   --color-accent-fg: #0a0a0a;
+  --color-accent-soft: #101a2b;
 
   --color-vt-label: #fafafa;
   --color-vt-label-muted: #525252;
@@ -69,10 +73,11 @@
   --color-fg: #4b3b2b;
   --color-fg-muted: #7a6650;
   --color-fg-subtle: #a08a6d;
-  --color-border: #ddcdac;
-  --color-border-strong: #c8b58e;
+  --color-border: #e4d7b9;
+  --color-border-strong: #d3c29f;
   --color-accent: #4b3b2b;
   --color-accent-fg: #f4ecd8;
+  --color-accent-soft: #eadfc4;
 
   --color-vt-label: #4b3b2b;
   --color-vt-label-muted: #a08a6d;
@@ -96,12 +101,32 @@
 }
 
 /* ─── Radius scale ─── */
+/* Generous, friendly corners (Toss-style) · everything rounder by a step. */
 :root {
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
+}
+
+/* ─── Shadow scale ─── */
+/* Soft, large, low-alpha and slightly cool · cards float instead of sitting
+   behind hard outlines. Overlays get the deepest layer. */
+:root {
+  --shadow-soft: 0 1px 2px rgba(23, 37, 84, 0.03), 0 8px 24px rgba(23, 37, 84, 0.06);
+  --shadow-lift: 0 2px 6px rgba(23, 37, 84, 0.04), 0 16px 40px rgba(23, 37, 84, 0.10);
+  --shadow-overlay: 0 8px 24px rgba(23, 37, 84, 0.10), 0 28px 72px rgba(23, 37, 84, 0.18);
+}
+[data-theme="dark"] {
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.35), 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lift: 0 2px 6px rgba(0, 0, 0, 0.4), 0 16px 40px rgba(0, 0, 0, 0.55);
+  --shadow-overlay: 0 8px 24px rgba(0, 0, 0, 0.5), 0 28px 72px rgba(0, 0, 0, 0.65);
+}
+[data-theme="sepia"] {
+  --shadow-soft: 0 1px 2px rgba(75, 59, 43, 0.05), 0 8px 24px rgba(75, 59, 43, 0.08);
+  --shadow-lift: 0 2px 6px rgba(75, 59, 43, 0.06), 0 16px 40px rgba(75, 59, 43, 0.12);
+  --shadow-overlay: 0 8px 24px rgba(75, 59, 43, 0.12), 0 28px 72px rgba(75, 59, 43, 0.2);
 }
 
 /* ─── Corner smoothing ─── */
