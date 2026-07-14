@@ -367,6 +367,9 @@ a {
   grid-template-columns: 1fr;
   min-height: calc(100dvh - 56px);
   align-items: start;
+  /* Center the rail + content block · equal gutters left and right */
+  max-width: 1100px;
+  margin: 0 auto;
 }
 .components-sidebar {
   display: none;

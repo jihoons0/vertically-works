@@ -8,23 +8,6 @@ export const metadata: Metadata = {
     "The component system for vertical writing interfaces: real writing-mode primitives, accessible by default, source you own.",
 };
 
-// The docs' front page (Toss-docs style): what the system is, what it
-// guarantees, how to start · then the full component index by category.
-const GOALS = [
-  {
-    title: "Correct by default",
-    body: "Every component is set on the real vertical axis · writing-mode: vertical-rl with text-orientation: mixed · never a rotated horizontal control. Orientation, punctuation, and motion follow the reading direction.",
-  },
-  {
-    title: "Accessible from the first line",
-    body: "Keyboard, touch, screen reader, and reduced-motion behavior ship inside every component, not as an afterthought. Semantics stay native: switches are switches, tabs are tabs.",
-  },
-  {
-    title: "Source you own",
-    body: "Components copy into your project as plain files · tokens-only styling, zero runtime dependency. Change anything; nothing breaks on update because there is nothing to update.",
-  },
-];
-
 export default function ComponentsIntroductionPage() {
   const categories = Array.from(new Set(COMPONENTS_REGISTRY.map((c) => c.category)));
 
@@ -77,42 +60,6 @@ export default function ComponentsIntroductionPage() {
           GitHub ↗
         </Link>
       </div>
-
-      {/* What the system guarantees */}
-      <section style={{ marginBottom: "var(--space-16)" }}>
-        <h2 style={{ fontSize: "1.5rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-fg)", margin: "0 0 var(--space-6)" }}>
-          What every component guarantees
-        </h2>
-        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-          {GOALS.map((g, i) => (
-            <div
-              key={g.title}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "auto 1fr",
-                gap: "var(--space-5)",
-                padding: "var(--space-6)",
-                borderRadius: "var(--radius-xl)",
-                border: "1px solid var(--color-border)",
-                background: "var(--color-bg)",
-                alignItems: "start",
-              }}
-            >
-              <span style={{ fontSize: "0.75rem", fontFamily: "var(--font-geist-mono)", color: "var(--color-fg-subtle)", paddingTop: 3 }}>
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div>
-                <h3 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--color-fg)", margin: "0 0 var(--space-2)", letterSpacing: "-0.01em" }}>
-                  {g.title}
-                </h3>
-                <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.65 }}>
-                  {g.body}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* Component index */}
       <section>
