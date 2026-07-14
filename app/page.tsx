@@ -242,23 +242,21 @@ export default function HomePage() {
           {APPLICATIONS.map((app, i) => (
             <Reveal key={app.id} delay={i * 70}>
               {app.href ? (
-                <Beam>
-                  <Link
-                    href={app.href}
-                    className="card-hover"
-                    style={{
-                      display: "block",
-                      borderRadius: "var(--radius-xl)",
-                      // width/style only — the `border` shorthand would reset
-                      // border-color to currentColor over .card-hover's token
-                      borderWidth: 1,
-                      borderStyle: "solid",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <AppCardContent app={app} />
-                  </Link>
-                </Beam>
+                <Link
+                  href={app.href}
+                  className="card-hover"
+                  style={{
+                    display: "block",
+                    borderRadius: "var(--radius-xl)",
+                    // width/style only — the `border` shorthand would reset
+                    // border-color to currentColor over .card-hover's token
+                    borderWidth: 1,
+                    borderStyle: "solid",
+                    overflow: "hidden",
+                  }}
+                >
+                  <AppCardContent app={app} />
+                </Link>
               ) : (
                 <div
                   style={{
