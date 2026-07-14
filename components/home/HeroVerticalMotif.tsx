@@ -6,9 +6,10 @@ import { usePreviewLang } from "@/components/providers/PreviewLangProvider";
 // "Vertical writing" in Japanese, Korean, and Chinese · the columns reveal
 // once in reading order (rightmost column first, each column top→bottom) and
 // then stay put; a slow shimmer travels the reading direction afterwards.
-// The selected preview language leads (rightmost, strongest ink).
+// The selected preview language leads (rightmost) inside an inverted pill ·
+// the same active treatment as the nav's 한/あ/中 toggle.
 const WORDS: Record<Lang, string> = { ja: "縦書き", ko: "세로쓰기", zh: "竖排" };
-const COLORS = ["var(--color-fg)", "var(--color-fg-muted)", "var(--color-fg-subtle)"];
+const COLORS = ["var(--color-bg)", "var(--color-fg-muted)", "var(--color-fg-subtle)"];
 
 const COLUMN_STAGGER = 450;
 const CHAR_STAGGER = 110;
@@ -46,6 +47,15 @@ export function HeroVerticalMotif() {
             lineHeight: 1,
             color: col.color,
             display: "block",
+            // Shared vertical padding keeps every column's first character on
+            // the same baseline; only the active pill adds sides and ink.
+            padding: colIndex === 0 ? "0.32em 0.2em 0.14em" : "0.32em 0 0.14em",
+            background: colIndex === 0 ? "var(--color-fg)" : "transparent",
+            borderRadius: colIndex === 0 ? "var(--radius-lg)" : undefined,
+            animation:
+              reduced || colIndex !== 0
+                ? undefined
+                : "vw-hero-char var(--duration-page) var(--easing-out) both",
           }}
         >
           {Array.from(col.text).map((char, charIndex) => (

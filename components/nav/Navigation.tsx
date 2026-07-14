@@ -248,7 +248,7 @@ export function Navigation() {
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginLeft: "auto" }}>
           <span className="nav-extras">
           <Link
-            href="https://github.com/jihoons"
+            href="https://github.com/jihoons0/vertically-works"
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub"
@@ -256,8 +256,8 @@ export function Navigation() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              width: 32,
-              height: 32,
+              width: 38,
+              height: 38,
               borderRadius: "var(--radius-md)",
               color: "var(--color-fg-muted)",
               transition: `color var(--duration-fast) var(--easing-default)`,
@@ -435,7 +435,7 @@ className="nav-mobile-dropdown"
           {/* GitHub + theme · tucked into the menu on mobile */}
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", marginTop: "var(--space-4)", paddingTop: "var(--space-4)", borderTop: "1px solid var(--color-border)" }}>
             <Link
-              href="https://github.com/jihoons"
+              href="https://github.com/jihoons0/vertically-works"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMobileOpen(false)}

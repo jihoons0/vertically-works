@@ -11,7 +11,7 @@ export function ThemeToggle() {
   useEffect(() => setMounted(true), []);
 
   if (!mounted) {
-    return <div className="w-8 h-8" aria-hidden />;
+    return <div style={{ width: 38, height: 38 }} aria-hidden />;
   }
 
   const isDark = theme === "dark";
@@ -21,8 +21,9 @@ export function ThemeToggle() {
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       style={{
-        width: 32,
-        height: 32,
+        // 38px square · matches the 한/あ/中 toggle's overall height
+        width: 38,
+        height: 38,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",

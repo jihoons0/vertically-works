@@ -68,7 +68,7 @@ export function Footer({ transparent = false }: { transparent?: boolean }) {
                 Connect
               </span>
               {[
-                { href: "https://github.com/jihoons", label: "GitHub" },
+                { href: "https://github.com/jihoons0/vertically-works", label: "GitHub" },
                 { href: "https://uxdesign.cc/vertically-works-design-exploration-on-vertical-typography-75164eed11a8", label: "Original Article" },
                 { href: "mailto:jihoon8846@gmail.com", label: "Email" },
               ].map((link) => (
