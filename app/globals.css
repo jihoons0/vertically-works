@@ -85,10 +85,16 @@ a {
   text-decoration: none;
 }
 
-/* ─── Scrollbar (thin) ─── */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-border-strong) transparent;
+/* ─── Scrollbar (thin) ───
+   Chromium/Safari take the slim 6px ::-webkit-scrollbar styling below.
+   `scrollbar-width` must NOT be set there — since Chrome 121 it disables the
+   webkit customization and falls back to the chunkier native thin bar. Only
+   Firefox (no ::-webkit-scrollbar support) gets the standard property. */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-border-strong) transparent;
+  }
 }
 ::-webkit-scrollbar {
   width: 6px;
