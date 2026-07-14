@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { CjkToggle } from "@/components/home/bento-shared";
 import { usePreviewLang } from "@/components/providers/PreviewLangProvider";
+
+// First-visit hint on the language toggle · dismissed once, remembered forever.
+const LANG_HINT_KEY = "vw-lang-hint-dismissed";
 
 const NAV_LINKS = [
   { href: "/apps", label: "Applications" },
@@ -27,6 +30,23 @@ export function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [appsOpen, setAppsOpen] = useState(false);
   const { lang, setLang } = usePreviewLang();
+
+  const [showLangHint, setShowLangHint] = useState(false);
+  useEffect(() => {
+    try {
+      if (!window.localStorage.getItem(LANG_HINT_KEY)) setShowLangHint(true);
+    } catch {
+      /* storage unavailable · never show */
+    }
+  }, []);
+  const dismissLangHint = () => {
+    setShowLangHint(false);
+    try {
+      window.localStorage.setItem(LANG_HINT_KEY, "1");
+    } catch {
+      /* in-memory only */
+    }
+  };
 
   return (
     <header
@@ -230,8 +250,10 @@ export function Navigation() {
           })}
         </ul>
 
-        {/* Right side · GitHub sits left of the language toggle */}
+        {/* Right side · GitHub sits left of the language toggle; on mobile the
+            GitHub/theme pair moves into the menu so 한/あ/中 keeps its spot */}
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginLeft: "auto" }}>
+          <span className="nav-extras">
           <Link
             href="https://github.com/jihoons"
             target="_blank"
@@ -254,13 +276,81 @@ export function Navigation() {
               <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" />
             </svg>
           </Link>
-
-          {/* Preview language · drives every vertical-UI demo site-wide */}
-          <span className="nav-lang">
-            <CjkToggle value={lang} onChange={setLang} />
           </span>
 
-          <ThemeToggle />
+          {/* Preview language · drives every vertical-UI demo site-wide */}
+          <span className="nav-lang" style={{ position: "relative", display: "inline-flex" }}>
+            <CjkToggle
+              value={lang}
+              onChange={(l) => {
+                setLang(l);
+                if (showLangHint) dismissLangHint();
+              }}
+            />
+            {showLangHint && (
+              <span
+                role="status"
+                style={{
+                  position: "absolute",
+                  top: "calc(100% + 10px)",
+                  right: 0,
+                  zIndex: 70,
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "var(--space-2)",
+                  whiteSpace: "nowrap",
+                  background: "var(--color-fg)",
+                  color: "var(--color-bg)",
+                  fontSize: "0.75rem",
+                  fontWeight: 500,
+                  padding: "var(--space-2) var(--space-2) var(--space-2) var(--space-3)",
+                  borderRadius: "var(--radius-lg)",
+                  boxShadow: "var(--shadow-overlay)",
+                }}
+              >
+                {/* caret · points up at the toggle */}
+                <span
+                  aria-hidden
+                  style={{
+                    position: "absolute",
+                    top: -4,
+                    right: 44,
+                    width: 8,
+                    height: 8,
+                    background: "var(--color-fg)",
+                    transform: "rotate(45deg)",
+                  }}
+                />
+                Change demo language
+                <button
+                  onClick={dismissLangHint}
+                  aria-label="Dismiss"
+                  className="pressable"
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    width: 18,
+                    height: 18,
+                    borderRadius: "var(--radius-full)",
+                    border: "none",
+                    background: "color-mix(in srgb, var(--color-bg) 22%, transparent)",
+                    color: "var(--color-bg)",
+                    cursor: "pointer",
+                    fontSize: "0.6875rem",
+                    lineHeight: 1,
+                    padding: 0,
+                  }}
+                >
+                  ✕
+                </button>
+              </span>
+            )}
+          </span>
+
+          <span className="nav-extras">
+            <ThemeToggle />
+          </span>
 
           {/* Mobile hamburger · visibility controlled by .nav-mobile-btn CSS class */}
           <button
@@ -359,6 +449,23 @@ className="nav-mobile-dropdown"
               );
             })}
           </ul>
+
+          {/* GitHub + theme · tucked into the menu on mobile */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-3)", marginTop: "var(--space-4)", paddingTop: "var(--space-4)", borderTop: "1px solid var(--color-border)" }}>
+            <Link
+              href="https://github.com/jihoons"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileOpen(false)}
+              style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: "0.875rem", color: "var(--color-fg-muted)", padding: "var(--space-2) var(--space-3)" }}
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z" />
+              </svg>
+              GitHub
+            </Link>
+            <ThemeToggle />
+          </div>
         </div>
       )}
     </header>

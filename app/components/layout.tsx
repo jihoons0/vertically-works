@@ -1,5 +1,6 @@
 import { COMPONENTS_REGISTRY } from "@/lib/components-registry";
 import { DocsSidebar } from "@/components/nav/DocsSidebar";
+import { DocsMobilePicker } from "@/components/nav/DocsMobilePicker";
 
 /**
  * Shared docs shell for /components, /components/setup, and every
@@ -12,6 +13,11 @@ export default function ComponentsDocsLayout({ children }: { children: React.Rea
 
   return (
     <div className="components-detail">
+      {/* Mobile picker bar · the sidebar's stand-in under 900px */}
+      <div className="components-mobilenav">
+        <DocsMobilePicker items={items} />
+      </div>
+
       {/* Sidebar · hidden on mobile (.components-sidebar) */}
       <aside
         className="components-sidebar"
