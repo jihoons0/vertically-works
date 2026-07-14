@@ -12,9 +12,9 @@ export function HeroShader() {
 
   return (
     <MeshGradient
-      colors={["#c9ded6", "#b8cbff", "#50b1fb", "#cdc2ff5c"]}
-      distortion={0.63}
-      swirl={0.35}
+      colors={["#caded6ab", "#ebf0ff", "#52b1fade", "#ebe5ff45"]}
+      distortion={0.1}
+      swirl={0.13}
       grainMixer={0.3}
       grainOverlay={0}
       speed={reduced ? 0 : 0.4}
