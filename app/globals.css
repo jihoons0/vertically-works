@@ -56,10 +56,10 @@ body {
 }
 
 /* Serif titles · scoped to site content (the bare app routes have no <main>).
-   Baskerville is wide; relax the Geist-era negative tracking. */
+   Baskerville is wide; relax the Geist-era negative tracking.
+   h3 stays sans · it serves as small labels and card titles, not display type. */
 main h1,
-main h2,
-main h3 {
+main h2 {
   font-family: var(--font-site-title);
   letter-spacing: -0.01em !important;
 }
@@ -311,14 +311,16 @@ a {
   }
 }
 
-/* ─── Install section · pitch left, install card right on wide screens ─── */
+/* ─── Install section · pitch left, install card right when wide ─── */
+/* Container query, not viewport · the banner also lives inside the ~860px
+   docs column, where a viewport breakpoint would wrongly force two columns. */
 .install-twoup {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-8);
   align-items: center;
 }
-@media (min-width: 880px) {
+@container (min-width: 800px) {
   .install-twoup {
     grid-template-columns: minmax(0, 1fr) minmax(340px, 480px);
     gap: var(--space-16);
@@ -420,6 +422,22 @@ a {
 @media (min-width: 900px) {
   .components-mobilenav {
     display: none;
+  }
+}
+
+/* Breadcrumb · under 900px the sticky mobile picker already names the page,
+   so the crumb row only renders alongside the desktop sidebar. */
+.components-breadcrumb {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+  font-size: 0.8125rem;
+  color: var(--color-fg-subtle);
+}
+@media (min-width: 900px) {
+  .components-breadcrumb {
+    display: flex;
   }
 }
 .components-twoup {

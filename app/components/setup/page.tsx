@@ -47,8 +47,8 @@ function Step({ n, title, children }: { n: number; title: string; children: Reac
 export default function SetupPage() {
   return (
     <main style={{ padding: "var(--space-12) clamp(var(--space-5), 5vw, var(--space-10)) var(--space-24)", maxWidth: 860, width: "100%", minWidth: 0 }}>
-      {/* Breadcrumb · matches component pages */}
-      <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-8)", fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
+      {/* Breadcrumb · desktop-only (.components-breadcrumb); the mobile picker names the page */}
+      <div className="components-breadcrumb">
         <Link href="/components" style={{ color: "inherit" }}>Components</Link>
         <ChevronRight size={12} strokeWidth={2} aria-hidden style={{ opacity: 0.8 }} />
         <span style={{ color: "var(--color-fg)" }}>Set up</span>

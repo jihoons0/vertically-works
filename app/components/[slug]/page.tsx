@@ -77,8 +77,8 @@ export default async function ComponentPage({ params }: Props) {
   // The docs shell (sidebar rail + grid) comes from app/components/layout.tsx.
   return (
     <main style={{ padding: "var(--space-12) clamp(var(--space-5), 5vw, var(--space-10)) var(--space-24)", maxWidth: 860, width: "100%", minWidth: 0 }}>
-        {/* Breadcrumb · the mobile component picker lives in the docs layout bar */}
-        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-8)", fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
+        {/* Breadcrumb · desktop-only (.components-breadcrumb); the mobile picker names the page */}
+        <div className="components-breadcrumb">
           <Link href="/components" style={{ color: "inherit" }}>Components</Link>
           <ChevronRight size={12} strokeWidth={2} aria-hidden style={{ opacity: 0.8 }} />
           <span style={{ color: "var(--color-fg)" }}>{comp.name}</span>

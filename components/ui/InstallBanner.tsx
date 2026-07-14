@@ -12,7 +12,7 @@ import { BannerShader } from "@/components/ui/BannerShader";
 export function InstallBanner() {
   return (
     <section>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(32px, 5vw, 64px) var(--space-6)" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(32px, 5vw, 64px) var(--space-6)", containerType: "inline-size" }}>
         <div
           className="install-twoup"
           style={{
