@@ -98,6 +98,17 @@
       "registryDependencies": ["tokens"]
     },
     {
+      "name": "tiered-page",
+      "siteSlug": "tiered-page",
+      "title": "Tiered Page",
+      "description": "A static book page of vertical columns split into two stacked tiers · with a verse-number band + hairline, or as a plain two-row spread divided by a rule. Pages turn; the page never scrolls.",
+      "type": "registry:component",
+      "files": [
+        { "path": "registry/components/tiered-page.tsx", "type": "registry:component" }
+      ],
+      "registryDependencies": ["tokens"]
+    },
+    {
       "name": "tabs",
       "siteSlug": "tabs",
       "title": "Vertical Tabs",

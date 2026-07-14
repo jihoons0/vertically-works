@@ -18,6 +18,7 @@ import { DialogDemo } from "@/components/demos/DialogDemo";
 import { ToastDemo } from "@/components/demos/ToastDemo";
 import { SkeletonDemo } from "@/components/demos/SkeletonDemo";
 import { VerticalListCellDemo } from "@/components/demos/VerticalListCellDemo";
+import { TieredPageDemo } from "@/components/demos/TieredPageDemo";
 
 export type ComponentVariant = {
   name: string;
@@ -1259,6 +1260,72 @@ export function ContentsList() {
     ],
     accessibility: "Container role='listbox' (or 'list'); each cell role='option' with aria-selected (or a plain button). Keyboard: arrow keys move selection; the visual R→L order must match DOM/tab order.",
     openQuestion: "When the accessory is an interactive control (toggle, stepper), should it keep the bottom position, or move beside the title so the primary tap target stays central?",
+    status: "built",
+  },
+  // ── Layout ───────────────────────────────────────────────────────────────────
+  {
+    slug: "tiered-page",
+    name: "Tiered Page",
+    category: "Layout",
+    description: "A static book page of vertical columns split into two stacked tiers · the vertical answer to the two-column spread. With a verse-number band, or as a plain two-row layout divided by rules.",
+    problem: "A tall page of short vertical columns wastes most of its height, and the horizontal fix — multi-column rows — doesn't exist on the vertical axis. How does structured text fill a page without scrolling?",
+    intent: "Stack two tiers of right-to-left columns and let two rules carry the whole hierarchy: a hairline under the number band, a heavier rule between the tiers. Reading flows down each column, leftward across the tier, then drops to the next tier's rightmost column. The page is the unit · it never scrolls, it turns.",
+    variants: [
+      {
+        name: "Numbered (절별)",
+        demo: <TieredPageDemo />,
+        code: `import { TieredPage } from "@/components/vw/tiered-page"
+
+export function VersePage() {
+  return (
+    <TieredPage
+      height={500}
+      columns={[
+        // A label starts a verse · unlabeled columns continue it.
+        { label: "1", text: "글씨를 세로로 쓰는" },
+        { text: "것을 세로쓰기라 한다" },
+        { label: "2", text: "한국어와 중국어와" },
+        { text: "일본어가 세로로" },
+        { text: "쓰였다" },
+        { label: "3", text: "우종서의 가장 오래된" },
+      ]}
+    />
+  )
+}`,
+      },
+      {
+        name: "Plain two-tier",
+        demo: <TieredPageDemo plain />,
+        code: `import { TieredPage } from "@/components/vw/tiered-page"
+
+export function PoemPage() {
+  return (
+    <TieredPage
+      height={420}
+      columns={[
+        { text: "산에는 꽃 피네" },
+        { text: "꽃이 피네" },
+        { text: "갈 봄 여름 없이" },
+        { text: "꽃이 피네" },
+      ]}
+    />
+  )
+}`,
+      },
+    ],
+    doList: [
+      "Pin every column to a fixed width · a packed tier must never compress columns into each other",
+      "Keep the rule weights distinct: hairline under the number band, heavier between tiers · that contrast is the hierarchy",
+      "Keep the empty number band on continuation columns so every body starts on the same line",
+      "Turn pages with external controls along the reading axis (see chapter-navigation) · the page itself never scrolls",
+    ],
+    dontList: [
+      "Mix scrolling and paging on the same surface · a tier that scrolls breaks the page as the unit of reading",
+      "Set the numbers in vertical writing mode · short numerals stay upright (tate-chu-yoko), so the band is horizontal text",
+      "Let a verse restart its number on a continuation column · the number marks the verse, not the column",
+    ],
+    accessibility: "DOM order must match reading order (row-reverse handles the visual R→L, the source stays first-to-last), so screen readers read verses in sequence. The rules are decorative · aria-hidden. Announce page turns via a live region on the external pager.",
+    openQuestion: "How many tiers before the page reads as a grid instead of a spread? And when a verse breaks across the tier boundary, should its continuation column repeat a dimmed number as a landing cue?",
     status: "built",
   },
 ];
