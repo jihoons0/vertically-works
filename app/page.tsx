@@ -361,7 +361,7 @@ export default function HomePage() {
       {/* ═══ Contact + footer · one grainy wave surface closes the page ═══ */}
       <section id="contact" style={{ scrollMarginTop: 72, position: "relative" }}>
         <BottomShader />
-        <div style={{ position: "relative", zIndex: 1, maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 1280, margin: "0 auto", padding: "clamp(80px, 11vw, 160px) var(--space-6) clamp(64px, 9vw, 128px)" }}>
           <Reveal>
             <ContactForm />
           </Reveal>
