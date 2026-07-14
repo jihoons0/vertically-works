@@ -326,11 +326,7 @@ a {
 }
 
 /* ─── Accent tint · the "slight light-blue gradient" moments ─── */
-/* A soft radial wash for heroes … */
-.hero-wash {
-  background: radial-gradient(1100px 520px at 82% -18%, var(--color-accent-soft), transparent 62%);
-}
-/* … and a gentle diagonal tint for feature panels. */
+/* A gentle diagonal tint for feature panels. */
 .tint-panel {
   background: linear-gradient(
     165deg,

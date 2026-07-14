@@ -138,7 +138,7 @@ export default function HomePage() {
   return (
     <>
       {/* ═══════════════════════════════ Hero ══════════════════════════════════ */}
-      <section className="hero-wash">
+      <section>
         <div
           style={{
             maxWidth: 1280,
