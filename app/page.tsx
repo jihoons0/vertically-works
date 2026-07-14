@@ -111,6 +111,27 @@ function AppCardContent({ app }: { app: (typeof APPLICATIONS)[number] }) {
   );
 }
 
+// Secondary link-button for section heading rows · right-aligned "All …" CTAs.
+function SectionCta({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <Link
+      href={href}
+      className="btn-cta-hover pressable"
+      style={{
+        display: "inline-flex", alignItems: "center", gap: 8,
+        height: 40, padding: "0 var(--space-5)",
+        fontSize: "0.9375rem",
+        borderRadius: "var(--radius-lg)",
+        border: "none", color: "var(--color-fg)",
+        flexShrink: 0,
+      }}
+    >
+      {children}
+      <span aria-hidden style={{ fontSize: "1.05em", lineHeight: 1 }}>➔</span>
+    </Link>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function HomePage() {
@@ -163,14 +184,15 @@ export default function HomePage() {
                 href="/apps"
                 className="btn-outline-hover"
                 style={{
-                  display: "inline-flex", alignItems: "center",
+                  display: "inline-flex", alignItems: "center", gap: 8,
                   height: 40, padding: "0 var(--space-5)",
                   fontSize: "0.9375rem", fontWeight: 500,
                   borderRadius: "var(--radius-lg)",
-                  border: "1px solid", color: "var(--color-fg)",
+                  border: "none", color: "var(--color-fg)",
                 }}
               >
-                See the apps →
+                See the apps
+                <span aria-hidden style={{ fontSize: "1.05em", lineHeight: 1 }}>➔</span>
               </Link>
             </div>
           </Reveal>
@@ -189,25 +211,10 @@ export default function HomePage() {
           <Reveal>
             <BentoGrid
               title="Components"
-              description="The interaction primitives of a vertical interface · buttons, toggles, dialogs, lists · each answering a design question the horizontal web never had to. Real, accessible React components you copy into your project with one command. Below, four of them replay as they behave on the reading axis."
+              description="The interaction primitives of a vertical interface · real, accessible React components you copy into your project with one command."
+              action={<SectionCta href="/components">All components</SectionCta>}
             />
           </Reveal>
-
-          <div style={{ marginTop: "var(--space-10)" }}>
-            <Link
-              href="/components"
-              className="btn-cta-hover pressable"
-              style={{
-                display: "inline-flex", alignItems: "center", gap: 8,
-                height: 40, padding: "0 var(--space-5)",
-                fontSize: "0.9375rem", fontWeight: 500,
-                borderRadius: "var(--radius-lg)",
-                border: "1px solid", color: "var(--color-fg)",
-              }}
-            >
-              View all components →
-            </Link>
-          </div>
         </div>
       </section>
 
@@ -217,9 +224,12 @@ export default function HomePage() {
       {/* ══════════════════════════ Applications ═══════════════════════════════ */}
       <section style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
         <Reveal>
-          <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
-            Applications
-          </h2>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)", flexWrap: "wrap", marginBottom: "var(--space-3)" }}>
+            <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: 0, lineHeight: 1.15 }}>
+              Applications
+            </h2>
+            <SectionCta href="/apps">All applications</SectionCta>
+          </div>
           <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-10)", maxWidth: "48ch", lineHeight: 1.65 }}>
             What happens when vertical-first thinking is applied to actual product categories.
           </p>
@@ -262,30 +272,18 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div style={{ marginTop: "var(--space-8)" }}>
-          <Link
-            href="/apps"
-            className="btn-cta-hover pressable"
-            style={{
-              display: "inline-flex", alignItems: "center", gap: 8,
-              height: 40, padding: "0 var(--space-5)",
-              fontSize: "0.9375rem", fontWeight: 500,
-              borderRadius: "var(--radius-lg)",
-              border: "1px solid", color: "var(--color-fg)",
-            }}
-          >
-            All applications →
-          </Link>
-        </div>
       </section>
 
       {/* ═══════════════════ Challenges + Principles (merged) ══════════════════ */}
       <section>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
           <Reveal>
-          <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
-            What This Project Explores
-          </h2>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)", flexWrap: "wrap", marginBottom: "var(--space-3)" }}>
+            <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: 0, lineHeight: 1.15 }}>
+              What This Project Explores
+            </h2>
+            <SectionCta href="/challenges">All challenges</SectionCta>
+          </div>
           <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-12)", maxWidth: "52ch", lineHeight: 1.65 }}>
             Open questions, and the principles derived from trying to answer them.
           </p>
@@ -336,9 +334,9 @@ export default function HomePage() {
           </div>
 
           {/* Principles · numbered, one pass to scan */}
-          <span style={{ display: "inline-block", fontSize: "0.75rem", fontWeight: 500, color: "var(--color-fg-subtle)", textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "var(--space-8)" }}>
+          <h3 style={{ fontSize: "1.5rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-fg)", margin: "0 0 var(--space-8)", lineHeight: 1.2 }}>
             Derived Principles
-          </span>
+          </h3>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 240px), 1fr))", gap: "var(--space-8) var(--space-6)" }}>
             {PRINCIPLES.map((p, i) => (
               <Reveal key={p.id} delay={i * 40}>

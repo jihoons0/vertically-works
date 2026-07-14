@@ -117,7 +117,7 @@ export function Footer({ tinted = false }: { tinted?: boolean }) {
           }}
         >
           <span style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
-            © 2026 Vertically Works. Open knowledge.
+            © 2026 Vertically Works.
           </span>
 
           {/* #8: 3 separate vertical columns · shorter height, wider spread */}

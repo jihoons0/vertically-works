@@ -13,27 +13,40 @@ import { LoopTabs } from "./LoopTabs";
  * desktop, single column on small screens (.home-bento). The demos' 한/あ/中
  * language comes from the site-wide preview-language toggle in the nav.
  */
-export function BentoGrid({ title, description }: { title: string; description: string }) {
+export function BentoGrid({
+  title,
+  description,
+  action,
+}: {
+  title: string;
+  description: string;
+  /** Rendered on the heading row, right-aligned (e.g. an "All components" link). */
+  action?: React.ReactNode;
+}) {
   const { lang } = usePreviewLang();
   return (
     <div>
-      <h2
-        style={{
-          fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
-          fontWeight: 600,
-          letterSpacing: "-0.03em",
-          color: "var(--color-fg)",
-          margin: "0 0 var(--space-3)",
-          lineHeight: 1.15,
-        }}
-      >
-        {title}
-      </h2>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)", flexWrap: "wrap", marginBottom: "var(--space-3)" }}>
+        <h2
+          style={{
+            fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
+            fontWeight: 600,
+            letterSpacing: "-0.03em",
+            color: "var(--color-fg)",
+            margin: 0,
+            lineHeight: 1.15,
+          }}
+        >
+          {title}
+        </h2>
+        {action}
+      </div>
       <p
         style={{
           fontSize: "1rem",
           color: "var(--color-fg-muted)",
           margin: "0 0 var(--space-10)",
+          maxWidth: "64ch",
           lineHeight: 1.65,
         }}
       >

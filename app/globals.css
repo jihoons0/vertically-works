@@ -451,13 +451,11 @@ a {
 
 .btn-outline-hover {
   background: color-mix(in srgb, var(--color-fg) 10%, var(--color-bg));
-  border-color: transparent;
+  border-color: transparent !important;
   font-weight: 600 !important;
-  transition: border-color var(--duration-fast) var(--easing-default),
-              background var(--duration-fast) var(--easing-default);
+  transition: background var(--duration-fast) var(--easing-default);
 }
 .btn-outline-hover:hover {
-  border-color: transparent;
   background: color-mix(in srgb, var(--color-fg) 16%, var(--color-bg));
 }
 
@@ -473,16 +471,13 @@ a {
 /* Section-level "view all" CTAs — outline at rest, full monochrome invert on
    hover so the action registers on both plain and subtle section backgrounds. */
 .btn-cta-hover {
-  /* Filled base, one step darker than bg-muted · unmistakably a button */
+  /* Secondary button · quiet filled gray, no border ring, no invert.
+     !important beats the `border: "1px solid"` shorthand at call sites. */
   background: color-mix(in srgb, var(--color-fg) 10%, var(--color-bg));
-  border-color: transparent;
+  border-color: transparent !important;
   font-weight: 600 !important;
-  transition: background var(--duration-fast) var(--easing-default),
-              color var(--duration-fast) var(--easing-default),
-              border-color var(--duration-fast) var(--easing-default);
+  transition: background var(--duration-fast) var(--easing-default);
 }
 .btn-cta-hover:hover {
-  background: var(--color-fg);
-  color: var(--color-bg) !important;
-  border-color: var(--color-fg);
+  background: color-mix(in srgb, var(--color-fg) 16%, var(--color-bg));
 }

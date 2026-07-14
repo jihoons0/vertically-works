@@ -123,7 +123,7 @@ export function ContactForm() {
   return (
     <div>
       <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
-        Write to Us
+        Contact us
       </h2>
       <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-10)", lineHeight: 1.65 }}>
         Questions, ideas, collaborations — write to us anytime. Compose your message
