@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { InstallBanner } from "@/components/ui/InstallBanner";
 import { ChallengeVisual } from "@/components/ChallengeVisual";
 
 export const metadata: Metadata = {
@@ -86,7 +87,6 @@ export default function ChallengesPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Challenges"
         title="Why Vertical Interfaces Are Difficult"
         description="Design problems that have no obvious answer when the reading axis changes. Some are resolved. Most remain open questions."
       />
@@ -168,6 +168,8 @@ export default function ChallengesPage() {
           </div>
         ))}
       </div>
+
+      <InstallBanner />
     </>
   );
 }

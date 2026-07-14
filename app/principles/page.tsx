@@ -1,6 +1,6 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { InstallBanner } from "@/components/ui/InstallBanner";
 
 export const metadata: Metadata = {
   title: "Principles",
@@ -79,17 +79,18 @@ export default function PrinciplesPage() {
         }}
       >
         {PRINCIPLES.map((p) => (
-          <Link
+          // Static content, not a link (no detail routes exist) · soft border, no hover
+          <div
             key={p.id}
-            href={`/principles/${p.id}`}
-            className="card-hover"
             style={{
               display: "grid",
               gridTemplateColumns: "56px 1fr",
               gap: "var(--space-8)",
               padding: "var(--space-8)",
               borderRadius: "var(--radius-xl)",
-              border: "1px solid",
+              border: "1px solid var(--color-border)",
+              background: "var(--color-bg)",
+              boxShadow: "var(--shadow-soft)",
               alignItems: "start",
             }}
           >
@@ -118,9 +119,11 @@ export default function PrinciplesPage() {
                 {p.detail}
               </p>
             </div>
-          </Link>
+          </div>
         ))}
       </div>
+
+      <InstallBanner />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
+import { InstallBanner } from "@/components/ui/InstallBanner";
 
 export const metadata: Metadata = {
   title: "Resources",
@@ -157,7 +158,10 @@ export default function ResourcesPage() {
                     gap: "var(--space-6)",
                     padding: "var(--space-6) var(--space-8)",
                     borderRadius: "var(--radius-xl)",
-                    border: "1px solid",
+                    // width/style only · the `border` shorthand would reset
+                    // border-color to currentColor over .card-hover's token
+                    borderWidth: 1,
+                    borderStyle: "solid",
                     alignItems: "start",
                   }}
                 >
@@ -186,6 +190,8 @@ export default function ResourcesPage() {
           </section>
         ))}
       </div>
+
+      <InstallBanner />
     </>
   );
 }
