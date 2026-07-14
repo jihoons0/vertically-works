@@ -49,7 +49,10 @@ export function VerticalListCellDemo() {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "space-between",
+                // flex-start (not space-between) · text keeps one consistent
+                // y-position across cells regardless of accessory height;
+                // the accessory is pinned to the bottom with an auto margin.
+                justifyContent: "flex-start",
                 flexShrink: 0,
                 width: 76,
                 height: 236,
@@ -81,9 +84,9 @@ export function VerticalListCellDemo() {
               {/* Trailing accessory · at the end (bottom) of the reading flow.
                   The disclosure chevron points DOWN, along the reading axis. */}
               {cell.accessory === "chevron" ? (
-                <span aria-hidden style={{ transform: "rotate(90deg)", fontSize: "1rem", color: "var(--color-fg-subtle)", lineHeight: 1 }}>›</span>
+                <span aria-hidden style={{ marginTop: "auto", transform: "rotate(90deg)", fontSize: "1rem", color: "var(--color-fg-subtle)", lineHeight: 1 }}>›</span>
               ) : (
-                <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.625rem", fontWeight: 600, color: "var(--color-bg)", background: "var(--color-fg)", borderRadius: "var(--radius-full)", padding: "var(--space-2) 2px", letterSpacing: "0.05em" }}>
+                <span style={{ marginTop: "auto", writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.625rem", fontWeight: 600, color: "var(--color-bg)", background: "var(--color-fg)", borderRadius: "var(--radius-full)", padding: "var(--space-2) 2px", letterSpacing: "0.05em" }}>
                   {cell.value}
                 </span>
               )}

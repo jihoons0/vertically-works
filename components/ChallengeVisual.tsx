@@ -1,3 +1,58 @@
+"use client";
+
+import { usePreviewLang } from "@/components/providers/PreviewLangProvider";
+import type { Lang } from "@/components/home/bento-shared";
+
+// Every text-bearing diagram localizes with the site-wide preview language.
+const T: Record<
+  Lang,
+  {
+    reading: string;
+    verseBook: string;
+    selection: [string, string, string];
+    caret: string;
+    candidates: [string, string, string];
+    keyChar: string;
+    keyLine: string;
+    chatA: string;
+    chatB: string;
+  }
+> = {
+  ko: {
+    reading: "읽기 ↓",
+    verseBook: "창",
+    selection: ["세로쓰기", "라고도", "부른다"],
+    caret: "가",
+    candidates: ["1 가", "2 家", "3 加"],
+    keyChar: "↓ 다음 글자",
+    keyLine: "← 다음 줄",
+    chatA: "안녕하세요",
+    chatB: "반가워요",
+  },
+  ja: {
+    reading: "読み ↓",
+    verseBook: "創",
+    selection: ["縦書き", "とも", "呼ぶ"],
+    caret: "か",
+    candidates: ["1 か", "2 家", "3 加"],
+    keyChar: "↓ 次の文字",
+    keyLine: "← 次の行",
+    chatA: "こんにちは",
+    chatB: "よろしく",
+  },
+  zh: {
+    reading: "閱讀 ↓",
+    verseBook: "創",
+    selection: ["直書", "又稱", "豎排"],
+    caret: "家",
+    candidates: ["1 家", "2 加", "3 佳"],
+    keyChar: "↓ 下一字",
+    keyLine: "← 下一行",
+    chatA: "你好",
+    chatB: "幸會",
+  },
+};
+
 // Compact, monochrome diagrams of each challenge's core axis conflict · each
 // one a self-playing CSS loop that acts out the question it illustrates
 // (motion always along the axis under discussion, never decorative). Token-based
@@ -6,6 +61,8 @@
 // resolved static composition, so prefers-reduced-motion (which freezes
 // animations globally) leaves the original still diagram.
 export function ChallengeVisual({ id }: { id: string }) {
+  const { lang } = usePreviewLang();
+  const t = T[lang];
   const fg = "var(--color-fg)";
   const sub = "var(--color-fg-subtle)";
   const strong = "var(--color-border-strong)";
@@ -29,7 +86,7 @@ export function ChallengeVisual({ id }: { id: string }) {
               <span style={{ color: bg, fontSize: 13, fontWeight: 700 }}>↑</span>
             </div>
           </div>
-          <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: 12, color: sub, letterSpacing: "0.1em" }}>읽기 ↓</span>
+          <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: 12, color: sub, letterSpacing: "0.1em" }}>{t.reading}</span>
           <style>{`@keyframes vw-cv-sheet {
             0%, 12% { transform: translateY(94%); }
             30%, 64% { transform: translateY(0); }
@@ -42,10 +99,10 @@ export function ChallengeVisual({ id }: { id: string }) {
       return (
         <span style={{ display: "grid", justifyItems: "center", fontSize: 22, letterSpacing: "0.12em", color: fg }}>
           <span style={{ gridArea: "1 / 1", writingMode: "vertical-rl", textOrientation: "mixed", animation: "vw-cv-lang-a 5s var(--easing-default) infinite" }}>
-            「창 1:1」
+            「{t.verseBook} 1:1」
           </span>
           <span aria-hidden style={{ gridArea: "1 / 1", writingMode: "vertical-rl", textOrientation: "mixed", opacity: 0, animation: "vw-cv-lang-b 5s var(--easing-default) infinite" }}>
-            「창 <span style={{ textCombineUpright: "all" }}>1:1</span>」
+            「{t.verseBook} <span style={{ textCombineUpright: "all" }}>1:1</span>」
           </span>
           <style>{`
             @keyframes vw-cv-lang-a { 0%, 40% { opacity: 1; } 50%, 90% { opacity: 0; } 100% { opacity: 1; } }
@@ -88,8 +145,8 @@ export function ChallengeVisual({ id }: { id: string }) {
       // Drag-select in reading order: down the first column, then leftward.
       return (
         <div style={{ position: "relative", display: "flex", flexDirection: "row-reverse", gap: 8 }}>
-          {["세로쓰기", "라고도", "부른다"].map((t, i) => (
-            <span key={i} style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: 13, letterSpacing: "0.08em", color: fg }}>{t}</span>
+          {t.selection.map((word, i) => (
+            <span key={i} style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: 13, letterSpacing: "0.08em", color: fg }}>{word}</span>
           ))}
           <div
             style={{
@@ -113,9 +170,9 @@ export function ChallengeVisual({ id }: { id: string }) {
       // Composition caret blinks; the candidate list cycles its highlight.
       return (
         <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-          <span style={{ writingMode: "vertical-rl", fontSize: 22, color: fg, borderInlineStart: `2px solid ${fg}`, paddingInlineStart: 3, animation: "vw-cv-caret 1.2s steps(1) infinite" }}>가</span>
+          <span style={{ writingMode: "vertical-rl", fontSize: 22, color: fg, borderInlineStart: `2px solid ${fg}`, paddingInlineStart: 3, animation: "vw-cv-caret 1.2s steps(1) infinite" }}>{t.caret}</span>
           <div style={{ display: "flex", flexDirection: "column", gap: 2, border: `1px solid ${strong}`, borderRadius: 6, padding: "4px 6px", background: bg }}>
-            {["1 가", "2 家", "3 加"].map((x, i) => (
+            {t.candidates.map((x, i) => (
               <span
                 key={x}
                 style={{
@@ -160,8 +217,8 @@ export function ChallengeVisual({ id }: { id: string }) {
             )}
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 3, fontSize: 10, color: sub }}>
-            <span>↓ 다음 글자</span>
-            <span>← 다음 줄</span>
+            <span>{t.keyChar}</span>
+            <span>{t.keyLine}</span>
           </div>
           <style>{`@keyframes vw-cv-key {
             0%, 6% { transform: scale(1); }
@@ -213,8 +270,8 @@ export function ChallengeVisual({ id }: { id: string }) {
       // The exchange replays: question column, then the reply beside it.
       return (
         <div style={{ display: "flex", flexDirection: "row-reverse", alignItems: "flex-start", gap: 8 }}>
-          <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: 12, color: fg, background: muted, borderRadius: 999, padding: "10px 6px", letterSpacing: "0.05em", animation: "vw-cv-chat-a 6s var(--easing-out) infinite" }}>안녕하세요</span>
-          <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: 12, color: bg, background: fg, borderRadius: 999, padding: "10px 6px", marginTop: 22, letterSpacing: "0.05em", animation: "vw-cv-chat-b 6s var(--easing-out) infinite" }}>반가워요</span>
+          <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: 12, color: fg, background: muted, borderRadius: 999, padding: "10px 6px", letterSpacing: "0.05em", animation: "vw-cv-chat-a 6s var(--easing-out) infinite" }}>{t.chatA}</span>
+          <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: 12, color: bg, background: fg, borderRadius: 999, padding: "10px 6px", marginTop: 22, letterSpacing: "0.05em", animation: "vw-cv-chat-b 6s var(--easing-out) infinite" }}>{t.chatB}</span>
           <style>{`
             @keyframes vw-cv-chat-a {
               0% { opacity: 0; transform: translateY(-6px); }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /** Preview language for the bento demos. */
 export type Lang = "ko" | "ja" | "zh";
@@ -56,16 +56,25 @@ export function CjkToggle({ value, onChange }: { value: Lang; onChange: (l: Lang
   );
 }
 
-/** Matches the guard in components/Reveal.tsx · true when the user asks for reduced motion. */
+/** Matches the guard in components/Reveal.tsx · true when the user asks for
+ *  reduced motion, and during Figma page captures (#figmacapture=…) so the
+ *  loops park at their resolved states and the DOM holds still to serialize.
+ *  Re-evaluates on hashchange, so a leftover capture tab unparks the moment
+ *  the hash clears (PreviewLangProvider strips it after the capture window). */
 export function useReducedMotion(): boolean {
   const [reduced, setReduced] = useState(false);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = () => setReduced(mq.matches);
-    onChange();
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
+    const evaluate = () =>
+      setReduced(mq.matches || window.location.hash.includes("figmacapture"));
+    evaluate();
+    mq.addEventListener("change", evaluate);
+    window.addEventListener("hashchange", evaluate);
+    return () => {
+      mq.removeEventListener("change", evaluate);
+      window.removeEventListener("hashchange", evaluate);
+    };
   }, []);
 
   return reduced;
@@ -168,10 +177,39 @@ export function Cursor({
 
 export const STAGE_HEIGHT = 260;
 
+/** Design width the loops were tuned against (2-col tile at the 1280 container). */
+const STAGE_DESIGN_WIDTH = 618;
+const STAGE_MAX_SCALE = 1.4;
+
 /**
- * Frame for one bento preview: a fixed-height animated stage (decorative,
- * hidden from assistive tech) above a caption that carries the meaning in
- * plain text, so the tile still teaches without motion.
+ * The loop stages are hand-tuned inside a fixed 260px-tall coordinate system.
+ * To render them bigger without retuning four animations, the tile keeps that
+ * design space intact and scales it to the (square) stage it actually got:
+ * full design scale on a full-width desktop tile, 1:1 on narrow screens.
+ */
+function useStageScale() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => {
+      const w = entry.contentRect.width;
+      setScale(Math.min(STAGE_MAX_SCALE, Math.max(1, (w / STAGE_DESIGN_WIDTH) * STAGE_MAX_SCALE)));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  return { ref, scale };
+}
+
+/**
+ * Frame for one bento preview: a square animated stage (decorative, hidden
+ * from assistive tech) with a subtle `01 · Title` caption overlaid in the
+ * corner. The fuller description stays for screen readers only, so the tile
+ * still teaches without motion.
  */
 export function BentoTile({
   index,
@@ -184,74 +222,80 @@ export function BentoTile({
   description: string;
   children: ReactNode;
 }) {
+  const { ref, scale } = useStageScale();
+
   return (
     <div
       style={{
+        position: "relative",
         borderRadius: "var(--radius-xl)",
         border: "1px solid var(--color-border)",
-        background: "var(--color-bg)",
+        background: "var(--color-bg-subtle)",
+        boxShadow: "var(--shadow-soft)",
         overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
       }}
     >
       <div
+        ref={ref}
         aria-hidden
         style={{
           position: "relative",
-          height: STAGE_HEIGHT,
-          background: "var(--color-bg-subtle)",
+          aspectRatio: "1 / 1",
           overflow: "hidden",
           userSelect: "none",
           pointerEvents: "none",
         }}
       >
-        {children}
-      </div>
-      <div
-        style={{
-          display: "flex",
-          gap: "var(--space-3)",
-          alignItems: "baseline",
-          padding: "var(--space-4) var(--space-5)",
-          borderTop: "1px solid var(--color-border)",
-        }}
-      >
-        <span
+        {/* The 260px design space, centered and scaled to the square it got */}
+        <div
           style={{
-            fontSize: "0.6875rem",
-            fontFamily: "var(--font-geist-mono)",
-            color: "var(--color-fg-subtle)",
-            flexShrink: 0,
+            position: "absolute",
+            left: 0,
+            right: 0,
+            top: "50%",
+            height: STAGE_HEIGHT,
+            transform: `translateY(-50%) scale(${scale})`,
+            transformOrigin: "50% 50%",
           }}
         >
-          {index}
-        </span>
-        <div>
-          <span
-            style={{
-              fontSize: "0.9375rem",
-              fontWeight: 600,
-              color: "var(--color-fg)",
-              letterSpacing: "-0.01em",
-              display: "block",
-              marginBottom: 2,
-            }}
-          >
-            {label}
-          </span>
-          <span
-            style={{
-              fontSize: "0.8125rem",
-              color: "var(--color-fg-muted)",
-              lineHeight: 1.55,
-              display: "block",
-            }}
-          >
-            {description}
-          </span>
+          {children}
         </div>
       </div>
+
+      {/* Subtle caption · index and title only */}
+      <span
+        style={{
+          position: "absolute",
+          left: "var(--space-5)",
+          bottom: "var(--space-4)",
+          display: "inline-flex",
+          gap: "var(--space-2)",
+          alignItems: "baseline",
+          fontSize: "0.75rem",
+          color: "var(--color-fg-subtle)",
+          letterSpacing: "0.02em",
+        }}
+      >
+        <span style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.6875rem" }}>{index}</span>
+        <span style={{ fontWeight: 500, color: "var(--color-fg-muted)" }}>{label}</span>
+      </span>
+
+      {/* Full description · screen readers only, the tile keeps teaching */}
+      <span
+        style={{
+          position: "absolute",
+          width: 1,
+          height: 1,
+          padding: 0,
+          margin: -1,
+          overflow: "hidden",
+          clipPath: "inset(50%)",
+          whiteSpace: "nowrap",
+          border: 0,
+        }}
+      >
+        {description}
+      </span>
     </div>
   );
 }

@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { ChallengeVisual } from "@/components/ChallengeVisual";
 import { BentoGrid } from "@/components/home/BentoGrid";
+import { ContactForm } from "@/components/home/ContactForm";
 import { HeroVerticalMotif } from "@/components/home/HeroVerticalMotif";
 import { InstallCard } from "@/components/ui/InstallCard";
 import { AppVideo } from "@/components/home/AppVideo";
@@ -32,7 +33,7 @@ const APPLICATIONS = [
     platform: "Web",
     status: "Live",
     href: "/apps/vertically-do",
-    video: null,
+    video: "/videos/vertically-notes.mp4",
     description:
       "A to-do list where every task is a column you read top to bottom.",
   },
@@ -89,26 +90,7 @@ function AppCardContent({ app }: { app: (typeof APPLICATIONS)[number] }) {
         {app.video ? (
           <AppVideo src={app.video} label={`${app.name} demo`} />
         ) : (
-          <div
-            style={{
-              height: 332,
-              aspectRatio: "2/3",
-              borderRadius: "var(--radius-xl)",
-              border: "1px solid var(--color-border)",
-              background: "var(--color-bg)",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "var(--space-3)",
-            }}
-          >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" style={{ color: "var(--color-fg-subtle)" }} aria-hidden>
-              <polygon points="5 3 19 12 5 21 5 3" fill="currentColor" stroke="none" opacity="0.3" />
-              <polygon points="5 3 19 12 5 21 5 3" />
-            </svg>
-            <span style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)", textAlign: "center" }}>Demo coming soon</span>
-          </div>
+          <span style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>Coming soon</span>
         )}
       </div>
 
@@ -135,13 +117,14 @@ export default function HomePage() {
   return (
     <>
       {/* ═══════════════════════════════ Hero ══════════════════════════════════ */}
-      <section
-        style={{
-          maxWidth: 1280,
-          margin: "0 auto",
-          padding: "var(--space-16) var(--space-6) clamp(56px, 7vw, 104px)",
-        }}
-      >
+      <section className="hero-wash">
+        <div
+          style={{
+            maxWidth: 1280,
+            margin: "0 auto",
+            padding: "var(--space-16) var(--space-6) clamp(56px, 7vw, 104px)",
+          }}
+        >
         <div className="home-hero">
           <Reveal style={{ paddingTop: 0 }}>
             <h1
@@ -197,16 +180,11 @@ export default function HomePage() {
             <HeroVerticalMotif />
           </Reveal>
         </div>
+        </div>
       </section>
 
       {/* ═══════════════ The System in Motion · self-playing demos ═════════════ */}
-      <section
-        style={{
-          borderTop: "1px solid var(--color-border)",
-          borderBottom: "1px solid var(--color-border)",
-          background: "var(--color-bg-subtle)",
-        }}
-      >
+      <section>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
           <Reveal>
             <BentoGrid
@@ -234,23 +212,30 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════ Install · copy them into your project ═════════════ */}
-      <section style={{ borderTop: "1px solid var(--color-border)", background: "var(--color-bg-subtle)" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
-          <Reveal>
-            <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
-              Bring them into your project
-            </h2>
-            <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-8)", maxWidth: "52ch", lineHeight: 1.65 }}>
-              Every component is source you own · no runtime dependency. Run{" "}
-              <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>init</code> once for the tokens, then{" "}
-              <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>add</code> any component · fetched live from the registry, nothing to configure.
-            </p>
-          </Reveal>
-          <Reveal delay={80}>
-            <div style={{ maxWidth: 560 }}>
+      <section>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(32px, 5vw, 64px) var(--space-6)" }}>
+          {/* A contained light-blue banner · one row, two columns inside */}
+          <div
+            className="tint-panel install-twoup"
+            style={{
+              borderRadius: "var(--radius-xl)",
+              padding: "clamp(32px, 5vw, 56px)",
+            }}
+          >
+            <Reveal>
+              <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
+                Bring them into your project
+              </h2>
+              <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: 0, maxWidth: "52ch", lineHeight: 1.65 }}>
+                Every component is source you own · no runtime dependency. Run{" "}
+                <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>init</code> once for the tokens, then{" "}
+                <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>add</code> any component · fetched live from the registry, nothing to configure.
+              </p>
+            </Reveal>
+            <Reveal delay={80}>
               <InstallCard command="npx verticallyworks init" github="https://github.com/jihoons0/vertically-works" />
-            </div>
-          </Reveal>
+            </Reveal>
+          </div>
         </div>
       </section>
 
@@ -276,7 +261,10 @@ export default function HomePage() {
                     style={{
                       display: "block",
                       borderRadius: "var(--radius-xl)",
-                      border: "1px solid",
+                      // width/style only — the `border` shorthand would reset
+                      // border-color to currentColor over .card-hover's token
+                      borderWidth: 1,
+                      borderStyle: "solid",
                       overflow: "hidden",
                     }}
                   >
@@ -317,12 +305,7 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════ Challenges + Principles (merged) ══════════════════ */}
-      <section
-        style={{
-          borderTop: "1px solid var(--color-border)",
-          background: "var(--color-bg-subtle)",
-        }}
-      >
+      <section>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
           <Reveal>
           <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
@@ -333,19 +316,12 @@ export default function HomePage() {
           </p>
           </Reveal>
 
-          {/* Challenges · all eight, each card acting out its question */}
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 340px), 1fr))",
-              gap: "var(--space-4)",
-              marginBottom: "var(--space-16)",
-            }}
-          >
+          {/* Challenges · all eight as a 4×2 grid on desktop */}
+          <div className="challenges-grid" style={{ marginBottom: "var(--space-16)" }}>
             {CHALLENGES.map((c, i) => (
               <Reveal
                 key={c.id}
-                delay={(i % 3) * 60}
+                delay={(i % 4) * 60}
                 style={{
                   borderRadius: "var(--radius-xl)",
                   border: "1px solid var(--color-border)",
@@ -406,6 +382,18 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ═══════ Contact · white fading into a light-blue cloud, footer continues it ═══════ */}
+      <section
+        id="contact"
+        className="cloud-fade"
+        style={{ scrollMarginTop: 72 }}
+      >
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
+          <Reveal>
+            <ContactForm />
+          </Reveal>
+        </div>
+      </section>
     </>
   );
 }

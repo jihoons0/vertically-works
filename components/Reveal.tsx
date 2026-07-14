@@ -28,7 +28,12 @@ export function Reveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    // Show instantly under reduced motion, and during Figma page captures
+    // (#figmacapture=…) so below-fold sections don't snapshot at opacity 0.
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.location.hash.includes("figmacapture")
+    ) {
       setShown(true);
       return;
     }

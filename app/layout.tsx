@@ -55,7 +55,11 @@ export default function RootLayout({
         <ThemeProvider>
           <SiteFrame>{children}</SiteFrame>
           {process.env.NODE_ENV === "development" && (
-            <Agentation endpoint="http://localhost:4747" />
+            <>
+              <Agentation endpoint="http://localhost:4747" />
+              {/* Figma page-capture bridge (generate_figma_design) · dev only */}
+              <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async />
+            </>
           )}
         </ThemeProvider>
       </body>

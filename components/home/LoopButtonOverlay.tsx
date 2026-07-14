@@ -50,11 +50,12 @@ export function LoopButtonOverlay({ lang }: { lang: Lang }) {
         {t.open}
       </div>
 
-      {/* Backdrop */}
+      {/* Backdrop · overshoots the 260px design band so it still covers the
+          full square stage after BentoTile scales the band (tile clips it) */}
       <div
         style={{
           position: "absolute",
-          inset: 0,
+          inset: -300,
           background: "rgba(0, 0, 0, 0.4)",
           opacity: open ? 1 : 0,
           transition: "opacity var(--duration-base) var(--easing-default)",

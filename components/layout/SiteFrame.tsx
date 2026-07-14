@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Navigation } from "@/components/nav/Navigation";
 import { Footer } from "@/components/layout/Footer";
+import { PreviewLangProvider } from "@/components/providers/PreviewLangProvider";
 
 // Most routes are documentation and wear the site chrome. The in-repo apps
 // (/apps/notes, /apps/listen) render bare so they own the whole viewport;
@@ -16,10 +17,10 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
   if (bare) return <>{children}</>;
 
   return (
-    <>
+    <PreviewLangProvider>
       <Navigation />
       <main style={{ flex: 1 }}>{children}</main>
-      <Footer />
-    </>
+      <Footer tinted={pathname === "/"} />
+    </PreviewLangProvider>
   );
 }

@@ -4,6 +4,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { CjkToggle } from "@/components/home/bento-shared";
+import { usePreviewLang } from "@/components/providers/PreviewLangProvider";
 
 const NAV_LINKS = [
   { href: "/apps", label: "Applications" },
@@ -24,6 +26,7 @@ export function Navigation() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [appsOpen, setAppsOpen] = useState(false);
+  const { lang, setLang } = usePreviewLang();
 
   return (
     <header
@@ -168,7 +171,7 @@ export function Navigation() {
                         borderRadius: "var(--radius-lg)",
                         border: "1px solid var(--color-border)",
                         background: "var(--color-bg)",
-                        boxShadow: "0 8px 24px rgba(0, 0, 0, 0.1)",
+                        boxShadow: "var(--shadow-overlay)",
                         display: "flex",
                         flexDirection: "column",
                         gap: 2,
@@ -229,6 +232,10 @@ export function Navigation() {
 
         {/* Right side */}
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginLeft: "auto" }}>
+          {/* Preview language · drives every vertical-UI demo site-wide */}
+          <span className="nav-lang">
+            <CjkToggle value={lang} onChange={setLang} />
+          </span>
           <Link
             href="https://github.com/jihoons"
             target="_blank"
