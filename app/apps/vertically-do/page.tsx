@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { AppHero } from "@/components/apps/AppHero";
 import { AppEmbed } from "@/components/apps/AppEmbed";
+import { AppVideo } from "@/components/home/AppVideo";
 
 export const metadata: Metadata = {
   title: "Vertically Notes",
@@ -86,6 +87,44 @@ export default function VerticallyDoPage() {
             </Link>
           </div>
           <AppEmbed src="/apps/notes" title="Vertically Notes · live to-do app" height={560} />
+        </Reveal>
+
+        {/* In motion · the recorded gestures, beside what they mean */}
+        <Reveal>
+          <div className="app-detail-lead" style={{ marginBottom: "var(--space-20)" }}>
+            <div
+              style={{
+                borderRadius: "var(--radius-xl)",
+                border: "1px solid var(--color-border)",
+                overflow: "hidden",
+                background: "var(--color-bg-muted)",
+                alignSelf: "start",
+              }}
+            >
+              <div style={{ aspectRatio: "1294 / 1484" }}>
+                <AppVideo
+                  src="/videos/vertically-notes.mp4"
+                  poster="/images/apps/notes-poster.jpg"
+                  label="Vertically Notes demo · adding, reordering, and deleting vertical task columns"
+                />
+              </div>
+            </div>
+
+            <div>
+              <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-4)", lineHeight: 1.15 }}>
+                In motion
+              </h2>
+              <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: "0 0 var(--space-5)", maxWidth: "52ch" }}>
+                Half a minute of the real gestures: a task written in vertical text, a
+                column pulled down into the trashcan that opens behind it, another dragged
+                sideways to reorder, and the whole interface flipped across 한 / あ / 中.
+              </p>
+              <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: 0, maxWidth: "52ch" }}>
+                Everything in the recording is the live app above — try the same moves
+                yourself.
+              </p>
+            </div>
+          </div>
         </Reveal>
 
         {/* Features */}

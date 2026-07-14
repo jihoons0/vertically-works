@@ -32,6 +32,8 @@ const APPS = [
     platform: "Web",
     status: "Live",
     href: "/apps/vertically-do",
+    video: "/videos/vertically-notes.mp4",
+    videoAspect: "1294 / 1484",
     description:
       "A to-do list on the vertical, right-to-left axis — tasks are columns you read top→bottom and reorder sideways.",
     challenges: [
@@ -97,7 +99,10 @@ export default function ApplicationsPage() {
               display: "block",
               padding: "var(--space-8)",
               borderRadius: "var(--radius-xl)",
-              border: "1px solid",
+              // width/style only — the `border` shorthand would reset
+              // border-color to currentColor over .card-hover's token
+              borderWidth: 1,
+              borderStyle: "solid",
               height: "100%",
             } as const;
 
@@ -152,7 +157,8 @@ export default function ApplicationsPage() {
                   <div
                     style={{
                       width: 180,
-                      aspectRatio: "2 / 3",
+                      // Frame each demo at its own aspect so nothing gets cropped
+                      aspectRatio: ("videoAspect" in app && app.videoAspect) || "2 / 3",
                       borderRadius: "var(--radius-lg)",
                       overflow: "hidden",
                       border: "1px solid var(--color-border)",
@@ -189,7 +195,7 @@ export default function ApplicationsPage() {
       </div>
 
       {/* ═══════════════ Build your own · npx unite ═══════════════ */}
-      <section style={{ borderTop: "1px solid var(--color-border)", background: "var(--color-bg-subtle)" }}>
+      <section className="tint-panel" style={{ borderTop: "1px solid var(--color-border)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-5)", alignItems: "flex-start" }}>
             <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: 0, lineHeight: 1.15, maxWidth: "20ch" }}>
