@@ -73,60 +73,9 @@ export default async function ComponentPage({ params }: Props) {
   const prev = currentIdx > 0 ? allComponents[currentIdx - 1] : null;
   const next = currentIdx < allComponents.length - 1 ? allComponents[currentIdx + 1] : null;
 
+  // The docs shell (sidebar rail + grid) comes from app/components/layout.tsx.
   return (
-    <div className="components-detail">
-      {/* Sidebar · component nav; hidden on mobile (.components-sidebar) */}
-      <aside
-        className="components-sidebar"
-        style={{
-          position: "sticky",
-          top: 56,
-          height: "calc(100dvh - 56px)",
-          overflowY: "auto",
-          borderRight: "1px solid var(--color-border)",
-          padding: "var(--space-6) 0",
-        }}
-      >
-        {/* Group by category */}
-        {Array.from(new Set(allComponents.map((c) => c.category))).map((cat) => (
-          <div key={cat} style={{ marginBottom: "var(--space-6)" }}>
-            <div
-              style={{
-                fontSize: "0.6875rem",
-                fontWeight: 700,
-                color: "var(--color-fg-subtle)",
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-                padding: "0 var(--space-6)",
-                marginBottom: "var(--space-2)",
-              }}
-            >
-              {cat}
-            </div>
-            {allComponents.filter((c) => c.category === cat).map((c) => (
-              <Link
-                key={c.slug}
-                href={`/components/${c.slug}`}
-                style={{
-                  display: "block",
-                  padding: "var(--space-2) var(--space-6)",
-                  fontSize: "0.875rem",
-                  color: c.slug === slug ? "var(--color-fg)" : "var(--color-fg-muted)",
-                  fontWeight: c.slug === slug ? 600 : 400,
-                  background: c.slug === slug ? "var(--color-bg-muted)" : "transparent",
-                  borderRight: c.slug === slug ? "2px solid var(--color-fg)" : "2px solid transparent",
-                  transition: "color 100ms ease, background 100ms ease, border-color 100ms ease, font-weight 100ms ease",
-                }}
-              >
-                {c.name}
-              </Link>
-            ))}
-          </div>
-        ))}
-      </aside>
-
-      {/* Main content */}
-      <main style={{ padding: "var(--space-12) clamp(var(--space-5), 5vw, var(--space-10)) var(--space-24)", maxWidth: 860, width: "100%", minWidth: 0 }}>
+    <main style={{ padding: "var(--space-12) clamp(var(--space-5), 5vw, var(--space-10)) var(--space-24)", maxWidth: 860, width: "100%", minWidth: 0 }}>
         {/* Breadcrumb — on mobile (no sidebar) the current component becomes a
             dropdown to switch between components. */}
         <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", marginBottom: "var(--space-8)", fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
@@ -405,7 +354,6 @@ export default async function ComponentPage({ params }: Props) {
             </Link>
           ) : <div />}
         </div>
-      </main>
-    </div>
+    </main>
   );
 }
