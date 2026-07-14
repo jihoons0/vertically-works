@@ -1,23 +1,30 @@
 import { Reveal } from "@/components/Reveal";
 import { InstallCard } from "@/components/ui/InstallCard";
+import { BannerShader } from "@/components/ui/BannerShader";
 
 /**
- * The contained light-blue install banner · pitch on the left, the npx card
- * on the right (.tint-panel + .install-twoup). One component so home, the
- * apps launcher, and the doc landing pages all share the exact same upsell.
+ * The install banner · pitch on the left, the npx card on the right, over the
+ * animated mesh-gradient surface (.install-twoup lays out the two columns).
+ * One component so home, the apps launcher, and the doc landing pages all
+ * share the exact same upsell. Light-scoped: the gradient is a light surface,
+ * so the ink stays dark in every site theme.
  */
 export function InstallBanner() {
   return (
     <section>
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(32px, 5vw, 64px) var(--space-6)" }}>
         <div
-          className="tint-panel install-twoup"
+          className="install-twoup"
+          data-theme="light"
           style={{
-            borderRadius: "var(--radius-xl)",
+            position: "relative",
+            overflow: "hidden",
+            borderRadius: "calc(var(--radius-xl) * 1.6)",
             padding: "clamp(32px, 5vw, 56px)",
           }}
         >
-          <Reveal>
+          <BannerShader />
+          <Reveal style={{ position: "relative", zIndex: 1 }}>
             <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
               Bring them into your project
             </h2>
@@ -27,7 +34,7 @@ export function InstallBanner() {
               <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>add</code> any component · fetched live from the registry, nothing to configure.
             </p>
           </Reveal>
-          <Reveal delay={80}>
+          <Reveal delay={80} style={{ position: "relative", zIndex: 1 }}>
             <InstallCard command="npx verticallyworks init" github="https://github.com/jihoons0/vertically-works" />
           </Reveal>
         </div>

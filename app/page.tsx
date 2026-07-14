@@ -5,7 +5,6 @@ import { ChallengeVisual } from "@/components/ChallengeVisual";
 import { BentoGrid } from "@/components/home/BentoGrid";
 import { ContactForm } from "@/components/home/ContactForm";
 import { HeroVerticalMotif } from "@/components/home/HeroVerticalMotif";
-import { HeroShader } from "@/components/home/HeroShader";
 import { InstallBanner } from "@/components/ui/InstallBanner";
 import { AppVideo } from "@/components/home/AppVideo";
 import { Beam } from "@/components/ui/Beam";
@@ -138,22 +137,15 @@ function SectionCta({ href, children }: { href: string; children: React.ReactNod
 export default function HomePage() {
   return (
     <>
-      {/* ═══════ Hero · a big rounded banner over the animated mesh gradient ═══════ */}
-      <section>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "var(--space-6) var(--space-6) 0" }}>
-          {/* Light-scoped: the gradient is a light surface, so the ink stays
-              dark inside the banner regardless of the site theme. */}
-          <div
-            data-theme="light"
-            style={{
-              position: "relative",
-              borderRadius: "calc(var(--radius-xl) * 1.6)",
-              overflow: "hidden",
-              padding: "clamp(48px, 7vw, 104px) clamp(28px, 5vw, 72px)",
-            }}
-          >
-            <HeroShader />
-            <div style={{ position: "relative", zIndex: 1 }}>
+      {/* ═══════════════════════════════ Hero ══════════════════════════════════ */}
+      <section className="hero-wash">
+        <div
+          style={{
+            maxWidth: 1280,
+            margin: "0 auto",
+            padding: "var(--space-16) var(--space-6) clamp(56px, 7vw, 104px)",
+          }}
+        >
         <div className="home-hero">
           <Reveal style={{ paddingTop: 0 }}>
             <h1
@@ -210,8 +202,6 @@ export default function HomePage() {
             <HeroVerticalMotif />
           </Reveal>
         </div>
-            </div>
-          </div>
         </div>
       </section>
 

@@ -4,10 +4,11 @@ import { MeshGradient } from "@paper-design/shaders-react";
 import { useReducedMotion } from "@/components/home/bento-shared";
 
 /**
- * The hero banner's animated mesh gradient. Fills its (relative) parent;
- * under prefers-reduced-motion the shader holds a still frame (speed 0).
+ * The banner's animated mesh gradient · fills its (relative) parent; under
+ * prefers-reduced-motion the shader holds a still frame (speed 0). Used by
+ * the InstallBanner on every page that carries it.
  */
-export function HeroShader() {
+export function BannerShader() {
   const reduced = useReducedMotion();
 
   return (
