@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 /** Preview language for the bento demos. */
@@ -215,23 +216,28 @@ export function BentoTile({
   index,
   label,
   description,
+  href,
   children,
 }: {
   index: string;
   label: string;
   description: string;
+  /** The component detail page this tile opens. */
+  href: string;
   children: ReactNode;
 }) {
   const { ref, scale } = useStageScale();
 
   return (
-    <div
+    <Link
+      href={href}
+      className="bento-tile"
       style={{
+        display: "block",
         position: "relative",
         borderRadius: "var(--radius-xl)",
         border: "1px solid var(--color-border)",
-        background: "var(--color-bg-subtle)",
-        boxShadow: "var(--shadow-soft)",
+        background: "var(--color-bg-muted)",
         overflow: "hidden",
       }}
     >
@@ -280,6 +286,28 @@ export function BentoTile({
         <span style={{ fontWeight: 500, color: "var(--color-fg-muted)" }}>{label}</span>
       </span>
 
+      {/* View cue · appears on hover/focus, bottom-right of the caption row */}
+      <span
+        className="bento-view"
+        aria-hidden
+        style={{
+          position: "absolute",
+          right: "var(--space-5)",
+          bottom: "var(--space-4)",
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 6,
+          fontSize: "0.75rem",
+          fontWeight: 500,
+          color: "var(--color-fg)",
+          textDecoration: "underline",
+          textUnderlineOffset: 3,
+        }}
+      >
+        View component
+        <span style={{ fontSize: "1.05em", lineHeight: 1, textDecoration: "none" }}>➔</span>
+      </span>
+
       {/* Full description · screen readers only, the tile keeps teaching */}
       <span
         style={{
@@ -296,6 +324,6 @@ export function BentoTile({
       >
         {description}
       </span>
-    </div>
+    </Link>
   );
 }

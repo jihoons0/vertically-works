@@ -28,6 +28,7 @@ export function LoopAccordion({ lang }: { lang: Lang }) {
   return (
     <BentoTile
       index="03"
+      href="/components/vertical-list-cell"
       label="Column accordion"
       description="Disclosure widens the cell sideways: detail unfolds as new columns beside the title, so the column's reading length never breaks."
     >

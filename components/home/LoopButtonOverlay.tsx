@@ -25,6 +25,7 @@ export function LoopButtonOverlay({ lang }: { lang: Lang }) {
   return (
     <BentoTile
       index="01"
+      href="/components/dialog"
       label="Vertical dialog"
       description="Title, body, and actions read as columns, right to left. The overlay is a layer above the flow, so it scales from center."
     >

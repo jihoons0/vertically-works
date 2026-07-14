@@ -37,6 +37,7 @@ export function LoopTabs({ lang }: { lang: Lang }) {
   return (
     <BentoTile
       index="06"
+      href="/components/tabs"
       label="Vertical tabs"
       description="A tab rail on the reading axis: vertical labels stacked at the right edge, panels unfolding to their left, the selection indicator traveling down the rail · never across it."
     >

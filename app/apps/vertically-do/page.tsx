@@ -226,7 +226,7 @@ export default function VerticallyDoPage() {
               flexShrink: 0,
             }}
           >
-            Open Vertically Notes →
+            Open Vertically Notes <span aria-hidden style={{ fontSize: "1.05em", lineHeight: 1 }}>➔</span>
           </Link>
         </div>
       </div>

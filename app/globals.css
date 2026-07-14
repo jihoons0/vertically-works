@@ -272,6 +272,16 @@ a {
   }
 }
 
+/* ─── Bento tiles · whole tile links to the component; cue reveals on hover ─── */
+.bento-view {
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--easing-default);
+}
+.bento-tile:hover .bento-view,
+.bento-tile:focus-visible .bento-view {
+  opacity: 1;
+}
+
 /* ─── Challenges · 8 cards as 4×2 on desktop ─── */
 .challenges-grid {
   display: grid;

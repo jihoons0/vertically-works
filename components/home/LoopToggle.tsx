@@ -91,6 +91,7 @@ export function LoopToggle({ lang }: { lang: Lang }) {
   return (
     <BentoTile
       index="02"
+      href="/components/toggle"
       label="List-cell toggle"
       description="The on/off thumb travels the reading axis · up is on · and flipping it re-themes the cells, so the toggle matches the direction the eye moves."
     >

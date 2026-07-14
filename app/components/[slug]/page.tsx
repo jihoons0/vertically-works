@@ -261,7 +261,7 @@ export default async function ComponentPage({ params }: Props) {
               }}
               className="card-hover-border"
             >
-              <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>← Previous</span>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}><span aria-hidden style={{ fontSize: "1.05em", lineHeight: 1, transform: "rotate(180deg)" }}>➔</span> Previous</span>
               <span style={{ fontSize: "0.9375rem", fontWeight: 600, color: "var(--color-fg)" }}>{prev.name}</span>
             </Link>
           ) : <div />}
@@ -282,7 +282,7 @@ export default async function ComponentPage({ params }: Props) {
               }}
               className="card-hover-border"
             >
-              <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>Next →</span>
+              <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: 6, fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>Next <span aria-hidden style={{ fontSize: "1.05em", lineHeight: 1 }}>➔</span></span>
               <span style={{ fontSize: "0.9375rem", fontWeight: 600, color: "var(--color-fg)" }}>{next.name}</span>
             </Link>
           ) : <div />}

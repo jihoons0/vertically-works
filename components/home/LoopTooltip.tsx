@@ -137,6 +137,7 @@ export function LoopTooltip({ lang }: { lang: Lang }) {
   return (
     <BentoTile
       index="04"
+      href="/components/tooltip"
       label="Tooltip on hover"
       description="Hover still exists in vertical UI: the tooltip opens to the left of the trigger, following reading direction, never below, where it would break the column."
     >

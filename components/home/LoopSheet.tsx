@@ -29,6 +29,7 @@ export function LoopSheet({ lang }: { lang: Lang }) {
   return (
     <BentoTile
       index="05"
+      href="/components/sheet"
       label="Edge sheet"
       description="The sheet enters from the reading direction · the left edge, where the next column would appear · not from screen geometry. Scrim, slide, and dismissal all travel the same axis."
     >

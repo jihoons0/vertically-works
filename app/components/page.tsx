@@ -35,14 +35,15 @@ export default function ComponentsIntroductionPage() {
           href="/components/setup"
           className="btn-primary-hover"
           style={{
-            display: "inline-flex", alignItems: "center",
+            display: "inline-flex", alignItems: "center", gap: 8,
             height: 40, padding: "0 var(--space-5)",
             fontSize: "0.9375rem", fontWeight: 500,
             borderRadius: "var(--radius-lg)",
             background: "var(--color-fg)", color: "var(--color-bg)",
           }}
         >
-          Set up →
+          Set up
+          <span aria-hidden style={{ fontSize: "1.05em", lineHeight: 1 }}>➔</span>
         </Link>
         <Link
           href="https://github.com/jihoons0/vertically-works"

@@ -17,7 +17,7 @@ const APPS = [
     status: "Live",
     video: "/videos/vertically-verse.mp4",
     description:
-      "A fully vertical, right-to-left Bible for Korean, Japanese, and Chinese.",
+      "A fully vertical, right-to-left Bible reader.",
     challenges: [
       "Columns snap per column, not per page",
       "Tate-chu-yoko (縦中横) verse numbers",
@@ -33,7 +33,7 @@ const APPS = [
     video: "/videos/vertically-notes.mp4",
     videoAspect: "1294 / 1484",
     description:
-      "A to-do list where every task is a column you read top to bottom.",
+      "A to-do list where tasks are vertical columns.",
     challenges: [
       "Tasks as full-height columns, stacking right→left",
       "Pull down to delete · drag sideways to reorder",
@@ -46,7 +46,7 @@ const APPS = [
     platform: "Web",
     status: "WIP",
     description:
-      "A podcast player where transcripts fall as time-synced vertical verse.",
+      "A podcast player with transcripts as vertical verse.",
     challenges: [
       "Shows › episodes › playing · browsing never stops playback",
       "Transcripts as vertical verse · tap a line to seek",
@@ -59,7 +59,7 @@ const APPS = [
     platform: "Concept",
     status: "Planned",
     description: null,
-    question: "How do directional labels and navigation adapt to a vertical reading axis?",
+    question: "How does navigation adapt to a vertical reading axis?",
     challenges: [
       "Place labels on a vertical reading axis",
       "Turn-by-turn: vertical list or carousel?",
