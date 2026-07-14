@@ -30,6 +30,7 @@ export function HeroVerticalMotif() {
       style={{
         display: "flex",
         flexDirection: "row-reverse", // reading order: first column sits rightmost
+        alignItems: "flex-start", // columns hug their own text — the pill wraps its word
         gap: "var(--space-6)",
         minHeight: "5.2em",
         fontSize: "clamp(2rem, 3.5vw, 2.75rem)",
