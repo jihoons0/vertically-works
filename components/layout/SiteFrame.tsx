@@ -8,7 +8,7 @@ import { PreviewLangProvider } from "@/components/providers/PreviewLangProvider"
 // Most routes are documentation and wear the site chrome. The in-repo apps
 // (/apps/notes, /apps/listen) render bare so they own the whole viewport;
 // everything else · the /apps launcher, the Verse pages · keeps the site chrome.
-const BARE_ROUTES = ["/apps/notes", "/apps/listen"];
+const BARE_ROUTES = ["/apps/notes", "/apps/listen", "/apps/news"];
 
 export function SiteFrame({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

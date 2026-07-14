@@ -1,0 +1,56 @@
+/* Vertically News · scoped styles for /apps/news.
+   Base tokens (colors, spacing, motion, .pressable, corner smoothing) come
+   from the site's globals; this file adds only what the newspaper needs. */
+
+/* ─── Reading faces · platform system CJK serif/mincho per edition ─── */
+:root {
+  --font-chrome: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "Apple SD Gothic Neo", "Hiragino Kaku Gothic ProN", "PingFang TC", "Noto Sans CJK KR", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-reading-ko: "Apple Myungjo", "AppleMyungjo", "Nanum Myeongjo",
+    "Noto Serif CJK KR", "Noto Serif KR", serif;
+  --font-reading-ja: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho",
+    "Noto Serif CJK JP", "Noto Serif JP", serif;
+  --font-reading-zh: "Songti TC", "Kaiti TC", "Noto Serif CJK TC", "Noto Serif TC", serif;
+  --font-reading: var(--font-reading-ko);
+}
+[data-edition="ko"] { --font-reading: var(--font-reading-ko); }
+[data-edition="ja"] { --font-reading: var(--font-reading-ja); }
+[data-edition="zh"] { --font-reading: var(--font-reading-zh); }
+
+/* Reading face preference · serif (명조) is the default; sans opts in. */
+[data-font="sans"] {
+  --font-reading-ko: "Apple SD Gothic Neo", "Noto Sans KR", "Noto Sans CJK KR", sans-serif;
+  --font-reading-ja: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Noto Sans CJK JP", sans-serif;
+  --font-reading-zh: "PingFang TC", "Heiti TC", "Noto Sans CJK TC", sans-serif;
+}
+
+.news-shell {
+  height: 100dvh;
+  font-family: var(--font-chrome);
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+
+/* ─── Vertical reading text · real writing mode, never a rotation ─── */
+.news-shell .vt-reading,
+.vt-reading {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  line-break: strict;
+  font-family: var(--font-reading);
+}
+
+/* Tate-chu-yoko · a short digit run set upright side-by-side in one cell. */
+.tcy {
+  text-combine-upright: all;
+}
+
+/* Hide scrollbars on the front-page scroller — the page indicator is the
+   position affordance. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { AppHero } from "@/components/apps/AppHero";
-import { WipBanner } from "@/components/apps/WipBanner";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Vertically News",
@@ -62,18 +63,28 @@ export default function VerticallyNewsPage() {
     <>
       <AppHero
         title="Vertically News"
-        status="WIP"
+        status="Live"
         platform="Web"
         meta="한 · あ · 中 editions"
       />
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
-        {/* WIP notice · the live front page embeds here at launch */}
+        {/* The app is live · open the front page */}
         <Reveal style={{ marginBottom: "var(--space-16)" }}>
-          <WipBanner>
-            Vertically News is a work in progress, going live soon · the live front page opens
-            here at launch.
-          </WipBanner>
+          <Link
+            href="/apps/news"
+            className="btn-primary-hover"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              height: 44, padding: "0 var(--space-6)",
+              fontSize: "0.9375rem", fontWeight: 500,
+              borderRadius: "var(--radius-lg)",
+              background: "var(--color-fg)", color: "var(--color-bg)",
+            }}
+          >
+            Open the front page
+            <ArrowRight size={16} strokeWidth={2.25} aria-hidden />
+          </Link>
         </Reveal>
 
         {/* Features */}

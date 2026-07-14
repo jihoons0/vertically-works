@@ -58,8 +58,8 @@ const APPS = [
     id: "news",
     name: "News",
     platform: "Web",
-    status: "WIP",
-    href: "/apps/vertically-news",
+    status: "Live",
+    href: "/apps/news",
     description:
       "A daily front page of live KR/JP/CN headlines, set as a vertical newspaper.",
     challenges: [
