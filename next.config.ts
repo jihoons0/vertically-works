@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // A stray lockfile in the home directory makes Turbopack infer ~ as the
+  // workspace root, which broke dev-server file watching (stale CSS after
+  // globals.css edits). Pin the root to this repo.
+  turbopack: {
+    root: __dirname,
+  },
   async redirects() {
     return [
       { source: "/applications", destination: "/apps", permanent: true },
