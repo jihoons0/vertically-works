@@ -1,13 +1,13 @@
 import Link from "next/link";
 
-/** `tinted` (home): carries the contact section's cloud color so the page
- *  settles into light blue with no seam · border dropped for continuity. */
-export function Footer({ tinted = false }: { tinted?: boolean }) {
+/** `transparent` (home): the footer sits inside the contact section's shader
+ *  surface, so it paints nothing of its own and drops the top border. */
+export function Footer({ transparent = false }: { transparent?: boolean }) {
   return (
     <footer
       style={{
-        borderTop: tinted ? "none" : "1px solid var(--color-border)",
-        background: tinted ? "var(--color-accent-soft)" : undefined,
+        borderTop: transparent ? "none" : "1px solid var(--color-border)",
+        background: transparent ? "transparent" : undefined,
         marginTop: "auto",
       }}
     >

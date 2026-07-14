@@ -20,7 +20,8 @@ export function SiteFrame({ children }: { children: React.ReactNode }) {
     <PreviewLangProvider>
       <Navigation />
       <main style={{ flex: 1 }}>{children}</main>
-      <Footer tinted={pathname === "/"} />
+      {/* Home carries its own footer inside the contact section's shader */}
+      {pathname !== "/" && <Footer />}
     </PreviewLangProvider>
   );
 }

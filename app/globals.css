@@ -334,11 +334,6 @@ a {
     var(--color-bg-subtle) 72%
   );
 }
-/* Cloud fade · white at the top easing into light blue; the (home) footer
-   carries the same end color so the page settles into it seamlessly. */
-.cloud-fade {
-  background: linear-gradient(to bottom, var(--color-bg) 0%, var(--color-accent-soft) 100%);
-}
 
 /* ─── Contact card (home) · one box, hairline between sender and compose ─── */
 .contact-card {

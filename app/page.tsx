@@ -5,6 +5,8 @@ import { Reveal } from "@/components/Reveal";
 import { ChallengeVisual } from "@/components/ChallengeVisual";
 import { BentoGrid } from "@/components/home/BentoGrid";
 import { ContactForm } from "@/components/home/ContactForm";
+import { BottomShader } from "@/components/ui/BottomShader";
+import { Footer } from "@/components/layout/Footer";
 import { HeroVerticalMotif } from "@/components/home/HeroVerticalMotif";
 import { InstallBanner } from "@/components/ui/InstallBanner";
 import { AppVideo } from "@/components/home/AppVideo";
@@ -356,16 +358,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ═══════ Contact · white fading into a light-blue cloud, footer continues it ═══════ */}
-      <section
-        id="contact"
-        className="cloud-fade"
-        style={{ scrollMarginTop: 72 }}
-      >
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
+      {/* ═══ Contact + footer · one grainy wave surface closes the page ═══ */}
+      <section id="contact" style={{ scrollMarginTop: 72, position: "relative" }}>
+        <BottomShader />
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
           <Reveal>
             <ContactForm />
           </Reveal>
+        </div>
+        <div style={{ position: "relative", zIndex: 1 }}>
+          <Footer transparent />
         </div>
       </section>
     </>

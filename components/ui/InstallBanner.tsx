@@ -6,8 +6,8 @@ import { BannerShader } from "@/components/ui/BannerShader";
  * The install banner · pitch on the left, the npx card on the right, over the
  * animated mesh-gradient surface (.install-twoup lays out the two columns).
  * One component so home, the apps launcher, and the doc landing pages all
- * share the exact same upsell. Light-scoped: the gradient is a light surface,
- * so the ink stays dark in every site theme.
+ * share the exact same upsell. The shader palette follows the site theme
+ * (cream/sky by day, teal/ink at night), so the ink follows the theme too.
  */
 export function InstallBanner() {
   return (
@@ -15,7 +15,6 @@ export function InstallBanner() {
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(32px, 5vw, 64px) var(--space-6)" }}>
         <div
           className="install-twoup"
-          data-theme="light"
           style={{
             position: "relative",
             overflow: "hidden",
