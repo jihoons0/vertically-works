@@ -7,7 +7,7 @@
 
 /* ─── Tailwind v4 theme tokens ─── */
 @theme inline {
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-noto-sans);
   --font-mono: var(--font-geist-mono);
 
   --color-background: var(--color-bg);
@@ -38,12 +38,33 @@ html {
   scroll-behavior: smooth;
 }
 
+/* ─── Site type system ───
+   Titles: Libre Baskerville paired with Noto Serif CJK (per-glyph fallback).
+   Body: Noto Sans with its CJK companions. The embedded applications
+   (.notes-shell, .listen-shell) pin themselves back to Geist. */
+:root {
+  --font-site-sans: var(--font-noto-sans), var(--font-noto-sans-kr), var(--font-noto-sans-jp), var(--font-noto-sans-tc), system-ui, sans-serif;
+  --font-site-title: var(--font-title), var(--font-noto-serif-kr), var(--font-noto-serif-jp), var(--font-noto-serif-tc), Georgia, serif;
+}
+
 body {
   background: var(--color-bg);
   color: var(--color-fg);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-site-sans);
   transition: background var(--duration-base) var(--easing-default),
               color var(--duration-base) var(--easing-default);
+}
+
+/* Serif titles · scoped to site content (the bare app routes have no <main>).
+   Baskerville is wide; relax the Geist-era negative tracking. */
+main h1,
+main h2,
+main h3 {
+  font-family: var(--font-site-title);
+  letter-spacing: -0.01em !important;
+}
+.home-hero-motif {
+  font-family: var(--font-site-title);
 }
 
 /* ─── Selection ─── */
@@ -262,9 +283,14 @@ a {
   }
 }
 
-/* ─── Nav preview-language toggle · tucked away on narrow screens ─── */
-@media (max-width: 699px) {
-  .nav-lang {
+/* ─── Nav right side · 한/あ/中 stays on mweb; GitHub + theme move to the menu ─── */
+.nav-extras {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+@media (max-width: 767px) {
+  .nav-extras {
     display: none;
   }
 }
@@ -374,6 +400,21 @@ a {
 .components-sidebar {
   display: none;
 }
+
+/* Mobile docs nav · the sidebar's stand-in under 900px */
+.components-mobilenav {
+  position: sticky;
+  top: 56px;
+  z-index: 40;
+  background: var(--color-bg);
+  padding: var(--space-3) var(--space-6);
+  border-bottom: 1px solid var(--color-border);
+}
+@media (min-width: 900px) {
+  .components-mobilenav {
+    display: none;
+  }
+}
 .components-twoup {
   display: grid;
   grid-template-columns: 1fr;
@@ -384,19 +425,6 @@ a {
     grid-template-columns: 1fr 1fr;
   }
 }
-/* Breadcrumb component picker — the mobile substitute for the sidebar. */
-.components-crumb-static {
-  display: none;
-}
-.components-crumb-picker {
-  display: inline-block;
-}
-.components-crumb-picker > summary {
-  list-style: none;
-}
-.components-crumb-picker > summary::-webkit-details-marker {
-  display: none;
-}
 @media (min-width: 900px) {
   .components-detail {
     grid-template-columns: 240px 1fr;
@@ -405,12 +433,6 @@ a {
     display: block;
   }
   /* Desktop has the sidebar → breadcrumb is plain text again. */
-  .components-crumb-static {
-    display: inline;
-  }
-  .components-crumb-picker {
-    display: none;
-  }
 }
 
 /* ─── Hover utility classes (CSS-only, works in Server Components) ─── */

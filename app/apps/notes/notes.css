@@ -1,3 +1,8 @@
+/* The app keeps Geist · the site's Baskerville/Noto voice stops at this shell. */
+.notes-shell {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
 /* ─────────────────────────────────────────────────────────────
    Vertically Do (the "Notes" application) — scoped additions.
    The base token system (colors, spacing, radii, motion, .pressable)

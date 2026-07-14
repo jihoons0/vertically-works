@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Libre_Baskerville,
+  Noto_Sans,
+  Noto_Sans_KR,
+  Noto_Sans_JP,
+  Noto_Sans_TC,
+  Noto_Serif_KR,
+  Noto_Serif_JP,
+  Noto_Serif_TC,
+} from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { SiteFrame } from "@/components/layout/SiteFrame";
 import { Agentation } from "agentation";
 
+// Geist stays for the embedded applications (Notes, Listen) and code.
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -14,6 +26,22 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+// Site voice: Libre Baskerville titles paired with Noto Serif CJK,
+// Noto Sans (+ KR/JP/TC) for everything else. CJK families skip preload ·
+// their glyph chunks stream by unicode-range as needed.
+const libreBaskerville = Libre_Baskerville({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  variable: "--font-title",
+});
+const notoSans = Noto_Sans({ subsets: ["latin"], variable: "--font-noto-sans" });
+const notoSansKR = Noto_Sans_KR({ subsets: ["latin"], variable: "--font-noto-sans-kr", preload: false });
+const notoSansJP = Noto_Sans_JP({ subsets: ["latin"], variable: "--font-noto-sans-jp", preload: false });
+const notoSansTC = Noto_Sans_TC({ subsets: ["latin"], variable: "--font-noto-sans-tc", preload: false });
+const notoSerifKR = Noto_Serif_KR({ subsets: ["latin"], variable: "--font-noto-serif-kr", preload: false });
+const notoSerifJP = Noto_Serif_JP({ subsets: ["latin"], variable: "--font-noto-serif-jp", preload: false });
+const notoSerifTC = Noto_Serif_TC({ subsets: ["latin"], variable: "--font-noto-serif-tc", preload: false });
 
 export const metadata: Metadata = {
   title: {
@@ -49,7 +77,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${libreBaskerville.variable} ${notoSans.variable} ${notoSansKR.variable} ${notoSansJP.variable} ${notoSansTC.variable} ${notoSerifKR.variable} ${notoSerifJP.variable} ${notoSerifTC.variable}`}
     >
       <body style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
         <ThemeProvider>
