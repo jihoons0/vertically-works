@@ -122,7 +122,7 @@ export default function VerticallyDoPage() {
                 sideways to reorder, and the whole interface flipped across 한 / あ / 中.
               </p>
               <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: 0, maxWidth: "52ch" }}>
-                Everything in the recording is the live app above — try the same moves
+                Everything in the recording is the live app above · try the same moves
                 yourself.
               </p>
             </div>

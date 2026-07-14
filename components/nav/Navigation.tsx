@@ -20,11 +20,34 @@ const NAV_LINKS = [
 ];
 
 // Shown in the Applications hover dropdown (desktop) and indented in the mobile menu.
-const APP_LINKS = [
+// `wip` entries link to their detail page but carry a WIP tag until the app is live.
+const APP_LINKS: { href: string; name: string; sub: string; wip?: boolean }[] = [
   { href: "/apps/vertically-verse", name: "Vertically Verse", sub: "Scripture reader · iOS" },
   { href: "/apps/vertically-do", name: "Vertically Notes", sub: "To-do list · Web" },
-  { href: "/apps/vertically-listen", name: "Vertically Listen", sub: "Podcast player · Web" },
+  { href: "/apps/vertically-listen", name: "Vertically Listen", sub: "Podcast player · Web", wip: true },
+  { href: "/apps/vertically-news", name: "Vertically News", sub: "Daily newspaper · Web", wip: true },
 ];
+
+// Small tag for apps that are announced but not yet live.
+function WipBadge() {
+  return (
+    <span
+      style={{
+        fontSize: "0.625rem",
+        fontWeight: 500,
+        color: "var(--color-fg-subtle)",
+        border: "1px solid var(--color-border)",
+        borderRadius: "var(--radius-full)",
+        padding: "1px 6px",
+        textTransform: "uppercase",
+        letterSpacing: "0.06em",
+        flexShrink: 0,
+      }}
+    >
+      WIP
+    </span>
+  );
+}
 
 export function Navigation() {
   const pathname = usePathname();
@@ -209,8 +232,9 @@ export function Navigation() {
                               (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
                             }}
                           >
-                            <span style={{ display: "block", fontSize: "0.875rem", fontWeight: 500, color: "var(--color-fg)", marginBottom: 1 }}>
+                            <span style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", fontSize: "0.875rem", fontWeight: 500, color: "var(--color-fg)", marginBottom: 1 }}>
                               {app.name}
+                              {app.wip && <WipBadge />}
                             </span>
                             <span style={{ display: "block", fontSize: "0.75rem", color: "var(--color-fg-subtle)" }}>
                               {app.sub}
@@ -410,7 +434,9 @@ className="nav-mobile-dropdown"
                               href={app.href}
                               onClick={() => setMobileOpen(false)}
                               style={{
-                                display: "block",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "var(--space-2)",
                                 padding: "var(--space-2) var(--space-3)",
                                 marginLeft: "var(--space-4)",
                                 fontSize: "0.875rem",
@@ -421,6 +447,7 @@ className="nav-mobile-dropdown"
                               }}
                             >
                               {app.name}
+                              {app.wip && <WipBadge />}
                             </Link>
                           </li>
                         );

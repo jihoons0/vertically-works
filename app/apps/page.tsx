@@ -45,6 +45,7 @@ const APPS = [
     name: "Listen",
     platform: "Web",
     status: "WIP",
+    href: "/apps/vertically-listen",
     description:
       "A podcast player with transcripts as vertical verse.",
     challenges: [
@@ -54,16 +55,17 @@ const APPS = [
     ],
   },
   {
-    id: "maps",
-    name: "Maps",
-    platform: "Concept",
-    status: "Planned",
-    description: null,
-    question: "How does navigation adapt to a vertical reading axis?",
+    id: "news",
+    name: "News",
+    platform: "Web",
+    status: "WIP",
+    href: "/apps/vertically-news",
+    description:
+      "A daily front page of live KR/JP/CN headlines, set as a vertical newspaper.",
     challenges: [
-      "Place labels on a vertical reading axis",
-      "Turn-by-turn: vertical list or carousel?",
-      "Results and details as columns",
+      "Live RSS headlines as full-height columns, first story at the right edge",
+      "Real-world digits, acronyms, and kinsoku · the typography stress test",
+      "Pull past the leftmost column to turn the page",
     ],
   },
 ];
@@ -86,8 +88,11 @@ export default function ApplicationsPage() {
       >
         <div className="apps-grid">
           {APPS.map((app) => {
-            // Only Live apps are enterable; WIP / Planned render as non-interactive cards.
-            const blocked = app.status !== "Live";
+            // Cards link to their detail page when one exists (Live apps default
+            // to /apps/<id>); only apps with no page yet render non-interactive.
+            const href =
+              "href" in app && app.href ? app.href : app.status === "Live" ? `/apps/${app.id}` : null;
+            const blocked = !href;
             const video = "video" in app && app.video ? app.video : null;
             const cardStyle = {
               display: "block",
@@ -101,14 +106,7 @@ export default function ApplicationsPage() {
             } as const;
 
             const inner = (
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: video ? "1fr auto" : "1fr",
-                  gap: "var(--space-6)",
-                  alignItems: "start",
-                }}
-              >
+              <div className={video ? "app-card-inner has-media" : "app-card-inner"}>
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-3)", flexWrap: "wrap" }}>
                     <h2 style={{ fontSize: "1.125rem", fontWeight: 600, color: "var(--color-fg)", margin: 0, letterSpacing: "-0.02em" }}>
@@ -132,7 +130,7 @@ export default function ApplicationsPage() {
                   </div>
 
                   <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-5)", lineHeight: 1.65 }}>
-                    {app.description ?? app.question}
+                    {app.description}
                   </p>
 
                   {app.challenges && (
@@ -175,12 +173,7 @@ export default function ApplicationsPage() {
                 {inner}
               </div>
             ) : (
-              <Link
-                key={app.id}
-                href={"href" in app && app.href ? app.href : `/apps/${app.id}`}
-                className="card-hover"
-                style={cardStyle}
-              >
+              <Link key={app.id} href={href!} className="card-hover" style={cardStyle}>
                 {inner}
               </Link>
             );

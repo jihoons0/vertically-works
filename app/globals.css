@@ -259,6 +259,31 @@ a {
   }
 }
 
+/* Application card interior: text over media on mobile, side-by-side from 800px */
+.app-card-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+@media (min-width: 800px) {
+  .app-card-inner.has-media {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+/* Home Applications: vertical stack on mobile, fluid columns from 800px */
+.home-apps-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+@media (min-width: 800px) {
+  .home-apps-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  }
+}
+
 /* ─── App detail lead: media + intro two-up ─── */
 .app-detail-lead {
   display: grid;

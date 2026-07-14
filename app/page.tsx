@@ -45,10 +45,20 @@ const APPLICATIONS = [
     name: "Vertically Listen",
     platform: "Web",
     status: "WIP",
-    href: null,
+    href: "/apps/vertically-listen",
     video: null,
     description:
       "A podcast player where transcripts fall as time-synced vertical verse.",
+  },
+  {
+    id: "news",
+    name: "Vertically News",
+    platform: "Web",
+    status: "WIP",
+    href: "/apps/vertically-news",
+    video: null,
+    description:
+      "A daily newspaper setting live Korean, Japanese, and Chinese headlines right to left.",
   },
 ];
 
@@ -238,7 +248,7 @@ export default function HomePage() {
           </p>
         </Reveal>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 280px), 1fr))", gap: "var(--space-4)" }}>
+        <div className="home-apps-grid">
           {APPLICATIONS.map((app, i) => (
             <Reveal key={app.id} delay={i * 70}>
               {app.href ? (
