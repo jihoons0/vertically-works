@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 
 function tokenize(code: string): { type: string; value: string }[] {
   const tokens: { type: string; value: string }[] = [];
@@ -60,31 +60,28 @@ function tokenize(code: string): { type: string; value: string }[] {
   return tokens;
 }
 
-const TOKEN_COLORS: Record<string, string> = {
-  keyword: "#c678dd",
-  string: "#98c379",
-  comment: "#5c6370",
-  tag: "#e06c75",
-  prop: "#d19a66",
-  number: "#d19a66",
-  text: "#abb2bf",
-  newline: "",
+// Monochrome syntax ramp · structure carries weight, not hue. Every color is a
+// semantic token, so the block follows data-theme (light/dark/sepia) natively.
+const TOKEN_STYLES: Record<string, CSSProperties> = {
+  keyword: { color: "var(--color-fg)", fontWeight: 600 },
+  tag: { color: "var(--color-fg)", fontWeight: 600 },
+  prop: { color: "var(--color-fg-muted)" },
+  string: { color: "var(--color-fg)" },
+  number: { color: "var(--color-fg)" },
+  comment: { color: "var(--color-fg-subtle)", fontStyle: "italic" },
+  text: { color: "var(--color-fg-muted)" },
 };
 
 export function CodeBlock({ code, language = "tsx" }: { code: string; language?: string }) {
   const [copied, setCopied] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
-  const tokens = tokenize(code);
   const lines = code.split("\n");
   const PREVIEW_LINES = 8;
   const shouldCollapse = lines.length > PREVIEW_LINES;
   const visibleCode = (!expanded && shouldCollapse)
     ? lines.slice(0, PREVIEW_LINES).join("\n")
     : code;
-  const visibleTokens = (!expanded && shouldCollapse)
-    ? tokenize(visibleCode)
-    : tokens;
 
   const copy = async () => {
     await navigator.clipboard.writeText(code);
@@ -92,14 +89,12 @@ export function CodeBlock({ code, language = "tsx" }: { code: string; language?:
     setTimeout(() => setCopied(false), 1500);
   };
 
-  let lineNum = 1;
-
   return (
     <div
       style={{
-        background: "#1e2127",
+        background: "var(--color-bg-muted)",
         borderRadius: "var(--radius-xl)",
-        border: "1px solid #2d3139",
+        border: "1px solid var(--color-border)",
         overflow: "hidden",
         fontSize: "0.8125rem",
         fontFamily: "var(--font-geist-mono), 'Fira Code', monospace",
@@ -112,25 +107,26 @@ export function CodeBlock({ code, language = "tsx" }: { code: string; language?:
           alignItems: "center",
           justifyContent: "space-between",
           padding: "var(--space-3) var(--space-5)",
-          borderBottom: "1px solid #2d3139",
-          background: "#181b20",
+          borderBottom: "1px solid var(--color-border)",
+          background: "var(--color-bg-subtle)",
         }}
       >
-        <span style={{ fontSize: "0.6875rem", color: "#5c6370", letterSpacing: "0.05em" }}>
+        <span style={{ fontSize: "0.6875rem", color: "var(--color-fg-subtle)", letterSpacing: "0.05em" }}>
           {language}
         </span>
         <button
           onClick={copy}
           style={{
             fontSize: "0.6875rem",
-            color: copied ? "#98c379" : "#5c6370",
+            color: copied ? "var(--color-fg)" : "var(--color-fg-subtle)",
+            fontWeight: copied ? 600 : 400,
             background: "none",
             border: "none",
             cursor: "pointer",
             fontFamily: "inherit",
             padding: "2px var(--space-2)",
             borderRadius: "var(--radius-sm)",
-            transition: "color 150ms ease",
+            transition: "color var(--duration-fast) var(--easing-default)",
           }}
         >
           {copied ? "Copied!" : "Copy"}
@@ -146,7 +142,8 @@ export function CodeBlock({ code, language = "tsx" }: { code: string; language?:
                 <td
                   style={{
                     padding: "0 var(--space-5) 0 var(--space-4)",
-                    color: "#3d4451",
+                    color: "var(--color-fg-subtle)",
+                    opacity: 0.7,
                     userSelect: "none",
                     textAlign: "right",
                     fontSize: "0.6875rem",
@@ -172,10 +169,12 @@ export function CodeBlock({ code, language = "tsx" }: { code: string; language?:
           style={{
             width: "100%",
             padding: "var(--space-3)",
-            background: expanded ? "transparent" : "linear-gradient(to bottom, transparent, #1e2127)",
-            color: "#5c6370",
+            background: expanded
+              ? "transparent"
+              : "linear-gradient(to bottom, transparent, var(--color-bg-muted))",
+            color: "var(--color-fg-subtle)",
             border: "none",
-            borderTop: "1px solid #2d3139",
+            borderTop: "1px solid var(--color-border)",
             cursor: "pointer",
             fontSize: "0.75rem",
             fontFamily: "inherit",
@@ -197,7 +196,7 @@ function HighlightedLine({ line }: { line: string }) {
   return (
     <>
       {tokens.map((t, i) => (
-        <span key={i} style={{ color: TOKEN_COLORS[t.type] ?? "#abb2bf" }}>
+        <span key={i} style={TOKEN_STYLES[t.type] ?? TOKEN_STYLES.text}>
           {t.value}
         </span>
       ))}

@@ -186,22 +186,21 @@ export function ContactForm() {
             />
           </div>
 
-          {/* Send row · status left, direction toggle beside Send on the right */}
-          <div style={{ marginTop: "auto", padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--color-border)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)", flexWrap: "wrap" }}>
-            <span aria-live="polite" style={{ fontSize: "0.75rem", color: "var(--color-fg)", fontWeight: 500, alignSelf: "center" }}>
+          {/* Send row · direction toggle at the left end, Send at the right */}
+          <div style={{ marginTop: "auto", padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--color-border)", display: "flex", alignItems: "center", gap: "var(--space-4)", flexWrap: "wrap" }}>
+            <Segmented
+              ariaLabel="Writing direction"
+              value={dir}
+              onChange={setDir}
+              options={[
+                { id: "vertical", label: "Vertical" },
+                { id: "horizontal", label: "Horizontal" },
+              ]}
+              style={{ width: 200 }}
+            />
+            <span aria-live="polite" style={{ flex: 1, minWidth: 120, fontSize: "0.75rem", color: "var(--color-fg)", fontWeight: 500 }}>
               {sent ? "✓ Draft opened — send it from your mail app." : errors.body ?? ""}
             </span>
-            <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", flexWrap: "wrap" }}>
-              <Segmented
-                ariaLabel="Writing direction"
-                value={dir}
-                onChange={setDir}
-                options={[
-                  { id: "vertical", label: "Vertical" },
-                  { id: "horizontal", label: "Horizontal" },
-                ]}
-                style={{ width: 200 }}
-              />
             <button
               type="submit"
               className="btn-primary-hover pressable"
@@ -220,9 +219,8 @@ export function ContactForm() {
                 color: "var(--color-bg)",
               }}
             >
-              Send →
+              Send
             </button>
-            </div>
           </div>
         </div>
       </form>
@@ -383,7 +381,8 @@ function Segmented<T extends string>({
           <span style={{ fontSize: "0.8125rem", color: "var(--color-fg)", fontWeight: 500 }}>{label}</span>
         </div>
       )}
-      <div role="group" aria-label={ariaLabel} style={{ display: "flex", gap: 2, padding: 3, borderRadius: "var(--radius-lg)", background: "var(--color-bg-muted)", border: "1px solid var(--color-border)" }}>
+      {/* height 40 · matches the Send button it sits beside */}
+      <div role="group" aria-label={ariaLabel} style={{ display: "flex", gap: 2, padding: 3, height: 40, boxSizing: "border-box", borderRadius: "var(--radius-lg)", background: "var(--color-bg-muted)", border: "1px solid var(--color-border)" }}>
         {options.map((o) => {
           const active = o.id === value;
           return (
@@ -395,7 +394,10 @@ function Segmented<T extends string>({
               className="pressable"
               style={{
                 flex: 1,
-                padding: "5px 0",
+                padding: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
                 borderRadius: "var(--radius-md)",
                 border: "none",
                 cursor: "pointer",

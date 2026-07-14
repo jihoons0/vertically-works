@@ -214,6 +214,11 @@ a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+@media (min-width: 1080px) {
+  .home-bento {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
 
 /* Applications: two-column card grid */
 .apps-grid {
@@ -445,7 +450,7 @@ a {
 }
 
 .btn-outline-hover {
-  background: var(--color-bg-muted);
+  background: color-mix(in srgb, var(--color-fg) 10%, var(--color-bg));
   border-color: transparent;
   font-weight: 600 !important;
   transition: border-color var(--duration-fast) var(--easing-default),
@@ -453,7 +458,7 @@ a {
 }
 .btn-outline-hover:hover {
   border-color: transparent;
-  background: var(--color-border);
+  background: color-mix(in srgb, var(--color-fg) 16%, var(--color-bg));
 }
 
 .btn-subtle-hover {
@@ -468,8 +473,8 @@ a {
 /* Section-level "view all" CTAs — outline at rest, full monochrome invert on
    hover so the action registers on both plain and subtle section backgrounds. */
 .btn-cta-hover {
-  /* Filled soft base · ghost buttons read as buttons at rest */
-  background: var(--color-bg-muted);
+  /* Filled base, one step darker than bg-muted · unmistakably a button */
+  background: color-mix(in srgb, var(--color-fg) 10%, var(--color-bg));
   border-color: transparent;
   font-weight: 600 !important;
   transition: background var(--duration-fast) var(--easing-default),
