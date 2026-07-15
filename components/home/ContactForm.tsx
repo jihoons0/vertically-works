@@ -20,7 +20,7 @@
  *   the global reduced-motion reset flattens it.
  */
 
-import { useId, useState, type CSSProperties, type FormEvent, type InputHTMLAttributes } from "react";
+import { useEffect, useId, useState, type CSSProperties, type FormEvent, type InputHTMLAttributes } from "react";
 import { usePreviewLang } from "@/components/providers/PreviewLangProvider";
 import { Check } from "lucide-react";
 import type { Lang } from "@/components/home/bento-shared";
@@ -55,7 +55,19 @@ export function ContactForm() {
   const [errors, setErrors] = useState<{ name?: string; email?: string; body?: string }>({});
   const [sent, setSent] = useState(false);
 
-  const isV = dir === "vertical";
+  // Narrow screens compose horizontally, full stop · the vertical surface
+  // needs width the stacked mobile card doesn't have, so the direction
+  // toggle disappears with it. 880px matches .contact-card's row breakpoint.
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 879px)");
+    const update = () => setNarrow(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  const isV = !narrow && dir === "vertical";
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -123,13 +135,9 @@ export function ContactForm() {
 
   return (
     <div>
-      <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-3)", lineHeight: 1.15 }}>
+      <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-8)", lineHeight: 1.15 }}>
         Contact us
       </h2>
-      <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-10)", lineHeight: 1.65 }}>
-        Questions, ideas, collaborations — write to us anytime. Compose your message
-        vertically or horizontally, whichever way you think.
-      </p>
 
       {/* One bounding box · sender and compose divided by a single hairline */}
       <form onSubmit={handleSubmit} noValidate className="contact-card">
@@ -187,18 +195,21 @@ export function ContactForm() {
             />
           </div>
 
-          {/* Send row · direction toggle at the left end, Send at the right */}
+          {/* Send row · direction toggle at the left end, Send at the right.
+              The toggle only exists where vertical mode does (wide screens). */}
           <div style={{ marginTop: "auto", padding: "var(--space-4) var(--space-6)", borderTop: "1px solid var(--color-border)", display: "flex", alignItems: "center", gap: "var(--space-4)", flexWrap: "wrap" }}>
-            <Segmented
-              ariaLabel="Writing direction"
-              value={dir}
-              onChange={setDir}
-              options={[
-                { id: "vertical", label: "Vertical" },
-                { id: "horizontal", label: "Horizontal" },
-              ]}
-              style={{ width: 200 }}
-            />
+            {!narrow && (
+              <Segmented
+                ariaLabel="Writing direction"
+                value={dir}
+                onChange={setDir}
+                options={[
+                  { id: "vertical", label: "Vertical" },
+                  { id: "horizontal", label: "Horizontal" },
+                ]}
+                style={{ width: 200 }}
+              />
+            )}
             <span aria-live="polite" style={{ flex: 1, minWidth: 120, fontSize: "0.75rem", color: "var(--color-fg)", fontWeight: 500 }}>
               {sent ? <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Check size={12} strokeWidth={2.5} aria-hidden /> Draft opened — send it from your mail app.</span> : errors.body ?? ""}
             </span>

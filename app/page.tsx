@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { ChallengeVisual } from "@/components/ChallengeVisual";
@@ -9,6 +9,7 @@ import { BottomShader } from "@/components/ui/BottomShader";
 import { Footer } from "@/components/layout/Footer";
 import { HeroVerticalMotif } from "@/components/home/HeroVerticalMotif";
 import { InstallBanner } from "@/components/ui/InstallBanner";
+import { OriginShader } from "@/components/ui/OriginShader";
 import { AppVideo } from "@/components/home/AppVideo";
 import { Beam } from "@/components/ui/Beam";
 
@@ -221,13 +222,13 @@ export default function HomePage() {
       {/* ═══════════════ The System in Motion · self-playing demos ═════════════ */}
       <section>
         <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
-          <Reveal>
-            <BentoGrid
-              title="Components"
-              description="The interaction primitives of a vertical interface · real, accessible React components you copy into your project with one command."
-              action={<SectionCta href="/components">All components</SectionCta>}
-            />
-          </Reveal>
+          {/* No scroll reveal · the section crests the fold on desktop, where a
+              scroll-triggered fade left it looking empty on first paint. */}
+          <BentoGrid
+            title="Components"
+            description="The interaction primitives of a vertical interface · real, accessible React components you copy into your project with one command."
+            action={<SectionCta href="/components">All components</SectionCta>}
+          />
         </div>
       </section>
 
@@ -363,6 +364,52 @@ export default function HomePage() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ═══════════ Where this began · the 2019 article behind the site ═══════ */}
+      <section
+        style={{
+          position: "relative",
+          overflow: "hidden",
+          background: "var(--color-bg-subtle)",
+          borderTop: "1px solid var(--color-border)",
+          borderBottom: "1px solid var(--color-border)",
+        }}
+      >
+        {/* Crumpled-paper surface · the page the question was first written on */}
+        <OriginShader />
+        <div style={{ position: "relative", zIndex: 1, maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 88px) var(--space-6)" }}>
+          <Reveal>
+            <figure style={{ margin: 0, maxWidth: 780 }}>
+              <blockquote
+                style={{
+                  margin: "0 0 var(--space-5)",
+                  fontFamily: "var(--font-site-title)",
+                  fontSize: "clamp(1.5rem, 3.2vw, 2.375rem)",
+                  lineHeight: 1.3,
+                  letterSpacing: "-0.01em",
+                  color: "var(--color-fg)",
+                }}
+              >
+                “Why don’t we have any user interfaces in vertical format?”
+              </blockquote>
+              <figcaption style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", lineHeight: 1.65, maxWidth: "56ch" }}>
+                Asked in{" "}
+                <Link
+                  href="https://uxdesign.cc/vertically-works-design-exploration-on-vertical-typography-75164eed11a8"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "var(--color-fg)", fontWeight: 500, textDecoration: "underline", textUnderlineOffset: 3 }}
+                >
+                  Introducing Vertically Works
+                  <ArrowUpRight size={13} strokeWidth={2.25} aria-hidden style={{ display: "inline", verticalAlign: "baseline", marginLeft: 2 }} />
+                </Link>
+                , the design exploration published with Yanlin Ma on UX Collective in December 2019.
+                Everything on this site is the long answer to that question.
+              </figcaption>
+            </figure>
+          </Reveal>
         </div>
       </section>
 

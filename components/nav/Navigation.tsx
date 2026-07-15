@@ -377,8 +377,9 @@ export function Navigation() {
             style={{
               alignItems: "center",
               justifyContent: "center",
-              width: 32,
-              height: 32,
+              // 38px square · matches the 한/あ/中 toggle's overall height beside it
+              width: 38,
+              height: 38,
               borderRadius: "var(--radius-md)",
               border: "1px solid var(--color-border)",
               background: "transparent",
@@ -387,7 +388,7 @@ export function Navigation() {
             }}
             className="nav-mobile-btn"
           >
-{mobileOpen ? <X size={14} strokeWidth={2} aria-hidden /> : <Menu size={14} strokeWidth={2} aria-hidden />}
+{mobileOpen ? <X size={16} strokeWidth={2} aria-hidden /> : <Menu size={16} strokeWidth={2} aria-hidden />}
           </button>
         </div>
       </nav>

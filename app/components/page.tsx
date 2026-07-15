@@ -110,7 +110,7 @@ export default function ComponentsIntroductionPage() {
         ))}
       </section>
 
-      <InstallBanner />
+      <InstallBanner flush />
     </main>
   );
 }

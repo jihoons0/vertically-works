@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { InstallBanner } from "@/components/ui/InstallBanner";
+import { RelatedPill } from "@/components/ui/RelatedPill";
 import { ChallengeVisual } from "@/components/ChallengeVisual";
 
 export const metadata: Metadata = {
@@ -8,7 +9,18 @@ export const metadata: Metadata = {
   description: "Design problems with no obvious answer when the reading axis changes.",
 };
 
-const CHALLENGES = [
+// Related pills · `href` links into the component/app that wrestles with the
+// challenge; entries without one stay plain concept tags.
+type Related = { label: string; href?: string };
+
+const CHALLENGES: {
+  id: string;
+  tag: string;
+  status: string;
+  question: string;
+  description: string;
+  related: Related[];
+}[] = [
   {
     id: "motion-direction",
     tag: "Motion",
@@ -16,7 +28,11 @@ const CHALLENGES = [
     question: "Should a sheet animate from screen geometry or reading direction?",
     description:
       "When a bottom sheet slides up in a horizontal interface, the direction matches gravity and screen edge proximity. In a vertical, RTL interface, dismissal toward the bottom-right conflicts with the reading direction. Which axis wins?",
-    related: ["Drawer", "Sheet", "Modal"],
+    related: [
+      { label: "Sheet", href: "/components/sheet" },
+      { label: "Dialog", href: "/components/dialog" },
+      { label: "Toast", href: "/components/toast" },
+    ],
   },
   {
     id: "mixed-language",
@@ -25,7 +41,11 @@ const CHALLENGES = [
     question: "How should mixed CJK and Latin content behave in the same column?",
     description:
       "A verse reference like 「창 1:1」 contains hangul, ASCII colon, Latin digits, and CJK brackets · each needing different orientation. Unicode defines orientation per character class, but browser and OS implementations vary significantly.",
-    related: ["Tate-chu-yoko", "Glyph Orientation", "Mixed Scripts"],
+    related: [
+      { label: "Verse", href: "/components/verse" },
+      { label: "Text Field", href: "/components/text-field" },
+      { label: "Vertically Verse", href: "/apps/vertically-verse" },
+    ],
   },
   {
     id: "navigation-direction",
@@ -34,7 +54,10 @@ const CHALLENGES = [
     question: "Where does the navigation rail belong in a vertical-first interface?",
     description:
       "Horizontal apps put navigation at the bottom (mobile) or left (desktop) based on thumb reach and primary reading axis. In a vertical, RTL reading interface, the primary axis is down-the-column, and columns flow right-to-left. The \"natural\" position of a rail is not obvious.",
-    related: ["Sidebar", "Tab Bar"],
+    related: [
+      { label: "Tabs", href: "/components/tabs" },
+      { label: "Chapter Navigation", href: "/components/chapter-navigation" },
+    ],
   },
   {
     id: "selection",
@@ -43,7 +66,11 @@ const CHALLENGES = [
     question: "How does text selection work when reading flows top-to-bottom, right-to-left?",
     description:
       "Click-drag selection assumes a left-to-right baseline. The OS text selection rectangle must account for RTL column ordering, column breaks, and tate-chu-yoko groups that behave as single units.",
-    related: ["Text Selection", "Highlight", "Copy"],
+    related: [
+      { label: "Marker", href: "/components/marker" },
+      { label: "Hyperlink Treatment", href: "/components/hyperlink-treatment" },
+      { label: "Vertically Verse", href: "/apps/vertically-verse" },
+    ],
   },
   {
     id: "ime-vertical",
@@ -52,7 +79,11 @@ const CHALLENGES = [
     question: "Where does the IME candidate window appear when input is vertical?",
     description:
       "Input Method Editors (CJK composition) display candidate windows horizontally by default. In a vertical context, the candidate window placement must not obscure the composition point · but the platform IME API rarely exposes enough control to correct this.",
-    related: ["Search", "Text Field", "CJK Input"],
+    related: [
+      { label: "Search", href: "/components/search" },
+      { label: "Text Field", href: "/components/text-field" },
+      { label: "CJK Input" },
+    ],
   },
   {
     id: "keyboard-navigation",
@@ -61,7 +92,11 @@ const CHALLENGES = [
     question: "What do the arrow keys mean in a vertical, RTL interface?",
     description:
       "Arrow keys in a horizontal interface move left/right within a line and up/down between lines. In a vertical interface, \"next character\" is downward; \"next line\" is leftward. The keyboard navigation model must remap these to prevent disorientation.",
-    related: ["Keyboard Navigation", "Focus Management", "Accessibility"],
+    related: [
+      { label: "Tabs", href: "/components/tabs" },
+      { label: "Slider", href: "/components/slider" },
+      { label: "Popover Menu", href: "/components/popover-menu" },
+    ],
   },
   {
     id: "drag-reorder",
@@ -70,7 +105,10 @@ const CHALLENGES = [
     question: "How does drag-and-drop reordering work when list items are columns?",
     description:
       "List reordering assumes a vertical list of horizontal rows. In a vertical reading interface, a list of columns flowing RTL has a different primary axis for reorder gestures · left-right drag maps to position change, not the usual up-down.",
-    related: ["Sortable List", "Drag and Drop", "Gesture"],
+    related: [
+      { label: "Vertical List Cell", href: "/components/vertical-list-cell" },
+      { label: "Vertically Notes", href: "/apps/vertically-do" },
+    ],
   },
   {
     id: "ai-chat",
@@ -79,7 +117,10 @@ const CHALLENGES = [
     question: "How should AI chat interfaces adapt to vertical writing systems?",
     description:
       "AI conversation UIs are designed around horizontal text bubbles alternating left and right. For a CJK user reading vertically, this model imposes a foreign interaction pattern. What would a native vertical AI chat interface look like?",
-    related: ["Messaging", "AI Interface", "Chat"],
+    related: [
+      { label: "Message", href: "/components/message" },
+      { label: "Text Field", href: "/components/text-field" },
+    ],
   },
 ];
 
@@ -102,20 +143,8 @@ export default function ChallengesPage() {
         }}
       >
         {CHALLENGES.map((c, i) => (
-          <div
-            key={c.id}
-            style={{
-              display: "grid",
-              gridTemplateColumns: "40px 1fr 200px",
-              gap: "var(--space-6)",
-              padding: "var(--space-6) var(--space-8)",
-              borderRadius: "var(--radius-xl)",
-              border: "1px solid var(--color-border)",
-              background: "var(--color-bg)",
-              alignItems: "stretch",
-            }}
-          >
-            <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)", paddingTop: 3 }}>
+          <div key={c.id} id={c.id} className="doc-card has-visual">
+            <span className="doc-card-number">
               {String(i + 1).padStart(2, "0")}
             </span>
 
@@ -134,17 +163,14 @@ export default function ChallengesPage() {
                   {c.status}
                 </span>
               </div>
-              <p style={{ fontSize: "1.0625rem", fontWeight: 500, color: "var(--color-fg)", margin: "0 0 var(--space-3)", letterSpacing: "-0.01em", lineHeight: 1.4 }}>
-                {c.question}
-              </p>
+              <h2 className="doc-card-title">{c.question}</h2>
               <p style={{ fontSize: "0.875rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-4)", lineHeight: 1.65, maxWidth: "62ch" }}>
                 {c.description}
               </p>
+              {/* Related pills · link straight into the component/app that wrestles with this */}
               <div style={{ display: "flex", gap: "var(--space-2)", flexWrap: "wrap" }}>
                 {c.related.map((r) => (
-                  <span key={r} style={{ fontSize: "0.75rem", padding: "2px 8px", borderRadius: "var(--radius-full)", border: "1px solid var(--color-border)", color: "var(--color-fg-subtle)" }}>
-                    {r}
-                  </span>
+                  <RelatedPill key={r.label} label={r.label} href={r.href} />
                 ))}
               </div>
             </div>

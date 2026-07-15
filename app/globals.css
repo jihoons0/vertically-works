@@ -284,6 +284,20 @@ a {
   }
 }
 
+/* ─── App hero · title block left, optional try-it aside on the right ─── */
+.app-hero-twoup {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  align-items: end;
+}
+@media (min-width: 900px) {
+  .app-hero-twoup {
+    grid-template-columns: 1fr minmax(340px, 440px);
+    gap: var(--space-16);
+  }
+}
+
 /* ─── App detail lead: media + intro two-up ─── */
 .app-detail-lead {
   display: grid;
@@ -322,6 +336,86 @@ a {
   .challenges-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+}
+
+/* ─── Doc list cards · challenges + principles share one card anatomy:
+   number rail · content (· visual). Single column on mobile. ─── */
+.doc-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  background: var(--color-bg);
+  box-shadow: var(--shadow-soft);
+  scroll-margin-top: 72px; /* cards are #anchor targets · clear the sticky nav */
+}
+@media (min-width: 800px) {
+  .doc-card {
+    grid-template-columns: 56px 1fr;
+    gap: var(--space-8);
+    padding: var(--space-8);
+    align-items: start;
+  }
+  .doc-card.has-visual {
+    grid-template-columns: 56px 1fr 200px;
+    gap: var(--space-6);
+  }
+}
+.doc-card-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-border-strong);
+  font-family: var(--font-geist-mono);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  padding-top: 4px;
+}
+/* Card titles are labels, not display type · they stay sans (overrides main h2 serif) */
+.doc-card-title {
+  font-family: var(--font-site-sans);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--color-fg);
+  letter-spacing: -0.01em !important;
+  line-height: 1.4;
+  margin: 0 0 var(--space-3);
+}
+/* Related-reference pills · jumping points between doc surfaces.
+   The icon accents are site-only chrome (not tokens.css): ◆ purple marks a
+   component, the chain link orange an application, ? blue a challenge,
+   ▲ green a principle. */
+:root {
+  --color-ref-component: #8b5cf6;
+  --color-ref-app: #ea8a3a;
+  --color-ref-challenge: #3b82f6;
+  --color-ref-principle: #16a34a;
+}
+[data-theme="dark"] {
+  --color-ref-component: #a78bfa;
+  --color-ref-app: #fba55c;
+  --color-ref-challenge: #60a5fa;
+  --color-ref-principle: #4ade80;
+}
+.related-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  color: var(--color-fg-subtle);
+}
+a.related-pill {
+  color: var(--color-fg-muted);
+  transition: color var(--duration-fast) var(--easing-default),
+              border-color var(--duration-fast) var(--easing-default);
+}
+a.related-pill:hover {
+  color: var(--color-fg);
+  border-color: var(--color-border-strong);
 }
 
 /* ─── Nav right side · 한/あ/中 stays on mweb; GitHub + theme move to the menu ─── */

@@ -1,22 +1,27 @@
 import { Reveal } from "@/components/Reveal";
 
 /**
- * Header for application detail pages: eyebrow, title, and a status/platform
- * row on a subtle band · the core visual (video or live embed) leads directly
- * below it.
+ * Header for application detail pages: title, one-liner description, and a
+ * status/platform row on a subtle band · the core visual (video or live
+ * embed) leads directly below it. `aside` fills the banner's right side on
+ * desktop (e.g. a try-it CTA); it stacks below the title block on narrow
+ * screens.
  */
 export function AppHero({
-  eyebrow = "Application",
   title,
+  description,
   status,
   platform,
   meta,
+  aside,
 }: {
-  eyebrow?: string;
   title: string;
+  /** One-liner under the title · what the app is, in a sentence. */
+  description?: string;
   status: string;
   platform: string;
   meta?: string;
+  aside?: React.ReactNode;
 }) {
   return (
     <section
@@ -25,20 +30,11 @@ export function AppHero({
         background: "var(--color-bg-subtle)",
       }}
     >
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 6vw, 80px) var(--space-6)" }}>
+      <div
+        className={aside ? "app-hero-twoup" : undefined}
+        style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 6vw, 80px) var(--space-6)" }}
+      >
         <Reveal>
-          <p
-            style={{
-              fontSize: "0.75rem",
-              fontWeight: 500,
-              color: "var(--color-fg-subtle)",
-              textTransform: "uppercase",
-              letterSpacing: "0.1em",
-              margin: "0 0 var(--space-3)",
-            }}
-          >
-            {eyebrow}
-          </p>
           <h1
             style={{
               fontSize: "clamp(2.25rem, 5vw, 3.5rem)",
@@ -51,6 +47,19 @@ export function AppHero({
           >
             {title}
           </h1>
+          {description && (
+            <p
+              style={{
+                fontSize: "1.0625rem",
+                color: "var(--color-fg-muted)",
+                lineHeight: 1.6,
+                maxWidth: "44ch",
+                margin: "0 0 var(--space-5)",
+              }}
+            >
+              {description}
+            </p>
+          )}
           <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", flexWrap: "wrap" }}>
             <span
               style={{
@@ -77,6 +86,7 @@ export function AppHero({
             {meta && <span style={{ fontSize: "0.875rem", color: "var(--color-fg-subtle)" }}>{meta}</span>}
           </div>
         </Reveal>
+        {aside && <Reveal delay={100}>{aside}</Reveal>}
       </div>
     </section>
   );

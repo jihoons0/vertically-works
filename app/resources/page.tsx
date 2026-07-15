@@ -27,7 +27,7 @@ const RESOURCES = [
         source: "UX Design / Medium",
         href: "https://uxdesign.cc/vertically-works-design-exploration-on-vertical-typography-75164eed11a8",
         description: "The original exploration that spawned this project. Covers the motivation, historical context, and early design explorations for vertical UI.",
-        year: "2021",
+        year: "2019",
       },
       {
         title: "Vertically Verse iOS App",

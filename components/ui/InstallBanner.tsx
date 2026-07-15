@@ -9,10 +9,17 @@ import { BannerShader } from "@/components/ui/BannerShader";
  * share the exact same upsell. The shader palette follows the site theme
  * (cream/sky by day, teal/ink at night), so the ink follows the theme too.
  */
-export function InstallBanner() {
+export function InstallBanner({
+  /** Drop the container's own gutters when the banner sits inside an
+      already-padded column (e.g. the /components docs main), so its edges
+      line up with the cards around it instead of double-insetting. */
+  flush = false,
+}: {
+  flush?: boolean;
+}) {
   return (
     <section>
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(32px, 5vw, 64px) var(--space-6)", containerType: "inline-size" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: flush ? "clamp(32px, 5vw, 64px) 0" : "clamp(32px, 5vw, 64px) var(--space-6)", containerType: "inline-size" }}>
         <div
           className="install-twoup"
           style={{
