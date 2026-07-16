@@ -172,7 +172,7 @@ function Shell() {
             userSelect: "none",
           }}
         >
-          Vertically Notes
+          Vertically To-do
         </span>
       )}
 

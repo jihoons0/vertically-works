@@ -231,6 +231,30 @@ a {
   }
 }
 
+/* Hero stat row · inline with dividers when wide, stacked & divider-free when narrow */
+.hero-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+}
+.hero-stat-divider {
+  width: 1px;
+  height: 14px;
+  background: var(--color-border-strong);
+  flex-shrink: 0;
+}
+@media (max-width: 560px) {
+  .hero-stats {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .hero-stat-divider {
+    display: none;
+  }
+}
+
 .home-bento {
   display: grid;
   grid-template-columns: 1fr;
@@ -281,6 +305,116 @@ a {
 @media (min-width: 800px) {
   .home-apps-grid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  }
+}
+
+/* ─── Home flagship app showcase · media one side, copy the other ─── */
+.app-showcase {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-radius: var(--radius-xl);
+  border-width: 1px;
+  border-style: solid;
+  overflow: hidden;
+}
+.app-showcase-media {
+  position: relative;
+  isolation: isolate; /* trap the shader canvas (z-index:-1) behind the framed media */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--color-bg-muted);
+  padding: clamp(24px, 7vw, 40px);
+  min-height: clamp(240px, 62vw, 320px);
+  border-bottom: 1px solid var(--color-border);
+}
+.app-showcase-frame {
+  position: relative;
+  z-index: 1;
+  height: clamp(240px, 56vw, 320px);
+  max-width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-overlay);
+  background: var(--color-bg);
+}
+.app-showcase-shot {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-overlay);
+}
+.app-showcase-body {
+  padding: clamp(28px, 6vw, 52px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+}
+.app-showcase-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--color-fg);
+}
+.app-showcase-cta svg {
+  transition: transform var(--duration-fast) var(--easing-out);
+}
+.app-showcase:hover .app-showcase-cta {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.app-showcase:hover .app-showcase-cta svg {
+  transform: translateX(3px);
+}
+@media (min-width: 800px) {
+  .app-showcase {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+  .app-showcase-media {
+    min-height: clamp(340px, 32vw, 440px);
+    border-bottom: none;
+  }
+  /* Reverse rows put media on the right; the hairline switches sides too */
+  .app-showcase.reverse .app-showcase-media {
+    order: 2;
+    border-left: 1px solid var(--color-border);
+  }
+  .app-showcase:not(.reverse) .app-showcase-media {
+    border-right: 1px solid var(--color-border);
+  }
+}
+
+/* ─── Origin banner · quote left, the 2019 article screenshot right ───
+   The card is anchored top-right and taller than the band, so its bottom
+   bleeds past the banner's lower border and gets clipped flat by the
+   section's overflow:hidden. Hidden on mobile, where there's no room. */
+.origin-article {
+  display: none;
+}
+@media (min-width: 860px) {
+  .origin-article {
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: clamp(28px, 3.5vw, 48px);
+    /* right edge tracks the 1280 content column, with a slight bleed */
+    right: max(16px, calc((100% - 1280px) / 2));
+    width: clamp(300px, 30vw, 380px);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-overlay);
   }
 }
 
@@ -635,6 +769,54 @@ a.related-pill:hover {
 }
 .btn-subtle-hover:hover {
   background: var(--color-bg);
+}
+
+/* Solid white button · a crisp opaque pill that pops off the gradient banner.
+   White + dark text are fixed (not tokens) since it sits over a fixed-colour
+   surface in every theme; fill dims slightly on hover. */
+.btn-ghost-hover {
+  background: #ffffff;
+  color: #1a1a1a;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  transition: background var(--duration-fast) var(--easing-default),
+    border-color var(--duration-fast) var(--easing-default);
+}
+.btn-ghost-hover:hover {
+  background: #f1f1f1;
+  border-color: rgba(0, 0, 0, 0.14) !important;
+}
+
+/* ─── About page · reading body beside a small right-hand byline column ─── */
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: var(--space-16);
+  align-items: start;
+}
+.about-body {
+  grid-column: 1;
+  grid-row: 1;
+  max-width: 680px;
+}
+.about-aside {
+  grid-column: 2;
+  grid-row: 1;
+}
+/* Narrow · revert to a single v-stack with the byline on top */
+@media (max-width: 900px) {
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .about-aside {
+    grid-column: 1;
+    grid-row: 1;
+    margin-bottom: var(--space-12);
+  }
+  .about-body {
+    grid-column: 1;
+    grid-row: 2;
+  }
 }
 
 /* Section-level "view all" CTAs — outline at rest, full monochrome invert on

@@ -23,18 +23,18 @@ const RESOURCES = [
       },
       {
         title: "Vertically Works: Design Exploration on Vertical Typography",
-        author: "Jihoon Suh & Yanlin Ma",
+        author: "Jihoon Suh",
         source: "UX Design / Medium",
         href: "https://uxdesign.cc/vertically-works-design-exploration-on-vertical-typography-75164eed11a8",
         description: "The original exploration that spawned this project. Covers the motivation, historical context, and early design explorations for vertical UI.",
         year: "2019",
       },
       {
-        title: "Vertically Verse iOS App",
+        title: "Vertically Verse · TestFlight beta",
         author: "Jihoon Suh",
-        source: "GitHub",
-        href: "https://github.com/jihoons/exploring",
-        description: "Source code for the companion iOS scripture reader. A SwiftUI implementation of vertical-first interaction patterns with Swift 6 strict concurrency.",
+        source: "TestFlight",
+        href: "https://testflight.apple.com/join/DY7MKU7m",
+        description: "The companion iOS scripture reader · a SwiftUI implementation of vertical-first interaction patterns. Join the public beta.",
         year: "2025",
       },
     ],
@@ -115,11 +115,7 @@ const RESOURCES = [
 export default function ResourcesPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Resources"
-        title="Research & References"
-        description="The specifications, papers, and references that inform this project. Understanding these is necessary for implementing correct vertical interface behavior."
-      />
+      <PageHeader title="Research & References" />
 
       <div
         style={{
@@ -135,6 +131,7 @@ export default function ResourcesPage() {
           <section key={section.category}>
             <h2
               style={{
+                fontFamily: "var(--font-site-sans)",
                 fontSize: "0.875rem",
                 fontWeight: 600,
                 color: "var(--color-fg-subtle)",

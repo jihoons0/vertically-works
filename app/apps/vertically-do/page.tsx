@@ -11,7 +11,7 @@ import { AppVideo } from "@/components/home/AppVideo";
 type Related = { label: string; href: string };
 
 export const metadata: Metadata = {
-  title: "Vertically Notes",
+  title: "Vertically To-do",
   description: "A to-do list rethought for the vertical, right-to-left axis · tasks are columns you read top to bottom.",
 };
 
@@ -88,7 +88,7 @@ export default function VerticallyDoPage() {
   return (
     <>
       <AppHero
-        title="Vertically Notes"
+        title="Vertically To-do"
         description="A to-do list where every task is a column you read top to bottom."
         status="Live"
         platform="Web"
@@ -119,7 +119,7 @@ export default function VerticallyDoPage() {
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
         {/* Core visual · the real app, running in the page */}
         <Reveal style={{ marginBottom: "var(--space-20)" }}>
-          <AppEmbed src="/apps/notes" title="Vertically Notes · live to-do app" height={560} />
+          <AppEmbed src="/apps/notes" title="Vertically To-do · live to-do app" height={560} />
         </Reveal>
 
         {/* In motion · the recorded gestures, beside what they mean */}
@@ -139,7 +139,7 @@ export default function VerticallyDoPage() {
                 <AppVideo
                   src="/videos/vertically-notes.mp4"
                   poster="/images/apps/notes-poster.jpg"
-                  label="Vertically Notes demo · adding, reordering, and deleting vertical task columns"
+                  label="Vertically To-do demo · adding, reordering, and deleting vertical task columns"
                 />
               </div>
             </div>
@@ -271,7 +271,7 @@ export default function VerticallyDoPage() {
               flexShrink: 0,
             }}
           >
-            Open Vertically Notes <ArrowRight size={15} strokeWidth={2.25} aria-hidden />
+            Open Vertically To-do <ArrowRight size={15} strokeWidth={2.25} aria-hidden />
           </Link>
         </div>
       </div>

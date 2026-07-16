@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { InstallBanner } from "@/components/ui/InstallBanner";
 import { RelatedPill } from "@/components/ui/RelatedPill";
@@ -107,7 +108,7 @@ const CHALLENGES: {
       "List reordering assumes a vertical list of horizontal rows. In a vertical reading interface, a list of columns flowing RTL has a different primary axis for reorder gestures · left-right drag maps to position change, not the usual up-down.",
     related: [
       { label: "Vertical List Cell", href: "/components/vertical-list-cell" },
-      { label: "Vertically Notes", href: "/apps/vertically-do" },
+      { label: "Vertically To-do", href: "/apps/vertically-do" },
     ],
   },
   {
@@ -127,10 +128,22 @@ const CHALLENGES: {
 export default function ChallengesPage() {
   return (
     <>
-      <PageHeader
-        title="Why Vertical Interfaces Are Difficult"
-        description="Design problems that have no obvious answer when the reading axis changes. Some are resolved. Most remain open questions."
-      />
+      <PageHeader title="Why Vertical Interfaces Are Difficult" />
+
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "var(--space-8) var(--space-6) 0" }}>
+        <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", lineHeight: 1.65, margin: 0 }}>
+          Each challenge is an open{" "}
+          <Link
+            href="https://github.com/jihoons0/vertically-works/discussions"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: "var(--color-fg)", fontWeight: 500, textDecoration: "underline", textUnderlineOffset: 3 }}
+          >
+            Discussion on GitHub
+          </Link>
+          . Strong answers get merged into the spec.
+        </p>
+      </div>
 
       <div
         style={{

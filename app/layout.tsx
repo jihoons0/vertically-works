@@ -43,19 +43,21 @@ const notoSerifKR = Noto_Serif_KR({ subsets: ["latin"], variable: "--font-noto-s
 const notoSerifJP = Noto_Serif_JP({ subsets: ["latin"], variable: "--font-noto-serif-jp", preload: false });
 const notoSerifTC = Noto_Serif_TC({ subsets: ["latin"], variable: "--font-noto-serif-tc", preload: false });
 
+const STORY_ONE_LINER =
+  "Every UI component you know assumes horizontal text. Vertically Works is what interface design becomes when reading flows top to bottom, right to left.";
+
 export const metadata: Metadata = {
   title: {
-    default: "Vertically Works",
+    default: "Vertically Works · React components for vertical writing interfaces (CJK)",
     template: "%s · Vertically Works",
   },
   description:
-    "The canonical reference for vertical interface design. Exploring interaction patterns for vertical writing systems.",
+    "An open-source design system for vertical writing · Korean, Japanese, Chinese. Real React components on true writing-mode: vertical-rl, a shadcn-compatible registry, and live apps.",
   keywords: ["vertical text", "CJK", "writing direction", "interface design", "design system"],
-  authors: [{ name: "Jihoon Suh", url: "https://vertically.works" }],
+  authors: [{ name: "Jihoon Suh", url: "https://jihoonsuh.com" }],
   openGraph: {
     title: "Vertically Works",
-    description:
-      "The canonical reference for vertical interface design. Exploring interaction patterns for vertical writing systems.",
+    description: STORY_ONE_LINER,
     url: "https://vertically.works",
     siteName: "Vertically Works",
     locale: "en_US",
@@ -64,7 +66,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Vertically Works",
-    description: "The canonical reference for vertical interface design.",
+    description: STORY_ONE_LINER,
   },
 };
 

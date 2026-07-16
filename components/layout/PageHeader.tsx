@@ -4,10 +4,12 @@ interface PageHeaderProps {
   description?: string;
   /** Let the description span the full container width instead of the 52ch measure. */
   descriptionWide?: boolean;
+  /** Let the title span the full container width instead of the 18ch measure. */
+  titleWide?: boolean;
   children?: React.ReactNode;
 }
 
-export function PageHeader({ eyebrow, title, description, descriptionWide, children }: PageHeaderProps) {
+export function PageHeader({ eyebrow, title, description, descriptionWide, titleWide, children }: PageHeaderProps) {
   return (
     <div
       style={{
@@ -39,7 +41,7 @@ export function PageHeader({ eyebrow, title, description, descriptionWide, child
           lineHeight: 1.08,
           color: "var(--color-fg)",
           margin: "0 0 var(--space-5)",
-          maxWidth: "18ch",
+          maxWidth: titleWide ? "none" : "18ch",
         }}
       >
         {title}

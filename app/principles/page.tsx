@@ -76,7 +76,7 @@ const PRINCIPLES = [
     description: "Users who are new to vertical interfaces need a ramp. Vertical interaction is unfamiliar to most digital users, even those who read vertically in print.",
     detail: "A sudden full-vertical interface is disorienting. The best approach is progressive introduction · starting with familiar patterns in the navigation chrome, then deepening the vertical commitment in the content area, then finally in gesture interactions.",
     related: [
-      { label: "Vertically Notes", href: "/apps/vertically-do" },
+      { label: "Vertically To-do", href: "/apps/vertically-do" },
       { label: "Vertically Verse", href: "/apps/vertically-verse" },
     ],
   },
@@ -96,11 +96,7 @@ const PRINCIPLES = [
 export default function PrinciplesPage() {
   return (
     <>
-      <PageHeader
-        eyebrow="Principles"
-        title="Guidance from Observation"
-        description="Not opinions. Patterns derived from building real interfaces on the vertical axis. Each one emerged from a specific design problem."
-      />
+      <PageHeader title="Guidance from Observation" titleWide />
 
       <div
         style={{

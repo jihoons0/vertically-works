@@ -4,7 +4,7 @@ import { ImageResponse } from "next/og";
 // vertical-writing motif on the right · 縦書き and 竖排 as ink pills,
 // 세로쓰기 in quiet gray · over the site's light-blue hero wash.
 
-export const alt = "Vertically Works · Designing Interfaces for Vertical Writing Systems";
+export const alt = "Vertically Works · Designing Interfaces for Vertical Writing";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -20,7 +20,7 @@ async function loadFont(family: string, text: string, weight: number) {
   return (await fetch(url)).arrayBuffer();
 }
 
-const TITLE = "Designing Interfaces for Vertical Writing Systems";
+const TITLE = "Interfaces for vertical writing";
 
 function Column({ chars, pill }: { chars: string; pill: boolean }) {
   return (

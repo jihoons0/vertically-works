@@ -12,20 +12,21 @@ import { ChevronDown, Menu, X } from "lucide-react";
 const LANG_HINT_KEY = "vw-lang-hint-dismissed";
 
 const NAV_LINKS = [
-  { href: "/apps", label: "Applications" },
+  { href: "/apps", label: "Apps" },
   { href: "/components", label: "Components" },
   { href: "/challenges", label: "Challenges" },
   { href: "/principles", label: "Principles" },
   { href: "/resources", label: "Resources" },
+  { href: "/about", label: "About" },
 ];
 
 // Shown in the Applications hover dropdown (desktop) and indented in the mobile menu.
 // `wip` entries link to their detail page but carry a WIP tag until the app is live.
 const APP_LINKS: { href: string; name: string; sub: string; wip?: boolean }[] = [
   { href: "/apps/vertically-verse", name: "Vertically Verse", sub: "Scripture reader · iOS" },
-  { href: "/apps/vertically-do", name: "Vertically Notes", sub: "To-do list · Web" },
+  { href: "/apps/vertically-do", name: "Vertically To-do", sub: "To-do list · Web" },
+  { href: "/apps/vertically-news", name: "Vertically News", sub: "Daily newspaper · Web" },
   { href: "/apps/vertically-listen", name: "Vertically Listen", sub: "Podcast player · Web", wip: true },
-  { href: "/apps/vertically-news", name: "Vertically News", sub: "Daily newspaper · Web", wip: true },
 ];
 
 // Small tag for apps that are announced but not yet live.

@@ -37,7 +37,7 @@ export function Footer({ transparent = false }: { transparent?: boolean }) {
               Vertically Works
             </span>
             <p style={{ fontSize: "0.8125rem", color: "var(--color-fg-muted)", lineHeight: 1.6, margin: 0 }}>
-              The canonical reference for vertical interface design. Exploring how software changes when writing direction becomes the foundation of interaction.
+              A living design system for vertical writing interfaces. Exploring what software becomes when writing direction is the foundation of interaction, not an afterthought.
             </p>
           </div>
 
@@ -48,10 +48,11 @@ export function Footer({ transparent = false }: { transparent?: boolean }) {
                 Explore
               </span>
               {[
-                { href: "/apps", label: "Applications" },
+                { href: "/apps", label: "Apps" },
                 { href: "/components", label: "Components" },
                 { href: "/challenges", label: "Challenges" },
                 { href: "/principles", label: "Principles" },
+                { href: "/about", label: "About" },
               ].map((link) => (
                 <Link
                   key={link.href}
@@ -69,7 +70,7 @@ export function Footer({ transparent = false }: { transparent?: boolean }) {
               </span>
               {[
                 { href: "https://github.com/jihoons0/vertically-works", label: "GitHub" },
-                { href: "https://uxdesign.cc/vertically-works-design-exploration-on-vertical-typography-75164eed11a8", label: "Original Article" },
+                { href: "https://uxdesign.cc/vertically-works-design-exploration-on-vertical-typography-75164eed11a8", label: "The 2019 essay" },
                 { href: "mailto:jihoon8846@gmail.com", label: "Email" },
               ].map((link) => (
                 <Link
@@ -117,7 +118,7 @@ export function Footer({ transparent = false }: { transparent?: boolean }) {
           }}
         >
           <span style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>
-            © 2026 Vertically Works.
+            © 2026 Jihoon Suh · Vertically Works
           </span>
 
           {/* #8: 3 separate vertical columns · shorter height, wider spread */}

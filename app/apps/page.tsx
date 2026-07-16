@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const APPS = [
   {
     id: "vertically-verse",
-    name: "Vertically Verse",
+    name: "Verse",
     platform: "iOS",
     status: "Live",
     video: "/videos/vertically-verse.mp4",
@@ -26,7 +26,7 @@ const APPS = [
   },
   {
     id: "notes",
-    name: "Vertically Notes",
+    name: "To-do",
     platform: "Web",
     status: "Live",
     href: "/apps/vertically-do",
@@ -38,20 +38,6 @@ const APPS = [
       "Tasks as full-height columns, stacking right→left",
       "Pull down to delete · drag sideways to reorder",
       "한 / あ / 中 re-localizes the whole interface",
-    ],
-  },
-  {
-    id: "listen",
-    name: "Listen",
-    platform: "Web",
-    status: "WIP",
-    href: "/apps/vertically-listen",
-    description:
-      "A podcast player with transcripts as vertical verse.",
-    challenges: [
-      "Shows › episodes › playing · browsing never stops playback",
-      "Transcripts as vertical verse · tap a line to seek",
-      "Reading stays vertical · transport stays horizontal",
     ],
   },
   {
@@ -68,16 +54,26 @@ const APPS = [
       "Pull past the leftmost column to turn the page",
     ],
   },
+  {
+    id: "listen",
+    name: "Listen",
+    platform: "Web",
+    status: "WIP",
+    href: "/apps/vertically-listen",
+    description:
+      "A podcast player with transcripts as vertical verse.",
+    challenges: [
+      "Shows › episodes › playing · browsing never stops playback",
+      "Transcripts as vertical verse · tap a line to seek",
+      "Reading stays vertical · transport stays horizontal",
+    ],
+  },
 ];
 
 export default function ApplicationsPage() {
   return (
     <>
-      <PageHeader
-        title="Real Implementations"
-        description="What happens when vertical-first thinking is applied to actual product categories. Each application surfaces a different set of design challenges."
-        descriptionWide
-      />
+      <PageHeader title="Vertically Apps" />
 
       <div
         style={{
