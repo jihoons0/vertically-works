@@ -2,6 +2,9 @@
 
 Everything you post on Tue Jul 21. Voice matches the site: spare, declarative, interpuncts. Link everywhere: **https://vertically.works** · repo: **github.com/jihoons0/vertically-works**
 
+**Assets (all in `docs/media/`), generated from the site — no editor needed:**
+`components.gif` (thread opener) · `toggle.gif` · `sheet.gif` · `tooltip.gif` · `tabs.gif` · `text-field.png` (the IME shot, static) · spares: `dialog.gif`, `accordion.gif`. All GIFs are <1MB.
+
 ---
 
 ## 1 · Show HN (7:00–8:00am ET, from your own account)
@@ -46,7 +49,7 @@ Everything you post on Tue Jul 21. Voice matches the site: spare, declarative, i
 **4/** (attach `tooltip` clip)
 > A tooltip opens to the left of its trigger — forward, along the reading direction. Small thing. Completely wrong if you rotate.
 
-**5/** (attach `ime` / text-field clip)
+**5/** (attach `text-field.png` — static)
 > The label is vertical; the input stays deliberately horizontal. CJK IME composition needs a horizontal baseline — so the text field respects it instead of fighting it.
 
 **6/** (attach `tabs` clip)
