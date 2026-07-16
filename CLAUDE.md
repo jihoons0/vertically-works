@@ -49,7 +49,9 @@ There is no `content/` directory and no MDX pipeline (despite `next-mdx-remote` 
 
 ### The spec layer
 
-`spec/` (BRAND.md, PRINCIPLES.md) plus `registry/vertical-typography.md` are the **implementation-neutral source of truth** shared with the Swift apps (VerticallyKit, in separate repos). Rules are edited there first; each platform implements them. When changing a design rule, update the canonical doc, then the implementations.
+`spec/` (BRAND.md, PRINCIPLES.md, README.md index) plus `registry/vertical-typography.md` are the **implementation-neutral source of truth** shared with the Swift apps (VerticallyKit, Vertically Verse, VerticallyPoemLab — separate repos). Rules are edited there first; each platform implements them. When changing a design rule, update the canonical doc, then the implementations.
+
+`docs/` holds project provenance (00_MANIFESTO, 01_BLUEPRINT, 02_PROJECT_KICKOFF) — read for intent, not runtime. `gtm/` is go-to-market material (launch playbook, discussions, translations), not code. `AGENTS.md` carries the Next.js 16 warning quoted below.
 
 ### Design tokens & theming
 
@@ -72,6 +74,10 @@ Full-screen apps render **bare** (no site chrome) via the `BARE_ROUTES` list in 
 - **Vertically Verse** is the CJK **scripture (bible) reader for iOS** — case-study page at `/apps/vertically-verse` plus `/verse/*` (privacy/support). It is a *different app* from Notes; never conflate Verse (bible) with Notes (to-do).
 
 Each app keeps state in its `lib/<app>/store.ts` and i18n strings in `lib/<app>/i18n.ts`; app-local styles live in `app/apps/<app>/<app>.css`.
+
+### Chromed site routes (not bare)
+
+Beyond the docs pages, two interactive surfaces get full site chrome: **`/playground`** (`components/PlaygroundClient.tsx`) — a live cross-writing-direction / language / theme / device previewer whose config serializes to the URL — and **`/about`**. Both use `components/layout/PageHeader`.
 
 ### Route ⇄ file — do not get this wrong
 
