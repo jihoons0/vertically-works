@@ -1,24 +1,24 @@
 # Product Hunt · launch kit
 
-**Verdict: yes, but as a staggered second wave (~Tue Jul 28), not launch day.** PH rewards visually striking things, and vertical CJK UI is exactly that — but its maker/PM/founder audience overlaps less with your core (deep frontend + CJK) than HN or the Zenn/Juejin/GeekNews flywheel, and running it the same day as HN splits attention. Launch it ~a week after HN so you can lead with proof ("trending on HN, N stars in a week").
+**Verdict: yes, but as a staggered second wave (~Tue Jul 28), not launch day.** PH rewards visually striking things, and vertical CJK UI is one of them. Its maker/PM/founder audience overlaps less with your core (deep frontend + CJK) than HN or the Zenn/Juejin/GeekNews flywheel, and running it the same day as HN splits attention. Launch it a week after HN so you can lead with proof ("trending on HN, N stars in a week").
 
 ## Pre-reqs (need a human)
-- **A hunter** — ideally someone with PH standing who genuinely likes it; a self-hunt works but a known hunter helps reach. Line this up this week.
+- **A hunter:** ideally someone with PH standing who likes it. A self-hunt works, but a known hunter helps reach. Line this up this week.
 - **Timing:** PH day starts **12:01am PT**. Tue–Thu are strongest. Be awake and in the comments all day.
 - **Assets:** thumbnail (240×240, animated GIF allowed), gallery (1270×760), tagline, description, first comment, topics.
 
 ## Tagline (≤ 60 chars — pick one)
-- `UI components for vertical writing — Korean, Japanese, Chinese`
+- `UI components for vertical CJK writing (top-to-bottom, RTL)`
 - `Copy-and-own React components for vertical CJK interfaces`
 - `The interface layer for top-to-bottom, right-to-left reading`
 
 ## Description (≤ 260 chars)
-> Open-source React components for vertical writing interfaces — Korean, Japanese, Chinese — on true writing-mode: vertical-rl, never a rotation. Copy-and-own, zero runtime deps, shadcn-compatible. Plus live apps and the open questions, documented.
+> Open-source React components for vertical writing interfaces (Korean, Japanese, Chinese) on true writing-mode: vertical-rl, never a rotation. Copy-and-own, zero runtime deps, shadcn-compatible. Plus live apps and the open questions, documented.
 
 ## First comment (maker)
-> Hi PH 👋 I'm Jihoon. Every UI component we use assumes text runs left to right — which quietly breaks everything for vertical writing: which way a toggle flips, where a tooltip opens, what the arrow keys mean, where the IME window belongs.
+> Hi PH 👋 I'm Jihoon. Every UI component we use assumes text runs left to right. For vertical writing that decides the wrong thing at every turn: which way a toggle flips, where a tooltip opens, what the arrow keys do, where the IME window sits.
 >
-> Vertically Works rebuilds those primitives on real `writing-mode: vertical-rl` (never rotation — rotation kills selection, screen readers, and IME). Copy-and-own like shadcn, zero runtime deps, and there are four apps putting it under real load, including a live vertical newspaper. It's a living study — the eight hardest open problems (including what a *vertical* AI chat interface should be) are open as Discussions. Would love your take.
+> Vertically Works rebuilds those primitives on real `writing-mode: vertical-rl` (I never rotate; rotation kills selection, screen readers, and IME). Copy-and-own like shadcn, zero runtime deps, and four apps put it under load, including a live vertical newspaper. I left it unfinished on purpose: the eight hardest open problems, including what a *vertical* AI chat interface should be, are open as Discussions. Would love your take.
 
 ## Gallery shot list (1270×760, 5–6 slides)
 1. **The hero** — `components.gif` (the 6-component bento) or a widescreen recut of it

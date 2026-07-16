@@ -2,7 +2,7 @@
 
 Everything you post on Tue Jul 21. Voice matches the site: spare, declarative, interpuncts. Link everywhere: **https://vertically.works** · repo: **github.com/jihoons0/vertically-works**
 
-**Assets (all in `docs/media/`), generated from the site — no editor needed:**
+**Assets (all in `docs/media/`), generated from the site, no editor needed:**
 `components.gif` (thread opener) · `toggle.gif` · `sheet.gif` · `tooltip.gif` · `tabs.gif` · `text-field.png` (the IME shot, static) · spares: `dialog.gif`, `accordion.gif`. All GIFs are <1MB.
 
 ---
@@ -15,14 +15,14 @@ Everything you post on Tue Jul 21. Voice matches the site: spare, declarative, i
 **URL:** https://vertically.works
 
 **First comment — post it immediately after submitting:**
-> I'm Jihoon. The web's interaction layer assumes text runs left to right, and for Korean, Japanese, and Chinese that assumption breaks everything downstream of it — which way a toggle flips, where a tooltip opens, what the arrow keys mean, where the IME candidate window belongs.
+> I'm Jihoon. Every UI toolkit assumes text runs left to right. For Korean, Japanese, and Chinese that assumption is wrong, and it shows up everywhere downstream: which way a toggle flips, where a tooltip opens, what the arrow keys do, where the IME candidate window sits.
 >
-> This started in 2019 as an essay asking whether vertical type could work in a real UI. The honest answer then was that nobody knew — the components you'd need to find out didn't exist. So over the years I built them: React components on true `writing-mode: vertical-rl` (never a rotation — rotation breaks selection, screen readers, and IME), a shadcn-style copy-and-own registry, and four apps that put them under real load, including a live vertical newspaper pulling KR/JP/CN headlines.
+> I started in 2019 with an essay asking whether vertical type could work in a real UI. Nobody knew. The components you'd need to find out didn't exist, so I built them: React components on true `writing-mode: vertical-rl` (rotation breaks selection, screen readers, and IME, so I never rotate it), a shadcn-style copy-and-own registry, and four apps that put them under load, including a live vertical newspaper pulling KR/JP/CN headlines.
 >
-> It's a living study, not a finished spec. The eight hardest open problems — motion direction, mixed-script typography, IME placement, what a *vertical* AI chat interface even is — are open as GitHub Discussions, documented as carefully as the answers. Disagreement is a contribution. Happy to go deep on any of it.
+> I left it unfinished on purpose. The eight hardest problems are open as GitHub Discussions: motion direction, mixed-script typography, IME placement, and what a *vertical* AI chat interface should even be. I documented them as carefully as the answers. Tell me where I'm wrong.
 
 **Thread-tending ammo** (from the site FAQ — have these ready):
-- *"Most CJK is horizontal anyway"* → Yes, and that's the point: the axis is chosen by the toolchain now, not the designer. Vertical never died — novels, manga, scripture, newspapers, signage. Horizontal is a default, not a conclusion.
+- *"Most CJK is horizontal anyway"* → Yes, and that's the point: the toolchain picks the axis now, not the designer. Vertical never died: novels, manga, scripture, newspapers, signage. Horizontal is a default, not a conclusion.
 - *"Why not rotate?"* → Rotation transforms pixels, not behavior. Rotated text stops being text: selection breaks, SR order is wrong, IME falls apart. Everything here is real writing-mode.
 - *"Does a11y actually work?"* → Arrow keys remap (next char is down, next line is left), focus traverses columns R→L, durations collapse to 0 under reduced-motion. What's unsolved is listed openly in Challenges.
 
@@ -35,28 +35,28 @@ Everything you post on Tue Jul 21. Voice matches the site: spare, declarative, i
 **1/** (attach `components.gif`)
 > Every UI component you know assumes horizontal text.
 >
-> So I rebuilt the interface layer for vertical writing — Korean, Japanese, Chinese, where reading flows top to bottom, right to left.
+> So I rebuilt the interface layer for vertical writing. Korean, Japanese, Chinese, where reading flows top to bottom, right to left.
 >
 > Open source, real `writing-mode: vertical-rl`, never a rotation. 🧵
 > vertically.works
 
 **2/** (attach `toggle` clip)
-> A toggle's thumb should travel the reading axis. Up is on. It matches the column instead of cutting across it — a rotated horizontal switch never could.
+> A toggle's thumb travels the reading axis. Up is on. It moves with the column the way a rotated switch can't.
 
 **3/** (attach `sheet` clip)
-> Motion follows reading direction, not screen gravity. A sheet dismisses along the column. Every duration collapses to zero under prefers-reduced-motion.
+> A sheet dismisses along the column, following the reading direction rather than screen gravity. Every duration collapses to zero under prefers-reduced-motion.
 
 **4/** (attach `tooltip` clip)
-> A tooltip opens to the left of its trigger — forward, along the reading direction. Small thing. Completely wrong if you rotate.
+> A tooltip opens to the left of its trigger, forward along the reading direction. Rotate it and it points backward.
 
 **5/** (attach `text-field.png` — static)
-> The label is vertical; the input stays deliberately horizontal. CJK IME composition needs a horizontal baseline — so the text field respects it instead of fighting it.
+> The label runs vertical. The input stays horizontal, because CJK IME composition needs a horizontal baseline. Fight that and the typing breaks.
 
 **6/** (attach `tabs` clip)
-> Arrow keys remap: next character is down, next line is left, focus traverses columns right-to-left. Keyboard and screen-reader behavior is the foundation, not a follow-up.
+> Arrow keys remap: next character is down, next line is left, focus moves through columns right to left. I built the keyboard and screen-reader behavior first.
 
 **7/**
-> The hardest problems are still open — where the IME window belongs, how mixed script behaves in one column, and what a *vertical* AI chat interface should even be. All documented as GitHub Discussions. Strong answers get merged into the spec.
+> The hardest problems are still open: where the IME window belongs, how mixed script behaves in one column, and what a *vertical* AI chat interface should even be. Each is a GitHub Discussion. Strong answers get merged into the spec.
 
 **8/**
 > Copy-and-own, zero runtime deps, shadcn-compatible:
@@ -74,11 +74,11 @@ Everything you post on Tue Jul 21. Voice matches the site: spare, declarative, i
 
 ## 3 · LinkedIn (same day) · leadership frame, not dev frame
 
-> Korean, Japanese, and Chinese were written top to bottom for a thousand years before the web. Then every digital tool we built made horizontal the default — not by decision, but by inheritance.
+> Korean, Japanese, and Chinese were written top to bottom for a thousand years before the web. Then every digital tool we built defaulted to horizontal, an inheritance nobody chose.
 >
-> I spent seven years chasing one question: can vertical type actually work in an interface, not as a typographic effect but as behavior? The thing I kept relearning is that you cannot study a system with the wrong parts. You cannot evaluate vertical interaction using horizontal components. So the real work wasn't the demo — it was building the parts first: components on true writing-mode, then apps to put them under load, then documenting what still doesn't have an answer as carefully as what does.
+> I spent seven years on one question: can vertical type work in an interface at the level of behavior, not decoration? I kept relearning the same thing. You cannot study a system with the wrong parts. You cannot evaluate vertical interaction with horizontal components. So I built the parts first. Components on true writing-mode. Then apps to put them under load. Then the open questions, documented as carefully as the answers.
 >
-> That's a design-systems lesson more than a typography one: the discipline is building the primitives and the measurement before you build the conclusion. Vertically Works is open source today. The open questions are the interesting part.
+> That is a design-systems lesson more than a typography one: build the primitives and the measurement before the conclusion. Vertically Works is open source today, and the open questions are the interesting part.
 >
 > vertically.works
 
@@ -87,7 +87,7 @@ Everything you post on Tue Jul 21. Voice matches the site: spare, declarative, i
 ## 4 · Reddit (one honest post each, spaced a day apart)
 
 **r/reactjs** — title: *"I built copy-and-own React components for vertical writing (CJK) on real writing-mode: vertical-rl"*
-> Sharing a project I've worked on for a while. It's a shadcn-style registry of components for vertical writing interfaces — Korean/Japanese/Chinese — built on true `writing-mode: vertical-rl` rather than rotating horizontal UI. Copy-and-own, zero runtime deps, and the registry works with the shadcn CLI. Accessibility (remapped arrow keys, RTL focus order, reduced-motion) was the hard part and it's documented per component. Not selling anything — it's MIT and I'd genuinely like feedback on the open problems. [link]
+> Sharing a project I've worked on for a while. It's a shadcn-style registry of components for vertical writing interfaces (Korean, Japanese, Chinese), built on true `writing-mode: vertical-rl` instead of rotating horizontal UI. Copy-and-own, zero runtime deps, and it works with the shadcn CLI. Accessibility was the hard part (remapped arrow keys, RTL focus order, reduced-motion) and it's documented per component. It's MIT. I'd like feedback on the open problems. [link]
 
 **r/web_design** — lead with the visual (embed `components.gif`), one paragraph, same honest maker tone.
 
@@ -95,5 +95,5 @@ Everything you post on Tue Jul 21. Voice matches the site: spare, declarative, i
 
 ## Do-not (keep these in view all day)
 - Never solicit HN upvotes, from anyone, anywhere.
-- Don't launch on a day Apple owns — slip to Wed.
+- Don't launch on a day Apple owns; slip to Wed.
 - Reply to every substantive comment for 48 hours. Responsiveness is ranking fuel.

@@ -1,6 +1,6 @@
 # CJK-native seeds · the priority tier
 
-**Why this tier leads.** For a vertical-writing project, one like/RT from a CJK design engineer who lives 縦書き / 竖排 / 세로쓰기 outweighs the entire Western craft list: their audience is the actual user base, and they'll evaluate "true `writing-mode`, never a rotation" on its merits instead of as a novelty. Lead here. Keep the Western list (`dm-drafts.md`) — especially **Argyle, Jen Simmons, Sara Soueidan** — as the *bridge* into the LTR/English dev audience, and treat Rauno/Emil/Paco/Una/Ahmad as secondary craft seeds.
+**Why this tier leads.** For a vertical-writing project, one like/RT from a CJK design engineer who lives 縦書き / 竖排 / 세로쓰기 outweighs the entire Western craft list: their audience is the actual user base, and they'll evaluate "true `writing-mode`, never a rotation" on its merits instead of as a novelty. Lead here. Keep the Western list (`dm-drafts.md`), especially **Argyle and Sara Soueidan**, as the *bridge* into the LTR/English dev audience, and treat Rauno/Emil/Paco/Una/Ahmad as secondary craft seeds.
 
 **Honesty caveat.** Handles drift and my knowledge has a cutoff — **verify every handle before sending.** And note the platform reality: many Chinese voices live on **Weibo / 掘金 (Juejin)**, Korean voices on **velog / Disquiet**, more than on X. Meet them where they are.
 
