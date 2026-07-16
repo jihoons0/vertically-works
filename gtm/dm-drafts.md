@@ -51,15 +51,10 @@ Tag publicly with the working CLI command; do not DM. Attach `toggle`.
 
 > Sara — I built a component system for vertical writing interfaces (Korean/Japanese/Chinese), and I treated accessibility as the foundation rather than a follow-up, which is exactly why I wanted you to see it. Arrow keys remap (next character is down, next line is left), focus traverses columns right-to-left, screen-reader order follows the visual columns, and everything respects reduced-motion. If you ever have a moment, I'd genuinely value your read on where it still falls short: vertically.works
 
-## 8 · Jen Simmons — Bluesky/Mastodon (**verify current handle before sending**) · clip: `verse`
-
-> Jen — you evangelized writing-mode when almost nobody was listening, and this project only exists because the browsers eventually shipped it. It's a full interaction layer built on `writing-mode: vertical-rl` (never rotation) — components plus a real iOS reader — for Korean, Japanese, and Chinese. Thought you of all people would want to see writing-mode carry a whole product: vertically.works · TestFlight for the iOS app: testflight.apple.com/join/DY7MKU7m
-
 ---
 
 ### Warm-up checklist (this week, before Jul 20)
-- [ ] Follow all 9 and turn on notifications
+- [ ] Follow all targets and turn on notifications
 - [ ] Leave one genuine, specific reply on a recent post from each
-- [ ] Confirm Jen Simmons' active handle (Bluesky vs Mastodon)
 - [ ] Have the right clip exported and ready to attach per person (see legend)
 - [ ] Sara + anyone email-only: find the contact form / address on their site
