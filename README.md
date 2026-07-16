@@ -125,7 +125,7 @@ Editing files under `registry/` mid-session? Re-run `npm run registry:build` to 
 
 ## About
 
-Built by **[Jihoon Suh](https://jihoonsuh.com)** · design engineer in New York · [@jihoons0](https://x.com/jihoons0). Began in 2019, sparked by Yong Jae Lee's vertical-native Korean typeface Baram.
+Built by **[Jihoon Suh](https://jihoonsuh.com)** · designer in New York · [@jihoons0](https://x.com/jihoons0). Began in 2019.
 
 ## License
 
