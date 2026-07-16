@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { InstallBanner } from "@/components/ui/InstallBanner";
 import { RelatedPill } from "@/components/ui/RelatedPill";
@@ -186,6 +187,16 @@ export default function ChallengesPage() {
                   <RelatedPill key={r.label} label={r.label} href={r.href} />
                 ))}
               </div>
+              {/* Each challenge is an open RFC Discussion · card index maps to discussion number */}
+              <Link
+                href={`https://github.com/jihoons0/vertically-works/discussions/${i + 1}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: 5, marginTop: "var(--space-4)", fontSize: "0.8125rem", fontWeight: 500, color: "var(--color-fg)", textDecoration: "underline", textUnderlineOffset: 3 }}
+              >
+                Discuss on GitHub
+                <ArrowUpRight size={13} strokeWidth={2.25} aria-hidden />
+              </Link>
             </div>
 
             <div
