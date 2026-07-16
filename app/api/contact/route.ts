@@ -1,23 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 
 /**
- * Contact form delivery · the home page's ContactForm POSTs here and the message
+ * Contact form delivery. The home page's ContactForm POSTs here and the message
  * is emailed to the site owner through Resend (https://resend.com). The visitor's
  * address becomes reply-to, so replying goes straight back to them.
  *
- * Setup · one env var: RESEND_API_KEY (Resend dashboard → API Keys), set in
- * Vercel's project settings (and .env.local for dev). With no verified domain
- * Resend still sends from `onboarding@resend.dev` to the account owner's address;
- * verify designwithorbital.com later to send from a branded FROM_EMAIL.
+ * Setup: one env var, RESEND_API_KEY (Resend dashboard, API Keys), set in Vercel
+ * project settings and in .env.local for dev. Sends from vertically.works, which
+ * is verified in Resend (DKIM/SPF on the domain), to the owner inbox below.
  *
  * If the key is missing the route returns 503 and the form falls back to opening
  * a mailto: draft, so a message is never lost.
  */
 
-const TO_EMAIL = "jihoons@designwithorbital.com";
-// Branded sender once designwithorbital.com is verified in Resend; until then
-// Resend requires the onboarding sender for un-verified domains.
-const FROM_EMAIL = "Vertically Works <onboarding@resend.dev>";
+const TO_EMAIL = "contact@designwithorbital.com";
+// Sender lives on vertically.works, a Resend-verified domain. No mailbox needed
+// for the from address; DKIM/SPF on the domain authorize it.
+const FROM_EMAIL = "Vertically Works <noreply@vertically.works>";
 
 const PURPOSE_LABELS: Record<string, string> = {
   collab: "Collaboration",
