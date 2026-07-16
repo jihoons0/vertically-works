@@ -5,7 +5,7 @@
 
 # Vertically Works
 
-**Every UI component you know assumes horizontal text. This is what happens when it doesn't.**
+**Every UI component you know assumes horizontal text. These don't.**
 
 Open-source React components for vertical writing interfaces · Korean (한국어), Japanese (日本語), Chinese (中文) · where reading flows top to bottom, right to left.
 
@@ -53,9 +53,9 @@ npx shadcn@latest add https://vertically.works/r/vertical-button.json
 
 ## Why this exists
 
-The web's interaction layer was built on one assumption: text runs left to right. For vertical writing, that assumption breaks everything downstream of it · which way a toggle flips, where a tooltip opens, what the arrow keys mean, where the IME candidate window belongs.
+The web's interaction layer assumes text runs left to right. For vertical writing that assumption is wrong, and it shows up everywhere downstream: which way a toggle flips, where a tooltip opens, what the arrow keys do, where the IME candidate window sits.
 
-This project started in 2019 as [an essay](https://uxdesign.cc/vertically-works-design-exploration-on-vertical-typography-75164eed11a8) asking whether vertical type could work in user interface. The honest answer then was that nobody knew · the components you would need to find out did not exist. Seven years later, this repository is the answer in progress: components on true writing-mode, applications that put them under real load, and [eight open questions](https://vertically.works/challenges) documented as carefully as the answers.
+I started this in 2019 with [an essay](https://uxdesign.cc/vertically-works-design-exploration-on-vertical-typography-75164eed11a8) asking whether vertical type could work in user interface. Nobody knew. The components you would need to find out did not exist, so I built them. Seven years later this repository is the answer in progress: components on true writing-mode, applications that put them under load, and [eight open questions](https://vertically.works/challenges) documented as carefully as the answers.
 
 ## Components
 
@@ -69,7 +69,7 @@ Each is a source file you own, styled entirely through the design tokens, access
 | `tooltip`            | Opens to the left of its trigger · along the reading direction              | [tooltip](https://vertically.works/components/tooltip)                        |
 | `dialog`             | A modal whose title, description, and actions read as columns               | [dialog](https://vertically.works/components/dialog)                          |
 | `sheet`              | An edge sheet aware of the reading axis (bottom / left / right)             | [sheet](https://vertically.works/components/sheet)                            |
-| `text-field`         | Vertical label, deliberately horizontal input (CJK IME needs the baseline)  | [text-field](https://vertically.works/components/text-field)                  |
+| `text-field`         | Vertical label, horizontal input by design (CJK IME needs the baseline)     | [text-field](https://vertically.works/components/text-field)                  |
 | `tabs`               | A tab rail on the reading axis with full keyboard semantics                 | [tabs](https://vertically.works/components/tabs)                              |
 
 `npx verticallyworks list` prints the live registry. The full documented set · twenty components across actions, inputs, navigation, text, overlays, conversation, feedback, lists, and layout · lives at [vertically.works/components](https://vertically.works/components), landing in the registry as they harden.

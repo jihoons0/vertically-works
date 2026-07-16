@@ -15,15 +15,15 @@ Companion files: `site-copy.md` (all rewritten copy), `README.md` (paste-ready),
 - One recorded talk or podcast by October
 - 5+ inbound DMs from design leaders / hiring-adjacent people
 
-**Starting state:** repo at 0 stars, 0 forks, no releases. This is a cold launch, which is an advantage: first impressions are intact. Everything is built around one coordinated 48-hour star-velocity window, because velocity triggers Trending, and Trending compounds.
+**Starting state:** repo at 0 stars, 0 forks, no releases. This is a cold launch, and the first impression is still intact. The whole plan turns on one coordinated 48-hour star-velocity window: velocity triggers Trending, and Trending compounds.
 
 ---
 
 ## 2 · Positioning · three hooks, three audiences
 
 1. **Narrative (HN, LinkedIn, press):** The web was built left to right. Korean, Japanese, and Chinese were written top to bottom for a thousand years before it. Vertically Works rebuilds the interface layer.
-2. **Dev (X, GitHub, newsletters):** shadcn-model ownership. Real `writing-mode: vertical-rl`, never rotation. Source you copy and own, zero runtime dependencies, and the registry works with the shadcn CLI. "shadcn for vertical writing" is instantly legible.
-3. **Discussion (comments, contributions):** the 8 open challenges, especially "what should an AI chat interface be in vertical writing." Open questions generate comments; comments generate ranking.
+2. **Dev (X, GitHub, newsletters):** shadcn-model ownership. Real `writing-mode: vertical-rl`, never rotation. Source you copy and own, zero runtime dependencies, and the registry works with the shadcn CLI. "shadcn for vertical writing" reads at a glance.
+3. **Discussion (comments, contributions):** the 8 open challenges, especially "what should an AI chat interface be in vertical writing." People argue in the open questions, and comment volume drives ranking.
 
 **Master one-liner (every surface):** Open-source React components for vertical writing interfaces · Korean, Japanese, Chinese · where reading flows top to bottom, right to left.
 
@@ -93,7 +93,7 @@ Companion files: `site-copy.md` (all rewritten copy), `README.md` (paste-ready),
 
 ### 5.3 Influencer seeding (DMs sent Mon Jul 20)
 Nine targets: shadcn (skip DM, tag publicly with the working shadcn CLI command), Rauno Freiberg, Emil Kowalski, Paco Coursey, Adam Argyle, Una Kravets, Ahmad Shadeed (X DMs), Sara Soueidan (email via site, lead with a11y), Jen Simmons (Bluesky/Mastodon, verify handle; she evangelized writing-mode for years and is at Apple WebKit).
-- Format: 3 sentences, one clip attached, one link, zero ask for shares. Warm up by genuinely engaging with their posts this week.
+- Format: 3 sentences, one clip attached, one link, zero ask for shares. Warm up by engaging with their posts this week.
 
 ### 5.4 LinkedIn (same day)
 Leadership frame, not dev frame: what building for a billion overlooked readers taught you about design systems. This is the version Apple and Erebor interviewers find when they Google you.
@@ -136,7 +136,7 @@ Leadership frame, not dev frame: what building for a billion overlooked readers 
 
 **Free submissions (do all):** React Status, JavaScript Weekly, Frontend Focus, This Week in React, Bytes, TLDR Web Dev, Codrops Collective, CSS-Tricks newsletter, awesome-shadcn-ui, awesome-react-components, awesome-design-systems.
 
-**Guest essay (pitch one):** Smashing Magazine or CSS-Tricks: "What I learned shipping 20 components in writing-mode: vertical-rl." Deep CSS craft is exactly their lane.
+**Guest essay (pitch one):** Smashing Magazine or CSS-Tricks: "What I learned shipping 20 components in writing-mode: vertical-rl." Deep CSS craft is their lane.
 
 **One paid sponsorship** after the organic wave, to catch stragglers: Cooperpress (React Status / Frontend Focus, ~$1,500–2,000) or This Week in React.
 
