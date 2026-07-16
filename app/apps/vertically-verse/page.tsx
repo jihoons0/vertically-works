@@ -157,9 +157,9 @@ export default function VerticallyVersePage() {
               </h2>
               <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: "0 0 var(--space-5)", maxWidth: "52ch" }}>
                 A vertical, right-to-left Bible reader for Korean, Japanese, and
-                Chinese. Every control, gesture, and transition is rethought for the
+                Chinese. Every control, gesture, and transition works on the
                 top→bottom, R→L axis · columns instead of pages, chrome that reads
-                vertically, and motion that always follows the reading direction.
+                vertically, motion that tracks the reading direction.
               </p>
               <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: 0, maxWidth: "52ch" }}>
                 The recording is the real app: verse-anchored highlights, the color

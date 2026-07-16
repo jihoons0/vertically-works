@@ -26,7 +26,7 @@ const FEATURES = [
   },
   {
     title: "Pull down to delete",
-    description: "Drag a column down · past the end of its own text · and a trashcan opens behind it in the vacated slot. The gesture continues the reading direction to its conclusion.",
+    description: "Drag a column down · past the end of its own text · and a trashcan opens behind it in the vacated slot.",
     related: [
       { label: "Motion direction", href: "/challenges#motion-direction" },
       { label: "Motion Has Meaning", href: "/principles#motion-meaning" },
@@ -68,7 +68,7 @@ const DECISIONS = [
   },
   {
     title: "Why does pulling down delete?",
-    body: "Down is the reading axis: pulling a column past its own end reads it out of the flow. The trashcan appearing behind the card, in the slot the column vacated, gives the gesture a visible target instead of an invisible threshold.",
+    body: "Down is the reading axis · dragging a column past its own end carries it out of the flow. The trashcan appearing behind the card, in the slot the column vacated, gives the gesture a visible target instead of an invisible threshold.",
     related: [
       { label: "Motion direction", href: "/challenges#motion-direction" },
       { label: "Motion Has Meaning", href: "/principles#motion-meaning" },
@@ -76,7 +76,7 @@ const DECISIONS = [
   },
   {
     title: "Why split the drag axes?",
-    body: "With two orthogonal axes, direction alone carries intent · vertical removes from the flow, horizontal rearranges it. No modes, no delays: the first few pixels of movement declare what the gesture means.",
+    body: "With two orthogonal axes, direction alone carries intent · vertical removes from the flow, horizontal rearranges it. No modes, no delays · the drag's first direction sets whether it removes or reorders.",
     related: [
       { label: "Drag-and-drop reorder", href: "/challenges#drag-reorder" },
       { label: "Interaction Before Typography", href: "/principles#interaction-first" },

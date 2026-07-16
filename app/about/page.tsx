@@ -26,8 +26,8 @@ const FAQ = [
     q: "Does this work with keyboards and screen readers?",
     a: (
       <>
-        It is the hardest part, and it is treated as fundamental rather than a follow-up. Arrow
-        keys are remapped · next character is down, next line is left · focus traverses columns
+        It is the hardest part, so I build it in from the start. I remap the arrow keys · next
+        character is down, next line is left · focus traverses columns
         right to left, and every duration collapses to zero under prefers-reduced-motion. Each
         component documents its accessibility behavior. What remains unsolved is listed openly in{" "}
         <Link
@@ -142,8 +142,8 @@ export default function AboutPage() {
               Vertically Works began with a typeface. In 2019 I was following Yong Jae Lee&rsquo;s
               progress on Baram, a Korean font designed natively for vertical setting, and learning how
               much labor hides inside a script: a Korean typeface needs more than 3,350 glyphs before it
-              can say anything at all. Print spent centuries refining vertical typography. Software never
-              gave it a first day.
+              can say anything at all. Print spent centuries refining vertical typography. Screens started
+              horizontal and stayed there.
             </p>
 
             <p style={paragraph}>
@@ -165,8 +165,7 @@ export default function AboutPage() {
             <p style={paragraph}>
               Vertically Works is the result · components built on true writing-mode: vertical-rl,
               applications that put them under real load, and open questions documented as carefully as
-              the answers. It is a living study, not a finished specification. Disagreement is a
-              contribution.
+              the answers.
             </p>
 
             <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-subtle)", margin: "var(--space-8) 0 0" }}>

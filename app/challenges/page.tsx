@@ -42,7 +42,7 @@ const CHALLENGES: {
     status: "Partially Resolved",
     question: "How should mixed CJK and Latin content behave in the same column?",
     description:
-      "A verse reference like 「창 1:1」 contains hangul, ASCII colon, Latin digits, and CJK brackets · each needing different orientation. Unicode defines orientation per character class, but browser and OS implementations vary significantly.",
+      "A verse reference like 「창 1:1」 contains hangul, ASCII colon, Latin digits, and CJK brackets · each needing different orientation. Unicode defines orientation per character class, but browser and OS implementations differ.",
     related: [
       { label: "Verse", href: "/components/verse" },
       { label: "Text Field", href: "/components/text-field" },

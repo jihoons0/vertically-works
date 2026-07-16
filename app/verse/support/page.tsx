@@ -116,8 +116,8 @@ export default function SupportPage() {
           <h2 style={h2}>Contact us</h2>
           <p style={p}>
             Need help or want to report a problem? Email{" "}
-            <Link href="mailto:jihoon8846@gmail.com" style={link}>
-              jihoon8846@gmail.com
+            <Link href="mailto:jihoons@designwithorbital.com" style={link}>
+              jihoons@designwithorbital.com
             </Link>
             . We aim to reply within a few business days.
           </p>

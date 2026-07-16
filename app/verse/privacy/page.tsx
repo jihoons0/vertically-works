@@ -92,8 +92,8 @@ const SECTIONS: { heading: string; body: React.ReactNode }[] = [
     body: (
       <p style={p}>
         Questions about this policy? Email{" "}
-        <Link href="mailto:jihoon8846@gmail.com" style={link}>
-          jihoon8846@gmail.com
+        <Link href="mailto:jihoons@designwithorbital.com" style={link}>
+          jihoons@designwithorbital.com
         </Link>
         .
       </p>

@@ -35,9 +35,7 @@ export function InstallBanner({
               Bring them into your project
             </h2>
             <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: 0, maxWidth: "52ch", lineHeight: 1.65 }}>
-              Every component is source you own · no runtime dependency. Run{" "}
-              <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>init</code> once for the tokens, then{" "}
-              <code style={{ fontFamily: "var(--font-geist-mono)", fontSize: "0.85em" }}>add</code> any component · fetched live from the registry, nothing to configure.
+              Use them in your own project. Open source on GitHub, MIT-licensed.
             </p>
           </Reveal>
           <Reveal delay={80} style={{ position: "relative", zIndex: 1 }}>

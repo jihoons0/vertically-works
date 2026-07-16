@@ -58,7 +58,7 @@ const FEATURES = [
 const DECISIONS = [
   {
     title: "Why do transcripts read as verse?",
-    body: "A transcript is prose you follow in time. Setting each timed line as its own column makes progress legible on the page itself. The columns you have heard sit to the right, the ones still coming wait on the left, and the accent marks now.",
+    body: "A transcript is prose you follow in time. Setting each timed line as its own column makes progress legible on the page itself. The columns you have heard sit to the right, the ones still coming wait on the left, and the accent highlights the line playing now.",
     related: [
       { label: "Verse", href: "/components/verse" },
       { label: "Respect Reading Flow", href: "/principles#reading-flow" },
@@ -74,7 +74,7 @@ const DECISIONS = [
   },
   {
     title: "Why does browsing never stop playback?",
-    body: "The breadcrumb trace keeps shows, episodes, and the playing state simultaneously alive. In a reading interface you can look back at the shelf without losing your place in the text. Audio deserves the same.",
+    body: "The breadcrumb trace keeps shows, episodes, and the playing state all reachable at once. In a reading interface you can look back at the shelf without losing your place · playback keeps going while you browse.",
     related: [
       { label: "Navigation rail placement", href: "/challenges#navigation-direction" },
       { label: "Interaction Before Typography", href: "/principles#interaction-first" },

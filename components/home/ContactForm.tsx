@@ -14,8 +14,9 @@
  * - Name and email deliberately stay horizontal — fields AND labels: CJK IME
  *   composition assumes a horizontal baseline (the registry text-field's
  *   reasoning), and the labels are English chrome, not vertical content.
- * - Sending composes a mail draft (mailto:) in the visitor's own mail app ·
- *   nothing is stored on the site, and the UI says so.
+ * - Sending POSTs to /api/contact, which emails the message to the site owner
+ *   via Resend. If that route is unavailable (or RESEND_API_KEY isn't set yet)
+ *   it falls back to a mailto: draft, so a message is never lost.
  * - Motion: only the surface's box transition, on --duration/--easing tokens;
  *   the global reduced-motion reset flattens it.
  */
@@ -25,7 +26,7 @@ import { usePreviewLang } from "@/components/providers/PreviewLangProvider";
 import { Check } from "lucide-react";
 import type { Lang } from "@/components/home/bento-shared";
 
-const CONTACT_EMAIL = "office@designwithorbital.com";
+const CONTACT_EMAIL = "jihoons@designwithorbital.com";
 
 type Dir = "vertical" | "horizontal";
 type Purpose = "collab" | "general" | "feature";
@@ -53,7 +54,7 @@ export function ContactForm() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [errors, setErrors] = useState<{ name?: string; email?: string; body?: string }>({});
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "fallback">("idle");
 
   // Narrow screens compose horizontally, full stop · the vertical surface
   // needs width the stacked mobile card doesn't have, so the direction
@@ -69,7 +70,16 @@ export function ContactForm() {
 
   const isV = !narrow && dir === "vertical";
 
-  function handleSubmit(e: FormEvent) {
+  // Fallback path · compose a draft in the visitor's own mail app when the
+  // server route can't deliver (backend down, or the API key isn't set yet).
+  function openMailtoDraft() {
+    const subjectTag = PURPOSES.find((p) => p.id === purpose)?.subject ?? "General";
+    const subject = `[${subjectTag}] ${title.trim() || "(no title)"}`;
+    const lines = [`Name: ${name.trim()}`, `Email: ${email.trim()}`, `Purpose: ${subjectTag}`, "", body];
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
+  }
+
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     const errs: typeof errors = {};
     if (!name.trim()) errs.name = "Your name is required.";
@@ -78,11 +88,24 @@ export function ContactForm() {
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
 
-    const subjectTag = PURPOSES.find((p) => p.id === purpose)?.subject ?? "General";
-    const subject = `[${subjectTag}] ${title.trim() || "(no title)"}`;
-    const lines = [`Name: ${name.trim()}`, `Email: ${email.trim()}`, `Purpose: ${subjectTag}`, "", body];
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join("\n"))}`;
-    setSent(true);
+    setStatus("sending");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name.trim(), email: email.trim(), purpose, title: title.trim(), body }),
+      });
+      if (res.ok) {
+        setStatus("sent");
+        return;
+      }
+      // Route unavailable or unconfigured · fall back to a mail draft
+      openMailtoDraft();
+      setStatus("fallback");
+    } catch {
+      openMailtoDraft();
+      setStatus("fallback");
+    }
   }
 
   // ── Composition surface styles · the playground's textStyle, grown up ──
@@ -215,10 +238,17 @@ export function ContactForm() {
               />
             )}
             <span aria-live="polite" style={{ flex: 1, minWidth: 120, fontSize: "0.75rem", color: "var(--color-fg)", fontWeight: 500 }}>
-              {sent ? <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Check size={12} strokeWidth={2.5} aria-hidden /> Draft opened — send it from your mail app.</span> : errors.body ?? ""}
+              {status === "sent" ? (
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Check size={12} strokeWidth={2.5} aria-hidden /> Sent — thanks. I&rsquo;ll reply to your email.</span>
+              ) : status === "fallback" ? (
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><Check size={12} strokeWidth={2.5} aria-hidden /> Draft opened — send it from your mail app.</span>
+              ) : (
+                errors.body ?? ""
+              )}
             </span>
             <button
               type="submit"
+              disabled={status === "sending"}
               className="btn-primary-hover pressable"
               style={{
                 display: "inline-flex",
@@ -229,13 +259,14 @@ export function ContactForm() {
                 fontWeight: 500,
                 borderRadius: "var(--radius-lg)",
                 border: "none",
-                cursor: "pointer",
+                cursor: status === "sending" ? "default" : "pointer",
+                opacity: status === "sending" ? 0.6 : 1,
                 fontFamily: "inherit",
                 background: "var(--color-fg)",
                 color: "var(--color-bg)",
               }}
             >
-              Send
+              {status === "sending" ? "Sending…" : "Send"}
             </button>
           </div>
         </div>

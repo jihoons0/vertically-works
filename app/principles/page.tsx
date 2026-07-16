@@ -26,7 +26,7 @@ const PRINCIPLES = [
     number: "02",
     title: "Motion Has Meaning",
     description: "Every animation communicates something. In a vertical interface, the direction, duration, and easing of motion must be calibrated to the reading axis, not imported from horizontal conventions.",
-    detail: "A drawer that slides from the right edge of an RTL reading interface travels toward the reader's origin · which feels like an intrusion. The same drawer sliding from below follows an orthogonal axis · which feels like a new layer. Neither is inherently correct; the choice must be deliberate.",
+    detail: "A drawer that slides from the right edge of an RTL reading interface travels toward the reader's origin · which feels like an intrusion. The same drawer sliding from below follows an orthogonal axis · which feels like a new layer. Neither is right by default; you choose one on purpose.",
     related: [
       { label: "Sheet", href: "/components/sheet" },
       { label: "Dialog", href: "/components/dialog" },
@@ -37,7 +37,7 @@ const PRINCIPLES = [
     id: "interaction-first",
     number: "03",
     title: "Interaction Before Typography",
-    description: "The purpose of a vertical interface is not beautiful text. It is behavior that matches how people read. Typography enables interaction; it is not the goal.",
+    description: "A vertical interface exists to make behavior match how you read. Typography serves that behavior; it is not the goal.",
     detail: "A common mistake is to treat vertical text as a typographic exercise · rotating existing components or applying writing-mode to achieve aesthetic effect. The question is not 'does this look like a vertical book?' but 'does this behave like one?'",
     related: [
       { label: "Button", href: "/components/button" },
@@ -61,7 +61,7 @@ const PRINCIPLES = [
     id: "accessibility",
     number: "05",
     title: "Accessibility Is Fundamental",
-    description: "Vertical interfaces introduce unique accessibility challenges that horizontal design systems never considered. Solve them from the beginning.",
+    description: "Vertical interfaces raise accessibility problems horizontal design systems never faced. Solve them from the start.",
     detail: "Arrow key semantics change. Screen reader reading order depends on column order. Reduced motion must account for the directional nature of vertical animations. Focus management must traverse RTL column order correctly.",
     related: [
       { label: "Tabs", href: "/components/tabs" },

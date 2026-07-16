@@ -56,7 +56,7 @@ const FEATURES = [
   {
     title: "An honest reader",
     description:
-      "Full articles are extracted as text when the publisher page allows it. When extraction fails, the reader falls back to a single elegant description page with a prominent 원문 보기 link · never a fake full article.",
+      "Full articles are extracted as text when the publisher page allows it. When extraction fails, the reader falls back to a single description page with a prominent 원문 보기 link · never a fake full article.",
     related: [
       { label: "Hyperlink Treatment", href: "/components/hyperlink-treatment" },
       { label: "Research Never Ends", href: "/principles#document-uncertainty" },
@@ -65,7 +65,7 @@ const FEATURES = [
   {
     title: "Sources you own",
     description:
-      "Default feeds can be toggled per edition and any RSS URL added alongside them. A dead feed surfaces its failure in the Sources sheet and never blanks the front page.",
+      "Default feeds can be toggled per edition and any RSS URL added alongside them. The Sources sheet shows a dead feed's failure · it never blanks the front page.",
     related: [
       { label: "Sheet", href: "/components/sheet" },
     ],
@@ -75,7 +75,7 @@ const FEATURES = [
 const DECISIONS = [
   {
     title: "Why a newspaper?",
-    body: "Newspapers are the strongest historical case for vertical CJK setting: for over a century, Korean, Japanese, and Chinese dailies were composed top to bottom, right to left, and Japanese national papers still are, in print. Every digital edition fell back to horizontal. News is where vertical setting was lost, so it is where restoring it means the most.",
+    body: "Newspapers are the strongest historical case for vertical CJK setting: for over a century, Korean, Japanese, and Chinese dailies were composed top to bottom, right to left, and Japanese national papers still are, in print. Every digital edition fell back to horizontal. News is where digital dropped vertical setting, so restoring it there matters most.",
     related: [
       { label: "Tiered Page", href: "/components/tiered-page" },
       { label: "Respect Reading Flow", href: "/principles#reading-flow" },
@@ -83,7 +83,7 @@ const DECISIONS = [
   },
   {
     title: "Why live feeds instead of curated demos?",
-    body: "Hand-picked sample text flatters a typography system. Live headlines do not: they arrive full of digits, Latin acronyms, and mixed punctuation, several times an hour. If the pipeline holds up against a real news day, it holds up anywhere. The stress test is the product.",
+    body: "Hand-picked sample text flatters a typography system. Live headlines do not: they arrive full of digits, Latin acronyms, and mixed punctuation, several times an hour. If the pipeline holds up against a real news day, it holds up anywhere.",
     related: [
       { label: "Mixed CJK & Latin", href: "/challenges#mixed-language" },
       { label: "Research Never Ends", href: "/principles#document-uncertainty" },

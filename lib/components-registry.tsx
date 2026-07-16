@@ -49,7 +49,7 @@ export const COMPONENTS_REGISTRY: ComponentEntry[] = [
     category: "Actions",
     description: "Trigger an immediate action. In a vertical interface, label and icon orientation must match the reading axis.",
     problem: "Where does the label sit relative to the touch target when the button is oriented for a vertical layout?",
-    intent: "A rotated horizontal button is not a vertical button. The writing-mode property must be applied to the label itself.",
+    intent: "Rotation alone doesn't make a vertical button · apply writing-mode to the label itself.",
     variants: [
       {
         name: "Default",
@@ -180,7 +180,7 @@ function Settings() {
     category: "Inputs",
     description: "Single-line text input with CJK IME composition support in a vertical interface.",
     problem: "How does a text input compose CJK characters in a vertical context, and where does the IME candidate window appear?",
-    intent: "CJK input requires IME composition · an intermediate state where the candidate characters are shown before confirmation. The candidate window placement in a vertical context is largely unsolved.",
+    intent: "CJK input requires IME composition · an intermediate state where the candidate characters are shown before confirmation. Where the candidate window lands in a vertical context is still unsolved.",
     variants: [
       {
         name: "Default",
@@ -302,7 +302,7 @@ function Settings() {
     category: "Inputs",
     description: "A drag control for selecting a value along a continuous range.",
     problem: "A horizontal slider is counterintuitive on the vertical reading axis. What replaces it?",
-    intent: "Standard horizontal sliders conflict with vertical reading in a specific way: 'increase' goes right, but reading also goes (in a sense) left. A vertical drag-up-to-increase model resolves this.",
+    intent: "Standard horizontal sliders conflict with vertical reading: 'increase' goes right, but the column advances leftward. Drag-up-to-increase puts the control back on the reading axis.",
     variants: [
       {
         name: "Vertical drag",
@@ -1008,7 +1008,7 @@ function ThreadSeparator({ label, sub }) {
     category: "Conversation",
     description: "A chat message with avatar, content, timestamp, and alignment. The open question in a vertical interface is whether bubbles should adapt to the reading axis.",
     problem: "Should chat message bubbles remain horizontal (familiar) or adapt to vertical text orientation (consistent with reading direction)?",
-    intent: "This is one of the most contested open questions in vertical interface design. Horizontal bubbles are universally understood. Vertical message columns are consistent with the reading axis but unfamiliar.",
+    intent: "Horizontal bubbles are familiar · vertical message columns match the reading axis but stay unfamiliar. No convention has settled it.",
     variants: [
       {
         name: "Horizontal vs Vertical",
@@ -1081,7 +1081,7 @@ function VerticalMessage({ from, text, time, avatar }) {
       "Use vertical messages for long multi-paragraph messages · truncate or expand differently",
     ],
     accessibility: "Each message has aria-label including sender and timestamp. Messages list uses role='log'. New messages announced via aria-live='polite'.",
-    openQuestion: "This is one of the most contested open questions in vertical UI. Horizontal bubbles are familiar to all users; vertical columns are consistent with reading direction. Which wins? The answer may depend on the content type.",
+    openQuestion: "Horizontal bubbles are familiar; vertical columns match reading direction. Which one wins likely turns on content type · mixed-language chat versus pure CJK.",
     status: "built",
   },
 
