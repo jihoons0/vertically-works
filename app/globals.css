@@ -399,10 +399,17 @@ a {
    The card is anchored top-right and taller than the band, so its bottom
    bleeds past the banner's lower border and gets clipped flat by the
    section's overflow:hidden. Hidden on mobile, where there's no room. */
-/* The origin banner's legibility scrim is only needed over the light-mode
-   gradient; in dark mode it shows as a band on the reading side, so drop it. */
+/* The origin banner's legibility scrim: full strength keeps dark text crisp
+   over the light-mode gradient; in dark mode it's softened (about half the
+   ink, fading sooner) so it lifts the reading side without a heavy band.
+   !important because the base gradient is an inline style. */
 [data-theme="dark"] .origin-scrim {
-  display: none;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--color-bg) 40%, transparent) 0%,
+    color-mix(in srgb, var(--color-bg) 18%, transparent) 40%,
+    transparent 60%
+  ) !important;
 }
 
 .origin-article {
