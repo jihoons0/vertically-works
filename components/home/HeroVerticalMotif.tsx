@@ -22,7 +22,7 @@ export function HeroVerticalMotif() {
 
   // Selected language first, the remaining two in canonical order.
   const order: Lang[] = [lang, ...(["ja", "ko", "zh"] as Lang[]).filter((l) => l !== lang)];
-  const COLUMNS = order.map((l, i) => ({ text: WORDS[l], color: COLORS[i] }));
+  const COLUMNS = order.map((l, i) => ({ lang: l, text: WORDS[l], color: COLORS[i] }));
 
   return (
     <div
@@ -43,7 +43,10 @@ export function HeroVerticalMotif() {
           style={{
             writingMode: "vertical-rl",
             textOrientation: "mixed",
-            fontWeight: 300,
+            // Baram (Hangul-only) sets the Korean word; the others keep the
+            // serif title stack. Baram is ExtraBold, so its column skips the 300.
+            fontFamily: col.lang === "ko" ? "var(--font-baram)" : undefined,
+            fontWeight: col.lang === "ko" ? 800 : 300,
             letterSpacing: "0.18em",
             lineHeight: 1,
             color: col.color,
