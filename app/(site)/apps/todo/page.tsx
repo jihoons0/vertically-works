@@ -4,7 +4,6 @@ import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { AppHero } from "@/components/apps/AppHero";
 import { RelatedPill } from "@/components/ui/RelatedPill";
-import { AppEmbed } from "@/components/apps/AppEmbed";
 import { AppVideo } from "@/components/home/AppVideo";
 import { runningAppUrl } from "@/lib/appUrls";
 
@@ -120,11 +119,6 @@ export default function VerticallyDoPage() {
       />
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
-        {/* Core visual · the real app, running in the page */}
-        <Reveal style={{ marginBottom: "var(--space-20)" }}>
-          <AppEmbed src="/run/todo" title="Vertically To-do · live to-do app" height={560} label="todo.vertically.works" />
-        </Reveal>
-
         {/* In motion · the recorded gestures, beside what they mean */}
         <Reveal>
           <div className="app-detail-lead" style={{ marginBottom: "var(--space-20)" }}>
