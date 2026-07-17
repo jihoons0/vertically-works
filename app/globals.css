@@ -399,6 +399,12 @@ a {
    The card is anchored top-right and taller than the band, so its bottom
    bleeds past the banner's lower border and gets clipped flat by the
    section's overflow:hidden. Hidden on mobile, where there's no room. */
+/* The origin banner's legibility scrim is only needed over the light-mode
+   gradient; in dark mode it shows as a band on the reading side, so drop it. */
+[data-theme="dark"] .origin-scrim {
+  display: none;
+}
+
 .origin-article {
   display: none;
 }

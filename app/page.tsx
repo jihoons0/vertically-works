@@ -343,9 +343,11 @@ export default function HomePage() {
         {/* Soft mesh-gradient backdrop · the surface the question was first written on */}
         <OriginShader />
         {/* Legibility scrim · lifts the reading side toward the page bg so dark text
-            stays crisp over the gradient, then fades out before the article card. */}
+            stays crisp over the gradient, then fades out before the article card.
+            Light mode only · in dark mode it reads as an unwanted band (.origin-scrim). */}
         <div
           aria-hidden
+          className="origin-scrim"
           style={{
             position: "absolute",
             inset: 0,
