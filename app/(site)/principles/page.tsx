@@ -18,7 +18,7 @@ const PRINCIPLES = [
     related: [
       { label: "Vertical List Cell", href: "/components/vertical-list-cell" },
       { label: "Tiered Page", href: "/components/tiered-page" },
-      { label: "Vertically Verse", href: "/apps/vertically-verse" },
+      { label: "Vertically Verse", href: "/apps/verse" },
     ],
   },
   {
@@ -76,8 +76,8 @@ const PRINCIPLES = [
     description: "Users who are new to vertical interfaces need a ramp. Vertical interaction is unfamiliar to most digital users, even those who read vertically in print.",
     detail: "A sudden full-vertical interface is disorienting. The best approach is progressive introduction · starting with familiar patterns in the navigation chrome, then deepening the vertical commitment in the content area, then finally in gesture interactions.",
     related: [
-      { label: "Vertically To-do", href: "/apps/vertically-do" },
-      { label: "Vertically Verse", href: "/apps/vertically-verse" },
+      { label: "Vertically To-do", href: "/apps/todo" },
+      { label: "Vertically Verse", href: "/apps/verse" },
     ],
   },
   {

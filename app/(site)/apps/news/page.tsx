@@ -4,6 +4,7 @@ import { AppHero } from "@/components/apps/AppHero";
 import { RelatedPill } from "@/components/ui/RelatedPill";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { runningAppUrl } from "@/lib/appUrls";
 
 // Cross-references rendered as badge links: ◆ component · ? challenge · ▲ principle
 type Related = { label: string; href: string };
@@ -114,7 +115,9 @@ export default function VerticallyNewsPage() {
               Try this
             </h2>
             <Link
-              href="/apps/news"
+              href={runningAppUrl("news")}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-primary-hover"
               style={{
                 display: "inline-flex", alignItems: "center", gap: 8,

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./notes.css";
+import "./todo.css";
 import { TodoApp } from "@/components/notes/TodoApp";
 
 export const metadata: Metadata = {

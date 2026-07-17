@@ -14,7 +14,6 @@ import {
 import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { SiteFrame } from "@/components/layout/SiteFrame";
 import { Agentation } from "agentation";
 
 // Geist stays for the embedded applications (Notes, Listen) and code.
@@ -95,7 +94,7 @@ export default function RootLayout({
     >
       <body style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
         <ThemeProvider>
-          <SiteFrame>{children}</SiteFrame>
+          {children}
           {process.env.NODE_ENV === "development" && (
             <>
               <Agentation endpoint="http://localhost:4747" />

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 const APPS = [
   {
-    id: "vertically-verse",
+    id: "verse",
     name: "Verse",
     platform: "iOS",
     status: "Live",
@@ -25,11 +25,11 @@ const APPS = [
     ],
   },
   {
-    id: "notes",
+    id: "todo",
     name: "To-do",
     platform: "Web",
     status: "Live",
-    href: "/apps/vertically-do",
+    href: "/apps/todo",
     video: "/videos/vertically-notes.mp4",
     videoAspect: "1294 / 1484",
     description:
@@ -59,13 +59,27 @@ const APPS = [
     name: "Listen",
     platform: "Web",
     status: "WIP",
-    href: "/apps/vertically-listen",
+    href: "/apps/listen",
     description:
       "A podcast player with transcripts as vertical verse.",
     challenges: [
       "Shows › episodes › playing · browsing never stops playback",
       "Transcripts as vertical verse · tap a line to seek",
       "Reading stays vertical · transport stays horizontal",
+    ],
+  },
+  {
+    id: "chat",
+    name: "Chat",
+    platform: "Web",
+    status: "WIP",
+    href: "/apps/chat",
+    description:
+      "An AI chat interface for vertical, right-to-left reading.",
+    challenges: [
+      "Where a new message enters a vertical thread",
+      "Separating two speakers on one reading axis",
+      "Where the composer sits without fighting the flow",
     ],
   },
 ];

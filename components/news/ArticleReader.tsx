@@ -33,6 +33,9 @@ export function ArticleReader({ id }: { id: string }) {
   const fallbackSource = search.get("s") ?? undefined;
   const t = STRINGS[edition];
 
+  // Back to the front page: "/" on the news subdomain, "/run/news" in local dev.
+  const backToFront = () => router.push(window.location.pathname.replace(/\/article\/[^/]+$/, "") || "/");
+
   const [item, setItem] = useState<NewsItem | null>(null);
   const [status, setStatus] = useState<Status>("loading");
 
@@ -105,7 +108,7 @@ export function ArticleReader({ id }: { id: string }) {
                   {t.original}
                 </VerticalButton>
               )}
-              <VerticalButton variant="outline" onClick={() => router.push("/apps/news")}>
+              <VerticalButton variant="outline" onClick={backToFront}>
                 {t.back}
               </VerticalButton>
             </div>
@@ -117,7 +120,7 @@ export function ArticleReader({ id }: { id: string }) {
 
   return (
     <PaperShell mainProps={{ lang: LANG_TAGS[edition], className: "vn-article-enter" }}>
-      <ArticleView item={item!} edition={edition} onClose={() => router.push("/apps/news")} />
+      <ArticleView item={item!} edition={edition} onClose={backToFront} />
       <style>{`
         .vn-article-enter { animation: vn-article-in var(--duration-page) var(--easing-out) both; }
         @keyframes vn-article-in {

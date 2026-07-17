@@ -113,7 +113,9 @@ export function FrontPage() {
       s: item.sourceName,
     });
     try {
-      window.history.pushState({ vnArticle: item.id }, "", `/apps/news/article/${item.id}?${carry}`);
+      // "" on the news subdomain (app at root), "/run/news" in local dev.
+      const base = window.location.pathname.startsWith("/run/news") ? "/run/news" : "";
+      window.history.pushState({ vnArticle: item.id }, "", `${base}/article/${item.id}?${carry}`);
     } catch {}
   };
 

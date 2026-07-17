@@ -6,6 +6,7 @@ import { AppHero } from "@/components/apps/AppHero";
 import { RelatedPill } from "@/components/ui/RelatedPill";
 import { AppEmbed } from "@/components/apps/AppEmbed";
 import { AppVideo } from "@/components/home/AppVideo";
+import { runningAppUrl } from "@/lib/appUrls";
 
 // Cross-references rendered as badge links: ◆ component · ? challenge · ▲ principle
 type Related = { label: string; href: string };
@@ -99,7 +100,9 @@ export default function VerticallyDoPage() {
               Try this
             </h2>
             <Link
-              href="/apps/notes"
+              href={runningAppUrl("todo")}
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-cta-hover pressable"
               style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
@@ -119,7 +122,7 @@ export default function VerticallyDoPage() {
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
         {/* Core visual · the real app, running in the page */}
         <Reveal style={{ marginBottom: "var(--space-20)" }}>
-          <AppEmbed src="/apps/notes" title="Vertically To-do · live to-do app" height={560} />
+          <AppEmbed src="/run/todo" title="Vertically To-do · live to-do app" height={560} label="todo.vertically.works" />
         </Reveal>
 
         {/* In motion · the recorded gestures, beside what they mean */}
@@ -252,10 +255,12 @@ export default function VerticallyDoPage() {
         >
           <div>
             <p style={{ fontSize: "0.9375rem", fontWeight: 500, color: "var(--color-fg)", margin: "0 0 var(--space-1)" }}>Use it in the browser</p>
-            <p style={{ fontSize: "0.875rem", color: "var(--color-fg-muted)", margin: 0 }}>The app owns the full viewport at /apps/notes. Your list is saved locally on this device.</p>
+            <p style={{ fontSize: "0.875rem", color: "var(--color-fg-muted)", margin: 0 }}>The app owns the full viewport at todo.vertically.works. Your list is saved locally on this device.</p>
           </div>
           <Link
-            href="/apps/notes"
+            href={runningAppUrl("todo")}
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-cta-hover pressable"
             style={{
               display: "inline-flex",

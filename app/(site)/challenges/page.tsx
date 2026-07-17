@@ -46,7 +46,7 @@ const CHALLENGES: {
     related: [
       { label: "Verse", href: "/components/verse" },
       { label: "Text Field", href: "/components/text-field" },
-      { label: "Vertically Verse", href: "/apps/vertically-verse" },
+      { label: "Vertically Verse", href: "/apps/verse" },
     ],
   },
   {
@@ -71,7 +71,7 @@ const CHALLENGES: {
     related: [
       { label: "Marker", href: "/components/marker" },
       { label: "Hyperlink Treatment", href: "/components/hyperlink-treatment" },
-      { label: "Vertically Verse", href: "/apps/vertically-verse" },
+      { label: "Vertically Verse", href: "/apps/verse" },
     ],
   },
   {
@@ -109,7 +109,7 @@ const CHALLENGES: {
       "List reordering assumes a vertical list of horizontal rows. In a vertical reading interface, a list of columns flowing RTL has a different primary axis for reorder gestures · left-right drag maps to position change, not the usual up-down.",
     related: [
       { label: "Vertical List Cell", href: "/components/vertical-list-cell" },
-      { label: "Vertically To-do", href: "/apps/vertically-do" },
+      { label: "Vertically To-do", href: "/apps/todo" },
     ],
   },
   {

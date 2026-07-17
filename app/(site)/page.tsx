@@ -42,11 +42,11 @@ type Application = {
 // compact card. Order is canonical · Verse, Notes, News, then Listen.
 const APPLICATIONS: Application[] = [
   {
-    id: "vertically-verse",
+    id: "verse",
     name: "Verse",
     platform: "iOS",
     status: "Live",
-    href: "/apps/vertically-verse",
+    href: "/apps/verse",
     description:
       "A fully vertical, right-to-left Bible for Korean, Japanese, and Chinese.",
     highlights: [
@@ -57,11 +57,11 @@ const APPLICATIONS: Application[] = [
     media: { type: "video", src: "/videos/vertically-verse.mp4", aspect: "2 / 3" },
   },
   {
-    id: "notes",
+    id: "todo",
     name: "To-do",
     platform: "Web",
     status: "Live",
-    href: "/apps/vertically-do",
+    href: "/apps/todo",
     description:
       "A to-do list where every task is a column you read top to bottom.",
     highlights: [
@@ -76,7 +76,7 @@ const APPLICATIONS: Application[] = [
     name: "News",
     platform: "Web",
     status: "WIP",
-    href: "/apps/vertically-news",
+    href: "/apps/news",
     description:
       "A daily newspaper setting live Korean, Japanese, and Chinese headlines right to left.",
     highlights: [],
@@ -87,7 +87,7 @@ const APPLICATIONS: Application[] = [
     name: "Listen",
     platform: "Web",
     status: "WIP",
-    href: "/apps/vertically-listen",
+    href: "/apps/listen",
     description:
       "A podcast player where transcripts fall as time-synced vertical verse.",
     highlights: [],

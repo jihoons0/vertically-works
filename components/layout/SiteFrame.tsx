@@ -5,16 +5,12 @@ import { Navigation } from "@/components/nav/Navigation";
 import { Footer } from "@/components/layout/Footer";
 import { PreviewLangProvider } from "@/components/providers/PreviewLangProvider";
 
-// Most routes are documentation and wear the site chrome. The in-repo apps
-// (/apps/notes, /apps/listen) render bare so they own the whole viewport;
-// everything else · the /apps launcher, the Verse pages · keeps the site chrome.
-const BARE_ROUTES = ["/apps/notes", "/apps/listen", "/apps/news"];
-
+// The documentation chrome, rendered for every route under app/(site). The
+// running apps (app/run/*) live outside that group and never reach here, so
+// they render bare and own the whole viewport — including when a subdomain
+// host-rewrite points at them.
 export function SiteFrame({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const bare = BARE_ROUTES.some((r) => pathname === r || pathname.startsWith(r + "/"));
-
-  if (bare) return <>{children}</>;
 
   return (
     <PreviewLangProvider>

@@ -6,10 +6,14 @@ export function AppEmbed({
   src,
   title,
   height = 560,
+  label,
 }: {
   src: string;
   title: string;
   height?: number;
+  /** Address-bar text. Defaults to `vertically.works{src}`; pass the public
+   *  subdomain (e.g. "todo.vertically.works") when the embed is same-origin. */
+  label?: string;
 }) {
   return (
     <div
@@ -38,7 +42,7 @@ export function AppEmbed({
           />
         ))}
         <span style={{ fontSize: "0.75rem", color: "var(--color-fg-subtle)", fontFamily: "var(--font-geist-mono)", marginLeft: "var(--space-2)" }}>
-          vertically.works{src}
+          {label ?? `vertically.works${src}`}
         </span>
       </div>
       <iframe

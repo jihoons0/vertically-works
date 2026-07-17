@@ -22,7 +22,7 @@ type ShaderConfig = {
 };
 
 const SHADERS: Record<string, ShaderConfig> = {
-  "vertically-verse": {
+  "verse": {
     colors: ["#f5e2bc", "#c7ffd2", "#ff8661", "#ffd447"],
     distortion: 0.68,
     swirl: 0.16,
@@ -31,7 +31,7 @@ const SHADERS: Record<string, ShaderConfig> = {
     speed: 0.4,
     rotation: 88,
   },
-  notes: {
+  todo: {
     colors: ["#e0eaff", "#241d9a", "#cbb3b9", "#4eb3d4"],
     distortion: 0.5,
     swirl: 0.09,
