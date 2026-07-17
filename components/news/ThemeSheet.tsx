@@ -11,13 +11,23 @@ import { useTheme } from "next-themes";
 import { VerticalSheet } from "@/components/news/vw/sheet";
 import { VerticalText } from "./VerticalText";
 import { STRINGS } from "@/lib/news/i18n";
-import { getFont, setFont, type FontId, type ThemeId } from "@/lib/news/prefs";
+import { FONT_OPTIONS, getFont, setFont, type FontId, type ThemeId } from "@/lib/news/prefs";
 import type { EditionId } from "@/lib/news/sources";
 
 const SWATCHES: Record<ThemeId, { bg: string; fg: string }> = {
   light: { bg: "#ffffff", fg: "#0a0a0a" },
   dark: { bg: "#0a0a0a", fg: "#fafafa" },
   sepia: { bg: "#f4ecd8", fg: "#4b3b2b" },
+};
+
+// The specimen glyph in each swatch previews the face itself.
+const SPECIMEN_FAMILY: Record<FontId, string> = {
+  serif: "'Apple Myungjo', 'Hiragino Mincho ProN', serif",
+  sans: "'Apple SD Gothic Neo', 'Hiragino Kaku Gothic ProN', sans-serif",
+  sung: "var(--font-chiron-sung-hk), serif",
+  zenAntique: "var(--font-zen-antique), serif",
+  dotGothic: "var(--font-dotgothic16), sans-serif",
+  longCang: "var(--font-long-cang), cursive",
 };
 
 export function ThemeSheet({
@@ -35,11 +45,11 @@ export function ThemeSheet({
   const active: ThemeId = theme === "dark" || theme === "sepia" ? theme : "light";
   const [font, setFontState] = useState<FontId>("serif");
   useEffect(() => {
-    if (open) setFontState(getFont());
-  }, [open]);
+    if (open) setFontState(getFont(edition));
+  }, [open, edition]);
 
   const pickFont = (next: FontId) => {
-    setFont(next);
+    setFont(edition, next);
     setFontState(next);
   };
 
@@ -120,14 +130,20 @@ export function ThemeSheet({
         })}
       </div>
 
-      {/* ─── Reading face · serif (default) or sans ─── */}
+      {/* ─── Reading face · system serif (default) + the edition's webfaces ─── */}
       <h2 style={{ ...sheetHeadingStyle, marginTop: "var(--space-6)" }}>{t.typeface}</h2>
       <div
         role="radiogroup"
         aria-label={t.typeface}
-        style={{ display: "flex", flexDirection: "row-reverse", gap: "var(--space-3)", justifyContent: "flex-end" }}
+        style={{
+          display: "flex",
+          flexDirection: "row-reverse",
+          flexWrap: "wrap",
+          gap: "var(--space-3)",
+          justifyContent: "flex-end",
+        }}
       >
-        {(["serif", "sans"] as FontId[]).map((face) => {
+        {FONT_OPTIONS[edition].map((face) => {
           const selected = face === font;
           return (
             <button
@@ -140,6 +156,8 @@ export function ThemeSheet({
               className="pressable"
               style={{
                 display: "flex",
+                flex: "1 1 0",
+                minWidth: 72,
                 flexDirection: "column",
                 alignItems: "center",
                 gap: "var(--space-3)",
@@ -157,10 +175,7 @@ export function ThemeSheet({
                 aria-hidden
                 style={{
                   fontSize: "1.25rem",
-                  fontFamily:
-                    face === "serif"
-                      ? "'Apple Myungjo', 'Hiragino Mincho ProN', serif"
-                      : "'Apple SD Gothic Neo', 'Hiragino Kaku Gothic ProN', sans-serif",
+                  fontFamily: SPECIMEN_FAMILY[face],
                   color: "var(--color-fg)",
                 }}
               >
@@ -170,7 +185,7 @@ export function ThemeSheet({
                 className="vt-reading"
                 style={{ fontSize: "0.875rem", fontWeight: 600, letterSpacing: "0.1em", color: "var(--color-fg)", flex: 1 }}
               >
-                <VerticalText text={face === "serif" ? t.serifName : t.sansName} />
+                <VerticalText text={t.fontNames[face] ?? face} />
               </span>
             </button>
           );

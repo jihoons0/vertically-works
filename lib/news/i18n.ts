@@ -4,6 +4,7 @@
  */
 
 import type { EditionId } from "./sources";
+import type { FontId } from "./prefs";
 
 export interface Strings {
   frontPage: string;
@@ -31,6 +32,8 @@ export interface Strings {
   typeface: string;
   serifName: string;
   sansName: string;
+  /** Display names for the faces this edition offers (see FONT_OPTIONS). */
+  fontNames: Partial<Record<FontId, string>>;
   original: string;
   share: string;
   back: string;
@@ -73,6 +76,7 @@ export const STRINGS: Record<EditionId, Strings> = {
     typeface: "글꼴",
     serifName: "명조",
     sansName: "고딕",
+    fontNames: { serif: "명조", sans: "고딕", sung: "송조" },
     original: "원문 보기",
     share: "공유",
     back: "1면으로",
@@ -113,6 +117,7 @@ export const STRINGS: Record<EditionId, Strings> = {
     typeface: "書体",
     serifName: "明朝",
     sansName: "ゴシック",
+    fontNames: { serif: "明朝", sans: "ゴシック", zenAntique: "アンティーク", dotGothic: "ドット" },
     original: "元の記事",
     share: "共有",
     back: "一面へ",
@@ -153,6 +158,7 @@ export const STRINGS: Record<EditionId, Strings> = {
     typeface: "字體",
     serifName: "明體",
     sansName: "黑體",
+    fontNames: { serif: "明體", sans: "黑體", sung: "宋體", longCang: "龍藏" },
     original: "原文連結",
     share: "分享",
     back: "回頭版",

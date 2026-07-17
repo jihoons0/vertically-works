@@ -10,6 +10,10 @@ import {
   Noto_Serif_KR,
   Noto_Serif_JP,
   Noto_Serif_TC,
+  Chiron_Sung_HK,
+  Zen_Antique,
+  DotGothic16,
+  Long_Cang,
 } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -42,6 +46,14 @@ const notoSansTC = Noto_Sans_TC({ subsets: ["latin"], variable: "--font-noto-san
 const notoSerifKR = Noto_Serif_KR({ subsets: ["latin"], variable: "--font-noto-serif-kr", preload: false });
 const notoSerifJP = Noto_Serif_JP({ subsets: ["latin"], variable: "--font-noto-serif-jp", preload: false });
 const notoSerifTC = Noto_Serif_TC({ subsets: ["latin"], variable: "--font-noto-serif-tc", preload: false });
+
+// News · optional CJK reading faces, opt-in per edition via the app's
+// typeface picker (see app/run/news + lib/news/prefs). Script-sliced CJK, so
+// no preload — only the unicode-range chunks an article uses stream in.
+const chironSungHK = Chiron_Sung_HK({ variable: "--font-chiron-sung-hk", display: "swap", preload: false });
+const zenAntique = Zen_Antique({ weight: "400", variable: "--font-zen-antique", display: "swap", preload: false });
+const dotGothic16 = DotGothic16({ weight: "400", variable: "--font-dotgothic16", display: "swap", preload: false });
+const longCang = Long_Cang({ weight: "400", variable: "--font-long-cang", display: "swap", preload: false });
 
 // Baram · Yong Jae Lee's vertical-native Korean typeface, the one that started
 // the project. Hangul only (no JP/CN glyphs), so it's used on the Korean word
@@ -90,7 +102,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${libreBaskerville.variable} ${notoSans.variable} ${notoSansKR.variable} ${notoSansJP.variable} ${notoSansTC.variable} ${notoSerifKR.variable} ${notoSerifJP.variable} ${notoSerifTC.variable} ${baram.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${libreBaskerville.variable} ${notoSans.variable} ${notoSansKR.variable} ${notoSansJP.variable} ${notoSansTC.variable} ${notoSerifKR.variable} ${notoSerifJP.variable} ${notoSerifTC.variable} ${baram.variable} ${chironSungHK.variable} ${zenAntique.variable} ${dotGothic16.variable} ${longCang.variable}`}
     >
       <body style={{ minHeight: "100dvh", display: "flex", flexDirection: "column" }}>
         <ThemeProvider>
