@@ -80,7 +80,7 @@ Everything ships in one file, `tokens.css`:
 
 - **Semantic colors** · `--color-bg/-subtle/-muted`, `--color-fg/-muted/-subtle`, `--color-border/-strong`, with full `light` / `dark` / `sepia` themes via `data-theme`
 - **Spacing** · `--space-1` … `--space-32` (4px base)
-- **Radius** · `--radius-sm` … `--radius-full`, plus continuous "squircle" corner smoothing where `corner-shape` is supported
+- **Radius** · `--radius-sm` … `--radius-full`
 - **Motion** · `--duration-micro` … `--duration-page` and `--easing-*` curves; every duration collapses to `0ms` under `prefers-reduced-motion`
 - **Utilities** · `.writing-vertical`, `.writing-vertical-upright`, `.pressable` press feedback, `.corner-round`
 

@@ -130,24 +130,6 @@
 }
 
 /* ─── Corner smoothing ─── */
-/* Continuous "squircle" corners on every rounded element · the curve eases into
-   the straight edge instead of kinking at the arc joint (Apple-style corner
-   smoothing). Progressive enhancement: browsers without corner-shape keep
-   plain circular arcs. True circles (thumbs, knobs, swatches, avatars) opt
-   back out with .corner-round so they don't square off. */
-@supports (corner-shape: squircle) {
-  *,
-  *::before,
-  *::after {
-    corner-shape: squircle;
-  }
-  .corner-round,
-  .corner-round::before,
-  .corner-round::after {
-    corner-shape: round;
-  }
-}
-
 /* ─── Motion tokens ─── */
 :root {
   --duration-micro: 80ms;
