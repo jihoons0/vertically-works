@@ -445,7 +445,6 @@ export default function HomePage() {
               scroll-triggered fade left it looking empty on first paint. */}
           <BentoGrid
             title="Components"
-            description="The interaction primitives of a vertical interface · real, accessible React components you copy into your project with one command."
             action={<SectionCta href="/components">All components</SectionCta>}
           />
         </div>

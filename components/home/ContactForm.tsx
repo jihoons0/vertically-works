@@ -158,13 +158,9 @@ export function ContactForm() {
 
   return (
     <div>
-      <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-4)", lineHeight: 1.15 }}>
+      <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: "0 0 var(--space-8)", lineHeight: 1.15 }}>
         Say hello
       </h2>
-      <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-8)", lineHeight: 1.65, maxWidth: "52ch" }}>
-        Questions, ideas, disagreements · write to me anytime. Compose vertically or
-        horizontally, whichever way you think.
-      </p>
 
       {/* One bounding box · sender and compose divided by a single hairline */}
       <form onSubmit={handleSubmit} noValidate className="contact-card">

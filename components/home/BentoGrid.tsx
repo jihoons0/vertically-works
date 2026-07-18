@@ -19,14 +19,14 @@ export function BentoGrid({
   action,
 }: {
   title: string;
-  description: string;
+  description?: string;
   /** Rendered on the heading row, right-aligned (e.g. an "All components" link). */
   action?: React.ReactNode;
 }) {
   const { lang } = usePreviewLang();
   return (
     <div>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)", flexWrap: "wrap", marginBottom: "var(--space-3)" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)", flexWrap: "wrap", marginBottom: description ? "var(--space-3)" : "var(--space-10)" }}>
         <h2
           style={{
             fontSize: "clamp(1.5rem, 3vw, 2.25rem)",
@@ -41,17 +41,19 @@ export function BentoGrid({
         </h2>
         {action}
       </div>
-      <p
-        style={{
-          fontSize: "1rem",
-          color: "var(--color-fg-muted)",
-          margin: "0 0 var(--space-10)",
-          maxWidth: "64ch",
-          lineHeight: 1.65,
-        }}
-      >
-        {description}
-      </p>
+      {description && (
+        <p
+          style={{
+            fontSize: "1rem",
+            color: "var(--color-fg-muted)",
+            margin: "0 0 var(--space-10)",
+            maxWidth: "64ch",
+            lineHeight: 1.65,
+          }}
+        >
+          {description}
+        </p>
+      )}
       <div className="home-bento">
         <LoopButtonOverlay lang={lang} />
         <LoopToggle lang={lang} />
