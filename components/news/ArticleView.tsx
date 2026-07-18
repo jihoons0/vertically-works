@@ -7,11 +7,10 @@
  * whatever container hosts it — the front page's card body (inline, no page
  * navigation) or the standalone /article route for deep links.
  *
- * Fluid-interface notes (apple-design): the pull tracks the pointer 1:1 and
- * is interruptible; enter/exit happen on the same edge; pulling rightward
- * past the first page is the dismiss gesture — the same motion that pages
- * backward keeps going and collapses the article (`onClose`). Escape and the
- * rail's back button do the same.
+ * Fluid-interface notes (apple-design): enter/exit happen on the same edge.
+ * Pages turn by keyboard — ← is forward on the R→L axis, → is backward and,
+ * past the first page, keeps going to collapse the article (`onClose`).
+ * Escape and the rail's back button do the same.
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -19,7 +18,6 @@ import { TieredPage, type TieredPageColumn } from "@/components/news/vw/tiered-p
 import { VerticalButton } from "@/components/news/vw/vertical-button";
 import { VerticalSheet } from "@/components/news/vw/sheet";
 import { VerticalText } from "./VerticalText";
-import { PullRing } from "./PullRing";
 import { STRINGS } from "@/lib/news/i18n";
 import { relativeTime } from "@/lib/news/time";
 import { LANG_TAGS, type EditionId } from "@/lib/news/sources";
@@ -33,7 +31,6 @@ const BODY_GLYPH_ADVANCE = 17.6; // exact vertical advance: 1rem + 0.1em trackin
 const HEAD_GLYPH = 31; // 1.875rem headline glyph + 0.02em tracking
 const HEAD_COLUMN = 44; // headline column thickness (1.875rem × 1.45 line-height)
 const META_WIDTH = 24; // the attribution column beside the headline
-const PULL_THRESHOLD = 96; // px of pull to arm
 
 export function safeHost(url: string): string {
   try {
@@ -62,12 +59,6 @@ export function ArticleView({
   const [turn, setTurn] = useState<"next" | "prev" | null>(null);
   const [shareOpen, setShareOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-
-  // Pull gesture state · progress in [-1..1+]: negative = previous/dismiss.
-  const [pull, setPull] = useState(0);
-  const pointer = useRef<{ startX: number; active: boolean }>({ startX: 0, active: false });
-  const wheelAccum = useRef(0);
-  const wheelIdle = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const stageRef = useRef<HTMLDivElement>(null);
   const [stage, setStage] = useState({ width: 0, height: 0 });
@@ -206,61 +197,11 @@ export function ArticleView({
     return () => window.removeEventListener("keydown", onKey);
   }, [forward, backward, onClose]);
 
-  // ── Pull-to-paginate · pointer tracks 1:1, fires on release ──
-  const onPointerDown = (e: React.PointerEvent) => {
-    if ((e.target as HTMLElement).closest("button, a")) return;
-    pointer.current = { startX: e.clientX, active: true };
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-  };
-  const onPointerMove = (e: React.PointerEvent) => {
-    if (!pointer.current.active) return;
-    const dx = e.clientX - pointer.current.startX;
-    // Pull leftward (dx<0) = toward the next page; rightward = previous/close.
-    setPull(-dx / PULL_THRESHOLD);
-  };
-  const releasePull = () => {
-    if (!pointer.current.active) return;
-    pointer.current.active = false;
-    setPull((p) => {
-      if (p >= 1) forward();
-      else if (p <= -1) backward();
-      return 0;
-    });
-  };
-
-  // Wheel/trackpad: accumulate horizontal overscroll, fire when armed.
-  const onWheel = (e: React.WheelEvent) => {
-    const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    wheelAccum.current += d;
-    const p = wheelAccum.current / PULL_THRESHOLD;
-    setPull(p);
-    if (p >= 1) {
-      wheelAccum.current = 0;
-      setPull(0);
-      forward();
-    } else if (p <= -1) {
-      wheelAccum.current = 0;
-      setPull(0);
-      backward();
-    }
-    if (wheelIdle.current) clearTimeout(wheelIdle.current);
-    wheelIdle.current = setTimeout(() => {
-      wheelAccum.current = 0;
-      setPull(0);
-    }, 180);
-  };
-
   const descriptionOnly = !pages || pages.length === 0;
-  const pullVisible = Math.abs(pull) > 0.04;
 
   return (
     <div
       lang={LANG_TAGS[edition]}
-      onPointerDown={onPointerDown}
-      onPointerMove={onPointerMove}
-      onPointerUp={releasePull}
-      onPointerCancel={releasePull}
-      onWheel={onWheel}
       style={{
         flex: 1,
         minHeight: 0,
@@ -270,12 +211,12 @@ export function ArticleView({
         flexDirection: "column",
         // Left clearance for the floating action rail.
         padding: "var(--space-6) var(--space-8) var(--space-6) 96px",
-        touchAction: "pan-y",
-        cursor: pointer.current.active ? "grabbing" : undefined,
       }}
     >
-      {/* ─── The page · headline opens page 1 with larger columns ─── */}
-      <div ref={stageRef} style={{ flex: 1, minHeight: 0, display: "flex" }}>
+      {/* ─── The page · headline opens page 1 with larger columns.
+           When the container is too narrow to seat every column, the stage
+           scrolls horizontally so the whole story stays readable. ─── */}
+      <div ref={stageRef} style={{ flex: 1, minWidth: 0, minHeight: 0, display: "flex", overflowX: "auto", overflowY: "hidden" }}>
       <div
         key={page}
         className={
@@ -283,14 +224,12 @@ export function ArticleView({
         }
         style={{
           flex: 1,
+          minWidth: 0,
           minHeight: 0,
           display: "flex",
           flexDirection: "row-reverse",
           alignItems: "center",
           gap: "var(--space-8)",
-          // The pull tracks the pointer 1:1 · transform-only.
-          transform: pullVisible ? `translateX(${-Math.max(-1.4, Math.min(1.4, pull)) * 28}px)` : undefined,
-          transition: pullVisible ? "none" : "transform var(--duration-base) var(--easing-out)",
         }}
       >
         {page === 0 && (
@@ -430,15 +369,6 @@ export function ArticleView({
       </div>
       </div>
 
-      {/* ─── Pull rings · the left one sits above the action rail ─── */}
-      <div style={{ position: "absolute", left: "var(--space-4)", top: "30%", transform: "translateY(-50%)", zIndex: 5 }}>
-        <PullRing progress={pull} visible={pull > 0.04 && page < total - 1} />
-      </div>
-      <div style={{ position: "absolute", right: "var(--space-4)", top: "50%", transform: "translateY(-50%)", zIndex: 5 }}>
-        {/* At the first page the rightward pull dismisses — the ring still arms. */}
-        <PullRing progress={-pull} visible={pull < -0.04} />
-      </div>
-
       {/* ─── Action rail · vertically centered on the left edge ─── */}
       <nav
         style={{
@@ -483,7 +413,7 @@ export function ArticleView({
         <VerticalButton
           variant="outline"
           onClick={() => window.open(story.link, "_blank", "noopener")}
-          style={{ minHeight: 96, fontSize: "0.8125rem" }}
+          style={{ width: 40, minWidth: 40, minHeight: 96, fontSize: "0.8125rem" }}
         >
           {t.original}
         </VerticalButton>

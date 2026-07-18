@@ -9,7 +9,7 @@
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AmbientGround, PaperGrain } from "./AmbientGround";
+import { PaperGrain } from "./AmbientGround";
 import { VerticalListCell } from "@/components/news/vw/vertical-list-cell";
 import { VerticalTooltip } from "@/components/news/vw/tooltip";
 import { Masthead } from "./Masthead";
@@ -143,17 +143,14 @@ export function FrontPage() {
     collapseArticle();
   };
 
-  // Chrome minimize: forward (leftward) travel hides, backward travel restores.
+  // The chrome stays put — it no longer minimizes on scroll. We still track the
+  // scroll position to keep the story indicator in sync.
   // In a row-reverse scroller the start edge is scrollLeft 0; forward is negative.
   const onScroll = useCallback(() => {
     const el = scrollerRef.current;
     if (!el) return;
     const forward = -el.scrollLeft;
-    const delta = forward - lastScroll.current;
     lastScroll.current = forward;
-    if (forward < window.innerWidth * 0.3) setChromeHidden(false);
-    else if (delta > 4) setChromeHidden(true);
-    else if (delta < -4) setChromeHidden(false);
     const step = CELL_WIDTH + CELL_GAP;
     setStoryIndex(Math.min(Math.max(1, Math.round(forward / step) + 1), items?.length ?? 1));
   }, [items?.length]);
@@ -169,23 +166,17 @@ export function FrontPage() {
         position: "relative",
         display: "flex",
         flexDirection: "column",
-        padding: mobile ? "var(--space-3)" : "var(--space-4) var(--space-6) var(--space-5)",
+        background: "var(--color-bg)",
       }}
     >
-      {/* ─── Ambient ground · the paper floats on a slow mesh gradient ─── */}
-      <AmbientGround />
-
-      {/* ─── The paper · one giant card: chrome, hairline, and columns ─── */}
+      {/* ─── The paper · full-bleed: chrome, hairline, and columns ─── */}
       <div
         style={{
           flex: 1,
           minHeight: 0,
           display: "flex",
           flexDirection: "column",
-          border: "1px solid var(--color-border)",
-          borderRadius: "var(--radius-xl)",
           background: "var(--color-bg)",
-          boxShadow: "var(--shadow-soft)",
           overflow: "hidden",
         }}
       >
@@ -195,6 +186,7 @@ export function FrontPage() {
         className={chromeHidden ? "vn-chrome vn-chrome-hidden" : "vn-chrome"}
         style={{
           position: "relative",
+          zIndex: 20, // chrome tooltips overhang the columns below
           flexShrink: 0,
           display: "flex",
           flexDirection: "row-reverse", // masthead at the reading start
@@ -207,26 +199,13 @@ export function FrontPage() {
         }}
       >
         <Masthead edition={edition} compact={mobile} wordmark={false} />
-        {/* Language toggle · horizontal, centered on the page axis */}
-        {!mobile ? (
-          <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}>
-            <EditionCapsule
-              edition={edition}
-              onEditionChange={changeEdition}
-              orientation="horizontal"
-              glyph={38}
-              aria-label={t.editionCapsule}
-            />
-          </div>
-        ) : (
-          <EditionCapsule
-            edition={edition}
-            onEditionChange={changeEdition}
-            orientation="horizontal"
-            glyph={30}
-            aria-label={t.editionCapsule}
-          />
-        )}
+        {/* Edition selector · sits in-flow between the date and the sections */}
+        <EditionCapsule
+          edition={edition}
+          onEditionChange={changeEdition}
+          orientation="horizontal"
+          aria-label={t.editionCapsule}
+        />
         <SectionRail
           edition={edition}
           section={section}

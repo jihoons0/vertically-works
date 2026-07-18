@@ -125,6 +125,10 @@ export const SECTION_LABELS: Record<EditionId, Record<SectionId, string>> = {
 
 export const EDITION_GLYPHS: Record<EditionId, string> = { ko: "한", ja: "あ", zh: "中" };
 
+/** Flag + country name per edition, each in its own language (chrome label). */
+export const EDITION_FLAGS: Record<EditionId, string> = { ko: "🇰🇷", ja: "🇯🇵", zh: "🇹🇼" };
+export const EDITION_NAMES: Record<EditionId, string> = { ko: "한국", ja: "日本", zh: "臺灣" };
+
 /** The vertical masthead wordmark per edition (PRD §6.1). */
 export const WORDMARKS: Record<EditionId, string> = {
   ko: "세로신문",
