@@ -412,6 +412,16 @@ a {
   ) !important;
 }
 
+/* Waitlist form on the in-progress app pages · email + button in a row,
+   wrapping (button drops below) when the card gets narrow. */
+.notify-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  max-width: 460px;
+}
+
 .origin-article {
   display: none;
 }

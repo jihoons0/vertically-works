@@ -3,6 +3,7 @@ import { Reveal } from "@/components/Reveal";
 import { AppHero } from "@/components/apps/AppHero";
 import { RelatedPill } from "@/components/ui/RelatedPill";
 import { WipBanner } from "@/components/apps/WipBanner";
+import { NotifyForm } from "@/components/apps/NotifyForm";
 
 // Cross-references rendered as badge links: ◆ component · ? challenge · ▲ principle
 type Related = { label: string; href: string };
@@ -94,11 +95,14 @@ export default function VerticallyListenPage() {
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
         {/* WIP notice · the live player returns here when it's ready */}
-        <Reveal style={{ marginBottom: "var(--space-16)" }}>
+        <Reveal style={{ marginBottom: "var(--space-6)" }}>
           <WipBanner>
             Vertically Listen is a work in progress · it&apos;s being reworked and isn&apos;t open
             to enter yet. The live player returns here when it&apos;s ready.
           </WipBanner>
+        </Reveal>
+        <Reveal style={{ marginBottom: "var(--space-16)" }}>
+          <NotifyForm app="Vertically Listen" />
         </Reveal>
 
         {/* Features */}

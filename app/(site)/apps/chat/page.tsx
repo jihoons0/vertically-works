@@ -3,6 +3,7 @@ import { Reveal } from "@/components/Reveal";
 import { AppHero } from "@/components/apps/AppHero";
 import { RelatedPill } from "@/components/ui/RelatedPill";
 import { WipBanner } from "@/components/apps/WipBanner";
+import { NotifyForm } from "@/components/apps/NotifyForm";
 
 export const metadata: Metadata = {
   title: "Vertically Chat",
@@ -21,11 +22,14 @@ export default function VerticallyChatPage() {
       />
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
-        <Reveal style={{ marginBottom: "var(--space-12)" }}>
+        <Reveal style={{ marginBottom: "var(--space-6)" }}>
           <WipBanner>
             Vertically Chat isn&apos;t built yet. It&apos;s the newest of the open questions, so the
             thinking lives in Challenges for now. The live app opens here once it exists.
           </WipBanner>
+        </Reveal>
+        <Reveal style={{ marginBottom: "var(--space-12)" }}>
+          <NotifyForm app="Vertically Chat" />
         </Reveal>
 
         <Reveal>
