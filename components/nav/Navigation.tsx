@@ -23,11 +23,11 @@ const NAV_LINKS = [
 // Shown in the Applications hover dropdown (desktop) and indented in the mobile menu.
 // `wip` entries link to their detail page but carry a WIP tag until the app is live.
 const APP_LINKS: { href: string; name: string; sub: string; wip?: boolean }[] = [
-  { href: "/apps/verse", name: "Vertically Verse", sub: "Scripture reader · iOS" },
-  { href: "/apps/todo", name: "Vertically To-do", sub: "To-do list · Web" },
-  { href: "/apps/news", name: "Vertically News", sub: "Daily newspaper · Web" },
-  { href: "/apps/listen", name: "Vertically Listen", sub: "Podcast player · Web", wip: true },
-  { href: "/apps/chat", name: "Vertically Chat", sub: "AI chat · Web", wip: true },
+  { href: "/apps/verse", name: "Verse", sub: "Scripture reader · iOS" },
+  { href: "/apps/todo", name: "To-do", sub: "To-do list · Web" },
+  { href: "/apps/news", name: "News", sub: "Daily newspaper · Web" },
+  { href: "/apps/listen", name: "Listen", sub: "Podcast player · Web", wip: true },
+  { href: "/apps/chat", name: "Chat", sub: "AI chat · Web", wip: true },
 ];
 
 // Small tag for apps that are announced but not yet live.
@@ -258,7 +258,7 @@ export function Navigation() {
                             fontWeight: 500,
                           }}
                         >
-                          All applications →
+                          Vertically apps →
                         </Link>
                       </li>
                     </ul>
