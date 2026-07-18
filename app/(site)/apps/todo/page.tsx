@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { AppHero } from "@/components/apps/AppHero";
@@ -102,17 +102,17 @@ export default function VerticallyDoPage() {
               href={runningAppUrl("todo")}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-cta-hover pressable"
+              className="btn-primary-hover"
               style={{
                 display: "inline-flex", alignItems: "center", gap: 8,
                 height: 40, padding: "0 var(--space-5)",
                 fontSize: "0.9375rem", fontWeight: 500,
                 borderRadius: "var(--radius-lg)",
-                border: "1px solid", color: "var(--color-fg)",
+                background: "var(--color-fg)", color: "var(--color-bg)",
               }}
             >
               Open full screen
-              <ArrowUpRight size={16} strokeWidth={2.25} aria-hidden />
+              <ArrowRight size={16} strokeWidth={2.25} aria-hidden />
             </Link>
           </div>
         }
