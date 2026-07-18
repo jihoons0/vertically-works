@@ -139,15 +139,15 @@ export default function AboutPage() {
             </h2>
 
             <p style={paragraph}>
-              Vertically Works began with a typeface. In 2019 I was following Yong Jae Lee&rsquo;s
-              progress on Baram, a Korean font designed natively for vertical setting, and learning how
-              much labor hides inside a script: a Korean typeface needs more than 3,350 glyphs before it
+              Vertically Works began with a typeface. Baram, Yong Jae Lee&rsquo;s Korean font from 2015,
+              was crowd-funded and designed natively for vertical setting. It showed me how much labor
+              hides inside a script: a Korean typeface needs more than 3,350 glyphs before it
               can say anything at all. Print spent centuries refining vertical typography. Screens started
               horizontal and stayed there.
             </p>
 
             <p style={paragraph}>
-              That same year, I turned the itch into{" "}
+              In 2019, I turned the itch into{" "}
               <Link href={ESSAY_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>
                 an essay
               </Link>{" "}

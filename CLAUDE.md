@@ -64,29 +64,39 @@ There is no `content/` directory and no MDX pipeline (despite `next-mdx-remote` 
 
 Site voice is **Libre Baskerville** (titles, `--font-title`) + **Noto Sans/Serif KR·JP·TC** (CJK families stream by unicode-range, no preload). **Geist Sans/Mono** remain for the embedded apps and code. All loaded in `app/layout.tsx` via `next/font/google`.
 
-### The embedded applications
+### The applications (detail pages + subdomain apps)
 
-Full-screen apps render **bare** (no site chrome) via the `BARE_ROUTES` list in `components/layout/SiteFrame.tsx`; everything else gets Navigation + Footer.
+Each app has **two surfaces**: a **detail / case-study page** at `/apps/<name>` (site chrome), and — for the web apps — a **running app** served on its own **subdomain**. The running apps render **bare** (no chrome) because they live *outside* the `app/(site)` route group (see Route ⇄ file), not via a route allowlist.
 
-- **`/apps/notes`** — **Vertically Do**, the vertical/RTL to-do app (`app/apps/notes/`, `components/notes`, `lib/notes`). Case-study page: `/apps/vertically-do`.
-- **`/apps/listen`** — **Vertically Listen**, podcast player with vertical transcripts (`components/listen`, `lib/listen`; API routes in `app/api/podcasts|episodes|transcript`).
-- **`/apps/news`** — **Vertically News**, RSS reader (`components/news`, `lib/news`; `app/api/news`).
-- **Vertically Verse** is the CJK **scripture (bible) reader for iOS** — case-study page at `/apps/vertically-verse` plus `/verse/*` (privacy/support). It is a *different app* from Notes; never conflate Verse (bible) with Notes (to-do).
+Detail pages live in `app/(site)/apps/<name>/`: `verse`, `todo`, `news`, `listen`, `chat`. The `/apps` index links to them.
 
-Each app keeps state in its `lib/<app>/store.ts` and i18n strings in `lib/<app>/i18n.ts`; app-local styles live in `app/apps/<app>/<app>.css`.
+Running web apps live under **`app/run/<name>/`** and are served on subdomains via host-rewrites in `next.config.ts` (`<name>.vertically.works` → `/run/<name>`):
+
+- **`todo.vertically.works`** → `/run/todo` — **Vertically To-do** (localStorage only). Detail `/apps/todo`. NOTE the folder split: the *route* is `app/run/todo/` but its components/logic still live in **`components/notes` / `lib/notes`** (the app's internal name is "notes").
+- **`news.vertically.works`** → `/run/news` (+ `/article/[id]`) — **Vertically News**, RSS reader (`components/news`, `lib/news`; `app/api/news/*`). Detail `/apps/news`.
+- **`listen.vertically.works`** → `/run/listen` — **Vertically Listen**, podcast player (`components/listen`, `lib/listen`; `app/api/podcasts|episodes|transcript`). Detail `/apps/listen`.
+- **`chat.vertically.works`** → `/run/chat` — **Vertically Chat**, a WIP placeholder (no app built yet; tracks the `ai-chat` challenge). Detail `/apps/chat`.
+- **Vertically Verse** is the CJK **scripture (bible) reader for iOS** — detail page `/apps/verse` plus `/verse/*` (privacy/support). No web app: **`verse.vertically.works` 307-redirects to the TestFlight beta**. A *different app* from To-do; never conflate Verse (bible) with To-do.
+
+Detail-page "open the app" buttons use `runningAppUrl()` in `lib/appUrls.ts` (subdomain in prod, `/run/<name>` in dev); iframe embeds (`components/apps/AppEmbed`) stay same-origin on `/run/<name>`. Each web app keeps state in `lib/<app>/store.ts`, i18n in `lib/<app>/i18n.ts`, styles in `app/run/<app>/<app>.css`.
+
+### Contact form
+
+`app/api/contact/route.ts` emails home-page contact submissions via **Resend** to the owner inbox (reply-to = the visitor), with a mailto fallback if unconfigured. Needs `RESEND_API_KEY` (Vercel env + `.env.local`); sends `from` a **Resend-verified domain** (`vertically.works`). See `.env.example`.
 
 ### Chromed site routes (not bare)
 
 Beyond the docs pages, two interactive surfaces get full site chrome: **`/playground`** (`components/PlaygroundClient.tsx`) — a live cross-writing-direction / language / theme / device previewer whose config serializes to the URL — and **`/about`**. Both use `components/layout/PageHeader`.
 
-### Route ⇄ file — do not get this wrong
+### Route ⇄ file — the `(site)` group + `/run` apps
 
-The App Router `app/` directory is the routing root and is NEVER part of the URL.
+The App Router `app/` directory is the routing root and is NEVER part of the URL. Route groups like `(site)` also never appear in the URL.
 
-- `app/apps/notes/page.tsx` → **`/apps/notes`** ✅ (the to-do app's canonical URL)
-- `app/notes/page.tsx` → `/notes` ❌
+- **Chrome pages** live under **`app/(site)/…`** → e.g. `app/(site)/apps/todo/page.tsx` → **`/apps/todo`** (the To-do *detail* page). The `(site)` group supplies Navigation + Footer via `app/(site)/layout.tsx`.
+- **Running apps** live *outside* the group under **`app/run/…`** → e.g. `app/run/todo/page.tsx` → **`/run/todo`**, rendered **bare** (no chrome). Subdomains host-rewrite onto these (`todo.vertically.works` → `/run/todo`).
+- `app/api/…` also stays outside `(site)`.
 
-`app/apps/notes` is NOT "apps/apps" nesting — it is the `app/` framework folder + the `apps/notes` URL path (`apps` appears once in the URL).
+Bare-vs-chrome is **structural now** (inside `app/(site)` = chrome; `app/run/*` = bare). The old pathname-based `BARE_ROUTES` list in `SiteFrame.tsx` is gone. When adding a new running app, put it in `app/run/<name>` and add a host-rewrite in `next.config.ts` — do NOT re-add a bare-route allowlist.
 
 ---
 
@@ -117,4 +127,5 @@ The App Router `app/` directory is the routing root and is NEVER part of the URL
 ## Deployment
 
 - This repo is the live site **https://vertically.works**, deployed by Vercel from the `main` branch. Pushing to `main` triggers a production deploy.
-- **"ship it" means: commit and push to `main` so it deploys to https://vertically.works.** Do not just build locally — a change is not "shipped" until it is live on the site. For the to-do app specifically, that means https://vertically.works/apps/notes.
+- **"ship it" means: commit and push to `main` so it deploys to https://vertically.works.** Do not just build locally — a change is not "shipped" until it is live on the site. For the to-do app specifically, that means https://todo.vertically.works (detail page: https://vertically.works/apps/todo).
+- **Subdomains** (`news`/`todo`/`listen`/`chat`/`verse`.vertically.works) are served by the same project via host-rewrites/redirects in `next.config.ts`. Infra (not in the repo): a wildcard `*.vertically.works` CNAME → `cname.vercel-dns.com` at the registrar (GoDaddy), and each host added as a domain on the Vercel project. Adding a new app subdomain = add the host-rewrite in config **and** the Vercel project domain (the wildcard CNAME already covers DNS).
