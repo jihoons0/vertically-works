@@ -9,17 +9,17 @@ Everything you post on Tue Jul 21. Voice matches the site: spare, declarative, i
 
 ## 1 · Show HN (7:00–8:00am ET, from your own account)
 
-**Title** (≤ 80 chars, no "I made"):
-> Show HN: Vertically Works – UI components for vertical CJK writing (top-to-bottom, RTL)
+**Title** (76 chars · HN's hard limit is 80, no "I made"):
+> Show HN: Vertically Works – UI components built on writing-mode: vertical-rl
 
 **URL:** https://vertically.works
 
 **First comment — post it immediately after submitting:**
 > I'm Jihoon. Every UI toolkit assumes text runs left to right. For Korean, Japanese, and Chinese that assumption is wrong, and it shows up everywhere downstream: which way a toggle flips, where a tooltip opens, what the arrow keys do, where the IME candidate window sits.
 >
-> I started in 2019 with an essay asking whether vertical type could work in a real UI. Nobody knew. The components you'd need to find out didn't exist, so I built them: React components on true `writing-mode: vertical-rl` (rotation breaks selection, screen readers, and IME, so I never rotate it), a shadcn-style copy-and-own registry, and four apps that put them under load, including a live vertical newspaper pulling KR/JP/CN headlines.
+> I started in 2019 with an essay asking whether vertical type could work in a real UI. Nobody knew. The components you'd need to find out didn't exist, so I built them: React components on true `writing-mode: vertical-rl` (rotation breaks selection, screen readers, and IME, so I never rotate it), a shadcn-style copy-and-own registry, and three apps that put them under load, including a live vertical newspaper pulling KR/JP/CN headlines.
 >
-> I left it unfinished on purpose. The eight hardest problems are open as GitHub Discussions: motion direction, mixed-script typography, IME placement, and what a *vertical* AI chat interface should even be. I documented them as carefully as the answers. Tell me where I'm wrong.
+> I left it unfinished on purpose. The eight hardest problems are open as GitHub Discussions: motion direction, mixed-script typography, IME placement, and what a *vertical* AI chat interface should even be. I documented them as carefully as the answers. It's all MIT: github.com/jihoons0/vertically-works. Tell me where I'm wrong.
 
 **Thread-tending ammo** (from the site FAQ — have these ready):
 - *"Most CJK is horizontal anyway"* → Yes, and that's the point: the toolchain picks the axis now, not the designer. Vertical never died: novels, manga, scripture, newspapers, signage. Horizontal is a default, not a conclusion.
