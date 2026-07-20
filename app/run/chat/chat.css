@@ -54,8 +54,14 @@
   grid-template-rows: 1fr;
   height: 100dvh;
   overflow: hidden;
+  position: relative; /* contain the shader background */
 }
 .vc-app *, .vc-app *::before, .vc-app *::after { box-sizing: border-box; }
+
+/* static shader-gradient wash behind the app · navy theme only */
+.vc-shader { position: absolute; inset: 0; z-index: 0; display: none; pointer-events: none; }
+.vc-app[data-theme="navy"] .vc-shader { display: block; }
+.vc-app header, .vc-app .thread, .vc-app form { position: relative; z-index: 1; }
 
 .vc-app[data-theme="navy"] {
   --color-bg: #0e1c3a; --color-bg-subtle: #132449; --color-bg-muted: #1a2d57;

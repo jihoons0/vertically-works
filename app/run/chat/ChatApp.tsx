@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { ChatShader } from "./ChatShader";
 
 type Lang = "ja" | "ko" | "en";
 type Theme = "navy" | "light" | "dark" | "sepia";
@@ -306,6 +307,7 @@ export default function ChatApp() {
 
   return (
     <div className="vc-app" ref={appRef} data-theme="navy" lang="ja">
+      <ChatShader />
       <header>
         <div className="brand">
           <h1 className="writing-vertical">縦書きチャット</h1>
