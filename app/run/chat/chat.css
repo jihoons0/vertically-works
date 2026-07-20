@@ -1,0 +1,231 @@
+/* Vertically Chat · app styles.
+   Everything is scoped under .vc-app and the app manages its own theme via
+   data-theme on that wrapper, so it doesn't fight the site's next-themes. */
+
+/* ── embedded fonts · Galmuri11 (갈무리 11, OFL) ──────────────────────────────
+   Korean pixel/bitmap face that also covers Japanese kana + kanji. Bold (700)
+   covers Korean + Latin but NOT Japanese kanji/kana — Japanese chrome stays at
+   weight 400 so it never falls back to tofu. */
+@font-face {
+  font-family: "Galmuri11";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/galmuri11.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Galmuri11";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/galmuri11-bold.woff2") format("woff2");
+}
+
+/* ── the app shell · navy is the default look ─────────────────────────────── */
+.vc-app {
+  /* semantic tokens — navy defaults (overridden per data-theme below) */
+  --color-bg: #0e1c3a;
+  --color-bg-subtle: #132449;
+  --color-bg-muted: #1a2d57;
+  --color-fg: #ffffff;
+  --color-fg-muted: #a9b6d4;
+  --color-fg-subtle: #6b7aa0;
+  --color-border: #233459;
+  --color-border-strong: #35497a;
+  --color-accent: #ffffff;
+  --color-accent-fg: #0e1c3a;
+
+  --col-w: clamp(2.6rem, 6vw, 3.1rem);
+  --serif: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", "Songti SC", serif;
+  --sans: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif;
+  --pixel: "Galmuri11", var(--sans);
+
+  --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px;
+  --radius-sm: 0; --radius-md: 0; --radius-lg: 0; --radius-full: 0; /* flat · radius 0 app-wide */
+  --duration-fast: 150ms; --duration-base: 200ms; --duration-page: 400ms;
+  --easing-out: cubic-bezier(0.23, 1, 0.32, 1);
+
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--sans);
+  /* three full-height columns: header rail (left) · thread (fills) · composer (right) */
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: 1fr;
+  height: 100dvh;
+  overflow: hidden;
+}
+.vc-app *, .vc-app *::before, .vc-app *::after { box-sizing: border-box; }
+
+.vc-app[data-theme="navy"] {
+  --color-bg: #0e1c3a; --color-bg-subtle: #132449; --color-bg-muted: #1a2d57;
+  --color-fg: #ffffff; --color-fg-muted: #a9b6d4; --color-fg-subtle: #6b7aa0;
+  --color-border: #233459; --color-border-strong: #35497a;
+  --color-accent: #ffffff; --color-accent-fg: #0e1c3a;
+}
+.vc-app[data-theme="light"] {
+  --color-bg: #fff; --color-bg-subtle: #f9f9f9; --color-bg-muted: #f3f3f3;
+  --color-fg: #0a0a0a; --color-fg-muted: #737373; --color-fg-subtle: #a3a3a3;
+  --color-border: #ededed; --color-border-strong: #dfdfdf;
+  --color-accent: #0a0a0a; --color-accent-fg: #fff;
+}
+.vc-app[data-theme="dark"] {
+  --color-bg: #0a0a0a; --color-bg-subtle: #111; --color-bg-muted: #1a1a1a;
+  --color-fg: #fafafa; --color-fg-muted: #a3a3a3; --color-fg-subtle: #525252;
+  --color-border: #212121; --color-border-strong: #303030;
+  --color-accent: #fafafa; --color-accent-fg: #0a0a0a;
+}
+.vc-app[data-theme="sepia"] {
+  --color-bg: #f4ecd8; --color-bg-subtle: #efe4cb; --color-bg-muted: #e7d9ba;
+  --color-fg: #4b3b2b; --color-fg-muted: #7a6650; --color-fg-subtle: #a08a6d;
+  --color-border: #e4d7b9; --color-border-strong: #d3c29f;
+  --color-accent: #4b3b2b; --color-accent-fg: #f4ecd8;
+}
+@media (prefers-reduced-motion: reduce) {
+  .vc-app { --duration-fast: 0ms; --duration-base: 0ms; --duration-page: 0ms; }
+}
+
+/* ── header · a vertical rail on the LEFT edge ────────────────────────────── */
+.vc-app header {
+  grid-column: 1; grid-row: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+  gap: 1rem; padding: 1.4rem 1rem; border-right: 1px solid var(--color-border);
+}
+.vc-app .brand { display: flex; flex-direction: column; align-items: center; gap: .7rem; }
+.vc-app h1 { font-family: var(--pixel); font-size: 1.05rem; font-weight: 400; margin: 0; letter-spacing: .1em; }
+.vc-app .sub { font-size: .76rem; color: var(--color-fg-subtle); letter-spacing: .06em; }
+.vc-app .controls { display: flex; flex-direction: column; align-items: center; gap: .55rem; }
+.vc-app .theme, .vc-app .lang {
+  writing-mode: vertical-rl; text-orientation: mixed; flex: none;
+  font-family: var(--pixel); font-size: .72rem; color: var(--color-fg-muted);
+  background: var(--color-bg-muted); border: 1px solid var(--color-border);
+  border-radius: var(--radius-full); padding: var(--space-3) var(--space-2); cursor: pointer;
+  transition: transform 140ms var(--easing-out), color var(--duration-fast) var(--easing-out), background var(--duration-fast) var(--easing-out);
+}
+.vc-app .theme:hover, .vc-app .lang:hover { color: var(--color-fg); }
+
+/* hover menu · opens to the RIGHT of a rail control, options as vertical pills */
+.vc-app .menu { position: relative; display: flex; }
+.vc-app .menu-pop {
+  position: absolute; left: 100%; bottom: 0;
+  display: flex; flex-direction: row-reverse; gap: .35rem;
+  padding: .5rem .5rem .5rem 1rem;
+  background: var(--color-bg); border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg); box-shadow: 0 8px 28px rgba(0, 0, 0, .35);
+  opacity: 0; visibility: hidden; transform: translateX(-6px);
+  transition: opacity var(--duration-fast) var(--easing-out),
+              transform var(--duration-fast) var(--easing-out),
+              visibility var(--duration-fast) var(--easing-out);
+  z-index: 30; white-space: nowrap;
+}
+.vc-app .menu:hover .menu-pop,
+.vc-app .menu:focus-within .menu-pop,
+.vc-app .menu-pop:hover { opacity: 1; visibility: visible; transform: none; }
+.vc-app .menu-pop button {
+  writing-mode: vertical-rl; text-orientation: mixed;
+  font-family: var(--pixel); font-size: .78rem; color: var(--color-fg-muted);
+  background: transparent; border: 1px solid transparent;
+  border-radius: var(--radius-full); padding: .55rem .35rem; cursor: pointer;
+  transition: color var(--duration-fast) var(--easing-out), background var(--duration-fast) var(--easing-out);
+}
+.vc-app .menu-pop button:hover { color: var(--color-fg); background: var(--color-bg-muted); }
+.vc-app .menu-pop button[aria-checked="true"] {
+  color: var(--color-fg); background: var(--color-bg-muted); border-color: var(--color-border-strong);
+}
+
+/* ── thread · a right-to-left row of vertical columns ─────────────────────── */
+.vc-app .thread {
+  grid-column: 2; grid-row: 1; min-width: 0; min-height: 0;
+  display: flex; flex-direction: row; align-items: stretch;
+  gap: 1.1rem; padding: 1.4rem 1.5rem;
+  overflow-x: auto; overflow-y: hidden; scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain;
+}
+/* underfull thread hugs the right edge; auto margin collapses on overflow */
+.vc-app .thread > .turn:first-child { margin-left: auto; }
+
+.vc-app .turn {
+  font-family: var(--pixel); font-size: 1.2rem; line-height: 1.85;
+  height: 100%; padding: .3rem 0;
+  display: flex; flex-direction: column; align-items: flex-start;
+  animation: vc-enter var(--duration-page) var(--easing-out) both;
+}
+@keyframes vc-enter { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
+
+.vc-app .cap {
+  writing-mode: vertical-rl; text-orientation: mixed;
+  display: inline-flex; flex-direction: row; align-items: center; gap: .4rem;
+  font-family: var(--pixel); font-size: .72rem; color: var(--color-fg-subtle);
+  margin-bottom: .7rem; flex: none;
+}
+.vc-app .dot { width: .5rem; height: .5rem; }
+.vc-app .turn.user .dot { background: var(--color-fg); }
+.vc-app .turn.ai .dot { background: transparent; border: 1.5px solid var(--color-accent); }
+.vc-app .turn.user .cap { color: var(--color-fg-muted); }
+
+.vc-app .body { flex: 1; min-height: 0; }
+.vc-app .turn.user .body { color: var(--color-fg); font-weight: 500; }
+.vc-app .turn.ai .body { color: var(--color-fg); }
+
+.vc-app .tcy { text-combine-upright: all; }
+
+.vc-app .caret {
+  display: inline-block; width: 1em; height: 2px; background: var(--color-accent);
+  vertical-align: middle; animation: vc-blink 1s steps(2) infinite;
+}
+@keyframes vc-blink { 50% { opacity: 0; } }
+
+/* ── composer · a full-height vertical column at the right end ─────────────── */
+.vc-app form {
+  grid-column: 3; grid-row: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .9rem;
+  padding: 1.4rem 1.1rem; border-left: 1px solid var(--color-border);
+}
+.vc-app input[type="text"] {
+  writing-mode: vertical-rl; text-orientation: mixed;
+  flex: 1 1 auto; min-height: 0; width: 2.9rem; padding: .9rem 0;
+  font-family: var(--pixel); font-size: 1rem; line-height: 1.7; /* ≥16px avoids iOS zoom */
+  background: transparent; color: var(--color-fg);
+  border: none; outline: none;
+}
+.vc-app .send {
+  writing-mode: vertical-rl; text-orientation: mixed;
+  flex: none; width: 2.9rem; padding: .9rem 0;
+  font-family: var(--pixel); font-size: .95rem; font-weight: 400; letter-spacing: .1em;
+  background: var(--color-fg); color: var(--color-bg);
+  border: none; cursor: pointer;
+}
+.vc-app .send:disabled { opacity: .5; cursor: default; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vc-app .turn { animation: none; }
+  .vc-app .caret { animation: none; }
+  .vc-app .thread { scroll-behavior: auto; }
+}
+
+/* utilities carried from the registry */
+.vc-app .writing-vertical { writing-mode: vertical-rl; text-orientation: mixed; }
+@supports (corner-shape: squircle) {
+  .vc-app *, .vc-app *::before, .vc-app *::after { corner-shape: squircle; }
+  .vc-app .corner-round, .vc-app .corner-round::before, .vc-app .corner-round::after { corner-shape: round; }
+}
+.vc-app .pressable { transition: transform 140ms var(--easing-out); touch-action: manipulation; }
+.vc-app .pressable:active { transform: scale(0.96); }
+@media (prefers-reduced-motion: reduce) {
+  .vc-app .pressable { transition: none; }
+  .vc-app .pressable:active { transform: none; }
+}
+.vc-app [data-vw]:focus-visible { outline: 2px solid var(--color-fg); outline-offset: 2px; }
+
+/* ── mobile web · tighten the chrome rails ────────────────────────────────── */
+@media (max-width: 640px) {
+  .vc-app header { padding: .7rem .45rem; gap: .7rem; }
+  .vc-app h1 { font-size: .9rem; letter-spacing: .05em; }
+  .vc-app .sub { display: none; }
+  .vc-app .theme, .vc-app .lang { font-size: .68rem; padding: .5rem .3rem; }
+  .vc-app .thread { padding: 1rem .7rem; gap: .85rem; }
+  .vc-app .turn { font-size: 1.05rem; line-height: 1.7; }
+  .vc-app form { padding: 1rem .5rem; gap: .7rem; }
+  .vc-app input[type="text"], .vc-app .send { width: 2.5rem; }
+  .vc-app .menu-pop { display: none; } /* not reachable by touch; tap cycles the control */
+}
