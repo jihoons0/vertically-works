@@ -28,6 +28,38 @@ Everything you post on Tue Jul 21. Voice matches the site: spare, declarative, i
 
 **Rules:** live in the thread 6+ hours, answer everything, concede good points. **Never solicit upvotes, anywhere.**
 
+### Runbook
+
+Everything below marked ✅ is primary-sourced (HN's FAQ, guidelines, or dang's own moderation comments). Everything marked ⚠️ is folklore that failed verification — kept only so we don't re-adopt it later.
+
+**Monday pre-flight**
+
+1. ✅ **Warm up the HN account.** Leave a few genuine comments on other threads. HN's software auto-classifies accounts that mostly submit their own work as promotional and filters their posts — dang, 2026: "Linking to your project occasionally in a relevant context is fine, but this should be a (small) minority of what you post to HN." A fresh account submitting only vertically.works is the risky profile.
+2. ✅ **Check above-the-fold tryability.** Show HN excludes "blog posts, sign-up pages, newsletters, lists, and other reading material. Those can't be tried out." Moderators enforce this by stripping the prefix. Load the site as a stranger: is it obvious in the first screen that you can *try* this? The live demos and the npx command are what make it eligible.
+3. Test `npx verticallyworks@latest list` and the shadcn command in a clean directory. Readers will run them.
+4. Load the site logged-out and on mobile. Check the console.
+5. Pin 4 RFC Discussions; tag v0.1.0.
+
+**Tuesday morning**
+
+- 7:00 — Submit at news.ycombinator.com/submit. Title above, URL `https://vertically.works`, text field **empty** (HN allows one or the other).
+- 7:01 — Post the first comment.
+- 8:00 — X thread. **Do not link the HN item from X or anywhere else.**
+- All day — tend the thread. Concede good points; the project's premise is documented uncertainty, so play to it.
+
+**The one irreversible mistake**
+
+✅ Vote solicitation penalties attach to the submission, the account, **and the domain**. HN's FAQ: "We penalize or ban submissions, accounts, and sites that break this rule." A launch-day upvote push could poison every future vertically.works submission. The ring detector keys on anomalous vote patterns, not stated intent — so even sharing the HN link without an ask carries mechanical risk. Monday's seeding is **GitHub stars only**; that separation is load-bearing.
+
+**What we deliberately stopped optimizing**
+
+- ⚠️ *Posting time.* Every quantitative timing claim failed verification, and the sources contradict each other (one found Sunday 6am UTC 2.5× better; another found timing flat across 1.27M submissions). Post Tuesday morning and move on.
+- ⚠️ *Star projections.* The 2025 arXiv paper (121 stars at 24h, "12–17 UTC worth ~200 stars") failed verification entirely. No defensible expected-value estimate exists. Don't set expectations off it.
+- ⚠️ *The ranking formula.* `(votes-1)^0.8 / (age+2)^1.8`, the controversy penalty, the domain penalty table — all refuted as stale. HN publishes the shape of its algorithm, never the magnitudes.
+- ⚠️ *The second-chance pool.* No primary source survived on how it works or whether emailing hn@ycombinator.com is a legitimate channel. Treat as unknown, not as a contingency plan.
+
+**What is actually true about outcomes:** initial placement compounds — a 2014 quasi-experiment holding early votes fixed found median final scores of 35 (page 1) vs 5 (page 2), because HN paginates at exactly 30 and attention drops off a cliff there. You don't control which side of that line you land on. Play not to be disqualified, then let it run.
+
 ---
 
 ## 2 · X thread (same morning). Pin it.
