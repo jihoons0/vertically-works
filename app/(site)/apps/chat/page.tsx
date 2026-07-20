@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { AppHero } from "@/components/apps/AppHero";
+import { AppVideo } from "@/components/home/AppVideo";
 import { RelatedPill } from "@/components/ui/RelatedPill";
 import { runningAppUrl } from "@/lib/appUrls";
 
@@ -113,27 +113,24 @@ export default function VerticallyChatPage() {
       />
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
-        {/* Screenshot */}
+        {/* Demo */}
         <Reveal style={{ marginBottom: "var(--space-16)" }}>
           <div
             style={{
-              position: "relative",
               width: "100%",
-              maxWidth: 960,
+              maxWidth: 720,
               margin: "0 auto",
-              aspectRatio: "60 / 41",
+              aspectRatio: "1828 / 1544",
               borderRadius: "var(--radius-xl)",
               overflow: "hidden",
               border: "1px solid var(--color-border)",
               background: "var(--color-bg-muted)",
             }}
           >
-            <Image
-              src="/images/apps/chat.png"
-              alt="Vertically Chat · a navy, vertical AI chat with a Japanese conversation reading right to left"
-              fill
-              sizes="(max-width: 1000px) 100vw, 960px"
-              style={{ objectFit: "cover" }}
+            <AppVideo
+              src="/videos/vertically-chat.mp4"
+              poster="/images/apps/chat-poster.jpg"
+              label="Vertically Chat demo · a vertical AI chat reading right to left"
             />
           </div>
         </Reveal>

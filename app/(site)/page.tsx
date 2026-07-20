@@ -72,6 +72,21 @@ const APPLICATIONS: Application[] = [
     media: { type: "video", src: "/videos/vertically-notes.mp4", aspect: "1294 / 1484" },
   },
   {
+    id: "chat",
+    name: "Chat",
+    platform: "Web",
+    status: "Live",
+    href: "/apps/chat",
+    description:
+      "An AI chat that reads top to bottom, right to left · every turn is a column.",
+    highlights: [
+      "New turns enter from the left, oldest at the right edge",
+      "Speaker marked at the top of each column, not by side",
+      "The composer is the rightmost column · answers stream down it",
+    ],
+    media: { type: "video", src: "/videos/vertically-chat.mp4", aspect: "1828 / 1544" },
+  },
+  {
     id: "news",
     name: "News",
     platform: "Web",

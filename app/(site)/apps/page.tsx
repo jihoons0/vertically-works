@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { AppVideo } from "@/components/home/AppVideo";
@@ -75,8 +74,8 @@ const APPS = [
     platform: "Web",
     status: "Live",
     href: "/apps/chat",
-    image: "/images/apps/chat.png",
-    imageAspect: "60 / 41",
+    video: "/videos/vertically-chat.mp4",
+    videoAspect: "1828 / 1544",
     description:
       "An AI chat interface for vertical, right-to-left reading.",
     challenges: [
@@ -107,7 +106,6 @@ export default function ApplicationsPage() {
               "href" in app && app.href ? app.href : app.status === "Live" ? `/apps/${app.id}` : null;
             const blocked = !href;
             const video = "video" in app && app.video ? app.video : null;
-            const image = "image" in app && app.image ? app.image : null;
             const cardStyle = {
               display: "block",
               padding: "var(--space-8)",
@@ -120,7 +118,7 @@ export default function ApplicationsPage() {
             } as const;
 
             const inner = (
-              <div className={video || image ? "app-card-inner has-media" : "app-card-inner"}>
+              <div className={video ? "app-card-inner has-media" : "app-card-inner"}>
                 <div>
                   <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-3)", flexWrap: "wrap" }}>
                     <h2 style={{ fontSize: "1.125rem", fontWeight: 600, color: "var(--color-fg)", margin: 0, letterSpacing: "-0.02em" }}>
@@ -159,16 +157,12 @@ export default function ApplicationsPage() {
                   )}
                 </div>
 
-                {(video || image) && (
+                {video && (
                   <div
                     style={{
-                      position: "relative",
                       width: 180,
-                      // Frame each demo/screenshot at its own aspect so nothing gets cropped
-                      aspectRatio:
-                        ("videoAspect" in app && app.videoAspect) ||
-                        ("imageAspect" in app && app.imageAspect) ||
-                        "2 / 3",
+                      // Frame each demo at its own aspect so nothing gets cropped
+                      aspectRatio: ("videoAspect" in app && app.videoAspect) || "2 / 3",
                       borderRadius: "var(--radius-lg)",
                       overflow: "hidden",
                       border: "1px solid var(--color-border)",
@@ -176,11 +170,7 @@ export default function ApplicationsPage() {
                       flexShrink: 0,
                     }}
                   >
-                    {video ? (
-                      <AppVideo src={video} label={`${app.name} demo`} />
-                    ) : (
-                      <Image src={image!} alt={`${app.name} screenshot`} fill sizes="180px" style={{ objectFit: "cover" }} />
-                    )}
+                    <AppVideo src={video} label={`${app.name} demo`} />
                   </div>
                 )}
               </div>
