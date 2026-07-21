@@ -108,6 +108,17 @@ const APPLICATIONS: Application[] = [
     highlights: [],
     media: null,
   },
+  {
+    id: "poem",
+    name: "Poem",
+    platform: "iOS",
+    status: "WIP",
+    href: "/apps/poem",
+    description:
+      "A reader and composer for East Asian poetry, where each poem materializes and dissipates through an ink dissolve.",
+    highlights: [],
+    media: null,
+  },
 ];
 
 // Challenges · all eight, animated; full write-ups live on /challenges
