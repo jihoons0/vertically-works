@@ -430,9 +430,8 @@ a {
   z-index: 1;
   height: clamp(220px, 27vw, 384px);
   max-width: 100%;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  border: 1px solid var(--color-border);
   box-shadow: var(--shadow-overlay);
   background: var(--color-bg);
 }
@@ -443,8 +442,7 @@ a {
   width: 100%;
   max-height: clamp(220px, 27vw, 384px);
   object-fit: cover;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-overlay);
 }
 .app-tile-caption {
