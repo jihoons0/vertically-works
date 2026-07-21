@@ -17,9 +17,9 @@ Everything you post on Tue Jul 21. Voice matches the site: spare, declarative, i
 **First comment — post it immediately after submitting:**
 > I'm Jihoon. Every UI toolkit assumes text runs left to right. For Korean, Japanese, and Chinese that assumption is wrong, and it shows up everywhere downstream: which way a toggle flips, where a tooltip opens, what the arrow keys do, where the IME candidate window sits.
 >
-> I started in 2019 with an essay asking whether vertical type could work in a real UI. Nobody knew. The components you'd need to find out didn't exist, so I built them: React components on true `writing-mode: vertical-rl` (rotation breaks selection, screen readers, and IME, so I never rotate it), a shadcn-style copy-and-own registry, and three apps that put them under load, including a live vertical newspaper pulling KR/JP/CN headlines.
+> I started in 2019 with an essay asking whether vertical type could work in a real UI. Nobody knew. The components you'd need to find out didn't exist, so I built them: React components on true `writing-mode: vertical-rl` (rotation breaks selection, screen readers, and IME, so I never rotate it), a shadcn-style copy-and-own registry, and four apps that put them under load: a Bible reader on iOS, a to-do list, a live newspaper pulling KR/JP/CN headlines, and an AI chat where every turn is a column.
 >
-> I left it unfinished on purpose. The eight hardest problems are open as GitHub Discussions: motion direction, mixed-script typography, IME placement, and what a *vertical* AI chat interface should even be. I documented them as carefully as the answers. It's all MIT: github.com/jihoons0/vertically-works. Tell me where I'm wrong.
+> The hard problems are still open. I documented them as GitHub Discussions as carefully as the answers: motion direction, mixed-script typography, IME placement, and what a *vertical* AI chat interface should even be. The Chat app is my first attempt at that last one, and I'm not sure it's right. It's all MIT: github.com/jihoons0/vertically-works. Tell me where I'm wrong.
 
 **Thread-tending ammo** (from the site FAQ — have these ready):
 - *"Most CJK is horizontal anyway"* → Yes, and that's the point: the toolchain picks the axis now, not the designer. Vertical never died: novels, manga, scripture, newspapers, signage. Horizontal is a default, not a conclusion.

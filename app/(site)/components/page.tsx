@@ -25,12 +25,6 @@ export default function ComponentsIntroductionPage() {
       <h1 style={{ fontSize: "clamp(2rem, 4vw, 2.75rem)", fontWeight: 700, letterSpacing: "-0.03em", lineHeight: 1.1, color: "var(--color-fg)", margin: "0 0 var(--space-5)" }}>
         Components for vertical writing interfaces
       </h1>
-      <p style={{ fontSize: "1.0625rem", color: "var(--color-fg-muted)", lineHeight: 1.7, margin: "0 0 var(--space-8)" }}>
-        The interaction primitives of a vertical interface · buttons, toggles, dialogs,
-        tabs, lists · each answering a design question the horizontal web never had to.
-        Real, accessible React components you copy into your project and own.
-      </p>
-
       {/* CTA row */}
       <div style={{ display: "flex", gap: "var(--space-3)", flexWrap: "wrap", alignItems: "center", marginBottom: "var(--space-16)" }}>
         <Link

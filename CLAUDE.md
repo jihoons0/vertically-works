@@ -76,7 +76,7 @@ Running web apps live under **`app/run/<name>/`** and are served on subdomains v
 - **`news.vertically.works`** → `/run/news` (+ `/article/[id]`) — **Vertically News**, RSS reader (`components/news`, `lib/news`; `app/api/news/*`). Detail `/apps/news`.
 - **`listen.vertically.works`** → `/run/listen` — **Vertically Listen**, podcast player (`components/listen`, `lib/listen`; `app/api/podcasts|episodes|transcript`). Detail `/apps/listen`.
 - **`chat.vertically.works`** → `/run/chat` — **Vertically Chat**, a WIP placeholder (no app built yet; tracks the `ai-chat` challenge). Detail `/apps/chat`.
-- **Vertically Verse** is the CJK **scripture (bible) reader for iOS** — detail page `/apps/verse` plus `/verse/*` (privacy/support). No web app: **`verse.vertically.works` 307-redirects to the TestFlight beta**. A *different app* from To-do; never conflate Verse (bible) with To-do.
+- **Vertically Verse** is the CJK **scripture (bible) reader for iOS** — detail page `/apps/verse` plus `/verse/*` (privacy/support). No web app: **`verse.vertically.works` 307-redirects to the App Store** (`VERSE_APP_STORE_URL`, duplicated in `lib/appUrls.ts` and `next.config.ts`). A *different app* from To-do; never conflate Verse (bible) with To-do.
 
 Detail-page "open the app" buttons use `runningAppUrl()` in `lib/appUrls.ts` (subdomain in prod, `/run/<name>` in dev); iframe embeds (`components/apps/AppEmbed`) stay same-origin on `/run/<name>`. Each web app keeps state in `lib/<app>/store.ts`, i18n in `lib/<app>/i18n.ts`, styles in `app/run/<app>/<app>.css`.
 

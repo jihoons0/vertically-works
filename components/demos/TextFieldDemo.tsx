@@ -1,7 +1,11 @@
 "use client";
 import { useState } from "react";
+import { usePreviewLang } from "@/components/providers/PreviewLangProvider";
+import { usePicked, textFieldText } from "@/components/demos/sampleText";
 
 export function TextFieldDemo() {
+  const { lang } = usePreviewLang();
+  const t = usePicked(textFieldText);
   const [value, setValue] = useState("");
   const [focused, setFocused] = useState(false);
 
@@ -11,17 +15,17 @@ export function TextFieldDemo() {
         {/* The input stays horizontal · composition needs a horizontal baseline */}
         <div style={{ width: "100%", maxWidth: 320 }}>
           <label htmlFor="tf-demo" style={{ display: "block", fontSize: "0.75rem", color: "var(--color-fg-subtle)", marginBottom: "var(--space-2)", letterSpacing: "0.04em" }}>
-            검색어
+            {t.label}
           </label>
           <input
             id="tf-demo"
             type="text"
-            lang="ko"
+            lang={lang}
             value={value}
             onChange={(e) => setValue(e.target.value)}
             onFocus={() => setFocused(true)}
             onBlur={() => setFocused(false)}
-            placeholder="구절을 입력하세요…"
+            placeholder={t.placeholder}
             style={{
               width: "100%",
               padding: "var(--space-3) var(--space-4)",

@@ -4,13 +4,14 @@ import { useId, useState } from "react";
 // Dogfoods the real registry component · the same file
 // `npx verticallyworks add toggle` copies into a project.
 import { VerticalToggle } from "@/components/vw/toggle";
-
-const SETTINGS = [
-  { key: "darkMode" as const, label: "야간 모드", sub: "Dark mode" },
-  { key: "serifFont" as const, label: "명조체", sub: "Serif typeface" },
-];
+import { usePicked, toggleText } from "@/components/demos/sampleText";
 
 export function ToggleDemo() {
+  const t = usePicked(toggleText);
+  const SETTINGS = [
+    { key: "darkMode" as const, label: t.dark, sub: "Dark mode" },
+    { key: "serifFont" as const, label: t.serif, sub: "Serif typeface" },
+  ];
   const [states, setStates] = useState({ darkMode: true, serifFont: false });
   const baseId = useId();
 
@@ -80,7 +81,7 @@ export function ToggleDemo() {
               overflow: "hidden",
             }}
           >
-            {["글씨를 세로로 쓰는 것", "세로쓰기라 한다"].map((text, i) => (
+            {t.preview.map((text, i) => (
               <span
                 key={i}
                 style={{

@@ -1,29 +1,10 @@
 "use client";
 
 import { useState } from "react";
-
-const COLUMNS = [
-  {
-    verses: [
-      { ref: "1", text: "글씨를 세로로 쓰는 것을 세로쓰기라 한다" },
-      { ref: "2", text: "전통적으로 한국어·중국어·일본어가 세로로 쓰였다" },
-    ],
-  },
-  {
-    verses: [
-      { ref: "3", text: "우종서의 가장 오래된 기록은 중국에서 발견되었다" },
-      { ref: "4", text: "죽간을 쓰던 때부터 한자 문화권은 세로로 썼다" },
-    ],
-  },
-  {
-    verses: [
-      { ref: "5", text: "그에 따라 옛 문헌은 전부 세로쓰기로 되어 있다" },
-      { ref: "6", text: "가로로 쓰면 두루마리를 말고 펴기가 불편했다" },
-    ],
-  },
-];
+import { usePicked, verseText } from "@/components/demos/sampleText";
 
 export function VerseDemo() {
+  const t = usePicked(verseText);
   const [selected, setSelected] = useState<string | null>(null);
   const [highlights, setHighlights] = useState<Record<string, string>>({});
 
@@ -55,7 +36,7 @@ export function VerseDemo() {
           overflow: "auto",
         }}
       >
-        {COLUMNS.map((col, colIdx) => (
+        {t.columns.map((col, colIdx) => (
           <div
             key={colIdx}
             style={{
@@ -66,7 +47,7 @@ export function VerseDemo() {
               gap: "var(--space-4)",
             }}
           >
-            {col.verses.map((verse, rowIdx) => {
+            {col.map((verse, rowIdx) => {
               const k = key(colIdx, rowIdx);
               const isSelected = selected === k;
               const hl = highlights[k];
@@ -121,7 +102,7 @@ export function VerseDemo() {
           pointerEvents: selected ? "auto" : "none",
         }}
       >
-        <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.75rem", color: "var(--color-fg-muted)", letterSpacing: "0.05em" }}>하이라이트</span>
+        <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.75rem", color: "var(--color-fg-muted)", letterSpacing: "0.05em" }}>{t.highlight}</span>
         <div style={{ display: "flex", gap: "var(--space-1)" }}>
           {COLORS.map((c) => (
             <button
@@ -164,7 +145,7 @@ export function VerseDemo() {
           className="pressable"
           style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.75rem", color: "var(--color-fg-subtle)", background: "none", border: "none", cursor: "pointer", fontFamily: "inherit", letterSpacing: "0.05em" }}
         >
-          취소
+          {t.cancel}
         </button>
       </div>
 

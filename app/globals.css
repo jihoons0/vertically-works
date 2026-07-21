@@ -395,21 +395,120 @@ a {
   }
 }
 
+/* ─── Home app tiles · 2×2 grid of shader + video, title captioned below ─── */
+.home-apps-2x2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+@media (min-width: 720px) {
+  .home-apps-2x2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.app-tile {
+  display: block;
+}
+.app-tile-media {
+  position: relative;
+  isolation: isolate; /* trap the shader canvas behind the framed media */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-muted);
+  padding: clamp(28px, 5vw, 44px);
+  min-height: clamp(240px, 30vw, 300px);
+  transition: box-shadow 200ms var(--easing-out);
+}
+.app-tile:hover .app-tile-media {
+  box-shadow: 0 10px 34px rgba(0, 0, 0, 0.1);
+}
+.app-tile-frame {
+  position: relative;
+  z-index: 1;
+  height: clamp(220px, 27vw, 384px);
+  max-width: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-overlay);
+  background: var(--color-bg);
+}
+.app-tile-shot {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-height: clamp(220px, 27vw, 384px);
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-overlay);
+}
+.app-tile-caption {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-1) 0;
+}
+.app-tile-title {
+  flex-shrink: 0;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-fg);
+}
+.app-tile-tagline {
+  min-width: 0;
+  font-size: 0.875rem;
+  color: var(--color-fg-subtle);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.app-tile-arrow {
+  margin-left: auto;
+  align-self: center;
+  flex-shrink: 0;
+  color: var(--color-fg-subtle);
+  transition: transform var(--duration-fast) var(--easing-out), color var(--duration-fast) var(--easing-out);
+}
+.app-tile:hover .app-tile-arrow {
+  color: var(--color-fg);
+  transform: translate(2px, -2px);
+}
+
 /* ─── Origin banner · quote left, the 2019 article screenshot right ───
    The card is anchored top-right and taller than the band, so its bottom
    bleeds past the banner's lower border and gets clipped flat by the
    section's overflow:hidden. Hidden on mobile, where there's no room. */
-/* The origin banner's legibility scrim: full strength keeps dark text crisp
-   over the light-mode gradient; in dark mode it's softened (about half the
-   ink, fading sooner) so it lifts the reading side without a heavy band.
-   !important because the base gradient is an inline style. */
-[data-theme="dark"] .origin-scrim {
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--color-bg) 40%, transparent) 0%,
-    color-mix(in srgb, var(--color-bg) 18%, transparent) 40%,
-    transparent 60%
-  ) !important;
+/* Origin banner · an inverted band, the opposite of the page theme in both
+   modes: dark-gray surface + white text by day, light-gray (#f3f3f3) surface +
+   near-black text at night. The section overrides the semantic color tokens so
+   all its content — quote, byline, borders, button — flips with the background. */
+.origin-banner-mono {
+  background: #1e1e1e;
+  --color-bg: #1e1e1e;
+  --color-bg-subtle: #262626;
+  --color-bg-muted: #2e2e2e;
+  --color-fg: #ffffff;
+  --color-fg-muted: rgba(255, 255, 255, 0.66);
+  --color-fg-subtle: rgba(255, 255, 255, 0.45);
+  --color-border: rgba(255, 255, 255, 0.16);
+  --color-border-strong: rgba(255, 255, 255, 0.3);
+}
+[data-theme="dark"] .origin-banner-mono {
+  background: #f3f3f3;
+  --color-bg: #f3f3f3;
+  --color-bg-subtle: #ececec;
+  --color-bg-muted: #e4e4e4;
+  --color-fg: #111111;
+  --color-fg-muted: rgba(0, 0, 0, 0.66);
+  --color-fg-subtle: rgba(0, 0, 0, 0.45);
+  --color-border: rgba(0, 0, 0, 0.14);
+  --color-border-strong: rgba(0, 0, 0, 0.26);
 }
 
 /* Waitlist form on the in-progress app pages · email + button in a row,
@@ -437,7 +536,9 @@ a {
     border-radius: var(--radius-xl);
     overflow: hidden;
     border: 1px solid var(--color-border);
-    box-shadow: var(--shadow-overlay);
+    /* Much softer than --shadow-overlay · that token's heavy dark-mode value
+       looked harsh against the inverted white banner. */
+    box-shadow: 0 12px 44px rgba(0, 0, 0, 0.13);
   }
 }
 
@@ -854,4 +955,28 @@ a.related-pill:hover {
 }
 .btn-cta-hover:hover {
   background: color-mix(in srgb, var(--color-fg) 16%, var(--color-bg));
+}
+
+/* Section "view all" CTAs collapse to a right-aligned icon button on mobile:
+   the label is visually hidden (still read by screen readers) and the button
+   becomes a 40×40 square holding just the arrow. */
+@media (max-width: 640px) {
+  .section-cta {
+    width: 40px;
+    padding: 0 !important;
+    gap: 0 !important;
+    justify-content: center;
+  }
+  .section-cta .section-cta-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
 }

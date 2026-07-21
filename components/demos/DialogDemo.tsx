@@ -1,7 +1,9 @@
 "use client";
 import { useState } from "react";
+import { usePicked, dialogText } from "@/components/demos/sampleText";
 
 export function DialogDemo() {
+  const t = usePicked(dialogText);
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
 
@@ -11,7 +13,7 @@ export function DialogDemo() {
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
       <div style={{ position: "relative", minHeight: 360, borderRadius: "var(--radius-xl)", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center" }}>
           <button className="pressable" onClick={() => setOpen(true)} style={{ padding: "var(--space-5) var(--space-3)", borderRadius: "var(--radius-full)", background: "var(--color-fg)", color: "var(--color-bg)", border: "none", fontSize: "0.875rem", fontWeight: 600, cursor: "pointer", fontFamily: "inherit", position: "relative", zIndex: 1, writingMode: "vertical-rl", textOrientation: "mixed", letterSpacing: "0.05em" }}>
-            열기
+            {t.open}
           </button>
 
           {open && (
@@ -23,13 +25,13 @@ export function DialogDemo() {
               >
                 {/* Text · vertical columns reading R→L: title rightmost, body to its left */}
                 <div style={{ display: "flex", flexDirection: "row-reverse", alignItems: "flex-start", gap: "var(--space-4)" }}>
-                  <h3 id="dialog-title" style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.9375rem", fontWeight: 700, color: "var(--color-fg)", margin: 0, letterSpacing: "0.05em" }}>정말 삭제할까요?</h3>
-                  <p style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.8125rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.7, letterSpacing: "0.05em" }}>이 렌즈를 삭제하면 되돌릴 수 없어요.</p>
+                  <h3 id="dialog-title" style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.9375rem", fontWeight: 700, color: "var(--color-fg)", margin: 0, letterSpacing: "0.05em" }}>{t.title}</h3>
+                  <p style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.8125rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.7, letterSpacing: "0.05em" }}>{t.body}</p>
                 </div>
                 {/* Actions · vertical buttons at the end (leftmost) of the reading flow */}
                 <div style={{ display: "flex", flexDirection: "row-reverse", gap: "var(--space-2)" }}>
-                  <button className="pressable" onClick={close} style={{ writingMode: "vertical-rl", textOrientation: "mixed", padding: "var(--space-3) var(--space-3)", borderRadius: "var(--radius-lg)", border: "1px solid var(--color-border)", background: "transparent", fontSize: "0.8125rem", fontWeight: 500, color: "var(--color-fg-muted)", cursor: "pointer", fontFamily: "inherit", letterSpacing: "0.05em" }}>취소</button>
-                  <button className="pressable" onClick={close} style={{ writingMode: "vertical-rl", textOrientation: "mixed", padding: "var(--space-3) var(--space-3)", borderRadius: "var(--radius-lg)", border: "none", background: "#dc2626", fontSize: "0.8125rem", fontWeight: 600, color: "white", cursor: "pointer", fontFamily: "inherit", letterSpacing: "0.05em" }}>삭제</button>
+                  <button className="pressable" onClick={close} style={{ writingMode: "vertical-rl", textOrientation: "mixed", padding: "var(--space-3) var(--space-3)", borderRadius: "var(--radius-lg)", border: "1px solid var(--color-border)", background: "transparent", fontSize: "0.8125rem", fontWeight: 500, color: "var(--color-fg-muted)", cursor: "pointer", fontFamily: "inherit", letterSpacing: "0.05em" }}>{t.cancel}</button>
+                  <button className="pressable" onClick={close} style={{ writingMode: "vertical-rl", textOrientation: "mixed", padding: "var(--space-3) var(--space-3)", borderRadius: "var(--radius-lg)", border: "none", background: "#dc2626", fontSize: "0.8125rem", fontWeight: 600, color: "white", cursor: "pointer", fontFamily: "inherit", letterSpacing: "0.05em" }}>{t.del}</button>
                 </div>
               </div>
             </>

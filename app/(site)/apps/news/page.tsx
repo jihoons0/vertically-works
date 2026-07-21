@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Reveal } from "@/components/Reveal";
 import { AppHero } from "@/components/apps/AppHero";
+import { AppVideo } from "@/components/home/AppVideo";
 import { RelatedPill } from "@/components/ui/RelatedPill";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -135,6 +136,28 @@ export default function VerticallyNewsPage() {
       />
 
       <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 7vw, 80px) var(--space-6) var(--space-24)" }}>
+        {/* Preview · the front page in motion */}
+        <Reveal style={{ marginBottom: "var(--space-16)" }}>
+          <div
+            style={{
+              width: "100%",
+              maxWidth: 720,
+              margin: "0 auto",
+              aspectRatio: "1734 / 1544",
+              borderRadius: "var(--radius-xl)",
+              overflow: "hidden",
+              border: "1px solid var(--color-border)",
+              background: "var(--color-bg-muted)",
+            }}
+          >
+            <AppVideo
+              src="/videos/vertically-news.mp4"
+              poster="/images/apps/news-poster.jpg"
+              label="Vertically News demo · a vertical right-to-left newspaper front page"
+            />
+          </div>
+        </Reveal>
+
         {/* Features */}
         <section aria-labelledby="news-features" style={{ marginBottom: "var(--space-16)" }}>
           <Reveal>

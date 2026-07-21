@@ -1,18 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import { usePicked, popoverText } from "@/components/demos/sampleText";
 
 const HIGHLIGHT_COLORS = [
-  { id: "yellow", color: "#FFD166", label: "노란색" },
-  { id: "green",  color: "#44CF7A", label: "초록색" },
-  { id: "blue",   color: "#60A5FA", label: "파란색" },
-  { id: "pink",   color: "#F472B6", label: "분홍색" },
+  { id: "yellow", color: "#FFD166" },
+  { id: "green",  color: "#44CF7A" },
+  { id: "blue",   color: "#60A5FA" },
+  { id: "pink",   color: "#F472B6" },
 ];
 
 const ACTIONS = [
   {
     id: "save",
-    label: "저장",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
@@ -21,7 +21,6 @@ const ACTIONS = [
   },
   {
     id: "note",
-    label: "노트",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
@@ -33,7 +32,6 @@ const ACTIONS = [
   },
   {
     id: "copy",
-    label: "복사",
     icon: (
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         <rect x="9" y="9" width="11" height="11" rx="2.5" />
@@ -44,6 +42,7 @@ const ACTIONS = [
 ];
 
 export function PopoverMenuDemo() {
+  const t = usePicked(popoverText);
   const [activeColor, setActiveColor] = useState<string | null>("yellow");
   const [activeAction, setActiveAction] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -79,7 +78,7 @@ export function PopoverMenuDemo() {
           <button className="pressable"
             onClick={() => setOpen(true)}
             aria-expanded={false}
-            aria-label="메뉴 열기"
+            aria-label={t.open}
             style={{
               display: "flex",
               flexDirection: "column",
@@ -108,7 +107,7 @@ export function PopoverMenuDemo() {
         {open && (
           <div
             role="toolbar"
-            aria-label="구절 동작"
+            aria-label={t.toolbar}
             style={{
               background: "#1a1a1a",
               borderRadius: 20,
@@ -125,7 +124,7 @@ export function PopoverMenuDemo() {
             {/* Close button · collapses the menu */}
             <button className="pressable corner-round"
               onClick={() => setOpen(false)}
-              aria-label="메뉴 닫기"
+              aria-label={t.close}
               style={{
                 width: 26,
                 height: 26,
@@ -150,11 +149,11 @@ export function PopoverMenuDemo() {
             <div style={{ width: 24, height: 1, background: "rgba(255,255,255,0.15)", margin: "0 0 var(--space-1)" }} />
 
             {/* Highlight color swatches */}
-            {HIGHLIGHT_COLORS.map((c) => (
+            {HIGHLIGHT_COLORS.map((c, i) => (
               <button className="pressable corner-round"
                 key={c.id}
                 onClick={() => setActiveColor(c.id === activeColor ? null : c.id)}
-                aria-label={c.label}
+                aria-label={t.colors[i]}
                 style={{
                   width: 26,
                   height: 26,
@@ -176,7 +175,7 @@ export function PopoverMenuDemo() {
             <div style={{ width: 24, height: 1, background: "rgba(255,255,255,0.15)", margin: "var(--space-1) 0" }} />
 
             {/* Action buttons */}
-            {ACTIONS.map((action) => (
+            {ACTIONS.map((action, i) => (
               <button className="pressable"
                 key={action.id}
                 onClick={() => handleAction(action.id)}
@@ -219,7 +218,7 @@ export function PopoverMenuDemo() {
                     userSelect: "none",
                   }}
                 >
-                  {action.id === "copy" && copied ? "완료" : action.label}
+                  {action.id === "copy" && copied ? t.done : t.actions[i]}
                 </span>
               </button>
             ))}

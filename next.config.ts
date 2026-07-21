@@ -9,7 +9,9 @@ const APP_HOSTS: Array<[host: string, base: string]> = [
   ["chat.vertically.works", "/run/chat"],
 ];
 
-const TESTFLIGHT_URL = "https://testflight.apple.com/join/DY7MKU7m";
+// Mirrors VERSE_APP_STORE_URL in lib/appUrls.ts · next.config is evaluated
+// outside the module graph, so the two are kept in sync by hand.
+const VERSE_APP_STORE_URL = "https://apps.apple.com/us/app/vertically-verse/id6787391508";
 
 const nextConfig: NextConfig = {
   // A stray lockfile in the home directory makes Turbopack infer ~ as the
@@ -43,12 +45,13 @@ const nextConfig: NextConfig = {
       { source: "/applications", destination: "/apps", permanent: true },
       { source: "/applications/:path*", destination: "/apps/:path*", permanent: true },
 
-      // Verse is iOS-only: the whole verse subdomain bounces to TestFlight.
-      // permanent:false (307) — TestFlight join URLs rotate; don't cache forever.
+      // Verse is iOS-only: the whole verse subdomain bounces to the App Store.
+      // permanent:false (307) — kept temporary so the destination stays ours to
+      // change (a 308 would be cached in browsers indefinitely).
       {
         source: "/:path*",
         has: [{ type: "host", value: "verse.vertically.works" }],
-        destination: TESTFLIGHT_URL,
+        destination: VERSE_APP_STORE_URL,
         permanent: false,
       },
 

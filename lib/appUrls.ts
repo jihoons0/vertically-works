@@ -9,6 +9,12 @@ export const APP_HOSTS = {
   chat: "chat.vertically.works",
 } as const;
 
+// Verse ships on the App Store (iOS only · no web build). next.config.ts keeps
+// its own copy for the verse.vertically.works redirect — config is evaluated
+// outside the module graph, so update both together.
+export const VERSE_APP_STORE_URL =
+  "https://apps.apple.com/us/app/vertically-verse/id6787391508";
+
 export type RunningApp = keyof typeof APP_HOSTS;
 
 export function runningAppUrl(app: RunningApp): string {

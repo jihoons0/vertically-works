@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { InstallBanner } from "@/components/ui/InstallBanner";
+import { VERSE_APP_STORE_URL } from "@/lib/appUrls";
 
 export const metadata: Metadata = {
   title: "Resources",
@@ -30,11 +31,11 @@ const RESOURCES = [
         year: "2019",
       },
       {
-        title: "Vertically Verse · TestFlight beta",
+        title: "Vertically Verse · iOS",
         author: "Jihoon Suh",
-        source: "TestFlight",
-        href: "https://testflight.apple.com/join/DY7MKU7m",
-        description: "The companion iOS scripture reader · a SwiftUI implementation of vertical-first interaction patterns. Join the public beta.",
+        source: "App Store",
+        href: VERSE_APP_STORE_URL,
+        description: "The companion iOS scripture reader · a SwiftUI implementation of vertical-first interaction patterns.",
         year: "2025",
       },
     ],

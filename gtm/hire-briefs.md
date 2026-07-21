@@ -40,7 +40,7 @@ Launch videos from shadcn/ui, Linear, and Family's design engineering clips: res
 
 ## Brief B · Launch writers · Japanese + Simplified Chinese
 
-(Korean: you write or light-edit yourself; the KIDNY network can review.)
+(Korean: you write or light-edit yourself)
 
 **Title:** Native JP / zh-CN tech writer for an open-source launch · dev-community adaptation, not literal translation
 

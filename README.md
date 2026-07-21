@@ -90,7 +90,7 @@ Components never hardcode a color, size, or duration · restyle your copy by edi
 
 Four apps built on these principles, documented as case studies:
 
-- **[Vertically Verse](https://vertically.works/apps/vertically-verse)** · a fully vertical, RTL scripture reader for iOS · [TestFlight beta](https://testflight.apple.com/join/DY7MKU7m)
+- **[Vertically Verse](https://vertically.works/apps/vertically-verse)** · a fully vertical, RTL scripture reader for iOS · [App Store](https://apps.apple.com/us/app/vertically-verse/id6787391508)
 - **[Vertically To-do](https://vertically.works/apps/vertically-do)** · a to-do list where tasks are columns · [use it](https://vertically.works/apps/notes)
 - **[Vertically Listen](https://vertically.works/apps/vertically-listen)** · a podcast player with transcripts as vertical verse · in progress
 - **[Vertically News](https://vertically.works/apps/vertically-news)** · live KR/JP/CN headlines set as a vertical newspaper · [read it](https://vertically.works/apps/news)

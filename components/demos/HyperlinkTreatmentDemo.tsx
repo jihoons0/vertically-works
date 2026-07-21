@@ -1,22 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { usePicked, linkText } from "@/components/demos/sampleText";
 
 type Treatment = "emphasis" | "underline";
 
 // A vertical passage with two phrases that act as links. In horizontal text a link
 // is underlined · a rule that runs *along* the baseline. Rotated into vertical text
 // that rule falls to one side of the column, colliding with the neighbouring line.
-// The CJK convention for marking a run of characters is the emphasis mark (방점):
-// a small dot set beside each character, on the right in vertical writing. We reuse
-// it as the hyperlink affordance · an interpunct to the right of every character.
-const BEFORE = "글씨를 세로로 쓰는 것을 ";
-const LINK_1 = "세로쓰기";
-const MIDDLE = "라 한다. 우종서의 기록은 ";
-const LINK_2 = "죽간";
-const AFTER = "에서 처음 나타났다.";
-
+// The CJK convention for marking a run of characters is the emphasis mark (방점 /
+// 圏点 / 旁點): a small dot set beside each character, on the right in vertical
+// writing. We reuse it as the hyperlink affordance · an interpunct to the right of
+// every character.
 export function HyperlinkTreatmentDemo() {
+  const t = usePicked(linkText);
   const [treatment, setTreatment] = useState<Treatment>("emphasis");
 
   return (
@@ -24,28 +21,28 @@ export function HyperlinkTreatmentDemo() {
       {/* Treatment selector */}
       <div style={{ display: "flex", justifyContent: "center", gap: "var(--space-2)" }}>
         {([
-          { id: "emphasis" as const, label: "방점 ·" },
-          { id: "underline" as const, label: "밑줄" },
-        ]).map((t) => (
+          { id: "emphasis" as const, label: t.emphasis },
+          { id: "underline" as const, label: t.underline },
+        ]).map((opt) => (
           <button
-            key={t.id}
+            key={opt.id}
             className="pressable"
-            onClick={() => setTreatment(t.id)}
-            aria-pressed={treatment === t.id}
+            onClick={() => setTreatment(opt.id)}
+            aria-pressed={treatment === opt.id}
             style={{
               padding: "var(--space-2) var(--space-4)",
               borderRadius: "var(--radius-full)",
               fontSize: "0.8125rem",
               fontWeight: 500,
-              background: treatment === t.id ? "var(--color-fg)" : "var(--color-bg-muted)",
-              color: treatment === t.id ? "var(--color-bg)" : "var(--color-fg-muted)",
+              background: treatment === opt.id ? "var(--color-fg)" : "var(--color-bg-muted)",
+              color: treatment === opt.id ? "var(--color-bg)" : "var(--color-fg-muted)",
               border: "1px solid var(--color-border)",
               cursor: "pointer",
               fontFamily: "inherit",
               transition: "background 150ms var(--easing-out), color 150ms var(--easing-out)",
             }}
           >
-            {t.label}
+            {opt.label}
           </button>
         ))}
       </div>
@@ -75,15 +72,15 @@ export function HyperlinkTreatmentDemo() {
             maxHeight: 260,
           }}
         >
-          {BEFORE}
+          {t.before}
           <a href="#" onClick={(e) => e.preventDefault()} className={`vw-link vw-link--${treatment}`}>
-            {LINK_1}
+            {t.link1}
           </a>
-          {MIDDLE}
+          {t.middle}
           <a href="#" onClick={(e) => e.preventDefault()} className={`vw-link vw-link--${treatment}`}>
-            {LINK_2}
+            {t.link2}
           </a>
-          {AFTER}
+          {t.after}
         </p>
       </div>
 

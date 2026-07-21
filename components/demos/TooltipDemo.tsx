@@ -1,14 +1,10 @@
 "use client";
 
 import { useState } from "react";
-
-const VERSES = [
-  { ref: "1", text: "글씨를 세로로 쓰는 것을 세로쓰기라 한다" },
-  { ref: "2", text: "전통적으로 한국어와 중국어가 세로로 쓰였다" },
-  { ref: "3", text: "죽간을 쓰던 때부터 세로로 써 왔다" },
-];
+import { usePicked, tooltipText } from "@/components/demos/sampleText";
 
 export function TooltipDemo() {
+  const { verses: VERSES, num } = usePicked(tooltipText);
   const [hoveredVerse, setHoveredVerse] = useState<number | null>(null);
   const [placement, setPlacement] = useState<"below" | "left">("left");
 
@@ -109,7 +105,7 @@ export function TooltipDemo() {
                           whiteSpace: "nowrap",
                         }}
                       >
-                        {`${i + 1}번 · ${verse.ref}`}
+                        {`${i + 1}${num} · ${verse.ref}`}
                       </span>
 
                       {/* Arrow */}

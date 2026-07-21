@@ -1,7 +1,7 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { AppVideo } from "@/components/home/AppVideo";
+import { Reveal } from "@/components/Reveal";
+import { AppShowcase, type ShowcaseApp } from "@/components/apps/AppShowcase";
 import { InstallBanner } from "@/components/ui/InstallBanner";
 
 export const metadata: Metadata = {
@@ -9,20 +9,17 @@ export const metadata: Metadata = {
   description: "Real implementations of vertical-first interface design across product categories.",
 };
 
-const APPS = [
+// All applications, shipped first · Chat is live, Listen is still in progress.
+const APPS: ShowcaseApp[] = [
   {
     id: "verse",
     name: "Verse",
     platform: "iOS",
     status: "Live",
-    video: "/videos/vertically-verse.mp4",
+    href: "/apps/verse",
     description:
-      "A fully vertical, right-to-left Bible reader.",
-    challenges: [
-      "Columns snap per column, not per page",
-      "Tate-chu-yoko (縦中横) verse numbers",
-      "RTL-native chrome · scroll-driven immersion",
-    ],
+      "A fully vertical, right-to-left Bible for Korean, Japanese, and Chinese. Columns snap one at a time and verse numbers stand upright with tate-chu-yoko.",
+    media: { type: "video", src: "/videos/vertically-verse.mp4", aspect: "2 / 3" },
   },
   {
     id: "todo",
@@ -30,15 +27,9 @@ const APPS = [
     platform: "Web",
     status: "Live",
     href: "/apps/todo",
-    video: "/videos/vertically-notes.mp4",
-    videoAspect: "1294 / 1484",
     description:
-      "A to-do list where tasks are vertical columns.",
-    challenges: [
-      "Tasks as full-height columns, stacking right→left",
-      "Pull down to delete · drag sideways to reorder",
-      "한 / あ / 中 re-localizes the whole interface",
-    ],
+      "A to-do list where every task is a full-height column you read top to bottom. Pull down to delete, drag sideways to reorder, and switch 한 / あ / 中 to re-localize the whole interface.",
+    media: { type: "video", src: "/videos/vertically-notes.mp4", aspect: "1294 / 1484" },
   },
   {
     id: "news",
@@ -47,12 +38,18 @@ const APPS = [
     status: "Live",
     href: "/apps/news",
     description:
-      "A daily front page of live KR/JP/CN headlines, set as a vertical newspaper.",
-    challenges: [
-      "Live RSS headlines as full-height columns, first story at the right edge",
-      "Real-world digits, acronyms, and kinsoku · the typography stress test",
-      "Pull past the leftmost column to turn the page",
-    ],
+      "A daily front page of live Korean, Japanese, and Chinese headlines, set right-to-left as a vertical newspaper — real-world digits, acronyms, and line-breaking under load.",
+    media: { type: "video", src: "/videos/vertically-news.mp4", aspect: "1734 / 1544" },
+  },
+  {
+    id: "chat",
+    name: "Chat",
+    platform: "Web",
+    status: "Live",
+    href: "/apps/chat",
+    description:
+      "An AI chat that reads top to bottom, right to left. Every turn is a column — new turns enter from the left, oldest at the right edge, with the composer as the rightmost column.",
+    media: { type: "video", src: "/videos/vertically-chat.mp4", aspect: "1828 / 1544" },
   },
   {
     id: "listen",
@@ -61,28 +58,8 @@ const APPS = [
     status: "WIP",
     href: "/apps/listen",
     description:
-      "A podcast player with transcripts as vertical verse.",
-    challenges: [
-      "Shows › episodes › playing · browsing never stops playback",
-      "Transcripts as vertical verse · tap a line to seek",
-      "Reading stays vertical · transport stays horizontal",
-    ],
-  },
-  {
-    id: "chat",
-    name: "Chat",
-    platform: "Web",
-    status: "Live",
-    href: "/apps/chat",
-    video: "/videos/vertically-chat.mp4",
-    videoAspect: "1828 / 1544",
-    description:
-      "An AI chat interface for vertical, right-to-left reading.",
-    challenges: [
-      "Where a new message enters a vertical thread",
-      "Separating two speakers on one reading axis",
-      "Where the composer sits without fighting the flow",
-    ],
+      "A podcast player whose transcripts fall as time-synced vertical verse. Reading stays vertical while the transport controls stay horizontal.",
+    media: null,
   },
 ];
 
@@ -98,98 +75,12 @@ export default function ApplicationsPage() {
           padding: "var(--space-12) var(--space-6) var(--space-16)",
         }}
       >
-        <div className="apps-grid">
-          {APPS.map((app) => {
-            // Cards link to their detail page when one exists (Live apps default
-            // to /apps/<id>); only apps with no page yet render non-interactive.
-            const href =
-              "href" in app && app.href ? app.href : app.status === "Live" ? `/apps/${app.id}` : null;
-            const blocked = !href;
-            const video = "video" in app && app.video ? app.video : null;
-            const cardStyle = {
-              display: "block",
-              padding: "var(--space-8)",
-              borderRadius: "var(--radius-xl)",
-              // width/style only — the `border` shorthand would reset
-              // border-color to currentColor over .card-hover's token
-              borderWidth: 1,
-              borderStyle: "solid",
-              height: "100%",
-            } as const;
-
-            const inner = (
-              <div className={video ? "app-card-inner has-media" : "app-card-inner"}>
-                <div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "var(--space-3)", marginBottom: "var(--space-3)", flexWrap: "wrap" }}>
-                    <h2 style={{ fontSize: "1.125rem", fontWeight: 600, color: "var(--color-fg)", margin: 0, letterSpacing: "-0.02em" }}>
-                      {app.name}
-                    </h2>
-                    <span
-                      style={{
-                        display: "inline-flex", alignItems: "center", gap: 5,
-                        fontSize: "0.6875rem", fontWeight: 500,
-                        color: app.status === "Live" ? "var(--color-fg)" : "var(--color-fg-subtle)",
-                        padding: "2px 8px", borderRadius: "var(--radius-full)", border: "1px solid",
-                        borderColor: app.status === "Live" ? "var(--color-border-strong)" : "var(--color-border)",
-                      }}
-                    >
-                      {app.status === "Live" && (
-                        <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />
-                      )}
-                      {app.status}
-                    </span>
-                    <span style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>{app.platform}</span>
-                  </div>
-
-                  <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: "0 0 var(--space-5)", lineHeight: 1.65 }}>
-                    {app.description}
-                  </p>
-
-                  {app.challenges && (
-                    <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-                      {app.challenges.map((c, i) => (
-                        <li key={i} style={{ display: "flex", gap: "var(--space-3)", alignItems: "baseline" }}>
-                          <span style={{ width: 4, height: 4, borderRadius: "50%", background: "var(--color-border-strong)", flexShrink: 0, marginTop: 7, display: "inline-block" }} />
-                          <span style={{ fontSize: "0.875rem", color: "var(--color-fg-muted)" }}>{c}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-
-                {video && (
-                  <div
-                    style={{
-                      width: 180,
-                      // Frame each demo at its own aspect so nothing gets cropped
-                      aspectRatio: ("videoAspect" in app && app.videoAspect) || "2 / 3",
-                      borderRadius: "var(--radius-lg)",
-                      overflow: "hidden",
-                      border: "1px solid var(--color-border)",
-                      background: "var(--color-bg-muted)",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <AppVideo src={video} label={`${app.name} demo`} />
-                  </div>
-                )}
-              </div>
-            );
-
-            return blocked ? (
-              <div
-                key={app.id}
-                aria-disabled="true"
-                style={{ ...cardStyle, borderColor: "var(--color-border)", opacity: 0.7, cursor: "not-allowed" }}
-              >
-                {inner}
-              </div>
-            ) : (
-              <Link key={app.id} href={href!} className="card-hover" style={cardStyle}>
-                {inner}
-              </Link>
-            );
-          })}
+        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+          {APPS.map((app, i) => (
+            <Reveal key={app.id} delay={i * 60}>
+              <AppShowcase app={app} reverse={i % 2 === 1} />
+            </Reveal>
+          ))}
         </div>
       </div>
 

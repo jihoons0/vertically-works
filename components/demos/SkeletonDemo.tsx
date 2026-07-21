@@ -1,14 +1,10 @@
 "use client";
 import { useState } from "react";
-
-const COLUMNS = [
-  "글씨를 세로로 쓰는 것을 세로쓰기라 한다",
-  "전통적으로 한국어와 중국어가 세로로 쓰였고",
-  "죽간을 쓰던 때부터 이어진 방식이며",
-  "옛 문헌은 전부 세로쓰기로 되어 있다",
-];
+import { usePicked, skeletonText } from "@/components/demos/sampleText";
 
 export function SkeletonDemo() {
+  const t = usePicked(skeletonText);
+  const COLUMNS = t.columns;
   const [loading, setLoading] = useState(true);
 
   const reload = () => {
@@ -20,10 +16,10 @@ export function SkeletonDemo() {
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
       <div style={{ display: "flex", justifyContent: "center", gap: "var(--space-3)" }}>
         <button className="pressable" onClick={reload} style={{ padding: "var(--space-2) var(--space-4)", borderRadius: "var(--radius-full)", background: "var(--color-fg)", color: "var(--color-bg)", border: "none", fontSize: "0.8125rem", fontWeight: 600, cursor: "pointer", fontFamily: "inherit" }}>
-          다시 불러오기 ↻
+          {t.reload}
         </button>
         <button className="pressable" onClick={() => setLoading((l) => !l)} style={{ padding: "var(--space-2) var(--space-4)", borderRadius: "var(--radius-full)", background: "var(--color-bg-muted)", color: "var(--color-fg)", border: "1px solid var(--color-border)", fontSize: "0.8125rem", fontWeight: 500, cursor: "pointer", fontFamily: "inherit" }}>
-          {loading ? "실제 내용 보기" : "스켈레톤 보기"}
+          {loading ? t.showReal : t.showSkel}
         </button>
       </div>
 

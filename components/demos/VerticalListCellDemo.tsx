@@ -1,21 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import { usePicked, listCellText } from "@/components/demos/sampleText";
 
 // A list cell reoriented for the vertical axis. In a horizontal list a cell is a
 // full-width row · [leading] [title / subtitle] … [trailing accessory]. Rotated,
 // it becomes a full-height column: leading at the top (reading start), title +
 // subtitle as vertical text, and the disclosure accessory at the bottom. Cells
 // stack as columns and the list scrolls right-to-left.
-const CELLS = [
-  { title: "세로쓰기", sub: "개요", accessory: "chevron" as const },
-  { title: "우종서", sub: "역사", accessory: "chevron" as const },
-  { title: "죽간", sub: "기원", accessory: "chevron" as const },
-  { title: "두루마리", sub: "관행", accessory: "value", value: "읽는 중" as const },
-  { title: "문자 체계", sub: "분류", accessory: "chevron" as const },
-];
-
 export function VerticalListCellDemo() {
+  const { cells: CELLS, aria } = usePicked(listCellText);
   const [selected, setSelected] = useState(3);
 
   return (
@@ -23,7 +17,7 @@ export function VerticalListCellDemo() {
       {/* The list · cells as columns flowing R→L, horizontally scrollable */}
       <div
         role="listbox"
-        aria-label="목차"
+        aria-label={aria}
         style={{
           background: "var(--color-bg-muted)",
           borderRadius: "var(--radius-xl)",

@@ -1,9 +1,9 @@
 "use client";
 import { useState, useRef } from "react";
-
-const CHAPTERS = ["세로쓰기 1장", "세로쓰기 2장", "세로쓰기 3장"];
+import { usePicked, chapterText } from "@/components/demos/sampleText";
 
 export function ChapterNavigationDemo() {
+  const { chapters: CHAPTERS, next, prev } = usePicked(chapterText);
   const [index, setIndex] = useState(1);
   const [pull, setPull] = useState(0); // -1..1, negative = pulling next (left), positive = prev (right)
   const [flash, setFlash] = useState<"next" | "prev" | null>(null);
@@ -54,8 +54,8 @@ export function ChapterNavigationDemo() {
           )}
 
           {/* Edge affordances · persistent hints for which way the pull goes */}
-          <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", letterSpacing: "0.1em", color: "var(--color-fg-subtle)", opacity: canNext && dir !== "next" ? 0.6 : 0, transition: "opacity 150ms var(--easing-out)", pointerEvents: "none" }}>다음 ‹</span>
-          <span style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", letterSpacing: "0.1em", color: "var(--color-fg-subtle)", opacity: canPrev && dir !== "prev" ? 0.6 : 0, transition: "opacity 150ms var(--easing-out)", pointerEvents: "none" }}>› 이전</span>
+          <span style={{ position: "absolute", left: 12, top: "50%", transform: "translateY(-50%)", writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", letterSpacing: "0.1em", color: "var(--color-fg-subtle)", opacity: canNext && dir !== "next" ? 0.6 : 0, transition: "opacity 150ms var(--easing-out)", pointerEvents: "none" }}>{next}</span>
+          <span style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.6875rem", letterSpacing: "0.1em", color: "var(--color-fg-subtle)", opacity: canPrev && dir !== "prev" ? 0.6 : 0, transition: "opacity 150ms var(--easing-out)", pointerEvents: "none" }}>{prev}</span>
 
           {/* Position indicator · the value the gesture drives, nudged by the pull */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-3)", transform: `translateX(${pull * 20}px)`, transition: startX.current === null ? "transform 300ms cubic-bezier(0.32,0.72,0,1)" : "none", opacity: flash ? 0.4 : 1 }}>

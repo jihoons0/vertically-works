@@ -21,7 +21,7 @@ Paste into **GitHub → Releases → Draft a new release**. Tag: `v0.1.0` · Tar
   ```
 - **Design tokens in one file** — semantic colors with `light` / `dark` / `sepia` themes, spacing, radius (incl. squircle corner smoothing), and motion tokens that collapse to `0ms` under `prefers-reduced-motion`.
 - **Accessibility built in** — remapped arrow keys, RTL-aware focus order, screen-reader column order, reduced-motion support, documented per component.
-- **Four applications** built on the system, documented as case studies: Vertically Verse (iOS, [TestFlight](https://testflight.apple.com/join/DY7MKU7m)), Vertically To-do, Vertically Listen, Vertically News.
+- **Three live applications** built on the system, documented as case studies: Vertically Verse (iOS, [App Store](https://apps.apple.com/us/app/vertically-verse/id6787391508)), Vertically To-do, and Vertically News. Chat, Poem, and Listen are documented and in progress.
 - **The living reference** at [vertically.works](https://vertically.works) — every component ships its design question, an interactive demo, do/don't guidance, accessibility notes, and the exact source the CLI copies.
 
 ### This is a living study

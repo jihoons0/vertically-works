@@ -1,14 +1,12 @@
 "use client";
 import { useState } from "react";
+import { usePicked, tabsText } from "@/components/demos/sampleText";
 
-const TABS = [
-  { id: "read",    label: "읽기",   content: "글씨를 세로로 쓰는 것을 세로쓰기라 한다" },
-  { id: "search",  label: "검색",   content: "검색 결과가 여기에 표시됩니다" },
-  { id: "history", label: "기록",   content: "최근 읽은 문서가 여기에 표시됩니다" },
-];
+const TAB_IDS = ["read", "search", "history"] as const;
 
 export function TabsDemo() {
-  const [active, setActive] = useState("read");
+  const TABS = usePicked(tabsText).map((t, i) => ({ id: TAB_IDS[i], ...t }));
+  const [active, setActive] = useState<string>("read");
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>

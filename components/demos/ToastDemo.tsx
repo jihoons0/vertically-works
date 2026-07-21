@@ -1,9 +1,10 @@
 "use client";
 import { useState, useRef } from "react";
-
-const MESSAGES = ["문단을 저장했어요", "노트에 추가했어요", "복사했어요", "형광펜을 지웠어요"];
+import { usePicked, toastText } from "@/components/demos/sampleText";
 
 export function ToastDemo() {
+  const t = usePicked(toastText);
+  const MESSAGES = t.messages;
   const [toast, setToast] = useState<string | null>(null);
   const [closing, setClosing] = useState(false);
   const idx = useRef(0);
@@ -59,7 +60,7 @@ export function ToastDemo() {
           )}
 
           <button className="pressable" onClick={fire} style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", padding: "var(--space-4) var(--space-2)", borderRadius: "var(--radius-full)", background: "var(--color-bg-muted)", color: "var(--color-fg)", border: "1px solid var(--color-border)", writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.8125rem", fontWeight: 600, letterSpacing: "0.05em", cursor: "pointer", fontFamily: "inherit" }}>
-            동작 실행 ↓
+            {t.button}
           </button>
         </div>
       </div>

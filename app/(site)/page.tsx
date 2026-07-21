@@ -9,9 +9,7 @@ import { BottomShader } from "@/components/ui/BottomShader";
 import { Footer } from "@/components/layout/Footer";
 import { HeroVerticalMotif } from "@/components/home/HeroVerticalMotif";
 import { InstallBanner } from "@/components/ui/InstallBanner";
-import { OriginShader } from "@/components/ui/OriginShader";
-import { AppVideo } from "@/components/home/AppVideo";
-import { AppShowcaseShader } from "@/components/home/AppShowcaseShader";
+import { AppTile, type ShowcaseApp } from "@/components/apps/AppShowcase";
 import { Beam } from "@/components/ui/Beam";
 
 export const metadata: Metadata = {
@@ -22,38 +20,18 @@ export const metadata: Metadata = {
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-type AppMedia =
-  | { type: "video"; src: string; aspect: string }
-  | { type: "image"; src: string; aspect: string }
-  | null;
-
-type Application = {
-  id: string;
-  name: string;
-  platform: string;
-  status: "Live" | "Beta" | "WIP";
-  href: string;
-  description: string;
-  highlights: string[];
-  media: AppMedia;
-};
-
-// The three flagship apps lead as full-width showcases; anything after is a
-// compact card. Order is canonical · Verse, Notes, News, then Listen.
-const APPLICATIONS: Application[] = [
+// Home leads with the flagship apps as full-width showcases · Verse, To-do, Chat.
+// Flagship apps · full-width showcases. Listen (WIP) lives only on /apps.
+const APPLICATIONS: ShowcaseApp[] = [
   {
     id: "verse",
     name: "Verse",
     platform: "iOS",
     status: "Live",
     href: "/apps/verse",
+    tagline: "A fully vertical Bible reader",
     description:
-      "A fully vertical, right-to-left Bible for Korean, Japanese, and Chinese.",
-    highlights: [
-      "Columns snap per column, not per page",
-      "Tate-chu-yoko (縦中横) verse numbers",
-      "RTL-native chrome, scroll-driven immersion",
-    ],
+      "A fully vertical, right-to-left Bible for Korean, Japanese, and Chinese. Columns snap one at a time and verse numbers stand upright with tate-chu-yoko.",
     media: { type: "video", src: "/videos/vertically-verse.mp4", aspect: "2 / 3" },
   },
   {
@@ -62,14 +40,21 @@ const APPLICATIONS: Application[] = [
     platform: "Web",
     status: "Live",
     href: "/apps/todo",
+    tagline: "Every task is a column",
     description:
-      "A to-do list where every task is a column you read top to bottom.",
-    highlights: [
-      "Tasks are full-height columns, newest at the reading start",
-      "Pull down to delete, drag sideways to reorder",
-      "한 / あ / 中 re-localizes the whole interface",
-    ],
+      "A to-do list where every task is a full-height column you read top to bottom. Pull down to delete, drag sideways to reorder, switch 한 / あ / 中 to re-localize it all.",
     media: { type: "video", src: "/videos/vertically-notes.mp4", aspect: "1294 / 1484" },
+  },
+  {
+    id: "news",
+    name: "News",
+    platform: "Web",
+    status: "Live",
+    href: "/apps/news",
+    tagline: "Headlines as a vertical newspaper",
+    description:
+      "A daily front page of live Korean, Japanese, and Chinese headlines, set right-to-left as a vertical newspaper — real-world digits, acronyms, and line-breaking under load.",
+    media: { type: "video", src: "/videos/vertically-news.mp4", aspect: "1734 / 1544" },
   },
   {
     id: "chat",
@@ -77,36 +62,10 @@ const APPLICATIONS: Application[] = [
     platform: "Web",
     status: "Live",
     href: "/apps/chat",
+    tagline: "An AI chat that reads vertically",
     description:
-      "An AI chat that reads top to bottom, right to left · every turn is a column.",
-    highlights: [
-      "New turns enter from the left, oldest at the right edge",
-      "Speaker marked at the top of each column, not by side",
-      "The composer is the rightmost column · answers stream down it",
-    ],
+      "An AI chat that reads top to bottom, right to left. Every turn is a column — new turns enter from the left, oldest at the right edge, with the composer as the rightmost column.",
     media: { type: "video", src: "/videos/vertically-chat.mp4", aspect: "1828 / 1544" },
-  },
-  {
-    id: "news",
-    name: "News",
-    platform: "Web",
-    status: "WIP",
-    href: "/apps/news",
-    description:
-      "A daily newspaper setting live Korean, Japanese, and Chinese headlines right to left.",
-    highlights: [],
-    media: null,
-  },
-  {
-    id: "listen",
-    name: "Listen",
-    platform: "Web",
-    status: "WIP",
-    href: "/apps/listen",
-    description:
-      "A podcast player where transcripts fall as time-synced vertical verse.",
-    highlights: [],
-    media: null,
   },
 ];
 
@@ -132,108 +91,12 @@ const PRINCIPLES = [
   { id: "uncertainty", title: "Research Never Ends", description: "Document open questions beside resolved ones." },
 ];
 
-// ─── App cards ────────────────────────────────────────────────────────────────
-
-function StatusPill({ status }: { status: Application["status"] }) {
-  const live = status === "Live";
-  return (
-    <span
-      style={{
-        display: "inline-flex", alignItems: "center", gap: 5,
-        fontSize: "0.6875rem", fontWeight: 500,
-        color: live ? "var(--color-fg)" : "var(--color-fg-subtle)",
-        padding: "2px 8px", borderRadius: "var(--radius-full)",
-        border: "1px solid",
-        borderColor: live ? "var(--color-border-strong)" : "var(--color-border)",
-      }}
-    >
-      {live && <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#22c55e", display: "inline-block" }} />}
-      {status}
-    </span>
-  );
-}
-
-/** Full-width flagship row · media on one side, copy on the other (alternating). */
-function AppShowcase({ app, reverse }: { app: Application; reverse: boolean }) {
-  return (
-    <Link href={app.href} className={`card-hover app-showcase${reverse ? " reverse" : ""}`}>
-      <div className="app-showcase-media">
-        <AppShowcaseShader appId={app.id} />
-        {app.media?.type === "video" ? (
-          <div className="app-showcase-frame" style={{ aspectRatio: app.media.aspect }}>
-            <AppVideo src={app.media.src} label={`${app.name} demo`} />
-          </div>
-        ) : app.media?.type === "image" ? (
-          <img src={app.media.src} alt={`${app.name} preview`} className="app-showcase-shot" />
-        ) : null}
-      </div>
-
-      <div className="app-showcase-body">
-        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", marginBottom: "var(--space-1)" }}>
-          <StatusPill status={app.status} />
-          <span style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>{app.platform}</span>
-        </div>
-        <h3 style={{ fontSize: "clamp(1.375rem, 2.4vw, 1.875rem)", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-fg)", margin: 0, lineHeight: 1.1 }}>
-          {app.name}
-        </h3>
-        <p style={{ fontSize: "1rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.6, maxWidth: "42ch" }}>
-          {app.description}
-        </p>
-        {app.highlights.length > 0 && (
-          <ul style={{ margin: "var(--space-1) 0 0", padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-2)" }}>
-            {app.highlights.map((h) => (
-              <li key={h} style={{ display: "flex", gap: "var(--space-3)", alignItems: "baseline" }}>
-                <span style={{ width: 4, height: 4, borderRadius: "50%", background: "var(--color-border-strong)", flexShrink: 0, marginTop: 7, display: "inline-block" }} />
-                <span style={{ fontSize: "0.875rem", color: "var(--color-fg-muted)", lineHeight: 1.55 }}>{h}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-        <span className="app-showcase-cta" style={{ marginTop: "var(--space-2)" }}>
-          View case study
-          <ArrowRight size={16} strokeWidth={2.25} aria-hidden />
-        </span>
-      </div>
-    </Link>
-  );
-}
-
-/** Compact card for secondary / in-progress apps · no media. */
-function AppCompact({ app }: { app: Application }) {
-  return (
-    <Link
-      href={app.href}
-      className="card-hover"
-      style={{
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-        gap: "var(--space-6)", flexWrap: "wrap",
-        padding: "var(--space-6) var(--space-8)",
-        borderRadius: "var(--radius-xl)",
-        borderWidth: 1, borderStyle: "solid",
-      }}
-    >
-      <div style={{ minWidth: 0 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "var(--space-2)", flexWrap: "wrap", marginBottom: "var(--space-2)" }}>
-          <h3 style={{ fontSize: "1.0625rem", fontWeight: 600, letterSpacing: "-0.01em", color: "var(--color-fg)", margin: 0 }}>{app.name}</h3>
-          <StatusPill status={app.status} />
-          <span style={{ fontSize: "0.8125rem", color: "var(--color-fg-subtle)" }}>{app.platform}</span>
-        </div>
-        <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.6 }}>{app.description}</p>
-      </div>
-      <span className="app-showcase-cta" style={{ flexShrink: 0 }}>
-        View case study
-        <ArrowRight size={16} strokeWidth={2.25} aria-hidden />
-      </span>
-    </Link>
-  );
-}
-
 // Secondary link-button for section heading rows · right-aligned "All …" CTAs.
 function SectionCta({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <Link
       href={href}
-      className="btn-cta-hover pressable"
+      className="btn-cta-hover pressable section-cta"
       style={{
         display: "inline-flex", alignItems: "center", gap: 8,
         height: 40, padding: "0 var(--space-5)",
@@ -243,7 +106,9 @@ function SectionCta({ href, children }: { href: string; children: React.ReactNod
         flexShrink: 0,
       }}
     >
-      {children}
+      {/* On mobile the label is visually hidden (kept for screen readers) and the
+          button collapses to a right-aligned icon button · see .section-cta CSS. */}
+      <span className="section-cta-label">{children}</span>
       <ArrowRight size={16} strokeWidth={2.25} aria-hidden />
     </Link>
   );
@@ -345,33 +210,53 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ══════════════════════════ Applications ═══════════════════════════════ */}
+      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
+        <Reveal>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)", flexWrap: "wrap", marginBottom: "var(--space-10)" }}>
+            <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: 0, lineHeight: 1.15 }}>
+              Applications
+            </h2>
+            <SectionCta href="/apps">All applications</SectionCta>
+          </div>
+        </Reveal>
+
+        {/* Flagship apps · a 2×2 grid of compact tiles (shader + video, title
+            below). Full case-study cards live on /apps. */}
+        <div className="home-apps-2x2">
+          {APPLICATIONS.map((app, i) => (
+            <Reveal key={app.id} delay={(i % 2) * 60}>
+              <AppTile app={app} />
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* ═══════════════ The System in Motion · self-playing demos ═════════════ */}
+      <section>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
+          {/* No scroll reveal · the section crests the fold on desktop, where a
+              scroll-triggered fade left it looking empty on first paint. */}
+          <BentoGrid
+            title="Components"
+            action={<SectionCta href="/components">All components</SectionCta>}
+          />
+        </div>
+      </section>
+
       {/* ═══════════ Where this began · the 2019 article behind the site ═══════ */}
       <section
+        className="origin-banner-mono"
         style={{
           position: "relative",
           overflow: "hidden",
-          background: "var(--color-bg-subtle)",
           borderTop: "1px solid var(--color-border)",
           borderBottom: "1px solid var(--color-border)",
         }}
       >
-        {/* Soft mesh-gradient backdrop · the surface the question was first written on */}
-        <OriginShader />
-        {/* Legibility scrim · lifts the reading side toward the page bg so dark text
-            stays crisp over the gradient, then fades out before the article card.
-            Light mode only · in dark mode it reads as an unwanted band (.origin-scrim). */}
-        <div
-          aria-hidden
-          className="origin-scrim"
-          style={{
-            position: "absolute",
-            inset: 0,
-            zIndex: 0,
-            pointerEvents: "none",
-            background:
-              "linear-gradient(90deg, color-mix(in srgb, var(--color-bg) 82%, transparent) 0%, color-mix(in srgb, var(--color-bg) 55%, transparent) 42%, transparent 68%)",
-          }}
-        />
+        {/* Monochrome banner · black on white by day, white on black at night
+            (.origin-banner-mono). No shader here; the navy mesh moved to the app
+            showcases. The article card still bleeds past the bottom edge. */}
         {/* The original article, as a tall card anchored top-right · it bleeds
             past the banner's bottom edge, clipped flat by the section. */}
         <a
@@ -436,13 +321,16 @@ export default function HomePage() {
               </figcaption>
               <Link
                 href="/about"
-                className="btn-ghost-hover"
+                className="btn-primary-hover"
                 style={{
                   display: "inline-flex", alignItems: "center", gap: 8,
                   height: 40, padding: "0 var(--space-5)",
                   marginTop: "var(--space-6)",
                   fontSize: "0.9375rem", fontWeight: 500,
                   borderRadius: "var(--radius-lg)",
+                  // Filled to the banner's inverted tokens · black-on-white in dark
+                  // mode, white-on-black in light mode.
+                  background: "var(--color-fg)", color: "var(--color-bg)",
                 }}
               >
                 Learn more about why I&rsquo;m doing this
@@ -451,50 +339,6 @@ export default function HomePage() {
             </figure>
           </Reveal>
         </div>
-      </section>
-
-      {/* ═══════════════ The System in Motion · self-playing demos ═════════════ */}
-      <section>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
-          {/* No scroll reveal · the section crests the fold on desktop, where a
-              scroll-triggered fade left it looking empty on first paint. */}
-          <BentoGrid
-            title="Components"
-            action={<SectionCta href="/components">All components</SectionCta>}
-          />
-        </div>
-      </section>
-
-      {/* ══════════════════════════ Applications ═══════════════════════════════ */}
-      <section style={{ maxWidth: 1280, margin: "0 auto", padding: "clamp(48px, 8vw, 96px) var(--space-6)" }}>
-        <Reveal>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "var(--space-4)", flexWrap: "wrap", marginBottom: "var(--space-10)" }}>
-            <h2 style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)", fontWeight: 600, letterSpacing: "-0.03em", color: "var(--color-fg)", margin: 0, lineHeight: 1.15 }}>
-              Applications
-            </h2>
-            <SectionCta href="/apps">All applications</SectionCta>
-          </div>
-        </Reveal>
-
-        {/* Flagship apps · those with a visual · full-width alternating showcases */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
-          {APPLICATIONS.filter((a) => a.media).map((app, i) => (
-            <Reveal key={app.id} delay={i * 60}>
-              <AppShowcase app={app} reverse={i % 2 === 1} />
-            </Reveal>
-          ))}
-        </div>
-
-        {/* In-progress apps · no visual yet · compact cards */}
-        {APPLICATIONS.some((a) => !a.media) && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)", marginTop: "var(--space-6)" }}>
-            {APPLICATIONS.filter((a) => !a.media).map((app, i) => (
-              <Reveal key={app.id} delay={i * 60}>
-                <AppCompact app={app} />
-              </Reveal>
-            ))}
-          </div>
-        )}
       </section>
 
       {/* ═══════════════════ Challenges + Principles (merged) ══════════════════ */}

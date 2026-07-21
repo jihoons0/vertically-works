@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePicked, sheetText } from "@/components/demos/sampleText";
 
 type Edge = "bottom" | "right" | "left";
 
@@ -10,13 +11,8 @@ const EDGES: { id: Edge; label: string; note: string }[] = [
   { id: "left", label: "→ Left", note: "Follows reading direction. New content arrives from where the reader is heading." },
 ];
 
-const BOOKMARKS = [
-  { ref: "세로 1", text: "글씨를 세로로 쓰는 것을 세로쓰기라 한다" },
-  { ref: "역사 2", text: "죽간을 쓰던 때부터 세로로 써 왔다" },
-  { ref: "역사 3", text: "옛 문헌은 세로쓰기로 되어 있다" },
-];
-
 export function SheetDemo() {
+  const t = usePicked(sheetText);
   const [open, setOpen] = useState(false);
   const [edge, setEdge] = useState<Edge>("bottom");
   const [closing, setClosing] = useState(false);
@@ -116,7 +112,7 @@ export function SheetDemo() {
               letterSpacing: "0.05em",
             }}
           >
-            열기
+            {t.open}
           </button>
 
           {/* Sheet overlay */}
@@ -138,7 +134,7 @@ export function SheetDemo() {
 
                 {/* Sheet header */}
                 <div style={{ padding: "0 var(--space-4) var(--space-3)", display: "flex", justifyContent: "space-between", alignItems: "flex-start", borderBottom: "1px solid var(--color-border)" }}>
-                  <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.8125rem", fontWeight: 700, color: "var(--color-fg)", letterSpacing: "0.05em" }}>책갈피</span>
+                  <span style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: "0.8125rem", fontWeight: 700, color: "var(--color-fg)", letterSpacing: "0.05em" }}>{t.title}</span>
                   <button className="pressable" onClick={close} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--color-fg-muted)", fontSize: "1.125rem", lineHeight: 1, fontFamily: "inherit" }}>×</button>
                 </div>
 
@@ -154,7 +150,7 @@ export function SheetDemo() {
                     alignItems: "flex-start",
                   }}
                 >
-                  {BOOKMARKS.map((bm, i) => (
+                  {t.bookmarks.map((bm, i) => (
                     <div
                       key={i}
                       style={{

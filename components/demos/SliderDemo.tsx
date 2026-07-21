@@ -1,7 +1,9 @@
 "use client";
 import { useState, useRef } from "react";
+import { usePicked, sliderText } from "@/components/demos/sampleText";
 
 export function SliderDemo() {
+  const t = usePicked(sliderText);
   const [fontSize, setFontSize] = useState(18);
   const [spacing, setSpacing] = useState(55);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -19,8 +21,8 @@ export function SliderDemo() {
         {/* Vertical sliders */}
         <div style={{ display: "flex", gap: "var(--space-10)", alignItems: "center" }}>
           {[
-            { label: "글자", sub: "Font size", value: fontSize, setter: setFontSize, min: 12, max: 28 },
-            { label: "행간", sub: "Line spacing", value: spacing, setter: setSpacing, min: 40, max: 80 },
+            { label: t.glyph, sub: "Font size", value: fontSize, setter: setFontSize, min: 12, max: 28 },
+            { label: t.line, sub: "Line spacing", value: spacing, setter: setSpacing, min: 40, max: 80 },
           ].map(({ label, sub, value, setter, min, max }) => (
             <div key={label} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "var(--space-4)" }}>
               <span style={{ writingMode: "vertical-rl", fontSize: "0.75rem", color: "var(--color-fg-subtle)", letterSpacing: "0.08em", userSelect: "none" }}>{label}</span>
@@ -41,7 +43,7 @@ export function SliderDemo() {
 
         {/* Live preview */}
         <div style={{ writingMode: "vertical-rl", textOrientation: "mixed", fontSize: `${fontSize}px`, lineHeight: `${spacing / 100 * 2}`, letterSpacing: "0.1em", color: "var(--color-fg)", transition: "font-size 100ms ease, line-height 100ms ease", maxHeight: 200, overflow: "hidden" }}>
-          글씨를 세로로 쓰는 것을 세로쓰기라 한다
+          {t.preview}
         </div>
       </div>
 

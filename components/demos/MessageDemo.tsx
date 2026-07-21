@@ -1,15 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { usePicked, messageText } from "@/components/demos/sampleText";
 
 type MessageMode = "horizontal" | "vertical";
-
-const MESSAGES = [
-  { from: "them", text: "세로쓰기의 유래가 흥미로웠어요",       time: "오전 9:14", vertical: "세로쓰기의 유래가 흥미로웠어요" },
-  { from: "me",   text: "어떤 부분이요?",                     time: "오전 9:15", vertical: "어떤 부분이요?" },
-  { from: "them", text: "죽간에서 세로쓰기가 시작됐대요",       time: "오전 9:16", vertical: "죽간에서 세로쓰기가 시작됐대요" },
-  { from: "me",   text: "그 부분 저도 좋아해요",              time: "오전 9:16", vertical: "그 부분 저도 좋아해요" },
-];
 
 function Avatar({ label, me }: { label: string; me: boolean }) {
   return (
@@ -27,6 +21,8 @@ function Avatar({ label, me }: { label: string; me: boolean }) {
 }
 
 export function MessageDemo() {
+  const t = usePicked(messageText);
+  const MESSAGES = t.messages;
   const [mode, setMode] = useState<MessageMode>("vertical");
   const [sent, setSent] = useState(false);
 
@@ -68,7 +64,7 @@ export function MessageDemo() {
               const me = msg.from === "me";
               return (
                 <div key={i} style={{ display: "flex", gap: "var(--space-3)", flexDirection: me ? "row-reverse" : "row", alignItems: "flex-end" }}>
-                  <Avatar label={me ? "나" : "친"} me={me} />
+                  <Avatar label={me ? t.me : t.friend} me={me} />
                   <div style={{ maxWidth: "70%", display: "flex", flexDirection: "column", alignItems: me ? "flex-end" : "flex-start", gap: 4 }}>
                     <div style={{
                       padding: "var(--space-3) var(--space-4)",
@@ -108,7 +104,7 @@ export function MessageDemo() {
                     alignItems: "center",
                     gap: "var(--space-2)",
                   }}>
-                    <Avatar label={me ? "나" : "친"} me={me} />
+                    <Avatar label={me ? t.me : t.friend} me={me} />
                     <div style={{
                       writingMode: "vertical-rl",
                       textOrientation: "mixed",
@@ -121,7 +117,7 @@ export function MessageDemo() {
                       letterSpacing: "0.08em",
                       lineHeight: 1.8,
                     }}>
-                      {msg.vertical}
+                      {msg.text}
                     </div>
                     <span style={{ fontSize: "0.6rem", color: "var(--color-fg-subtle)", writingMode: "vertical-rl" }}>{msg.time}</span>
                   </div>
@@ -149,7 +145,7 @@ export function MessageDemo() {
             color: "var(--color-fg-subtle)",
             background: "var(--color-bg-muted)",
           }}>
-            메시지 입력…
+            {t.input}
           </div>
           <button className="pressable corner-round"
             onClick={() => { setSent(true); setTimeout(() => setSent(false), 800); }}
@@ -162,7 +158,7 @@ export function MessageDemo() {
               transform: sent ? "scale(0.88)" : "scale(1)",
               transition: "transform 80ms ease",
             }}
-            aria-label="전송"
+            aria-label={t.send}
           >
             {/* Send arrow points left · the forward/RTL reading direction */}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden style={{ transform: "rotate(180deg)" }}>

@@ -1,26 +1,10 @@
 "use client";
 
 import { useState } from "react";
-
-type MarkerType = "status" | "separator" | "system" | "date";
-
-const MARKERS: { type: MarkerType; label: string; sub?: string; icon?: string }[] = [
-  { type: "status",    label: "읽기 시작",    sub: "오전 9:23",  icon: "▶" },
-  { type: "system",   label: "1장 완료",                         icon: "✓" },
-  { type: "separator", label: "쉬는 중",      sub: "12분"                  },
-  { type: "status",    label: "다시 읽기",    sub: "오전 9:45",  icon: "↺" },
-  { type: "system",   label: "2장 완료",                         icon: "✓" },
-  { type: "date",     label: "오늘",                                        },
-];
-
-const VERSES = [
-  "글씨를 세로로 쓰는 것을 세로쓰기라 한다",
-  "전통적으로 한국어와 중국어가 세로로 쓰였다",
-  "죽간을 쓰던 때부터 세로로 써 왔고",
-  "옛 문헌은 세로쓰기로 되어 있다",
-];
+import { usePicked, markerText } from "@/components/demos/sampleText";
 
 export function MarkerDemo() {
+  const { markers: MARKERS, verses: VERSES, ch1Done } = usePicked(markerText);
   const [mode, setMode] = useState<"reading" | "chat">("reading");
 
   return (
@@ -81,7 +65,7 @@ export function MarkerDemo() {
                     boxShadow: "0 1px 4px rgba(0,0,0,0.06)",
                   }}>
                     <span style={{ color: "#16a34a", fontSize: "0.625rem" }}>✓</span>
-                    1장 완료
+                    {ch1Done}
                   </div>
                 )}
               </div>
