@@ -428,7 +428,7 @@ a {
 .app-tile-frame {
   position: relative;
   z-index: 1;
-  height: clamp(260px, 35vw, 512px);
+  height: clamp(250px, 33vw, 476px);
   max-width: 100%;
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -440,7 +440,7 @@ a {
   z-index: 1;
   display: block;
   width: 100%;
-  max-height: clamp(260px, 35vw, 512px);
+  max-height: clamp(250px, 33vw, 476px);
   object-fit: cover;
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-overlay);
