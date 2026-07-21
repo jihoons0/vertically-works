@@ -16,6 +16,7 @@ import {
   Long_Cang,
 } from "next/font/google";
 import localFont from "next/font/local";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { Agentation } from "agentation";
@@ -98,6 +99,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Google Analytics 4 · loads in production only, so local dev stays out of the
+  // reports. Defaults to the site's Measurement ID; override with NEXT_PUBLIC_GA_ID.
+  // @next/third-parties + GA4 Enhanced Measurement track App Router route changes.
+  const gaId = process.env.NEXT_PUBLIC_GA_ID ?? "G-PP1Z3F3QT6";
   return (
     <html
       lang="en"
@@ -116,6 +121,7 @@ export default function RootLayout({
           )}
         </ThemeProvider>
       </body>
+      {process.env.NODE_ENV === "production" && gaId && <GoogleAnalytics gaId={gaId} />}
     </html>
   );
 }
