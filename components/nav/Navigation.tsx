@@ -28,6 +28,7 @@ const APP_LINKS: { href: string; name: string; sub: string; wip?: boolean }[] = 
   { href: "/apps/news", name: "News", sub: "Daily newspaper · Web" },
   { href: "/apps/listen", name: "Listen", sub: "Podcast player · Web", wip: true },
   { href: "/apps/chat", name: "Chat", sub: "AI chat · Web", wip: true },
+  { href: "/apps/poem", name: "Poem", sub: "Poetry reader · iOS", wip: true },
 ];
 
 // Small tag for apps that are announced but not yet live.

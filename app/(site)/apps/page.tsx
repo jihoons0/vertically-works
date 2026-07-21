@@ -84,6 +84,20 @@ const APPS = [
       "Where the composer sits without fighting the flow",
     ],
   },
+  {
+    id: "poem",
+    name: "Poem",
+    platform: "iOS",
+    status: "WIP",
+    href: "/apps/poem",
+    description:
+      "A reader and composer for East Asian poetry, set fully vertical and right to left.",
+    challenges: [
+      "A feed that materializes and dissipates · the ink dissolve is the transition",
+      "Poems as vertical columns, right→left · kinsoku wraps the long lines",
+      "A form-aware composer · a live 5·7·5 counter, haptic on target",
+    ],
+  },
 ];
 
 export default function ApplicationsPage() {
