@@ -201,43 +201,6 @@ export default async function ComponentPage({ params }: Props) {
           <DosDonts doList={comp.doList} dontList={comp.dontList} />
         </div>
 
-        {/* Accessibility */}
-        <div style={{ marginTop: "var(--space-10)" }}>
-          <h2 style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-fg)", margin: "0 0 var(--space-5)" }}>
-            Accessibility
-          </h2>
-          <div
-            style={{
-              padding: "var(--space-5) var(--space-6)",
-              borderRadius: "var(--radius-lg)",
-              background: "var(--color-bg-subtle)",
-              border: "1px solid var(--color-border)",
-            }}
-          >
-            <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.7 }}>
-              {comp.accessibility}
-            </p>
-          </div>
-        </div>
-
-        {/* Open question */}
-        <div style={{ marginTop: "var(--space-10)" }}>
-          <h2 style={{ fontSize: "1.25rem", fontWeight: 600, letterSpacing: "-0.02em", color: "var(--color-fg)", margin: "0 0 var(--space-5)" }}>
-            Open Question
-          </h2>
-          <div
-            style={{
-              padding: "var(--space-5) var(--space-6)",
-              borderRadius: "var(--radius-lg)",
-              border: "1px dashed var(--color-border-strong)",
-            }}
-          >
-            <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-muted)", margin: 0, lineHeight: 1.7, fontStyle: "italic" }}>
-              {comp.openQuestion}
-            </p>
-          </div>
-        </div>
-
         {/* Prev / Next navigation */}
         <div
           className="components-twoup"
