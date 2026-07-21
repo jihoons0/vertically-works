@@ -65,7 +65,7 @@ export function ThemeSheet({
     <VerticalSheet
       open={open}
       onClose={onClose}
-      edge="left"
+      edge="right"
       aria-label={`${t.themes} · ${t.typeface}`}
       panelStyle={{ width: "min(88vw, 360px)", maxWidth: "min(88vw, 360px)" }}
     >

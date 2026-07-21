@@ -11,6 +11,7 @@ export interface Strings {
   stories: string;
   editionCapsule: string;
   sections: string;
+  trace: string;
   sources: string;
   themes: string;
   addFeed: string;
@@ -55,6 +56,7 @@ export const STRINGS: Record<EditionId, Strings> = {
     stories: "기사 목록",
     editionCapsule: "판 선택",
     sections: "지면",
+    trace: "위치",
     sources: "피드",
     themes: "지면 색",
     addFeed: "피드 추가",
@@ -96,6 +98,7 @@ export const STRINGS: Record<EditionId, Strings> = {
     stories: "記事一覧",
     editionCapsule: "版の選択",
     sections: "紙面",
+    trace: "現在地",
     sources: "フィード",
     themes: "紙面の色",
     addFeed: "フィード追加",
@@ -137,6 +140,7 @@ export const STRINGS: Record<EditionId, Strings> = {
     stories: "新聞列表",
     editionCapsule: "選擇版本",
     sections: "版面",
+    trace: "位置",
     sources: "訂閱源",
     themes: "版面色",
     addFeed: "新增訂閱",

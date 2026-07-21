@@ -95,15 +95,17 @@ export function SourcesSheet({
     <VerticalSheet
       open={open}
       onClose={onClose}
-      edge="left"
+      edge="right"
       aria-label={t.sources}
       panelStyle={{ width: "min(88vw, 480px)", maxWidth: "min(88vw, 480px)" }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
         {/* Default sources · vertical cells, toggle up = on */}
-        <section aria-label={t.defaultSources}>
-          <h2 style={sheetHeadingStyle}>{t.defaultSources}</h2>
-          <div style={{ display: "flex", flexDirection: "row-reverse", flexWrap: "wrap", gap: "var(--space-3)", justifyContent: "flex-end" }}>
+        <section aria-label={t.defaultSources} style={sheetSectionStyle}>
+          <h2 style={sheetHeadingStyle}>
+            <VerticalText text={t.defaultSources} chrome />
+          </h2>
+          <div style={{ flex: 1, display: "flex", flexDirection: "row-reverse", flexWrap: "wrap", gap: "var(--space-3)", justifyContent: "flex-end" }}>
             {defaults.map((source) => {
               const on = !disabled.includes(source.id);
               const failed = failedNames.has(source.name);
@@ -145,8 +147,11 @@ export function SourcesSheet({
         </section>
 
         {/* Custom feeds */}
-        <section aria-label={t.customFeeds}>
-          <h2 style={sheetHeadingStyle}>{t.addFeed}</h2>
+        <section aria-label={t.customFeeds} style={sheetSectionStyle}>
+          <h2 style={sheetHeadingStyle}>
+            <VerticalText text={t.addFeed} chrome />
+          </h2>
+          <div style={{ flex: 1, minWidth: 0 }}>
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -207,6 +212,7 @@ export function SourcesSheet({
               ))}
             </div>
           )}
+          </div>
         </section>
       </div>
 
@@ -242,12 +248,23 @@ export function SourcesSheet({
   );
 }
 
+/** Section rows read R→L: the vertical heading sits at the reading start. */
+const sheetSectionStyle: React.CSSProperties = {
+  display: "flex",
+  flexDirection: "row-reverse",
+  alignItems: "flex-start",
+  gap: "var(--space-4)",
+};
+
 const sheetHeadingStyle: React.CSSProperties = {
-  margin: "0 0 var(--space-4)",
-  fontSize: "0.75rem",
+  margin: 0,
+  writingMode: "vertical-rl",
+  textOrientation: "mixed",
+  fontSize: "0.8125rem",
   fontWeight: 600,
-  letterSpacing: "0.08em",
+  letterSpacing: "0.1em",
   color: "var(--color-fg-subtle)",
+  flexShrink: 0,
 };
 
 function shortUrl(url: string): string {

@@ -68,6 +68,18 @@
   text-combine-upright: all;
 }
 
+/* Clip-truncation softener · vertical text has no ellipsis, so a column that
+   fills its block-size fades out at the cut instead of hard-clipping. */
+.news-shell .fade-edge-block,
+.fade-edge-block {
+  mask-image: linear-gradient(
+    to bottom,
+    black 0,
+    black calc(100% - var(--space-6)),
+    transparent 100%
+  );
+}
+
 /* Hide scrollbars on the front-page scroller — the page indicator is the
    position affordance. */
 .no-scrollbar {

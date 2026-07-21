@@ -23,9 +23,10 @@ export function relativeTime(iso: string, edition: EditionId, now = Date.now()):
   return `${Math.round(hours / 24)}${u.day}`;
 }
 
-/** Masthead date · 「7月13日」-style groups ≤3 digits so each sets as one tcy cell. */
+/** Masthead date · a 2-digit year and 「7月13日」-style groups, each ≤3 digits so
+ *  it sets as one upright tate-chu-yoko cell (「26」 not 「2026」). */
 export function mastheadDate(edition: EditionId, date = new Date()): string {
-  const y = date.getFullYear();
+  const y = String(date.getFullYear() % 100).padStart(2, "0");
   const m = date.getMonth() + 1;
   const d = date.getDate();
   if (edition === "ko") return `${y}년 ${m}월 ${d}일`;

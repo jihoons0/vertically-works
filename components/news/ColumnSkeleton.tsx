@@ -11,12 +11,10 @@
 
 export function ColumnSkeleton({
   count = 8,
-  height,
   cellWidth,
   gap,
 }: {
   count?: number;
-  height: number | string;
   cellWidth: number;
   gap: number;
 }) {
@@ -24,11 +22,13 @@ export function ColumnSkeleton({
     <div
       aria-hidden
       style={{
-        display: "flex",
-        flexDirection: "row-reverse",
+        display: "grid",
+        gridTemplateRows: "1fr 1fr",
+        gridAutoFlow: "column",
+        gridAutoColumns: `${cellWidth}px`,
         gap,
         height: "100%",
-        alignItems: "stretch",
+        direction: "rtl",
       }}
     >
       {Array.from({ length: count }, (_, i) => (
@@ -36,9 +36,7 @@ export function ColumnSkeleton({
           key={i}
           className="vn-skeleton"
           style={{
-            width: cellWidth,
-            height,
-            flexShrink: 0,
+            height: "100%",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -49,12 +47,11 @@ export function ColumnSkeleton({
             animationDelay: `${i * 90}ms`,
           }}
         >
-          {/* leading index slot */}
-          <span style={{ width: 16, height: 16, borderRadius: "var(--radius-sm)", background: "var(--color-bg-muted)" }} />
-          {/* title / subtitle columns */}
+          {/* title / body / subtitle columns */}
           <span style={{ display: "flex", flexDirection: "row-reverse", gap: "var(--space-2)", flex: 1, minHeight: 0 }}>
             <span style={{ width: 15, height: "88%", borderRadius: "var(--radius-full)", background: "var(--color-bg-muted)" }} />
-            <span style={{ width: 10, height: "55%", borderRadius: "var(--radius-full)", background: "var(--color-bg-subtle)" }} />
+            <span style={{ width: 20, height: "60%", borderRadius: "var(--radius-full)", background: "var(--color-bg-subtle)" }} />
+            <span style={{ width: 9, height: "38%", borderRadius: "var(--radius-full)", background: "var(--color-bg-subtle)" }} />
           </span>
           <span style={{ width: 12, height: 12, borderRadius: "var(--radius-sm)", background: "var(--color-bg-muted)" }} />
         </div>

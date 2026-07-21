@@ -22,6 +22,9 @@ export interface VerticalListCellProps
   title: ReactNode;
   /** Secondary label, set vertically beside the title (to its left · read second). */
   subtitle?: ReactNode;
+  /** Body/summary set vertically to the left of the title · wraps to at most
+   *  2 columns, then clips. Reads after the title, before the subtitle. */
+  body?: ReactNode;
   /** Slot at the top of the column · the reading start (index, icon, avatar…). */
   leading?: ReactNode;
   /** Bottom accessory. `chevron` points down: "continues along the reading axis". */
@@ -36,6 +39,7 @@ export interface VerticalListCellProps
 export function VerticalListCell({
   title,
   subtitle,
+  body,
   leading,
   accessory = "chevron",
   selected,
@@ -51,9 +55,12 @@ export function VerticalListCell({
       role={selected !== undefined ? "option" : undefined}
       aria-selected={selected}
       style={{
+        // The cell's inner layout is LTR so `row-reverse` keeps the title at
+        // the reading start (right) even when an ancestor scroller is `rtl`.
+        direction: "ltr",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex-end",
         justifyContent: "flex-start",
         gap: "var(--space-3)",
         height,
@@ -76,30 +83,59 @@ export function VerticalListCell({
         </span>
       )}
 
-      {/* Title rightmost, subtitle to its left · reading order within the cell */}
+      {/* Title rightmost, subtitle to its left · reading order within the cell.
+          `overflow: hidden` + `minHeight: 0` keep every column clipped to the
+          cell's height so the body can't spill past the bottom. */}
       <span
         style={{
           display: "flex",
           flexDirection: "row-reverse",
           alignItems: "flex-start",
-          gap: "var(--space-2)",
+          gap: "var(--space-1)",
           flex: 1,
           minHeight: 0,
+          minWidth: 0,
+          overflow: "hidden",
         }}
       >
+        {/* Title · a single column, clipped to the cell's block-size (there is
+            no ellipsis in vertical text — the clip is the affordance). */}
         <span
+          className="fade-edge-block"
           style={{
             writingMode: "vertical-rl",
             textOrientation: "mixed",
             fontSize: "0.9375rem",
             fontWeight: 600,
             letterSpacing: "0.05em",
+            maxHeight: "100%",
+            whiteSpace: "nowrap",
             overflow: "hidden",
-            textOverflow: "ellipsis",
           }}
         >
           {title}
         </span>
+        {/* Body · lines run top→bottom (capped to the cell height), wrapping
+            into at most 2 columns (width = 2 line-boxes), then clips. In
+            vertical-rl the physical width is the block axis = column count. */}
+        {body && (
+          <span
+            className="fade-edge-block"
+            style={{
+              writingMode: "vertical-rl",
+              textOrientation: "mixed",
+              fontSize: "0.75rem",
+              lineHeight: 1.7,
+              color: "var(--color-fg-muted)",
+              maxHeight: "100%",
+              width: "calc(2 * 1.7em)",
+              whiteSpace: "normal",
+              overflow: "hidden",
+            }}
+          >
+            {body}
+          </span>
+        )}
         {subtitle && (
           <span
             style={{
@@ -109,8 +145,9 @@ export function VerticalListCell({
               color: "var(--color-fg-subtle)",
               letterSpacing: "0.05em",
               paddingTop: 2,
+              maxHeight: "100%",
+              whiteSpace: "nowrap",
               overflow: "hidden",
-              textOverflow: "ellipsis",
             }}
           >
             {subtitle}
