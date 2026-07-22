@@ -102,7 +102,7 @@ export default function RootLayout({
   // Google Analytics 4 · loads in production only, so local dev stays out of the
   // reports. Defaults to the site's Measurement ID; override with NEXT_PUBLIC_GA_ID.
   // @next/third-parties + GA4 Enhanced Measurement track App Router route changes.
-  const gaId = process.env.NEXT_PUBLIC_GA_ID ?? "G-PP1Z3F3QT6";
+  const gaId = process.env.NEXT_PUBLIC_GA_ID ?? "G-WFQXMMBH3G";
   return (
     <html
       lang="en"
