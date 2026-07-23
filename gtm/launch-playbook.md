@@ -52,7 +52,7 @@ Companion files: `site-copy.md` (all rewritten copy), `README.md` (paste-ready),
 ### Copy (all drafted in site-copy.md)
 - New hero (launch mode H1 + subhead)
 - Byline block: "A living study by Jihoon Suh" + links · your name is currently invisible on the site
-- About section: the 2020 essay → Baram typeface → Yanlin → six years → working system
+- About section: the 2019 essay → Baram typeface → Yanlin → seven years → working system
 - FAQ pre-answering the three guaranteed HN attacks (most digital CJK is horizontal / why not rotate / does a11y work)
 - Voice fix: we → I; retire "canonical reference" until the numbers back it
 - One-liner system across title tag, meta, OG, GitHub About, npm, X bio
@@ -82,7 +82,7 @@ Companion files: `site-copy.md` (all rewritten copy), `README.md` (paste-ready),
 ### 5.1 Show HN
 - Post 7:00–8:00am ET Tuesday from your own account
 - Title: `Show HN: Vertically Works – UI components for vertical CJK writing (top-to-bottom, RTL)`
-- Immediately add a first comment: the personal story (Baram typeface, the 2020 essay with Yanlin, six years, why rotation fails, the IME problem). The About section in site-copy.md is 90% of this comment.
+- Immediately add a first comment: the personal story (Baram typeface, the 2019 essay with Yanlin, seven years, why rotation fails, the IME problem). The About section in site-copy.md is 90% of this comment.
 - Live in the thread 6+ hours. Answer everything, concede good points, link the Challenges page for open questions. The FAQ answers are your prepared ammunition.
 - A front page run realistically delivers 1,000–3,000 stars.
 

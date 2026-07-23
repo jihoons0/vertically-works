@@ -71,8 +71,8 @@ npx shadcn@latest add https://vertically.works/r/vertical-button.json
 
 ## [TRANSLATE: The applications]
 
-<!-- KEEP links + TestFlight URL -->
-- **[Vertically Verse](https://vertically.works/apps/vertically-verse)** · [TRANSLATE desc] · [TestFlight](https://testflight.apple.com/join/DY7MKU7m)
+<!-- KEEP links + App Store URL -->
+- **[Vertically Verse](https://vertically.works/apps/vertically-verse)** · [TRANSLATE desc] · [App Store](https://apps.apple.com/us/app/vertically-verse/id6787391508)
 - **[Vertically To-do](https://vertically.works/apps/vertically-do)** · [TRANSLATE desc]
 - **[Vertically Listen](https://vertically.works/apps/vertically-listen)** · [TRANSLATE desc]
 - **[Vertically News](https://vertically.works/apps/vertically-news)** · [TRANSLATE desc]

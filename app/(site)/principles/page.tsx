@@ -13,8 +13,8 @@ const PRINCIPLES = [
     id: "reading-flow",
     number: "01",
     title: "Respect Reading Flow",
-    description: "Reading direction creates expectations. Interfaces that reinforce those expectations feel natural; interfaces that oppose them feel disorienting, even when the user cannot articulate why.",
-    detail: "Motion, navigation, hierarchy, layout, spacing · every layer of interface design is affected by how the reader scans. In a vertical interface, 'up' and 'down' have different meanings. 'Left' and 'right' carry semantic weight they do not carry in horizontal UIs.",
+    description: "Reading direction sets expectations. Reinforce them and the interface feels natural; fight them and it feels disorienting, even when the user cannot say why.",
+    detail: "Motion, navigation, hierarchy, layout, spacing: every layer answers to how the reader scans. Turn the page vertical and 'up' and 'down' change meaning, and 'left' and 'right' carry weight they never had horizontally.",
     related: [
       { label: "Vertical List Cell", href: "/components/vertical-list-cell" },
       { label: "Tiered Page", href: "/components/tiered-page" },
@@ -25,8 +25,8 @@ const PRINCIPLES = [
     id: "motion-meaning",
     number: "02",
     title: "Motion Has Meaning",
-    description: "Every animation communicates something. In a vertical interface, the direction, duration, and easing of motion must be calibrated to the reading axis, not imported from horizontal conventions.",
-    detail: "A drawer that slides from the right edge of an RTL reading interface travels toward the reader's origin · which feels like an intrusion. The same drawer sliding from below follows an orthogonal axis · which feels like a new layer. Neither is right by default; you choose one on purpose.",
+    description: "Every animation says something. On the vertical axis, direction, duration, and easing answer to the reading direction, not to horizontal habit.",
+    detail: "In an RTL interface, a drawer from the right edge travels toward the reader's origin and feels like an intrusion. The same drawer from below crosses an orthogonal axis and feels like a new layer. Neither is right by default; you choose one on purpose.",
     related: [
       { label: "Sheet", href: "/components/sheet" },
       { label: "Dialog", href: "/components/dialog" },
@@ -38,7 +38,7 @@ const PRINCIPLES = [
     number: "03",
     title: "Interaction Before Typography",
     description: "A vertical interface exists to make behavior match how you read. Typography serves that behavior; it is not the goal.",
-    detail: "A common mistake is to treat vertical text as a typographic exercise · rotating existing components or applying writing-mode to achieve aesthetic effect. The question is not 'does this look like a vertical book?' but 'does this behave like one?'",
+    detail: "The common mistake is treating vertical text as a typographic exercise, rotating components or applying writing-mode for effect. The test is not 'does this look like a vertical book?' but 'does it behave like one?'",
     related: [
       { label: "Button", href: "/components/button" },
       { label: "Toggle", href: "/components/toggle" },
@@ -49,8 +49,8 @@ const PRINCIPLES = [
     id: "mixed-first",
     number: "04",
     title: "Mixed Language First",
-    description: "Real CJK content always contains mixed scripts · han characters, kana, hangul, Latin numerals, Roman punctuation, and URL-like strings. Design for this mixture from day one.",
-    detail: "Designing for pure CJK text produces a brittle system. Verse references, dates, measurements, code snippets, and proper nouns will appear in any real document. Each character class needs correct orientation defined at the token level.",
+    description: "Real CJK content is never pure. Han, kana, hangul, Latin numerals, Roman punctuation, and URL-like strings share the column. Design for the mixture from day one.",
+    detail: "Design for pure CJK and the system breaks on contact. References, dates, measurements, code, and proper nouns show up in any real document, and each character class needs its orientation set at the token level.",
     related: [
       { label: "Verse", href: "/components/verse" },
       { label: "Text Field", href: "/components/text-field" },
@@ -62,7 +62,7 @@ const PRINCIPLES = [
     number: "05",
     title: "Accessibility Is Fundamental",
     description: "Vertical interfaces raise accessibility problems horizontal design systems never faced. Solve them from the start.",
-    detail: "Arrow key semantics change. Screen reader reading order depends on column order. Reduced motion must account for the directional nature of vertical animations. Focus management must traverse RTL column order correctly.",
+    detail: "Arrow keys change meaning. Screen-reader order follows column order. Reduced motion has to account for directional animation, and focus has to traverse RTL columns.",
     related: [
       { label: "Tabs", href: "/components/tabs" },
       { label: "Dialog", href: "/components/dialog" },
@@ -73,8 +73,8 @@ const PRINCIPLES = [
     id: "progressive-familiarity",
     number: "06",
     title: "Progressive Familiarity",
-    description: "Users who are new to vertical interfaces need a ramp. Vertical interaction is unfamiliar to most digital users, even those who read vertically in print.",
-    detail: "A sudden full-vertical interface is disorienting. The best approach is progressive introduction · starting with familiar patterns in the navigation chrome, then deepening the vertical commitment in the content area, then finally in gesture interactions.",
+    description: "Vertical interaction is new to most digital users, even ones who read vertically in print. Give them a ramp.",
+    detail: "A sudden full-vertical interface disorients. Introduce it in stages: familiar patterns in the navigation chrome first, deeper vertical commitment in the content, then the gestures.",
     related: [
       { label: "Vertically To-do", href: "/apps/todo" },
       { label: "Vertically Verse", href: "/apps/verse" },
@@ -85,7 +85,7 @@ const PRINCIPLES = [
     number: "07",
     title: "Research Never Ends",
     description: "Most questions in vertical interface design do not have correct answers yet. Document what is unknown as carefully as what is known.",
-    detail: "Treating open questions as closed produces brittle design systems. The best vertical interface decisions are made with an explicit model of what is known and what remains a hypothesis.",
+    detail: "Treating open questions as closed produces brittle design systems. The strongest vertical-interface decisions come from an explicit model of what is known and what is still a hypothesis.",
     related: [
       { label: "Challenges", href: "/challenges" },
       { label: "Components", href: "/components" },

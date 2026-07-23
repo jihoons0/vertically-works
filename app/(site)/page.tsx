@@ -53,7 +53,7 @@ const APPLICATIONS: ShowcaseApp[] = [
     href: "/apps/news",
     tagline: "Headlines as a vertical newspaper",
     description:
-      "A daily front page of live Korean, Japanese, and Chinese headlines, set right-to-left as a vertical newspaper — real-world digits, acronyms, and line-breaking under load.",
+      "A daily front page of live Korean, Japanese, and Chinese headlines, set right-to-left as a vertical newspaper: real-world digits, acronyms, and line-breaking under load.",
     media: { type: "video", src: "/videos/vertically-news.mp4", aspect: "1734 / 1544" },
   },
   {
@@ -64,7 +64,7 @@ const APPLICATIONS: ShowcaseApp[] = [
     href: "/apps/chat",
     tagline: "An AI chat that reads vertically",
     description:
-      "An AI chat that reads top to bottom, right to left. Every turn is a column — new turns enter from the left, oldest at the right edge, with the composer as the rightmost column.",
+      "An AI chat that reads top to bottom, right to left. Every turn is a column: new turns enter from the left, oldest at the right edge, with the composer as the rightmost column.",
     media: { type: "video", src: "/videos/vertically-chat.mp4", aspect: "1828 / 1544" },
   },
 ];
@@ -87,7 +87,7 @@ const PRINCIPLES = [
   { id: "interaction-first", title: "Interaction Before Typography", description: "Behavior is the goal; typography enables it." },
   { id: "mixed-first", title: "Mixed Language First", description: "Design for mixed scripts, not the average." },
   { id: "accessibility", title: "Accessibility Is Fundamental", description: "Keyboard, touch, screen reader, reduced motion, built in." },
-  { id: "progressive-familiarity", title: "Progressive Familiarity", description: "New readers need a ramp · deepen the vertical commitment gradually." },
+  { id: "progressive-familiarity", title: "Progressive Familiarity", description: "New readers need a ramp · deepen the vertical commitment in stages." },
   { id: "uncertainty", title: "Research Never Ends", description: "Document open questions beside resolved ones." },
 ];
 
@@ -337,7 +337,7 @@ export default function HomePage() {
                   background: "var(--color-fg)", color: "var(--color-bg)",
                 }}
               >
-                Learn more about why I&rsquo;m doing this
+                Why I built this
                 <ArrowRight size={16} strokeWidth={2.25} aria-hidden />
               </Link>
             </figure>

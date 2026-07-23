@@ -7,7 +7,7 @@ import { InstallBanner } from "@/components/ui/InstallBanner";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Vertically Works is a living study by Jihoon Suh · what interface design becomes when reading flows top to bottom, right to left.",
+    "A living study by Jihoon Suh of what interface design becomes when reading flows top to bottom, right to left.",
 };
 
 const ESSAY_URL =
@@ -16,20 +16,20 @@ const ESSAY_URL =
 const FAQ = [
   {
     q: "Isn't most digital CJK text horizontal anyway?",
-    a: "Yes · and that is part of the point. Korean went almost entirely horizontal within living memory; Japanese and Chinese screens default to horizontal too. But vertical setting never died: novels, manga, scripture, newspapers, calligraphy, signage. Today the axis is chosen by the toolchain, not the designer. Horizontal is a default, not a conclusion. This project exists so the choice can be real.",
+    a: "Yes, and that's the point. Korean went almost fully horizontal within living memory, and Japanese and Chinese screens default to horizontal too. But vertical setting never died: novels, manga, scripture, newspapers, signage. The toolchain picks the axis now, not the designer. This project exists so the choice can be real again.",
   },
   {
     q: "Why not just rotate existing components?",
-    a: "Rotation transforms pixels, not behavior. A rotated toggle animates on the wrong axis. Rotated text stops being text: selection breaks, screen readers announce the wrong order, IME composition falls apart. Everything here is built on true writing-mode: vertical-rl, so text stays selectable, searchable, and accessible · and motion, focus, and gesture are redesigned for the axis rather than spun ninety degrees.",
+    a: "Rotation moves pixels, not behavior. A rotated toggle animates on the wrong axis. Rotated text stops being text: selection breaks, screen readers read the wrong order, IME composition falls apart. Everything here is built on true writing-mode: vertical-rl, so text stays selectable, searchable, and accessible, and motion, focus, and gesture are designed for the axis instead of spun ninety degrees.",
   },
   {
     q: "Does this work with keyboards and screen readers?",
     a: (
       <>
-        It is the hardest part, so I build it in from the start. I remap the arrow keys · next
-        character is down, next line is left · focus traverses columns
-        right to left, and every duration collapses to zero under prefers-reduced-motion. Each
-        component documents its accessibility behavior. What remains unsolved is listed openly in{" "}
+        It is the hardest part, so I build it in from the start. The arrow keys remap (down for the
+        next character, left for the next line), focus traverses columns right to left, and every
+        duration collapses to zero under prefers-reduced-motion. Each component documents its
+        accessibility behavior, and what is still unsolved sits in{" "}
         <Link
           href="/challenges"
           style={{ color: "var(--color-fg)", fontWeight: 500, textDecoration: "underline", textUnderlineOffset: 3 }}
@@ -42,7 +42,7 @@ const FAQ = [
   },
   {
     q: "Can I use this in production?",
-    a: "The components are MIT-licensed source you copy and own, with zero runtime dependencies · nothing to lock into, nothing to break under you. The system itself is young. Treat it the way you treated early shadcn/ui: read the source, adapt it, and file what you find.",
+    a: "The components are MIT-licensed source you copy and own, with zero runtime dependencies. Nothing to lock into, nothing to break under you. The system is young, though. Treat it like early shadcn/ui: read the source, adapt it, and file what you find.",
   },
 ];
 
@@ -108,8 +108,8 @@ export default function AboutPage() {
               </h2>
               <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
                 {[
-                  { href: "/challenges", title: "Challenges", gloss: "The open questions · design problems with no obvious answer once the reading axis changes." },
-                  { href: "/principles", title: "Principles", gloss: "The rules derived from trying to answer them · patterns from building on the vertical axis." },
+                  { href: "/challenges", title: "Challenges", gloss: "Design problems with no obvious answer once the reading axis changes." },
+                  { href: "/principles", title: "Principles", gloss: "Rules I settled on while building on the vertical axis." },
                 ].map((r) => (
                   <Link
                     key={r.href}
@@ -139,11 +139,11 @@ export default function AboutPage() {
             </h2>
 
             <p style={paragraph}>
-              Vertically Works began with a typeface. Baram, Yong Jae Lee&rsquo;s Korean font from 2015,
-              was crowd-funded and designed natively for vertical setting. It showed me how much labor
-              hides inside a script: a Korean typeface needs more than 3,350 glyphs before it
-              can say anything at all. Print spent centuries refining vertical typography. Screens started
-              horizontal and stayed there.
+              Vertically Works began with a typeface. Baram, Yong Jae Lee&rsquo;s crowd-funded Korean
+              font from 2015, was drawn natively for vertical setting. It showed me how much labor hides
+              inside a script: a Korean typeface needs more than 3,350 glyphs before it can say anything.
+              Print spent centuries refining vertical typography. Screens started horizontal and stayed
+              there.
             </p>
 
             <p style={paragraph}>
@@ -151,25 +151,23 @@ export default function AboutPage() {
               <Link href={ESSAY_URL} target="_blank" rel="noopener noreferrer" style={linkStyle}>
                 an essay
               </Link>{" "}
-              and a set of scrappy explorations asking one question: can vertical type work in user
-              interface? The honest answer at the time was that nobody knew. The components you would
-              need to find out did not exist.
+              and some scrappy explorations, all asking one question: can vertical type work in an
+              interface? Nobody knew. The components you would need to find out did not exist.
             </p>
 
             <p style={paragraph}>
-              The question outlasted the essay. Every few months I came back to it and hit the same
-              wall: you cannot study vertical interaction with horizontal parts. So, eventually, I built
-              the parts.
+              The question outlasted the essay. Every few months I came back and hit the same wall: you
+              cannot study vertical interaction with horizontal parts. So I built the parts.
             </p>
 
             <p style={paragraph}>
-              Vertically Works is the result · components built on true writing-mode: vertical-rl,
-              applications that put them under real load, and open questions documented as carefully as
-              the answers.
+              Vertically Works is the result. Components built on true writing-mode: vertical-rl,
+              applications that put them under load, and open questions documented as carefully as the
+              answers.
             </p>
 
             <p style={{ fontSize: "0.9375rem", color: "var(--color-fg-subtle)", margin: "var(--space-8) 0 0" }}>
-              · Jihoon Suh, New York
+              &mdash; Jihoon Suh, New York
             </p>
 
             {/* FAQ */}

@@ -29,7 +29,7 @@ const CHALLENGES: {
     status: "Open",
     question: "Should a sheet animate from screen geometry or reading direction?",
     description:
-      "When a bottom sheet slides up in a horizontal interface, the direction matches gravity and screen edge proximity. In a vertical, RTL interface, dismissal toward the bottom-right conflicts with the reading direction. Which axis wins?",
+      "In a horizontal interface a bottom sheet slides up, matching gravity and the screen edge. In a vertical, RTL interface, dismissing toward the bottom-right fights the reading direction. Which axis wins?",
     related: [
       { label: "Sheet", href: "/components/sheet" },
       { label: "Dialog", href: "/components/dialog" },
@@ -42,7 +42,7 @@ const CHALLENGES: {
     status: "Partially Resolved",
     question: "How should mixed CJK and Latin content behave in the same column?",
     description:
-      "A verse reference like 「창 1:1」 contains hangul, ASCII colon, Latin digits, and CJK brackets · each needing different orientation. Unicode defines orientation per character class, but browser and OS implementations differ.",
+      "A verse reference like 「창 1:1」 mixes hangul, an ASCII colon, Latin digits, and CJK brackets, each needing a different orientation. Unicode defines orientation per character class, but browsers and operating systems disagree.",
     related: [
       { label: "Verse", href: "/components/verse" },
       { label: "Text Field", href: "/components/text-field" },
@@ -55,7 +55,7 @@ const CHALLENGES: {
     status: "Open",
     question: "Where does the navigation rail belong in a vertical-first interface?",
     description:
-      "Horizontal apps put navigation at the bottom (mobile) or left (desktop) based on thumb reach and primary reading axis. In a vertical, RTL reading interface, the primary axis is down-the-column, and columns flow right-to-left. The \"natural\" position of a rail is not obvious.",
+      "Horizontal apps put navigation at the bottom on mobile or the left on desktop, following thumb reach and the reading axis. Here the axis runs down the column and columns flow right to left, so the \"natural\" spot for a rail is not obvious.",
     related: [
       { label: "Tabs", href: "/components/tabs" },
       { label: "Chapter Navigation", href: "/components/chapter-navigation" },
@@ -67,7 +67,7 @@ const CHALLENGES: {
     status: "Open",
     question: "How does text selection work when reading flows top-to-bottom, right-to-left?",
     description:
-      "Click-drag selection assumes a left-to-right baseline. The OS text selection rectangle must account for RTL column ordering, column breaks, and tate-chu-yoko groups that behave as single units.",
+      "Click-drag selection assumes a left-to-right baseline. The OS selection rectangle has to track RTL column order, column breaks, and tate-chu-yoko groups that behave as single units.",
     related: [
       { label: "Marker", href: "/components/marker" },
       { label: "Hyperlink Treatment", href: "/components/hyperlink-treatment" },
@@ -80,7 +80,7 @@ const CHALLENGES: {
     status: "Open",
     question: "Where does the IME candidate window appear when input is vertical?",
     description:
-      "Input Method Editors (CJK composition) display candidate windows horizontally by default. In a vertical context, the candidate window placement must not obscure the composition point · but the platform IME API rarely exposes enough control to correct this.",
+      "Input Method Editors show their candidate window horizontally by default. In a vertical context it must not cover the composition point, but the platform IME API rarely gives enough control to place it correctly.",
     related: [
       { label: "Search", href: "/components/search" },
       { label: "Text Field", href: "/components/text-field" },
@@ -93,7 +93,7 @@ const CHALLENGES: {
     status: "Open",
     question: "What do the arrow keys mean in a vertical, RTL interface?",
     description:
-      "Arrow keys in a horizontal interface move left/right within a line and up/down between lines. In a vertical interface, \"next character\" is downward; \"next line\" is leftward. The keyboard navigation model must remap these to prevent disorientation.",
+      "In a horizontal interface, arrow keys move left/right within a line and up/down between lines. Vertical flips that: next character is down, next line is left. The keyboard model has to remap them or users lose their place.",
     related: [
       { label: "Tabs", href: "/components/tabs" },
       { label: "Slider", href: "/components/slider" },
@@ -106,7 +106,7 @@ const CHALLENGES: {
     status: "Open",
     question: "How does drag-and-drop reordering work when list items are columns?",
     description:
-      "List reordering assumes a vertical list of horizontal rows. In a vertical reading interface, a list of columns flowing RTL has a different primary axis for reorder gestures · left-right drag maps to position change, not the usual up-down.",
+      "List reordering assumes a vertical stack of horizontal rows. Here the list is columns flowing right to left, so the reorder gesture flips: left-right drag changes position, not the usual up-down.",
     related: [
       { label: "Vertical List Cell", href: "/components/vertical-list-cell" },
       { label: "Vertically To-do", href: "/apps/todo" },
@@ -118,7 +118,7 @@ const CHALLENGES: {
     status: "Open",
     question: "How should AI chat interfaces adapt to vertical writing systems?",
     description:
-      "AI conversation UIs are designed around horizontal text bubbles alternating left and right. For a CJK user reading vertically, this model imposes a foreign interaction pattern. What would a native vertical AI chat interface look like?",
+      "AI chat UIs are built around horizontal bubbles alternating left and right. For a CJK user reading vertically, that pattern feels foreign. What would a native vertical AI chat look like?",
     related: [
       { label: "Message", href: "/components/message" },
       { label: "Text Field", href: "/components/text-field" },
@@ -142,7 +142,7 @@ export default function ChallengesPage() {
           >
             Discussion on GitHub
           </Link>
-          . Strong answers get merged into the spec.
+          . I merge the strongest answers into the spec.
         </p>
       </div>
 

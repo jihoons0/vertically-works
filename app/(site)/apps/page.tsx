@@ -38,7 +38,7 @@ const APPS: ShowcaseApp[] = [
     status: "Live",
     href: "/apps/news",
     description:
-      "A daily front page of live Korean, Japanese, and Chinese headlines, set right-to-left as a vertical newspaper — real-world digits, acronyms, and line-breaking under load.",
+      "A daily front page of live Korean, Japanese, and Chinese headlines, set right-to-left as a vertical newspaper: real-world digits, acronyms, and line-breaking under load.",
     media: { type: "video", src: "/videos/vertically-news.mp4", aspect: "1734 / 1544" },
   },
   {
@@ -48,7 +48,7 @@ const APPS: ShowcaseApp[] = [
     status: "Live",
     href: "/apps/chat",
     description:
-      "An AI chat that reads top to bottom, right to left. Every turn is a column — new turns enter from the left, oldest at the right edge, with the composer as the rightmost column.",
+      "An AI chat that reads top to bottom, right to left. Every turn is a column: new turns enter from the left, oldest at the right edge, with the composer as the rightmost column.",
     media: { type: "video", src: "/videos/vertically-chat.mp4", aspect: "1828 / 1544" },
   },
   {

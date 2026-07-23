@@ -51,7 +51,7 @@ The copy sprint and half the hygiene list are live on the site:
 - ✅ **Hero GIF** made from your recording → `docs/media/toggle.gif` (549KB, cropped to the toggle tile) + `docs/media/components.gif` (699KB, full 6-tile grid for social/X)
 - ✅ **Root `README.md` swapped** with the reconciled draft (toggle GIF hero, TestFlight, @jihoons0, 2019/seven, Discussions link)
 - ✅ **8 RFC Discussions created & live** under the Ideas category → /discussions. **Manual step left:** pin up to 4 in the web UI (API can't pin; GitHub caps at 4)
-- [ ] Surface a TestFlight/App Store badge on the Verse **card + apps listing** (site change — say go)
+- ✅ **Verse graduated TestFlight → App Store** — `lib/appUrls.ts` + all `gtm/` drafts now point to `apps.apple.com/us/app/vertically-verse/id6787391508`. (Optional: add a formal App Store badge to the Verse card + apps listing.)
 - [ ] Reconcile the component count (site "20" vs 21 built)
 
 ### Resolved this session
