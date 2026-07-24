@@ -1,6 +1,6 @@
-<!-- Hero: media/toggle.gif (549KB). Swap to media/components.gif for the full 6-component grid if you prefer breadth over focus. -->
+<!-- Hero: media/components.gif (699KB), the six-component grid. Swap to media/toggle.gif for a single focused component. -->
 <p align="center">
-  <img src="./media/toggle.gif" alt="A vertical toggle whose thumb travels the reading axis · up is on" width="520" />
+  <img src="./media/components.gif" alt="Six vertical components in motion · a vertical dialog, a list-cell toggle, a column accordion, a tooltip opening along the reading direction, an edge sheet, and vertical tabs" width="820" />
 </p>
 
 # Vertically Works
@@ -90,10 +90,10 @@ Components never hardcode a color, size, or duration · restyle your copy by edi
 
 Four apps built on these principles, documented as case studies:
 
-- **[Vertically Verse](https://vertically.works/apps/vertically-verse)** · a fully vertical, RTL scripture reader for iOS · [App Store](https://apps.apple.com/us/app/vertically-verse/id6787391508)
-- **[Vertically To-do](https://vertically.works/apps/vertically-do)** · a to-do list where tasks are columns · [use it](https://vertically.works/apps/notes)
-- **[Vertically Listen](https://vertically.works/apps/vertically-listen)** · a podcast player with transcripts as vertical verse · in progress
-- **[Vertically News](https://vertically.works/apps/vertically-news)** · live KR/JP/CN headlines set as a vertical newspaper · [read it](https://vertically.works/apps/news)
+- **[Vertically Verse](https://vertically.works/apps/verse)** · a fully vertical, RTL scripture reader for iOS · [App Store](https://apps.apple.com/us/app/vertically-verse/id6787391508)
+- **[Vertically To-do](https://vertically.works/apps/todo)** · a to-do list where tasks are columns · [use it](https://todo.vertically.works)
+- **[Vertically News](https://vertically.works/apps/news)** · live KR/JP/CN headlines set as a vertical newspaper · [read it](https://news.vertically.works)
+- **[Vertically Chat](https://vertically.works/apps/chat)** · an AI chat where each turn is a column and the thread flows right to left · [try it](https://chat.vertically.works)
 
 ## Open questions · contributing
 
