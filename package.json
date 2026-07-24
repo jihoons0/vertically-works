@@ -1,0 +1,11 @@
+{
+  "name": "verticallyworks",
+  "version": "0.1.0",
+  "description": "Design tokens, vertical-typography rules, and copy-in React components for vertical (CJK) writing-mode interfaces.",
+  "homepage": "https://vertically.works",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "registry:build": "node scripts/build-registry.mjs"
+  }
+}

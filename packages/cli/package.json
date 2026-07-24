@@ -1,0 +1,35 @@
+{
+  "name": "verticallyworks",
+  "version": "0.1.0",
+  "description": "Copy-in components for vertical writing interfaces — design tokens and vertical-first React components from vertically.works",
+  "type": "module",
+  "bin": {
+    "verticallyworks": "bin/verticallyworks.mjs"
+  },
+  "files": [
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "author": "Jihoon Suh",
+  "homepage": "https://vertically.works",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jihoons0/vertically-works.git",
+    "directory": "packages/cli"
+  },
+  "keywords": [
+    "vertical-writing",
+    "writing-mode",
+    "cjk",
+    "design-system",
+    "react",
+    "components",
+    "vertical-rl",
+    "tategaki"
+  ]
+}
