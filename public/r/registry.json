@@ -134,6 +134,18 @@
           "type": "registry:component"
         }
       ]
+    },
+    {
+      "name": "column-accordion",
+      "type": "registry:component",
+      "title": "Column Accordion",
+      "description": "A disclosure list on the vertical axis. Each item is a collapsed title column; opening one unfolds its detail sideways as new columns along the reading direction, never downward. One item open at a time.",
+      "files": [
+        {
+          "path": "registry/components/column-accordion.tsx",
+          "type": "registry:component"
+        }
+      ]
     }
   ]
 }

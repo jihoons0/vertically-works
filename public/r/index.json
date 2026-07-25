@@ -65,6 +65,12 @@
       "title": "Vertical Tabs",
       "description": "A tab rail on the reading axis: vertical labels at the right edge, panels to their left, full tablist keyboard semantics.",
       "docs": "https://vertically.works/components/tabs"
+    },
+    {
+      "name": "column-accordion",
+      "title": "Column Accordion",
+      "description": "A disclosure list on the vertical axis. Each item is a collapsed title column; opening one unfolds its detail sideways as new columns along the reading direction, never downward. One item open at a time.",
+      "docs": "https://vertically.works/components/column-accordion"
     }
   ]
 }

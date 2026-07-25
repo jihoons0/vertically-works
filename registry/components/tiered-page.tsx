@@ -14,9 +14,9 @@
  * tiers. Without numbers it reads as a plain two-row spread — still uniquely
  * vertical, since the rows are runs of columns, not lines.
  *
- * The page never scrolls · turn pages with external controls along the
- * reading axis (see chapter-navigation). Columns are pinned to a fixed width
- * so a packed tier can never compress them into each other.
+ * The page never scrolls; turn pages with external controls along the
+ * reading axis. Columns are pinned to a fixed width so a packed tier can
+ * never compress them into each other.
  *
  * Docs: https://vertically.works/components/tiered-page
  */
