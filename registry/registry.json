@@ -34,8 +34,8 @@
     {
       "name": "toggle",
       "siteSlug": "toggle",
-      "title": "Vertical Toggle",
-      "description": "An on/off switch whose thumb travels the reading axis · up is on. role=\"switch\" semantics.",
+      "title": "縦書きトグル",
+      "description": "オン/オフを切り替える縦書きトグル。親指のノブは読み方向へ動き、上方向が ON。`role=\"switch\"` のセマンティクスを採用しています。",
       "type": "registry:component",
       "files": [
         { "path": "registry/components/toggle.tsx", "type": "registry:component" }

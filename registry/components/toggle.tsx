@@ -1,11 +1,11 @@
 "use client";
 
 /**
- * VerticalToggle · an on/off switch whose thumb travels the reading axis.
+ * VerticalToggle · 読み方向に沿って親指のノブが上下する縦書きのオン/オフ切替。
  *
- * In a vertical interface the toggle runs vertically: up is on, matching the
- * direction the eye moves instead of cutting across it. Semantics are a native
- * button with `role="switch"` + `aria-checked`; Space and Enter both toggle.
+ * 縦組みレイアウトでは上が ON。横方向への回転ではなく、表示方向そのものを縦に設計しています。
+ * role="switch" と aria-checked でネイティブなスイッチのセマンティクスを保持し、
+ * Space / Enter のどちらでもトグルできます。
  *
  * Docs: https://vertically.works/components/toggle
  */
@@ -63,7 +63,7 @@ export function VerticalToggle({
         style={{
           position: "absolute",
           left: 3,
-          top: checked ? 3 : 21, // up = on: the thumb rises toward the reading start
+          top: checked ? 3 : 21, // 上が ON: ノブは読み進行方向へ上方向に上がる
           width: 20,
           height: 20,
           borderRadius: "50%",
