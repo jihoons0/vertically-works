@@ -77,7 +77,7 @@ Decimal points and thousands separators between two digits are deliberately **le
 
 | Rule | Glyphs | Treatment |
 | --- | --- | --- |
-| **Rotate 90° CCW** | `( ) [ ]` `（） ［］ 【】 〈〉 《》` `ー ～ 〜 …` | Centered in a square cell, then `rotationEffect(-90°)` |
+| **Rotate 90° CCW** | `( ) [ ]` `（） ［］ 【】 〈〉 《》` `ー ― ～ 〜 …` | Centered in a square cell, then `rotationEffect(-90°)` |
 | **Rotate 270°** (corner brackets) | `「 」 『 』` | Yields the vertical corner form (「→﹁, 」→﹂, 『→﹃, 』→﹄) |
 | **Vertical presentation form** | `。 、 ， ．` | Swapped for U+FE10–FE12 (`︒ ︑ ︐`); the glyph already sits top-right, no frame hack |
 | **Manual top-right corner** | ASCII `.` `,` | No vertical form exists → positioned `.topTrailing` in the cell |
@@ -85,7 +85,7 @@ Decimal points and thousands separators between two digits are deliberately **le
 
 The punctuation sets that drive classification:
 
-- `verticalPunctuation` — CJK marks: `。 、 ， ． ： ； ！ ？ 「 」 『 』 （ ） ［ ］ 【 】 〈 〉 《 》 ・ ー … 〜 ～`
+- `verticalPunctuation` — CJK marks: `。 、 ， ． ： ； ！ ？ 「 」 『 』 （ ） ［ ］ 【 】 〈 〉 《 》 ・ ー ― … 〜 ～`
 - `asciiPunctuation` — halfwidth marks that occur in Korean text: `. , ! ? : ; ( ) [ ]`
 
 ---
@@ -99,10 +99,11 @@ lands illegally at a column edge.
 ### 5.1 行頭금칙 — may **not begin** a column (KLREQ §4.3.3)
 
 Closing brackets, stops, commas, sentence-final marks, middle dot, ellipsis, prolonged/wave
-marks:
+marks, and the dash (JLREQ treats `―` as inseparable — keeping it off a column head keeps a
+`――` pair together):
 
 ```
-）」』］】〉》 ) ]   。、，． . ,   ！？ ! ?   ：；: ;   ・· … ー 〜 ～
+）」』］】〉》 ) ]   。、，． . ,   ！？ ! ?   ：；: ;   ・· … ー ― 〜 ～
 ```
 
 If a column would *start* with one of these, it is **pulled up** onto the previous column
