@@ -94,7 +94,7 @@ Four apps built on these principles, documented as case studies:
 - **[Vertically To-do](https://vertically.works/apps/todo)** · a to-do list where tasks are columns · [use it](https://todo.vertically.works)
 - **[Vertically News](https://vertically.works/apps/news)** · live KR/JP/CN headlines set as a vertical newspaper · [read it](https://news.vertically.works)
 - **[Vertically Chat](https://vertically.works/apps/chat)** · an AI chat where each turn is a column and the thread flows right to left · [try it](https://chat.vertically.works)
-- **[Vertically Stitch](https://vertically.works/apps/stitch)** · vertical text sewn strand by strand, the way a hand-guided embroidery shop letters a name tag, and four ways for it to leave · a study of entrance and exit motion · [try it](https://stitch.vertically.works)
+- **[Vertically Stitch](https://vertically.works/apps/stitch)** · vertical text sewn strand by strand, the way a hand-guided embroidery shop letters a name tag, and unpicked the way it came · a study of entrance and exit motion · [try it](https://stitch.vertically.works)
 
 ## Open questions · contributing
 
